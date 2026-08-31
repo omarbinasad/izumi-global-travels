@@ -10,7 +10,8 @@ it assumes the structure described in `project-structure.md`.
 | `index.html` | `resources/views/home.blade.php` |
 | `pages/<group>/<name>.html` | `resources/views/<group>/<name>.blade.php` |
 | `components/<group>/<name>.html` | `resources/views/components/<group>/<name>.blade.php` |
-| `assets/css/`, `assets/js/`, `assets/images/` | `public/assets/…` (or a Vite pipeline if one is added later) |
+| `assets/css/app.css` | `resources/css/app.css`, unchanged — only the `@source` lines change to point at `resources/views` |
+| `assets/js/`, `assets/images/` | `resources/js/`, `public/assets/images/` |
 | `assets/data/*.json` | Dropped once real endpoints exist. |
 
 ## Layouts
@@ -22,10 +23,15 @@ Every page repeats the same shell, marked in the HTML with
 - `layouts/dashboard.blade.php` — signed-in pages: adds the sidebar.
 - `layouts/minimal.blade.php` — payment, processing and error screens.
 
-The `<head>` must keep, in this order: the synchronous
-`assets/js/core/theme-boot.js` tag (before any stylesheet, so there is no theme
-flash), then `assets/css/main.css`. `assets/js/main.js` stays a
+The `<head>` must keep, in this order: the synchronous `theme-boot.js` tag
+(before any stylesheet, so there is no theme flash), then the compiled
+stylesheet — `@vite(['resources/css/app.css'])` in Laravel. `main.js` stays a
 `type="module"` tag at the end of `<body>`.
+
+Laravel 12 already ships Vite and `@tailwindcss/vite`, so the only move is
+copying `app.css` across and repointing `@source`. Every class in the markup
+compiles identically. Each class in `@layer components` is one Blade component
+(`.route-card` → `<x-flight.route-card>`).
 
 ## Components
 

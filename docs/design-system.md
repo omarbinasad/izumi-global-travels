@@ -1,14 +1,35 @@
 # Design system
 
-Token definitions live in `assets/css/1-settings/`. This file explains how to use
-them — it does not restate every value.
+Every token lives in the `@theme static` block of `assets/css/app.css`. This
+file explains how to use them — it does not restate every value.
 
-## Two layers
+## How @theme works
 
-1. **Primitives** — `tokens.css`. Raw values: colour scales, the type scale, the
-   spacing scale, radii, z-index layers. Components must not use these directly.
-2. **Semantic** — `themes.css`. Meaning-named variables that resolve per theme.
-   Components use only these for anything that changes between light and dark.
+A variable in `@theme` is a real CSS custom property **and** generates Tailwind
+utilities when its name sits in a Tailwind namespace:
+
+| Namespace | Example | Generates |
+| --- | --- | --- |
+| `--color-*` | `--color-primary` | `bg-primary`, `text-primary`, `border-primary` |
+| `--text-*` | `--text-2xs` | `text-2xs` |
+| `--radius-*` | `--radius-md` | `rounded-md` |
+| `--shadow-*` | `--shadow-lg` | `shadow-lg` |
+| `--container-*` | `--container-page` | `max-w-page` |
+| `--breakpoint-*` | `--breakpoint-mid` | `mid:` variant |
+| `--ease-*`, `--animate-*` | `--animate-rise-in` | `ease-entrance`, `animate-rise-in` |
+| `--spacing` | one base value | the whole `p-*` / `gap-*` scale, 4px per step |
+
+Names outside those namespaces (`--z-*`, `--control-height`, `--glass-blur`) are
+declared in the `:root` block instead: they are for the component layer to read,
+not for generating utilities.
+
+`static` emits every variable even when this page does not use it, so the token
+layer stays complete for the pages still to be built and for Laravel.
+
+**Two layers, as before:** primitives (`--color-brand-600`, `--color-neutral-200`)
+and semantic names built from them (`--color-primary`, `--color-surface`). Use
+the semantic ones in markup and components; reach for a primitive only when
+defining a semantic token.
 
 > The brand and neutral palettes come from the approved UI reference. What is
 > still marked `@brand-pending` in `tokens.css`: the typeface (a system stack
@@ -17,13 +38,18 @@ them — it does not restate every value.
 
 ## Semantic colours
 
-| Group | Variables |
-| --- | --- |
-| Brand | `--color-primary`, `--color-primary-hover`, `--color-primary-active`, `--color-on-primary`, `--color-secondary`, `--color-accent`, `--color-on-accent` |
-| Surfaces | `--color-background`, `--color-surface`, `--color-surface-raised`, `--color-surface-muted` |
-| Text | `--color-text`, `--color-text-heading`, `--color-text-muted`, `--color-text-inverse`, `--color-link` |
-| Lines | `--color-border`, `--color-border-strong`, `--color-focus-ring`, `--color-overlay` |
-| Status | `--color-success`, `--color-warning`, `--color-error`, `--color-info`, each with a `-surface` pair |
+Renamed during the Tailwind conversion so each one reads correctly as a utility
+(`text-fg-muted` rather than `text-text-muted`):
+
+| Group | Variables | Utility example |
+| --- | --- | --- |
+| Brand | `--color-primary`, `-hover`, `-active`, `--color-on-primary`, `--color-secondary`, `--color-accent`, `--color-on-accent`, `--color-link` | `bg-primary` |
+| Surfaces | `--color-page`, `--color-surface`, `--color-surface-raised`, `--color-surface-muted`, `--color-surface-tint` | `bg-surface` |
+| Text | `--color-fg`, `--color-fg-heading`, `--color-fg-muted`, `--color-fg-inverse` | `text-fg-muted` |
+| Lines | `--color-line`, `--color-line-strong`, `--color-ring`, `--color-overlay` | `border-line` |
+| Navy bands | `--color-panel`, `--color-panel-raised`, `--color-on-panel`, `--color-on-panel-muted`, `--color-panel-line` | `bg-panel` |
+| Glass | `--color-glass`, `-raised`, `-hover`, `-line`, `-fg`, `-muted`, `-accent` | `bg-glass-raised` |
+| Status | `--color-success`, `--color-warning`, `--color-error`, `--color-info`, each with a `-surface` pair | `text-error` |
 
 Always pair a background with its matching text token (`--color-primary` with
 `--color-on-primary`). Body and heading text against `--color-background` and
@@ -42,7 +68,11 @@ Each semantic token is declared once using `light-dark(light, dark)`, and
 
 There is no second copy of the palette to keep in sync, and **no component may
 declare its own `[data-theme="dark"]` rule**. If a component needs a themed
-value that does not exist, add the token to `themes.css` first.
+value that does not exist, add the token to `@theme` first.
+
+`dark:` is registered (`@custom-variant dark`, bound to `[data-theme="dark"]`,
+never to `prefers-color-scheme`) but should stay unused for colour: a semantic
+token already flips itself. Reach for it only for a non-colour difference.
 
 ## Typography
 
@@ -60,9 +90,10 @@ they are genuinely unique; do not invent a token for them.
 
 ## Layout
 
-Containers `--container-max` (1280 — the page width), `--container-max-wide`
-(1600 — the hero band, which is deliberately wider than the rest of the page)
-and `--container-max-narrow` (960); prose measure `--content-max-width`.
+Containers `--container-page` (1280 — the page width, shared by the header,
+the hero copy and every section) and `--container-narrow` (960); prose measure
+`--container-prose`. The hero photograph has no width cap: it fills the page
+container, so it scales with the viewport while keeping the side gutter.
 Padding steps `--container-padding` / `-md` / `-lg`. Control heights
 `--control-height-sm` (36), `--control-height` (44, the touch-target minimum),
 `--control-height-lg` (52), `--search-field-height` (56). Also `--header-height` (64) and `--sidebar-width` (260).
@@ -75,8 +106,9 @@ ring. Shadows are theme-aware and therefore live in `themes.css`.
 
 ## Breakpoints
 
-Media-query conditions cannot read CSS variables, so these numbers are written
-as literals. Mirrored in `assets/js/core/config.js` as `BREAKPOINTS`.
+Declared as `--breakpoint-*` in `@theme`, which both sets the media query and
+generates the variant prefix. Mirrored in `assets/js/core/config.js` as
+`BREAKPOINTS`.
 
 | Name | `min-width` | Verify at |
 | --- | --- | --- |
@@ -84,7 +116,10 @@ as literals. Mirrored in `assets/js/core/config.js` as `BREAKPOINTS`.
 | md | 768px | 768px |
 | lg | 1024px | 1024px |
 | xl | 1280px | 1280px |
-| xxl | 1440px | 1440px |
+| 2xl | 1440px | 1440px |
+
+Plus `mid` at 900px, where the bento grid, the route cards and the how-it-works
+row all turn two-up. It exists so those three do not need `min-[900px]:`.
 
 Mobile first: write the small-screen rule, then add `min-width` queries. Layouts
 must reflow — a search form becomes stacked full-width fields on mobile, not a

@@ -1,38 +1,45 @@
 # CSS
 
-One stylesheet is linked by the page: **`main.css`**. It contains `@import`
-lines only. Everything else lives in a numbered folder.
+One source file: **`app.css`**. One generated file: **`build.css`**, which is
+what the page links and what `.gitignore` excludes. Never edit `build.css`.
 
-## The folders load in number order
+```
+npm install
+npm run dev     # watch, rebuilds on every save
+npm run build   # minified, for handoff
+```
 
-| Folder | What goes in it |
+## What is in app.css, in order
+
+| Block | Holds |
 | --- | --- |
-| `1-settings/` | Variables only. `tokens.css` = raw values, `themes.css` = light/dark colours. Paints nothing. |
-| `2-base/` | Bare HTML elements: `reset.css`, then `typography.css` (text, links, page background, focus ring). No class names. |
-| `3-layout/` | Page structure: container width, header, navigation, footer, dashboard shell. |
-| `4-components/` | One file per reusable block — a button, a form field, a flight card. Most work happens here. |
-| `5-pages/` | Styles needed by exactly one page. Try to make a component first. |
-| `6-utilities/` | Small single-purpose helpers. Loaded last so they can override a component. |
+| `@import "tailwindcss"` | Tailwind itself |
+| `@source` | which files to scan for class names |
+| `@custom-variant dark` | binds `dark:` to `[data-theme="dark"]`, not the OS |
+| `@theme static` | every design token; the ones in a Tailwind namespace also generate utilities |
+| `:root` | tokens that should not generate utilities — z-index layers, control heights, blur |
+| `@layer base` | bare HTML elements: body, headings, links, focus ring, reduced motion |
+| `@layer components` | patterns repeated often enough that inlining them would drown the markup |
 
-**A bigger number can override a smaller one.** That is the only cascade rule
-you need to remember.
+## Where does my style go?
 
-## Adding a style
-
-1. Pick the folder from the table above.
-2. Create `<name>.css` there.
-3. Add one `@import` line to `main.css`, in that folder's section.
+1. **A Tailwind utility in the markup.** This is the default and covers most
+   layout, spacing and type.
+2. **A token in `@theme`** if you are about to write the same raw value twice.
+3. **A class in `@layer components`** only when a pattern repeats *and* its
+   utility list would make the HTML unreadable. Each one becomes a Blade
+   component, so name it after the thing, not the styling.
+4. **Plain CSS** for the few things utilities cannot express: `@keyframes`, the
+   `backdrop-filter` fallback, `::-webkit-` pseudo-elements, and pseudo-element
+   decoration like the ticket notches. Comment why.
 
 ## Three rules
 
-- **Use variables, not raw values.** Never write a hex colour or a pixel
-  spacing in a component. Use the semantic names from `1-settings/themes.css`
-  (`--color-primary`, `--color-surface`, `--color-text-muted`) and the scales
-  from `tokens.css` (`--space-4`, `--radius-md`).
-- **Never write a dark-theme rule outside `1-settings/themes.css`.** Colours
-  switch themselves. If a colour you need is missing, add it to `themes.css`
-  first.
-- **No inline `style=` attributes** and no `!important` without a comment
-  saying why.
+- **Never write a raw colour or a bare pixel value.** Use a token:
+  `bg-surface`, `text-fg-muted`, `rounded-md`, `p-4`.
+- **Light and dark differ only in `@theme`,** through `light-dark()`. Do not
+  scatter `dark:` variants; a semantic colour already flips itself.
+- **On the hero glass use the `--color-glass-*` family.** `--color-fg` turns
+  white in dark mode and vanishes against pale glass.
 
 Full reference: `docs/design-system.md`.

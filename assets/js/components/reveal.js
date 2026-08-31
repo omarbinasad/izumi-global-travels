@@ -2,7 +2,7 @@
  * Scroll-triggered entrance animations.
  *
  * This module only ever ADDS an attribute. The hidden state lives inside the
- * @keyframes in 6-utilities/animations.css, so content is visible without
+ * @keyframes in assets/css/app.css, so content is visible without
  * JavaScript, without IntersectionObserver, and while this module is still
  * downloading. Nothing here is required to read the page.
  */

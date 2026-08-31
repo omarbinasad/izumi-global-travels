@@ -79,7 +79,7 @@ function initTripType(root) {
  */
 function initSwap(root) {
   const button = qs('[data-swap-airports]', root);
-  const fields = qsa('.search-field--route', root);
+  const fields = qsa('[data-airport-field]', root);
 
   if (!button || fields.length !== 2) return;
 

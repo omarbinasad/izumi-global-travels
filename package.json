@@ -1,0 +1,15 @@
+{
+  "name": "izumi-global-travels",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Static flight-search frontend, styled with Tailwind CSS, for conversion to Laravel Blade.",
+  "license": "UNLICENSED",
+  "scripts": {
+    "dev": "tailwindcss --input assets/css/app.css --output assets/css/build.css --watch",
+    "build": "tailwindcss --input assets/css/app.css --output assets/css/build.css --minify"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

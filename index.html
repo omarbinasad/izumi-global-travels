@@ -17,13 +17,13 @@
   -->
   <script src="assets/js/core/theme-boot.js"></script>
 
-  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/build.css">
   <link rel="preload" as="image" href="assets/images/hero%20section.webp" fetchpriority="high">
 </head>
 
 <body data-page="home">
 
-  <a class="visually-hidden visually-hidden--focusable" href="#main-content">Skip to main content</a>
+  <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
        One request-free sprite for every icon on the page. Reference an icon
@@ -62,12 +62,12 @@
   </svg>
 
   <!-- BLADE BOUNDARY: site header -> <x-layout.header /> -->
-  <header class="site-header" data-site-header>
-    <div class="container site-header__inner">
+  <header class="sticky top-0 z-(--z-header) bg-surface border-b border-line" data-site-header>
+    <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:min-h-(--header-height-lg) lg:gap-8">
 
       <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
-      <a class="site-logo" href="index.html" aria-label="Izumi Global Travels — home">
-        <svg class="site-logo__mark icon--solid" viewBox="0 0 40 40" aria-hidden="true">
+      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="index.html" aria-label="Izumi Global Travels — home">
+        <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
           <circle cx="20" cy="20" r="20" fill="#1668e0"/>
           <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
           <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
@@ -78,30 +78,30 @@
         </span>
       </a>
 
-      <button class="nav-toggle" type="button"
+      <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
               data-nav-toggle
               aria-expanded="false"
               aria-controls="site-nav"
               aria-label="Open menu">
-        <svg class="icon nav-toggle__icon--open" width="22" height="22" aria-hidden="true"><use href="#i-menu"></use></svg>
-        <svg class="icon nav-toggle__icon--close" width="22" height="22" aria-hidden="true"><use href="#i-close"></use></svg>
+        <svg class="icon size-[22px] nav-toggle__icon--open" width="22" height="22" aria-hidden="true"><use href="#i-menu"></use></svg>
+        <svg class="icon size-[22px] nav-toggle__icon--close" width="22" height="22" aria-hidden="true"><use href="#i-close"></use></svg>
       </button>
 
       <div class="site-nav" id="site-nav" data-nav-panel>
-        <nav class="primary-nav" aria-label="Primary">
-          <ul class="primary-nav__list">
-            <li><a class="primary-nav__link" href="pages/flights/search-results.html">Flights</a></li>
-            <li><a class="primary-nav__link" href="pages/destinations.html">Destinations</a></li>
-            <li><a class="primary-nav__link" href="pages/deals.html">AI Planner</a></li>
-            <li><a class="primary-nav__link" href="pages/deals.html">Deals</a></li>
-            <li><a class="primary-nav__link" href="pages/support/help-centre.html">Travel Services</a></li>
+        <nav class="" aria-label="Primary">
+          <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
+            <li><a class="nav-link" href="pages/flights/search-results.html">Flights</a></li>
+            <li><a class="nav-link" href="pages/destinations.html">Destinations</a></li>
+            <li><a class="nav-link" href="pages/deals.html">AI Planner</a></li>
+            <li><a class="nav-link" href="pages/deals.html">Deals</a></li>
+            <li><a class="nav-link" href="pages/support/help-centre.html">Travel Services</a></li>
           </ul>
         </nav>
 
-        <div class="header-actions">
-          <a class="header-actions__link" href="pages/support/help-centre.html">Help</a>
+        <div class="flex flex-wrap items-center gap-3 mt-4 lg:mt-0 lg:flex-nowrap">
+          <a class="nav-link" href="pages/support/help-centre.html">Help</a>
 
-          <label class="visually-hidden" for="header-locale">Language and currency</label>
+          <label class="sr-only" for="header-locale">Language and currency</label>
           <select class="locale-select" id="header-locale" name="locale">
             <option value="en-BDT">EN/BDT</option>
             <option value="en-USD">EN/USD</option>
@@ -109,19 +109,19 @@
           </select>
 
           <!-- BLADE BOUNDARY: theme toggle -> <x-ui.theme-toggle /> -->
-          <div class="theme-toggle theme-toggle--compact" role="group" aria-label="Colour theme">
+          <div class="theme-toggle" role="group" aria-label="Colour theme">
             <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
               <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
-              <span class="visually-hidden">Light theme</span>
+              <span class="sr-only">Light theme</span>
             </button>
             <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
               <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
-              <span class="visually-hidden">Dark theme</span>
+              <span class="sr-only">Dark theme</span>
             </button>
           </div>
           <!-- END BLADE BOUNDARY: theme toggle -->
 
-          <a class="header-actions__link" href="pages/auth/login.html">Sign in</a>
+          <a class="nav-link" href="pages/auth/login.html">Sign in</a>
           <a class="btn btn--primary btn--sm" href="pages/auth/register.html">Create account</a>
         </div>
       </div>
@@ -136,53 +136,55 @@
     <!-- ====================================================================
          Hero + flight search
          ==================================================================== -->
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="container">
-        <div class="hero__panel">
+    <section class="pt-4" aria-labelledby="hero-title">
+      <!-- max-w-none: the container supplies only the responsive side gutter.
+           The band fills the rest of the viewport at any size — no cap. -->
+      <div class="page-container max-w-none">
+        <div class="hero-panel">
           <!-- The page container: the hero copy lines up with every other
                section, while the photograph behind it runs wider. -->
-          <div class="container hero__inner">
+          <div class="page-container flex flex-col gap-8 md:gap-12">
 
-            <div class="hero__content">
-              <h1 class="hero__title" id="hero-title">Find the right flight.<br>Travel your way.</h1>
-              <p class="hero__text">
+            <div class="max-w-[34rem]">
+              <h1 class="animate-rise-in m-0 text-3xl md:text-4xl font-bold leading-heading text-brand-900" id="hero-title">Find the right flight.<br>Travel your way.</h1>
+              <p class="animate-rise-in [animation-delay:90ms] mt-3 text-sm md:text-base text-brand-800">
                 Smart search, flexible choices and personal service from booking to boarding.
               </p>
 
               <!-- A real link, not decoration: it jumps to the next section. -->
               <a class="scroll-hint" href="#explore">
-                <span class="scroll-hint__dots" aria-hidden="true">
+                <span class="flex flex-col items-center gap-[3px]" aria-hidden="true">
                   <span class="scroll-hint__dot"></span>
                   <span class="scroll-hint__dot"></span>
                   <span class="scroll-hint__dot"></span>
                 </span>
                 <svg class="icon--solid scroll-hint__plane" aria-hidden="true"><use href="#i-plane"></use></svg>
                 <svg class="icon scroll-hint__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                <span class="visually-hidden">Scroll down to explore</span>
+                <span class="sr-only">Scroll down to explore</span>
               </a>
             </div>
 
             <!-- BLADE BOUNDARY: flight-search component -> <x-flight-search.search-form /> -->
-            <div class="search" data-flight-search>
+            <div class="flex flex-col gap-3" data-flight-search>
 
               <!-- The product tabs are a detached pill bar above the panel. -->
-              <div class="search__tabs" role="tablist" aria-label="What are you booking?">
+              <div class="search-tabs" role="tablist" aria-label="What are you booking?">
                 <button class="search-tab" type="button" role="tab"
                         id="tab-flights" aria-controls="panel-flights" aria-selected="true"
                         data-search-tab>
-                  <svg class="icon search-tab__icon" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-plane"></use></svg>
                   Flights
                 </button>
                 <button class="search-tab" type="button" role="tab"
                         id="tab-esim" aria-controls="panel-esim" aria-selected="false"
                         data-search-tab>
-                  <svg class="icon search-tab__icon" aria-hidden="true"><use href="#i-ticket"></use></svg>
+                  <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-ticket"></use></svg>
                   eSIM
                 </button>
                 <button class="search-tab" type="button" role="tab"
                         id="tab-status" aria-controls="panel-status" aria-selected="false"
                         data-search-tab>
-                  <svg class="icon search-tab__icon" aria-hidden="true"><use href="#i-clock"></use></svg>
+                  <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-clock"></use></svg>
                   Flight status
                 </button>
               </div>
@@ -191,9 +193,9 @@
 
                 <!-- Flights ------------------------------------------------- -->
                 <div id="panel-flights" role="tabpanel" aria-labelledby="tab-flights">
-                  <form class="search-form" action="pages/flights/search-results.html" method="get">
+                  <form class="flex flex-col gap-2 lg:gap-3" action="pages/flights/search-results.html" method="get">
 
-                    <div class="search-form__top">
+                    <div class="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 px-1 pb-2">
                       <!-- Radios, not buttons: the trip type still submits with
                            JavaScript off. The underline is a styled ::after. -->
                       <div class="trip-toggle" role="radiogroup" aria-label="Trip type">
@@ -207,7 +209,7 @@
                         </label>
                       </div>
 
-                      <div class="search-form__extras">
+                      <div class="flex flex-wrap items-center gap-4">
                         <label class="search-option">
                           <input type="checkbox" name="flexible_dates" value="1">
                           Flexible dates
@@ -220,8 +222,8 @@
                     </div>
 
                     <!-- Origin, flight path with the swap control, destination -->
-                    <div class="search-route">
-                      <div class="search-field search-field--route">
+                    <div class="grid gap-2 items-stretch lg:grid-cols-[minmax(0,1fr)_96px_minmax(0,1fr)]">
+                      <div class="search-field" data-airport-field>
                         <label class="search-field__label" for="origin">From</label>
                         <span class="search-field__line">
                           <input class="search-field__control search-field__control--lg" type="text"
@@ -233,7 +235,7 @@
                         <input type="hidden" name="origin_iata" value="DAC" data-airport-value>
                       </div>
 
-                      <div class="search-route__path">
+                      <div class="flex items-center justify-center text-glass-accent lg:flex-col lg:gap-[2px]">
                         <svg class="search-route__arc" viewBox="0 0 96 34" aria-hidden="true">
                           <path d="M6 26Q48 -2 90 26" fill="none" stroke="currentColor"
                                 stroke-width="1.25" stroke-dasharray="3 5" stroke-linecap="round"/>
@@ -242,11 +244,11 @@
                         </svg>
                         <button class="search-swap" type="button" data-swap-airports
                                 aria-label="Swap origin and destination">
-                          <svg class="icon search-swap__icon" aria-hidden="true"><use href="#i-swap"></use></svg>
+                          <svg class="icon size-4" aria-hidden="true"><use href="#i-swap"></use></svg>
                         </button>
                       </div>
 
-                      <div class="search-field search-field--route">
+                      <div class="search-field" data-airport-field>
                         <label class="search-field__label" for="destination">To</label>
                         <span class="search-field__line">
                           <input class="search-field__control search-field__control--lg" type="text"
@@ -260,7 +262,7 @@
                     </div>
 
                     <!-- Depart, return, travellers, submit -->
-                    <div class="search-details">
+                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)_auto]">
                       <div class="search-field">
                         <label class="search-field__label" for="departure-date">Depart</label>
                         <span class="search-field__value">
@@ -282,7 +284,7 @@
 
                       <!-- <details> so the panel opens without JavaScript, and the
                            counts are real number inputs for the same reason. -->
-                      <details class="search-field pax" data-pax>
+                      <details class="search-field relative max-lg:col-span-full" data-pax>
                         <summary class="pax__summary">
                           <span class="search-field__label">Travellers</span>
                           <span class="search-field__control--lg" data-pax-summary>1 adult</span>
@@ -316,7 +318,7 @@
                           </div>
 
                           <fieldset class="pax__cabins">
-                            <legend class="visually-hidden">Cabin class</legend>
+                            <legend class="sr-only">Cabin class</legend>
                             <label class="pax__cabin">
                               <input type="radio" name="cabin_class" value="ECONOMY" checked data-pax-cabin-input>
                               <span>Economy</span>
@@ -337,9 +339,9 @@
                         </div>
                       </details>
 
-                      <button class="btn btn--primary search-submit" type="submit">
+                      <button class="btn btn--primary min-h-(--search-field-height) px-6 max-lg:col-span-full" type="submit">
                         Search flights
-                        <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
                       </button>
                     </div>
                   </form>
@@ -347,8 +349,8 @@
 
                 <!-- eSIM ---------------------------------------------------- -->
                 <div id="panel-esim" role="tabpanel" aria-labelledby="tab-esim" hidden>
-                  <div class="search-form">
-                    <p class="search-form__note">
+                  <div class="flex flex-col gap-2 lg:gap-3">
+                    <p class="m-0 px-1 pt-2 pb-3 text-sm text-glass-muted">
                       Travel eSIM plans are coming soon.
                       <a href="pages/support/help-centre.html">Ask our team</a> about data for your destination.
                     </p>
@@ -357,11 +359,11 @@
 
                 <!-- Flight status ------------------------------------------- -->
                 <div id="panel-status" role="tabpanel" aria-labelledby="tab-status" hidden>
-                  <form class="search-form" action="pages/flight-status.html" method="get">
-                    <p class="search-form__note">
+                  <form class="flex flex-col gap-2 lg:gap-3" action="pages/flight-status.html" method="get">
+                    <p class="m-0 px-1 pt-2 pb-3 text-sm text-glass-muted">
                       Track a flight by its number — for example <b>BG 147</b> or <b>EK 585</b>.
                     </p>
-                    <div class="search-details search-details--status">
+                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)_auto] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_auto]">
                       <div class="search-field">
                         <label class="search-field__label" for="status-flight">Flight number</label>
                         <input class="search-field__control search-field__control--lg search-field__control--code"
@@ -376,9 +378,9 @@
                           <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
                         </span>
                       </div>
-                      <button class="btn btn--primary search-submit" type="submit">
+                      <button class="btn btn--primary min-h-(--search-field-height) px-6 max-lg:col-span-full" type="submit">
                         Check status
-                        <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
                       </button>
                     </div>
                   </form>
@@ -396,35 +398,35 @@
     <!-- ====================================================================
          Trusted airlines
          ==================================================================== -->
-    <section class="container airlines" id="explore" aria-labelledby="airlines-title">
-      <h2 class="airlines__label" id="airlines-title">Trusted airlines</h2>
+    <section class="page-container pt-5 pb-8" id="explore" aria-labelledby="airlines-title">
+      <h2 class="m-0 mb-4 text-[10px] font-semibold tracking-caps uppercase text-primary" id="airlines-title">Trusted airlines</h2>
 
       <!-- @brand-pending: text marks stand in until licensed airline logos
            are supplied as SVGs in assets/images/airlines/. -->
-      <ul class="airlines__list">
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Biman Bangladesh</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Emirates</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Qatar Airways</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Singapore Airlines</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Malaysia Airlines</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Thai Airways</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>ANA</li>
-        <li class="airlines__item"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg>Turkish Airlines</li>
+      <ul class="grid grid-cols-2 gap-x-3 gap-y-4 m-0 p-0 list-none sm:grid-cols-4 lg:grid-cols-8">
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Biman Bangladesh</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Emirates</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Qatar Airways</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Singapore Airlines</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Malaysia Airlines</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Thai Airways</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>ANA</li>
+        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Turkish Airlines</li>
       </ul>
     </section>
 
     <!-- ====================================================================
          Personalise — bento grid
          ==================================================================== -->
-    <section class="container home-section preferences" aria-labelledby="preferences-title">
-      <div class="section-head" data-reveal>
-        <h2 class="section-head__title section-head__title--plain" id="preferences-title">
+    <section class="page-container py-8 lg:py-10" aria-labelledby="preferences-title">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+        <h2 class="m-0 text-xl font-semibold text-fg-heading" id="preferences-title">
           Personalize every part of your journey
         </h2>
-        <p class="section-head__text">Choose the details that make your flight more comfortable.</p>
+        <p class="w-full m-0 text-sm text-fg-muted">Choose the details that make your flight more comfortable.</p>
       </div>
 
-      <div class="preferences__grid" data-reveal-group>
+      <div class="grid gap-4 mid:grid-cols-2 mid:grid-rows-2" data-reveal-group>
 
         <article class="preference-card" data-reveal="zoom">
           <img class="preference-card__media" src="assets/images/halal%20meal.png"
@@ -442,7 +444,7 @@
           </div>
         </article>
 
-        <article class="preference-card" data-reveal="zoom">
+        <article class="preference-card mid:col-start-2 mid:row-span-2" data-reveal="zoom">
           <img class="preference-card__media" src="assets/images/window.webp"
                alt="Clouds and an aircraft wing seen through a cabin window" width="1448" height="1086" loading="lazy" decoding="async">
           <span class="preference-card__tag">Your preferred view</span>
@@ -482,11 +484,11 @@
     <!-- ====================================================================
          Booking promise
          ==================================================================== -->
-    <section class="container home-section" aria-labelledby="promise-title">
-      <div class="promise" data-reveal>
-        <h2 class="promise__title" id="promise-title">Booking should feel simple.</h2>
+    <section class="page-container py-8 lg:py-10" aria-labelledby="promise-title">
+      <div class="promise-panel" data-reveal>
+        <h2 class="m-0 mb-5 text-2xl lg:text-3xl font-semibold text-on-panel" id="promise-title">Booking should feel simple.</h2>
 
-        <div class="promise__grid" data-reveal-group>
+        <div class="grid gap-3 max-w-[620px] sm:grid-cols-2" data-reveal-group>
           <article class="feature-card" data-reveal>
             <span class="feature-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-target"></use></svg></span>
             <div>
@@ -527,17 +529,17 @@
          Prices and availability shown here are illustrative. The backend
          supplies and re-verifies every value before booking.
          ==================================================================== -->
-    <section class="container home-section" aria-labelledby="routes-title">
-      <div class="routes">
-        <div class="section-head" data-reveal>
-          <h2 class="section-head__title" id="routes-title">Most Booked Routes</h2>
-          <a class="section-head__action" href="pages/destinations.html">
+    <section class="page-container py-8 lg:py-10" aria-labelledby="routes-title">
+      <div class="rounded-lg bg-surface-tint px-5 py-6 lg:p-8">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+          <h2 class="m-0 text-xl font-semibold text-primary" id="routes-title">Most Booked Routes</h2>
+          <a class="inline-flex items-center gap-1 text-sm font-medium text-primary no-underline" href="pages/destinations.html">
             View all routes
-            <svg class="icon" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
           </a>
         </div>
 
-        <div class="routes__grid" data-reveal-group>
+        <div class="grid gap-4 mid:grid-cols-2" data-reveal-group>
 
           <article class="route-card" data-reveal data-offer-id="off_dac_nrt_bg">
             <div class="route-card__main">
@@ -690,23 +692,23 @@
     <!-- ====================================================================
          How it works
          ==================================================================== -->
-    <section class="container home-section" aria-labelledby="how-title">
-      <div class="section-head" data-reveal>
-        <h2 class="section-head__title section-head__title--plain" id="how-title">How it works</h2>
+    <section class="page-container py-8 lg:py-10" aria-labelledby="how-title">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+        <h2 class="m-0 text-xl font-semibold text-fg-heading" id="how-title">How it works</h2>
       </div>
 
-      <ol class="steps" role="list" data-reveal-group>
+      <ol class="grid gap-4 items-stretch mid:grid-cols-[1fr_auto_1fr_auto_1fr] mid:gap-2" role="list" data-reveal-group>
         <li class="step-card" data-reveal>
           <span class="step-card__number" aria-hidden="true">1</span>
-          <span class="step-card__body">
+          <span class="flex-auto">
             <span class="step-card__title">Search Flights</span>
             <span class="step-card__text">Find the best flights that fit your plans in seconds.</span>
           </span>
           <span class="step-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-search"></use></svg></span>
         </li>
 
-        <li class="steps__connector" aria-hidden="true" data-reveal="fade">
-          <svg viewBox="0 0 100 26" fill="none">
+        <li class="hidden text-primary mid:grid mid:place-items-center mid:min-w-[72px]" aria-hidden="true" data-reveal="fade">
+          <svg class="w-full h-[26px]" viewBox="0 0 100 26" fill="none">
             <path d="M2 20 C 30 20, 40 6, 96 6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
             <path d="M92 2 98 6 92 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -714,15 +716,15 @@
 
         <li class="step-card" data-reveal>
           <span class="step-card__number" aria-hidden="true">2</span>
-          <span class="step-card__body">
+          <span class="flex-auto">
             <span class="step-card__title">Compare Options</span>
             <span class="step-card__text">Compare prices, times and airlines to choose what is best for you.</span>
           </span>
           <span class="step-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-compare"></use></svg></span>
         </li>
 
-        <li class="steps__connector" aria-hidden="true" data-reveal="fade">
-          <svg viewBox="0 0 100 26" fill="none">
+        <li class="hidden text-primary mid:grid mid:place-items-center mid:min-w-[72px]" aria-hidden="true" data-reveal="fade">
+          <svg class="w-full h-[26px]" viewBox="0 0 100 26" fill="none">
             <path d="M2 20 C 30 20, 40 6, 96 6" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
             <path d="M92 2 98 6 92 10" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
@@ -730,7 +732,7 @@
 
         <li class="step-card" data-reveal>
           <span class="step-card__number" aria-hidden="true">3</span>
-          <span class="step-card__body">
+          <span class="flex-auto">
             <span class="step-card__title">Book With Confidence</span>
             <span class="step-card__text">Secure your booking and get ready for a great trip.</span>
           </span>
@@ -742,10 +744,10 @@
     <!-- ====================================================================
          After booking / app
          ==================================================================== -->
-    <section class="container home-section" aria-labelledby="app-title">
+    <section class="page-container py-8 lg:py-10" aria-labelledby="app-title">
       <div class="app-panel" data-reveal>
 
-        <ul class="app-panel__list" role="list" data-reveal-group>
+        <ul class="grid gap-3 m-0 p-0 list-none" role="list" data-reveal-group>
           <li class="feature-card" data-reveal>
             <span class="feature-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-bell"></use></svg></span>
             <div>
@@ -772,12 +774,12 @@
         <!-- The phone artwork is part of the panel background image. -->
         <div class="app-panel__phone-space" aria-hidden="true"></div>
 
-        <div class="app-panel__copy">
-          <h2 class="app-panel__title" id="app-title">Everything you<br>need after booking.</h2>
+        <div class="flex flex-col justify-center gap-5">
+          <h2 class="m-0 text-2xl lg:text-3xl font-semibold text-on-panel" id="app-title">Everything you<br>need after booking.</h2>
 
           <!-- @brand-pending: replace with the official Apple and Google
                Play badge artwork before launch. -->
-          <div class="store-badges">
+          <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="pages/support/help-centre.html">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
               <span>
@@ -801,15 +803,15 @@
     <!-- ====================================================================
          Testimonials
          ==================================================================== -->
-    <section class="container home-section testimonials" aria-labelledby="testimonials-title">
-      <div class="section-head" data-reveal>
-        <h2 class="section-head__title section-head__title--plain" id="testimonials-title">Trusted by travelers</h2>
+    <section class="page-container py-8 lg:py-10" aria-labelledby="testimonials-title">
+      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+        <h2 class="m-0 text-xl font-semibold text-fg-heading" id="testimonials-title">Trusted by travelers</h2>
       </div>
 
-      <div class="testimonials__grid" data-reveal-group>
+      <div class="grid gap-4 md:grid-cols-3" data-reveal-group>
 
         <article class="testimonial-card" data-reveal>
-          <span class="testimonial-card__avatar testimonial-card__avatar--initials" aria-hidden="true">NR</span>
+          <span class="testimonial-card__avatar" aria-hidden="true">NR</span>
           <div>
             <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
               <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
@@ -821,13 +823,13 @@
             <blockquote class="testimonial-card__quote">
               “Great prices and smooth booking. The halal meal option made our trip perfect.”
             </blockquote>
-            <p class="testimonial-card__name">Nadia Rahman</p>
-            <p class="testimonial-card__place">Dhaka, Bangladesh</p>
+            <p class="text-sm font-semibold text-fg-heading">Nadia Rahman</p>
+            <p class="text-xs text-fg-muted">Dhaka, Bangladesh</p>
           </div>
         </article>
 
         <article class="testimonial-card" data-reveal>
-          <span class="testimonial-card__avatar testimonial-card__avatar--initials" aria-hidden="true">AH</span>
+          <span class="testimonial-card__avatar" aria-hidden="true">AH</span>
           <div>
             <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
               <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
@@ -839,13 +841,13 @@
             <blockquote class="testimonial-card__quote">
               “Customer support was super helpful when I needed to change my dates. Highly recommended.”
             </blockquote>
-            <p class="testimonial-card__name">Arif Hossain</p>
-            <p class="testimonial-card__place">Chattogram, Bangladesh</p>
+            <p class="text-sm font-semibold text-fg-heading">Arif Hossain</p>
+            <p class="text-xs text-fg-muted">Chattogram, Bangladesh</p>
           </div>
         </article>
 
         <article class="testimonial-card" data-reveal>
-          <span class="testimonial-card__avatar testimonial-card__avatar--initials" aria-hidden="true">MI</span>
+          <span class="testimonial-card__avatar" aria-hidden="true">MI</span>
           <div>
             <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
               <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
@@ -857,8 +859,8 @@
             <blockquote class="testimonial-card__quote">
               “Love the app and the real-time updates. Everything I need in one place.”
             </blockquote>
-            <p class="testimonial-card__name">Mumtaz Islam</p>
-            <p class="testimonial-card__place">Sylhet, Bangladesh</p>
+            <p class="text-sm font-semibold text-fg-heading">Mumtaz Islam</p>
+            <p class="text-xs text-fg-muted">Sylhet, Bangladesh</p>
           </div>
         </article>
 
@@ -868,12 +870,12 @@
     <!-- ====================================================================
          Closing call to action
          ==================================================================== -->
-    <section class="container home-section" aria-labelledby="cta-title">
-      <div class="cta" data-reveal="zoom">
-        <div class="cta__inner">
-          <h2 class="cta__title" id="cta-title">Ready to plan a better flight?</h2>
-          <p class="cta__text">Smart search, flexible options and personal service you can trust.</p>
-          <div class="cta__actions">
+    <section class="page-container py-8 lg:py-10" aria-labelledby="cta-title">
+      <div class="cta-panel" data-reveal="zoom">
+        <div class="flex flex-col items-center gap-3 p-6 rounded-md bg-white/85">
+          <h2 class="m-0 text-xl md:text-2xl font-semibold text-brand-900" id="cta-title">Ready to plan a better flight?</h2>
+          <p class="m-0 max-w-[46ch] text-sm text-brand-800">Smart search, flexible options and personal service you can trust.</p>
+          <div class="flex flex-wrap justify-center gap-3 mt-2">
             <a class="btn btn--primary" href="#main-content">Search Flights</a>
             <a class="btn btn--light" href="pages/deals.html">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-sparkles"></use></svg>
@@ -888,14 +890,14 @@
   <!-- END BLADE BOUNDARY: main content -->
 
   <!-- BLADE BOUNDARY: site footer -> <x-layout.footer /> -->
-  <footer class="site-footer">
-    <div class="container">
+  <footer class="mt-12 pt-10 pb-8 lg:pt-12 bg-panel text-on-panel-muted rounded-t-lg">
+    <div class="page-container">
 
-      <div class="site-footer__grid">
+      <div class="grid gap-8 sm:grid-cols-2 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
 
-        <div class="site-footer__brand">
+        <div class="flex flex-col items-start gap-4">
           <a class="footer-logo" href="index.html" aria-label="Izumi Global Travels — home">
-            <svg class="site-logo__mark icon--solid" viewBox="0 0 40 40" aria-hidden="true">
+            <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
               <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
               <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
@@ -905,12 +907,12 @@
               <span class="site-logo__tagline">Global Travels</span>
             </span>
           </a>
-          <p class="site-footer__blurb">Your trusted travel partner for flawless journeys worldwide.</p>
+          <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
         </div>
 
-        <nav class="footer-nav" aria-labelledby="footer-flights">
-          <h2 class="footer-nav__title" id="footer-flights">Flights</h2>
-          <ul class="footer-nav__list">
+        <nav class="" aria-labelledby="footer-flights">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-flights">Flights</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="pages/flights/search-results.html">Search Flights</a></li>
             <li><a class="footer-nav__link" href="pages/deals.html">Flight Deals</a></li>
             <li><a class="footer-nav__link" href="pages/destinations.html">Popular Routes</a></li>
@@ -919,9 +921,9 @@
           </ul>
         </nav>
 
-        <nav class="footer-nav" aria-labelledby="footer-services">
-          <h2 class="footer-nav__title" id="footer-services">Services</h2>
-          <ul class="footer-nav__list">
+        <nav class="" aria-labelledby="footer-services">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="pages/deals.html">AI Trip Planner</a></li>
             <li><a class="footer-nav__link" href="pages/support/help-centre.html">eSIM Plans</a></li>
             <li><a class="footer-nav__link" href="pages/booking/add-ons.html">Halal Meals</a></li>
@@ -930,9 +932,9 @@
           </ul>
         </nav>
 
-        <nav class="footer-nav" aria-labelledby="footer-support">
-          <h2 class="footer-nav__title" id="footer-support">Support</h2>
-          <ul class="footer-nav__list">
+        <nav class="" aria-labelledby="footer-support">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="pages/support/help-centre.html">Help Center</a></li>
             <li><a class="footer-nav__link" href="pages/contact.html">Contact Us</a></li>
             <li><a class="footer-nav__link" href="pages/manage-booking/find-booking.html">Manage Booking</a></li>
@@ -941,9 +943,9 @@
           </ul>
         </nav>
 
-        <nav class="footer-nav" aria-labelledby="footer-company">
-          <h2 class="footer-nav__title" id="footer-company">Company</h2>
-          <ul class="footer-nav__list">
+        <nav class="" aria-labelledby="footer-company">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="pages/about.html">About Us</a></li>
             <li><a class="footer-nav__link" href="pages/about.html">Careers</a></li>
             <li><a class="footer-nav__link" href="pages/about.html">Press Room</a></li>
@@ -952,9 +954,9 @@
           </ul>
         </nav>
 
-        <nav class="footer-nav" aria-labelledby="footer-legal">
-          <h2 class="footer-nav__title" id="footer-legal">Legal</h2>
-          <ul class="footer-nav__list">
+        <nav class="" aria-labelledby="footer-legal">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="pages/legal/terms.html">Terms &amp; Conditions</a></li>
             <li><a class="footer-nav__link" href="pages/legal/privacy-policy.html">Privacy Policy</a></li>
             <li><a class="footer-nav__link" href="pages/legal/privacy-policy.html">Cookie Policy</a></li>
@@ -963,15 +965,15 @@
           </ul>
         </nav>
 
-        <div class="site-footer__utility">
-          <label class="visually-hidden" for="footer-locale">Language and currency</label>
+        <div class="flex flex-col items-start gap-4">
+          <label class="sr-only" for="footer-locale">Language and currency</label>
           <select class="locale-select" id="footer-locale" name="locale">
             <option value="en-BDT">EN/BDT</option>
             <option value="en-USD">EN/USD</option>
             <option value="bn-BDT">BN/BDT</option>
           </select>
 
-          <div class="store-badges">
+          <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="pages/support/help-centre.html">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
               <span>
@@ -991,25 +993,25 @@
 
       </div>
 
-      <div class="site-footer__bottom">
-        <ul class="social-list" role="list">
-          <li><a class="social-list__link" href="pages/contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
-          <li><a class="social-list__link" href="pages/contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
-          <li><a class="social-list__link" href="pages/contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+      <div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-panel-line">
+        <ul class="flex items-center gap-2 m-0 p-0 list-none" role="list">
+          <li><a class="social-link" href="pages/contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a class="social-link" href="pages/contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a class="social-link" href="pages/contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
         </ul>
 
         <!-- @brand-pending: text marks stand in for the licensed payment
              scheme artwork. -->
-        <ul class="payment-list" role="list" aria-label="Accepted payment methods">
-          <li class="payment-list__item">Visa</li>
-          <li class="payment-list__item">Mastercard</li>
-          <li class="payment-list__item">Amex</li>
-          <li class="payment-list__item">bKash</li>
-          <li class="payment-list__item">Nagad</li>
-          <li class="payment-list__item">Rocket</li>
+        <ul class="flex flex-wrap items-center gap-2 m-0 p-0 list-none" role="list" aria-label="Accepted payment methods">
+          <li class="payment-mark">Visa</li>
+          <li class="payment-mark">Mastercard</li>
+          <li class="payment-mark">Amex</li>
+          <li class="payment-mark">bKash</li>
+          <li class="payment-mark">Nagad</li>
+          <li class="payment-mark">Rocket</li>
         </ul>
 
-        <p class="site-footer__legal">© 2026 Izumi Global Travels. All rights reserved.</p>
+        <p class="w-full text-xs">© 2026 Izumi Global Travels. All rights reserved.</p>
       </div>
 
     </div>
