@@ -1852,6 +1852,10 @@
     object-fit: cover;
   }
 
+  /* The cabin window sits right of centre in the source photograph, so the
+     crop is nudged to bring it into the middle of the card. */
+  .preference-card__media--window { object-position: 57% 50%; }
+
   .preference-card__badge {
     position: absolute;
     z-index: 1;
