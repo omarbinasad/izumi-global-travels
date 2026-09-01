@@ -12,6 +12,7 @@
 import { initTheme } from './core/theme.js';
 import { initNavigation } from './components/navigation.js';
 import { initReveal } from './components/reveal.js';
+import { initLocale } from './components/locale.js';
 
 /**
  * Page modules, added as pages are built. Each value is a dynamic import so
@@ -19,6 +20,8 @@ import { initReveal } from './components/reveal.js';
  */
 const pageModules = {
   home: () => import('./pages/home.js'),
+  'search-results': () => import('./pages/search-results.js'),
+  passengers: () => import('./pages/passengers.js'),
 };
 
 async function startPageModule() {
@@ -34,4 +37,5 @@ async function startPageModule() {
 initTheme();
 initNavigation();
 initReveal();
+initLocale();
 startPageModule();

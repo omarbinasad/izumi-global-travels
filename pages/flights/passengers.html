@@ -1,0 +1,759 @@
+<!doctype html>
+<!-- data-theme is set by theme-boot.js before paint; without JS the OS preference applies. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Enter the traveller details for your booking — name, document and contact information.">
+  <!-- Step of a booking in progress. Nothing here belongs in an index. -->
+  <meta name="robots" content="noindex">
+
+  <title>Passenger details — Izumi Global Travels</title>
+
+  <!--
+    Runs before paint so the dark theme never flashes light.
+    Must stay synchronous and must not be type="module".
+    Blade: resources/views/layouts/app.blade.php
+  -->
+  <script src="../../assets/js/core/theme-boot.js"></script>
+
+  <link rel="stylesheet" href="../../assets/css/build.css">
+</head>
+
+<body class="results-page" data-page="passengers">
+
+  <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
+
+  <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
+       One request-free sprite for every icon on the page. Reference an icon
+       Reference one with a use element pointing at its symbol id. -->
+  <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM18.5 14.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></symbol>
+    <symbol id="i-swap" viewBox="0 0 24 24"><path d="m8 3-4 4 4 4M4 7h16M16 21l4-4-4-4M20 17H4"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h10M18 18h2M14 4v4M8 10v4M14 16v4"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM21 21l-4.35-4.35"/></symbol>
+    <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 12.4 21.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4a2 2 0 0 1 2-2h9a2 2 0 0 1 1.4.6l6.4 6.4a2 2 0 0 1 0 2.8zM7.5 6.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4.5 4.5L19 6.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 11v5M12 7.5v.5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM3.5 17l4.8-4.8a2 2 0 0 1 2.7 0L16 17M15 15l1.6-1.6a2 2 0 0 1 2.7 0l1.2 1.1"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2"/></symbol>
+    <symbol id="i-bag" viewBox="0 0 24 24"><path d="M8 7V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v3M5 7h14a1 1 0 0 1 1 1v11a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a1 1 0 0 1 1-1zM10 11v6M14 11v6"/></symbol>
+    <symbol id="i-seat" viewBox="0 0 24 24"><path d="M7 3h8a2 2 0 0 1 2 2v8H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM5 13h12a3 3 0 0 1 3 3v2M8 21v-3M20 21v-3"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM12 11.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5z"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"/></symbol>
+    <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+    <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2zM18 18v1a3 3 0 0 1-3 3h-3"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
+    <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1zM10 6v2M10 11v2M10 16v2"/></symbol>
+    <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-compare" viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 8h6M9 12h6M9 16h3"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
+    <symbol id="i-sun" viewBox="0 0 24 24"><path d="M12 4V2M12 22v-2M4 12H2M22 12h-2M6.34 6.34 4.93 4.93M19.07 19.07l-1.41-1.41M17.66 6.34l1.41-1.41M4.93 19.07l1.41-1.41M12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/></symbol>
+    <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.4 12.7c0-2.3 1.9-3.4 2-3.5-1.1-1.6-2.8-1.8-3.4-1.8-1.4-.1-2.8.9-3.5.9s-1.8-.8-3-.8c-1.5 0-2.9.9-3.7 2.3-1.6 2.7-.4 6.8 1.1 9 .7 1.1 1.6 2.3 2.8 2.3 1.1 0 1.5-.7 2.9-.7 1.3 0 1.7.7 2.9.7 1.2 0 2-1.1 2.7-2.2.9-1.2 1.2-2.5 1.2-2.5s-2-.8-2-3.7zM14.2 5.6c.6-.8 1-1.8.9-2.9-.9 0-2 .6-2.7 1.4-.6.7-1.1 1.8-.9 2.8 1 .1 2-.5 2.7-1.3z"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="M3.6 2.3c-.4.3-.6.7-.6 1.3v16.8c0 .6.2 1 .6 1.3l9-9.7-9-9.7zM14.9 9.8 5.5 2.1l10.9 6.2-1.5 1.5zM16.4 14.2 5.5 21.9l9.4-7.7 1.5 1.5zM17.9 10.6l2.9 1.6c.7.4.7 1.4 0 1.8l-2.9 1.6-1.9-2.5 1.9-2.5z"/></symbol>
+    <symbol id="i-facebook" viewBox="0 0 24 24"><path d="M14 8.5V7c0-.8.2-1.2 1.4-1.2H17V3h-2.6c-2.9 0-3.9 1.4-3.9 3.7v1.8H8.5V11h2V21H14V11h2.4l.3-2.5H14z"/></symbol>
+    <symbol id="i-instagram" viewBox="0 0 24 24"><path d="M12 2.2c3.2 0 3.6 0 4.9.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.9.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9-.1-1.3-.1-1.6-.1-4.8s0-3.6.1-4.9C2.4 4 4 2.4 7.2 2.3c1.2-.1 1.6-.1 4.8-.1zm0 5.1a4.7 4.7 0 1 0 0 9.4 4.7 4.7 0 0 0 0-9.4zm0 7.7a3 3 0 1 1 0-6 3 3 0 0 1 0 6zm4.9-9a1.1 1.1 0 1 0 0 2.2 1.1 1.1 0 0 0 0-2.2z"/></symbol>
+    <symbol id="i-linkedin" viewBox="0 0 24 24"><path d="M6.9 21H3.6V9.4h3.3V21zM5.2 8A1.9 1.9 0 1 1 5.2 4a1.9 1.9 0 0 1 0 4zM21 21h-3.3v-5.6c0-1.4 0-3.1-1.9-3.1s-2.2 1.5-2.2 3v5.7H10.3V9.4h3.1v1.6h.1c.4-.8 1.5-1.8 3.2-1.8 3.4 0 4.1 2.2 4.1 5.1V21z"/></symbol>
+  </svg>
+
+  <!-- BLADE BOUNDARY: site header -> <x-layout.header /> -->
+  <header class="sticky top-0 z-(--z-header) bg-surface border-b border-line" data-site-header>
+    <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:grid lg:grid-cols-[1fr_auto_1fr] lg:min-h-(--header-height-lg) lg:gap-8">
+
+      <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
+      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../../index.html" aria-label="Izumi Global Travels — home">
+        <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
+          <circle cx="20" cy="20" r="20" fill="#1668e0"/>
+          <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
+          <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
+        </svg>
+        <span>
+          <span class="site-logo__name">Izumi</span>
+          <span class="site-logo__tagline">Global Travels</span>
+        </span>
+      </a>
+
+      <div class="site-nav" id="site-nav" data-nav-panel>
+        <nav class="lg:justify-self-center" aria-label="Primary">
+          <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
+            <li><a class="nav-link" href="../../pages/flights/search-results.html">Flights</a></li>
+            <li><a class="nav-link" href="../../pages/destinations.html">Destinations</a></li>
+            <li><a class="nav-link" href="../../pages/deals.html">Deals</a></li>
+            <li><a class="nav-link" href="../../pages/support/help-centre.html">Help</a></li>
+          </ul>
+        </nav>
+
+        <!-- The colour switch travels with the menu on a phone: the bar itself
+             has room for the account button and nothing else. -->
+        <div class="theme-toggle self-start mt-4 lg:hidden" role="group" aria-label="Colour theme">
+          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+            <span class="sr-only">Light theme</span>
+          </button>
+          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+            <span class="sr-only">Dark theme</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Outside the drawer, so the account button is in the bar at every
+           width. At lg this is the third grid column; below it the locale and
+           colour switches step aside and only the button is left. -->
+      <div class="flex items-center gap-3 lg:justify-self-end" data-header-actions>
+        <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
+        <details class="locale hidden lg:block" data-locale>
+          <summary class="locale__trigger">
+            <span data-locale-label>EN/BDT</span>
+            <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+            <span class="sr-only">Change language and currency</span>
+          </summary>
+
+          <div class="locale__panel">
+            <!-- Radios, not buttons: the two lists swap with no JavaScript,
+                 and the chosen values are real form values. -->
+            <input class="locale__tab-input sr-only" type="radio" name="header-locale-tab" id="header-locale-tab-currency" checked>
+            <input class="locale__tab-input sr-only" type="radio" name="header-locale-tab" id="header-locale-tab-language">
+
+            <div class="locale__tabs">
+              <label class="locale__tab" for="header-locale-tab-currency">Currency</label>
+              <label class="locale__tab" for="header-locale-tab-language">Language</label>
+            </div>
+
+            <ul class="locale__list locale__list--currency" role="list">
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-bdt" value="BDT" checked data-locale-currency>
+            <label class="locale__option" for="header-currency-bdt">
+              <span class="locale__code">BDT</span>
+              <span class="locale__name">Bangladeshi Taka</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-usd" value="USD" data-locale-currency>
+            <label class="locale__option" for="header-currency-usd">
+              <span class="locale__code">USD</span>
+              <span class="locale__name">US Dollar</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-aed" value="AED" data-locale-currency>
+            <label class="locale__option" for="header-currency-aed">
+              <span class="locale__code">AED</span>
+              <span class="locale__name">UAE Dirham</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-jpy" value="JPY" data-locale-currency>
+            <label class="locale__option" for="header-currency-jpy">
+              <span class="locale__code">JPY</span>
+              <span class="locale__name">Japanese Yen</span>
+            </label>
+          </li>
+            </ul>
+
+            <ul class="locale__list locale__list--language" role="list">
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-en" value="EN" checked data-locale-language>
+            <label class="locale__option" for="header-language-en">
+              <span class="locale__code">EN</span>
+              <span class="locale__name">English</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-bn" value="BN" data-locale-language>
+            <label class="locale__option" for="header-language-bn">
+              <span class="locale__code">BN</span>
+              <span class="locale__name">বাংলা</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ar" value="AR" data-locale-language>
+            <label class="locale__option" for="header-language-ar">
+              <span class="locale__code">AR</span>
+              <span class="locale__name">العربية</span>
+            </label>
+          </li>
+            </ul>
+          </div>
+        </details>
+        <!-- END BLADE BOUNDARY: locale switch -->
+
+        <!-- BLADE BOUNDARY: theme toggle -> <x-ui.theme-toggle /> -->
+        <div class="theme-toggle hidden lg:inline-flex" role="group" aria-label="Colour theme">
+          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+            <span class="sr-only">Light theme</span>
+          </button>
+          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+            <span class="sr-only">Dark theme</span>
+          </button>
+        </div>
+        <!-- END BLADE BOUNDARY: theme toggle -->
+
+        <a class="btn btn--primary btn--sm" href="../../pages/auth/login.html">Login/Register</a>
+      </div>
+
+      <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
+              data-nav-toggle
+              aria-expanded="false"
+              aria-controls="site-nav"
+              aria-label="Open menu">
+        <svg class="icon size-[22px] nav-toggle__icon--open" width="22" height="22" aria-hidden="true"><use href="#i-menu"></use></svg>
+        <svg class="icon size-[22px] nav-toggle__icon--close" width="22" height="22" aria-hidden="true"><use href="#i-close"></use></svg>
+      </button>
+
+    </div>
+  </header>
+  <!-- END BLADE BOUNDARY: site header -->
+
+  <!-- BLADE BOUNDARY: main content -> @yield('content') -->
+  <main id="main-content">
+
+    <!-- ====================================================================
+         Step two. The offer is already chosen; this page only collects the
+         people travelling on it. Nothing here is validated for real: Laravel
+         form requests are the authority, and the passport number is never
+         logged or kept in the browser.
+         ==================================================================== -->
+    <div class="page-container pt-6" data-offer-id="off_1">
+
+      <a class="review-back" href="flight-details.html">
+        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+        Back to flight details
+      </a>
+
+      <!-- BLADE BOUNDARY: booking steps -> <x-booking.steps current="2" /> -->
+      <nav class="mt-6" aria-label="Booking progress">
+        <ol class="booking-steps">
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Flight Details<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="current" aria-current="step">
+            <span class="booking-steps__dot" aria-hidden="true">2</span>
+            <span class="booking-steps__label">Passenger</span>
+          </li>
+          <li class="booking-steps__item" data-state="upcoming">
+            <span class="booking-steps__dot" aria-hidden="true">3</span>
+            <span class="booking-steps__label">Add-ons</span>
+          </li>
+          <li class="booking-steps__item" data-state="upcoming">
+            <span class="booking-steps__dot" aria-hidden="true">4</span>
+            <span class="booking-steps__label">Confirm</span>
+          </li>
+        </ol>
+      </nav>
+      <!-- END BLADE BOUNDARY: booking steps -->
+    </div>
+
+    <div class="page-container review-layout">
+
+      <div class="grid gap-5">
+
+        <!-- BLADE BOUNDARY: passenger form -> <x-booking.passenger-form /> -->
+        <!--
+          Blade replaces this with a POST to the passengers route and turns the
+          Continue link at the foot of the page into its submit button. It stays
+          a plain anchor here so the static prototype can be clicked through.
+        -->
+        <form class="review-panel" action="add-ons.html">
+          <h1 class="m-0 text-2xl font-bold tracking-tight text-fg-heading">Passenger Details</h1>
+
+          <fieldset class="mt-6 border-0 p-0 m-0">
+            <legend class="mb-5 p-0 text-base font-bold text-fg-heading">Passenger 1 (Adult)</legend>
+
+            <!-- The passenger type is a code the backend set, not something the
+                 traveller picks on this page. -->
+            <input type="hidden" name="passengers[0][type]" value="ADT">
+
+            <div class="field-grid">
+
+              <div class="field">
+                <div class="field__label">
+                  <label for="given-name-0">First Name/Given Name</label>
+                  <span class="hint">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a given name">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="given-name-guidance">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value hint__value--boxed">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Enter every given name shown on your passport, in the same order.
+                      </span>
+                    </span>
+                  </span>
+                </div>
+                <input class="field__control" type="text" id="given-name-0"
+                       name="passengers[0][given_name]" placeholder="Enter given name"
+                       autocomplete="given-name" aria-describedby="given-name-guidance" required>
+              </div>
+
+              <div class="field">
+                <div class="field__label">
+                  <label for="family-name-0">Last Name/Surname</label>
+                  <span class="hint">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a surname">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="family-name-guidance">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value hint__value--boxed">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Please enter your surname exactly as it appears on your passport or travel document.
+                      </span>
+                    </span>
+                  </span>
+                </div>
+                <input class="field__control" type="text" id="family-name-0"
+                       name="passengers[0][family_name]" placeholder="Enter surname"
+                       autocomplete="family-name" aria-describedby="family-name-guidance" required>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="gender-0">Gender</label>
+                <span class="field__select">
+                  <select class="field__control" id="gender-0" name="passengers[0][gender]" required>
+                    <option value="" selected>Select gender</option>
+                    <option value="M">Male</option>
+                    <option value="F">Female</option>
+                    <option value="X">Another gender</option>
+                    <option value="U">Prefer not to say</option>
+                  </select>
+                  <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </span>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="dob-0">Date of Birth</label>
+                <input class="field__control" type="date" id="dob-0"
+                       name="passengers[0][date_of_birth]" autocomplete="bday"
+                       aria-describedby="dob-hint" required>
+                <span class="field__error sr-only" id="dob-hint">Date of birth, as shown on the travel document</span>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="nationality-0">Nationality</label>
+                <span class="field__select">
+                  <!-- A short list stands in for the full ISO 3166-1 set the
+                       backend renders. The value submitted is the alpha-2 code. -->
+                  <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required>
+                    <option value="" selected>Select nationality</option>
+                    <option value="BD">Bangladesh</option>
+                    <option value="IN">India</option>
+                    <option value="JP">Japan</option>
+                    <option value="MY">Malaysia</option>
+                    <option value="AE">United Arab Emirates</option>
+                    <option value="GB">United Kingdom</option>
+                    <option value="US">United States</option>
+                  </select>
+                  <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </span>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="document-number-0">Passport Number</label>
+                <input class="field__control" type="text" id="document-number-0"
+                       name="passengers[0][document_number]" placeholder="Enter passport number"
+                       autocomplete="off" spellcheck="false" required>
+              </div>
+
+              <div class="field">
+                <div class="field__label">
+                  <label for="document-expiry-0">Passport Expiry Date</label>
+                  <span class="hint">
+                    <button class="hint__trigger" type="button" aria-label="About passport expiry">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="document-expiry-guidance">
+                      <span class="hint__title">Passport validity</span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Many destinations require a passport valid for six months beyond your return date. The airline checks this at the airport.
+                      </span>
+                    </span>
+                  </span>
+                </div>
+                <input class="field__control" type="date" id="document-expiry-0"
+                       name="passengers[0][document_expiry]"
+                       aria-describedby="document-expiry-guidance" required>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="document-photo-0">
+                  Upload Passport Photo <span class="field__optional">(Optional)</span>
+                </label>
+                <label class="field__control field__file" data-file-field>
+                  <span class="field__file-name" data-file-name>Upload file (JPG, PNG)</span>
+                  <svg class="icon size-5" aria-hidden="true"><use href="#i-image"></use></svg>
+                  <input class="sr-only" type="file" id="document-photo-0"
+                         name="passengers[0][document_photo]" accept="image/jpeg,image/png">
+                </label>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="contact-email">Email Address</label>
+                <input class="field__control" type="email" id="contact-email"
+                       name="contact_email" placeholder="name@example.com"
+                       autocomplete="email" required>
+              </div>
+
+              <div class="field">
+                <label class="field__label" for="contact-phone-number">Phone Number</label>
+                <span class="phone-field">
+                  <span class="field__select">
+                    <select class="field__control" id="contact-phone-country" name="contact_phone_country"
+                            aria-label="Dialling code">
+                      <option value="880" selected>+880</option>
+                      <option value="91">+91</option>
+                      <option value="81">+81</option>
+                      <option value="60">+60</option>
+                      <option value="971">+971</option>
+                      <option value="44">+44</option>
+                      <option value="1">+1</option>
+                    </select>
+                    <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                  </span>
+                  <input class="field__control" type="tel" id="contact-phone-number"
+                         name="contact_phone_number" placeholder="1XXXXXXXXX"
+                         autocomplete="tel-national" required>
+                </span>
+              </div>
+            </div>
+          </fieldset>
+
+          <label class="flex items-center gap-3 mt-6 text-sm text-fg">
+            <input type="checkbox" name="save_passenger_details" value="1">
+            Save passenger details for next time
+          </label>
+        </form>
+        <!-- END BLADE BOUNDARY: passenger form -->
+
+        <!-- BLADE BOUNDARY: step actions -> <x-booking.step-actions /> -->
+        <div class="step-actions">
+          <a class="btn btn--outline" href="flight-details.html">Back</a>
+          <a class="btn btn--primary step-actions__next" href="add-ons.html">Continue to add-ons</a>
+        </div>
+        <!-- END BLADE BOUNDARY: step actions -->
+      </div>
+
+      <!-- BLADE BOUNDARY: trip summary -> <x-booking.trip-summary /> -->
+      <aside class="review-aside grid gap-5">
+        <section class="review-panel">
+          <h2 class="m-0 text-lg font-semibold text-fg-heading">Trip Summary</h2>
+
+          <p class="itinerary__airline mt-4" data-segment-id="seg_out_1">
+            <img class="itinerary__logo size-7" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+            <span class="min-w-0 flex-1">
+              <span class="itinerary__carrier text-xs">Biman Bangladesh Airlines</span>
+              <span class="itinerary__flight text-2xs">BG 376</span>
+            </span>
+            <span class="tag-pill">Non-stop</span>
+          </p>
+
+          <div class="trip-summary__route mt-5">
+            <span class="trip-summary__end">
+              <span class="trip-summary__clock">02:20</span>
+              <span class="trip-summary__iata">DAC</span>
+              <span class="trip-summary__city">Dhaka (DAC)</span>
+              <span class="trip-summary__date">18 Sep 2026</span>
+            </span>
+
+            <span class="itinerary__path w-24">
+              <span class="itinerary__duration">6h 45m</span>
+              <span class="itinerary__line" aria-hidden="true">
+                <svg class="icon--solid"><use href="#i-plane"></use></svg>
+              </span>
+            </span>
+
+            <span class="trip-summary__end trip-summary__end--arrive">
+              <span class="trip-summary__clock">10:05</span>
+              <span class="trip-summary__iata">NRT</span>
+              <span class="trip-summary__city">Tokyo (NRT)</span>
+              <span class="trip-summary__date">27 Sep 2026</span>
+            </span>
+          </div>
+
+          <hr class="trip-summary__rule mt-5">
+
+          <p class="flex items-center gap-2 mt-4 mb-0 text-sm text-fg">
+            <svg class="icon size-4 text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+            1 Adult, Economy
+          </p>
+
+          <hr class="trip-summary__rule mt-4">
+
+          <dl class="grid gap-3 mt-4 m-0">
+            <div class="price-row">
+              <dt>Base Fare</dt>
+              <dd class="m-0 price-row__value">BDT 61,900</dd>
+            </div>
+            <div class="price-row">
+              <dt>Taxes &amp; Fees</dt>
+              <dd class="m-0 price-row__value">BDT 6,550</dd>
+            </div>
+            <div class="price-row">
+              <dt>Add-ons</dt>
+              <dd class="m-0 price-row__value">BDT 0</dd>
+            </div>
+            <div class="price-row price-row--total">
+              <dt>Total</dt>
+              <dd class="m-0 price-row__value">BDT 68,450</dd>
+            </div>
+          </dl>
+
+          <p class="mt-2 mb-0 text-xs text-fg-muted">Round-trip total &middot; Includes taxes and fees</p>
+        </section>
+      </aside>
+      <!-- END BLADE BOUNDARY: trip summary -->
+    </div>
+  </main>
+  <!-- END BLADE BOUNDARY: main content -->
+
+  <!-- BLADE BOUNDARY: site footer -> <x-layout.footer /> -->
+  <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
+    <div class="page-container">
+
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
+
+        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
+          <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
+            <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
+              <circle cx="20" cy="20" r="20" fill="#1668e0"/>
+              <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
+              <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
+            </svg>
+            <span>
+              <span class="site-logo__name">Izumi</span>
+              <span class="site-logo__tagline">Global Travels</span>
+            </span>
+          </a>
+          <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
+        </div>
+
+        <nav class="" aria-labelledby="footer-flights">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-flights">Flights</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/flights/search-results.html">Search Flights</a></li>
+            <li><a class="footer-nav__link" href="../../pages/deals.html">Flight Deals</a></li>
+            <li><a class="footer-nav__link" href="../../pages/destinations.html">Popular Routes</a></li>
+            <li><a class="footer-nav__link" href="../../pages/flight-status.html">Flight Status</a></li>
+            <li><a class="footer-nav__link" href="../../pages/airlines.html">Airlines</a></li>
+          </ul>
+        </nav>
+
+        <nav class="" aria-labelledby="footer-services">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/deals.html">AI Trip Planner</a></li>
+            <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">eSIM Plans</a></li>
+            <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Halal Meals</a></li>
+            <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Meet &amp; Greet</a></li>
+            <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Travel Insurance</a></li>
+          </ul>
+        </nav>
+
+        <nav class="" aria-labelledby="footer-support">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">Help Center</a></li>
+            <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
+            <li><a class="footer-nav__link" href="../../pages/support/support-request.html">Feedback</a></li>
+          </ul>
+        </nav>
+
+        <nav class="" aria-labelledby="footer-company">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/about.html">Careers</a></li>
+            <li><a class="footer-nav__link" href="../../pages/about.html">Press Room</a></li>
+            <li><a class="footer-nav__link" href="../../pages/about.html">Blog</a></li>
+            <li><a class="footer-nav__link" href="../../pages/contact.html">Become a Partner</a></li>
+          </ul>
+        </nav>
+
+        <nav class="" aria-labelledby="footer-legal">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/legal/terms.html">Terms &amp; Conditions</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Privacy Policy</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Cookie Policy</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/refund-policy.html">Refund Policy</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/booking-conditions.html">Booking Conditions</a></li>
+          </ul>
+        </nav>
+
+        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
+          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
+          <details class="locale" data-locale>
+            <summary class="locale__trigger">
+              <span data-locale-label>EN/BDT</span>
+              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+              <span class="sr-only">Change language and currency</span>
+            </summary>
+
+            <div class="locale__panel">
+              <!-- Radios, not buttons: the two lists swap with no JavaScript, and
+                   the chosen values are real form values. -->
+              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-currency" checked>
+              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-language">
+
+              <div class="locale__tabs">
+                <label class="locale__tab" for="footer-locale-tab-currency">Currency</label>
+                <label class="locale__tab" for="footer-locale-tab-language">Language</label>
+              </div>
+
+              <ul class="locale__list locale__list--currency" role="list">
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-bdt" value="BDT" checked data-locale-currency>
+                  <label class="locale__option" for="footer-currency-bdt">
+                    <span class="locale__code">BDT</span>
+                    <span class="locale__name">Bangladeshi Taka</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-usd" value="USD" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-usd">
+                    <span class="locale__code">USD</span>
+                    <span class="locale__name">US Dollar</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-aed" value="AED" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-aed">
+                    <span class="locale__code">AED</span>
+                    <span class="locale__name">UAE Dirham</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-jpy" value="JPY" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-jpy">
+                    <span class="locale__code">JPY</span>
+                    <span class="locale__name">Japanese Yen</span>
+                  </label>
+                </li>
+              </ul>
+
+              <ul class="locale__list locale__list--language" role="list">
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-en" value="EN" checked data-locale-language>
+                  <label class="locale__option" for="footer-language-en">
+                    <span class="locale__code">EN</span>
+                    <span class="locale__name">English</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-bn" value="BN" data-locale-language>
+                  <label class="locale__option" for="footer-language-bn">
+                    <span class="locale__code">BN</span>
+                    <span class="locale__name">বাংলা</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-ar" value="AR" data-locale-language>
+                  <label class="locale__option" for="footer-language-ar">
+                    <span class="locale__code">AR</span>
+                    <span class="locale__name">العربية</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </details>
+          <!-- END BLADE BOUNDARY: locale switch -->
+
+          <div class="flex flex-wrap gap-3">
+            <a class="store-badge" href="../../pages/support/help-centre.html">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
+              <span>
+                <span class="store-badge__small">Download on the</span>
+                <span class="store-badge__name">App Store</span>
+              </span>
+            </a>
+            <a class="store-badge" href="../../pages/support/help-centre.html">
+              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
+              <span>
+                <span class="store-badge__small">Get it on</span>
+                <span class="store-badge__name">Google Play</span>
+              </span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-panel-line">
+        <ul class="flex items-center gap-2 m-0 p-0 list-none" role="list">
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+        </ul>
+
+        <!-- @brand-pending: text marks stand in for the licensed payment
+             scheme artwork. -->
+        <ul class="flex flex-wrap items-center gap-2 m-0 p-0 list-none" role="list" aria-label="Accepted payment methods">
+          <li class="payment-mark">Visa</li>
+          <li class="payment-mark">Mastercard</li>
+          <li class="payment-mark">Amex</li>
+          <li class="payment-mark">bKash</li>
+          <li class="payment-mark">Nagad</li>
+          <li class="payment-mark">Rocket</li>
+        </ul>
+
+        <p class="w-full text-xs">© 2026 Izumi Global Travels. All rights reserved.</p>
+      </div>
+
+    </div>
+  </footer>
+  <!-- END BLADE BOUNDARY: site footer -->
+
+  <script type="module" src="../../assets/js/main.js"></script>
+</body>
+</html>

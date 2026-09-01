@@ -7,6 +7,7 @@
  */
 
 import { qs, qsa, on } from '../core/dom.js';
+import { initDateRange } from './date-range.js';
 
 /** Product tabs: Flights / eSIM / Flight status. */
 function initTabs(root) {
@@ -146,6 +147,22 @@ function initPax(root) {
 
   update();
 
+  /*
+   * The search panel sits at the foot of the hero, so a pop-out dropped below
+   * it runs off the screen. Presentation only: with no JavaScript the panel
+   * still opens, downwards.
+   */
+  const panel = qs('[data-pax-panel]', pax);
+
+  on(pax, 'toggle', () => {
+    if (!pax.open || !panel) return;
+    const field = pax.getBoundingClientRect();
+    const height = panel.getBoundingClientRect().height;
+    const below = window.innerHeight - field.bottom;
+    /* Above only when it will not fit below and there is more room up there. */
+    panel.dataset.drop = (height + 16 > below && field.top > below) ? 'up' : 'down';
+  });
+
   on(document, 'click', (event) => {
     if (pax.open && !pax.contains(event.target)) pax.open = false;
   });
@@ -208,4 +225,5 @@ export function initFlightSearch(scope = document) {
   initSwap(root);
   initPax(root);
   initDateDisplays(root);
+  initDateRange(root);
 }

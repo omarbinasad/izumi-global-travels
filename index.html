@@ -33,8 +33,14 @@
     <symbol id="i-calendar" viewBox="0 0 24 24"><path d="M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></symbol>
     <symbol id="i-user" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 3a4 4 0 1 0 0 8 4 4 0 0 0 0-8z"/></symbol>
     <symbol id="i-swap" viewBox="0 0 24 24"><path d="m8 3-4 4 4 4M4 7h16M16 21l4-4-4-4M20 17H4"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h10M18 18h2M14 4v4M8 10v4M14 16v4"/></symbol>
     <symbol id="i-search" viewBox="0 0 24 24"><path d="M11 3a8 8 0 1 0 0 16 8 8 0 0 0 0-16zM21 21l-4.35-4.35"/></symbol>
     <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+    <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></symbol>
+    <symbol id="i-tag" viewBox="0 0 24 24"><path d="M20.6 13.4 12.4 21.6a2 2 0 0 1-2.8 0l-7.2-7.2a2 2 0 0 1-.6-1.4V4a2 2 0 0 1 2-2h9a2 2 0 0 1 1.4.6l6.4 6.4a2 2 0 0 1 0 2.8zM7.5 6.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 13 4.5 4.5L19 6.5"/></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 11v5M12 7.5v.5"/></symbol>
+    <symbol id="i-image" viewBox="0 0 24 24"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 9.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM3.5 17l4.8-4.8a2 2 0 0 1 2.7 0L16 17M15 15l1.6-1.6a2 2 0 0 1 2.7 0l1.2 1.1"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
     <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
@@ -62,8 +68,8 @@
   </svg>
 
   <!-- BLADE BOUNDARY: site header -> <x-layout.header /> -->
-  <header class="sticky top-0 z-(--z-header) bg-surface border-b border-line" data-site-header>
-    <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:min-h-(--header-height-lg) lg:gap-8">
+  <header class="sticky top-0 z-(--z-header) bg-surface" data-site-header>
+    <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:grid lg:grid-cols-[1fr_auto_1fr] lg:min-h-(--header-height-lg) lg:gap-8">
 
       <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
       <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="index.html" aria-label="Izumi Global Travels — home">
@@ -78,6 +84,127 @@
         </span>
       </a>
 
+      <div class="site-nav" id="site-nav" data-nav-panel>
+        <nav class="lg:justify-self-center" aria-label="Primary">
+          <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
+            <li><a class="nav-link" href="pages/flights/search-results.html">Flights</a></li>
+            <li><a class="nav-link" href="pages/destinations.html">Destinations</a></li>
+            <li><a class="nav-link" href="pages/deals.html">Deals</a></li>
+            <li><a class="nav-link" href="pages/support/help-centre.html">Help</a></li>
+          </ul>
+        </nav>
+
+        <!-- The colour switch travels with the menu on a phone: the bar itself
+             has room for the account button and nothing else. -->
+        <div class="theme-toggle self-start mt-4 lg:hidden" role="group" aria-label="Colour theme">
+          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+            <span class="sr-only">Light theme</span>
+          </button>
+          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+            <span class="sr-only">Dark theme</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Outside the drawer, so the account button is in the bar at every
+           width. At lg this is the third grid column; below it the locale and
+           colour switches step aside and only the button is left. -->
+      <div class="flex items-center gap-3 lg:justify-self-end" data-header-actions>
+        <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
+        <details class="locale hidden lg:block" data-locale>
+          <summary class="locale__trigger">
+            <span data-locale-label>EN/BDT</span>
+            <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+            <span class="sr-only">Change language and currency</span>
+          </summary>
+
+          <div class="locale__panel">
+            <!-- Radios, not buttons: the two lists swap with no JavaScript,
+                 and the chosen values are real form values. -->
+            <input class="locale__tab-input sr-only" type="radio" name="header-locale-tab" id="header-locale-tab-currency" checked>
+            <input class="locale__tab-input sr-only" type="radio" name="header-locale-tab" id="header-locale-tab-language">
+
+            <div class="locale__tabs">
+              <label class="locale__tab" for="header-locale-tab-currency">Currency</label>
+              <label class="locale__tab" for="header-locale-tab-language">Language</label>
+            </div>
+
+            <ul class="locale__list locale__list--currency" role="list">
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-bdt" value="BDT" checked data-locale-currency>
+            <label class="locale__option" for="header-currency-bdt">
+              <span class="locale__code">BDT</span>
+              <span class="locale__name">Bangladeshi Taka</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-usd" value="USD" data-locale-currency>
+            <label class="locale__option" for="header-currency-usd">
+              <span class="locale__code">USD</span>
+              <span class="locale__name">US Dollar</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-aed" value="AED" data-locale-currency>
+            <label class="locale__option" for="header-currency-aed">
+              <span class="locale__code">AED</span>
+              <span class="locale__name">UAE Dirham</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-currency" id="header-currency-jpy" value="JPY" data-locale-currency>
+            <label class="locale__option" for="header-currency-jpy">
+              <span class="locale__code">JPY</span>
+              <span class="locale__name">Japanese Yen</span>
+            </label>
+          </li>
+            </ul>
+
+            <ul class="locale__list locale__list--language" role="list">
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-en" value="EN" checked data-locale-language>
+            <label class="locale__option" for="header-language-en">
+              <span class="locale__code">EN</span>
+              <span class="locale__name">English</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-bn" value="BN" data-locale-language>
+            <label class="locale__option" for="header-language-bn">
+              <span class="locale__code">BN</span>
+              <span class="locale__name">বাংলা</span>
+            </label>
+          </li>
+          <li>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ar" value="AR" data-locale-language>
+            <label class="locale__option" for="header-language-ar">
+              <span class="locale__code">AR</span>
+              <span class="locale__name">العربية</span>
+            </label>
+          </li>
+            </ul>
+          </div>
+        </details>
+        <!-- END BLADE BOUNDARY: locale switch -->
+
+        <!-- BLADE BOUNDARY: theme toggle -> <x-ui.theme-toggle /> -->
+        <div class="theme-toggle hidden lg:inline-flex" role="group" aria-label="Colour theme">
+          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+            <span class="sr-only">Light theme</span>
+          </button>
+          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+            <span class="sr-only">Dark theme</span>
+          </button>
+        </div>
+        <!-- END BLADE BOUNDARY: theme toggle -->
+
+        <a class="btn btn--primary btn--sm" href="pages/auth/login.html">Login/Register</a>
+      </div>
+
       <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
               data-nav-toggle
               aria-expanded="false"
@@ -86,45 +213,6 @@
         <svg class="icon size-[22px] nav-toggle__icon--open" width="22" height="22" aria-hidden="true"><use href="#i-menu"></use></svg>
         <svg class="icon size-[22px] nav-toggle__icon--close" width="22" height="22" aria-hidden="true"><use href="#i-close"></use></svg>
       </button>
-
-      <div class="site-nav" id="site-nav" data-nav-panel>
-        <nav class="" aria-label="Primary">
-          <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="pages/flights/search-results.html">Flights</a></li>
-            <li><a class="nav-link" href="pages/destinations.html">Destinations</a></li>
-            <li><a class="nav-link" href="pages/deals.html">AI Planner</a></li>
-            <li><a class="nav-link" href="pages/deals.html">Deals</a></li>
-            <li><a class="nav-link" href="pages/support/help-centre.html">Travel Services</a></li>
-          </ul>
-        </nav>
-
-        <div class="flex flex-wrap items-center gap-3 mt-4 lg:mt-0 lg:flex-nowrap">
-          <a class="nav-link" href="pages/support/help-centre.html">Help</a>
-
-          <label class="sr-only" for="header-locale">Language and currency</label>
-          <select class="locale-select" id="header-locale" name="locale">
-            <option value="en-BDT">EN/BDT</option>
-            <option value="en-USD">EN/USD</option>
-            <option value="bn-BDT">BN/BDT</option>
-          </select>
-
-          <!-- BLADE BOUNDARY: theme toggle -> <x-ui.theme-toggle /> -->
-          <div class="theme-toggle" role="group" aria-label="Colour theme">
-            <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
-              <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
-              <span class="sr-only">Light theme</span>
-            </button>
-            <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
-              <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
-              <span class="sr-only">Dark theme</span>
-            </button>
-          </div>
-          <!-- END BLADE BOUNDARY: theme toggle -->
-
-          <a class="nav-link" href="pages/auth/login.html">Sign in</a>
-          <a class="btn btn--primary btn--sm" href="pages/auth/register.html">Create account</a>
-        </div>
-      </div>
 
     </div>
   </header>
@@ -143,25 +231,30 @@
         <div class="hero-panel">
           <!-- The page container: the hero copy lines up with every other
                section, while the photograph behind it runs wider. -->
-          <div class="page-container flex flex-col gap-8 md:gap-12">
+          <div class="page-container flex flex-1 flex-col justify-end gap-8 md:gap-15">
 
-            <div class="max-w-[34rem]">
-              <h1 class="animate-rise-in m-0 text-3xl md:text-4xl font-bold leading-heading text-brand-900" id="hero-title">Find the right flight.<br>Travel your way.</h1>
-              <p class="animate-rise-in [animation-delay:90ms] mt-3 text-sm md:text-base text-brand-800">
-                Smart search, flexible choices and personal service from booking to boarding.
-              </p>
+            <div class="max-w-[42rem]">
+              <h1 class="animate-rise-in m-0 text-4xl md:text-5xl lg:text-6xl font-bold leading-heading text-brand-900" id="hero-title"><span class="hero-title__line">Find the right flight.</span><span class="hero-title__accent">Travel your way.</span></h1>
+              <!-- The cue and the standfirst share a row: two short stacked
+                   blocks left the hero copy taller than it needed to be. -->
+              <div class="animate-rise-in [animation-delay:90ms] mt-3 md:mt-4 flex items-center gap-4">
+                <!-- A real link, not decoration: it jumps to the next section. -->
+                <a class="scroll-hint" href="#explore">
+                  <span class="flex flex-col items-center gap-[3px]" aria-hidden="true">
+                    <span class="scroll-hint__dot"></span>
+                    <span class="scroll-hint__dot"></span>
+                    <span class="scroll-hint__dot"></span>
+                  </span>
+                  <svg class="icon--solid scroll-hint__plane" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <svg class="icon scroll-hint__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                  <span class="sr-only">Scroll down to explore</span>
+                </a>
 
-              <!-- A real link, not decoration: it jumps to the next section. -->
-              <a class="scroll-hint" href="#explore">
-                <span class="flex flex-col items-center gap-[3px]" aria-hidden="true">
-                  <span class="scroll-hint__dot"></span>
-                  <span class="scroll-hint__dot"></span>
-                  <span class="scroll-hint__dot"></span>
-                </span>
-                <svg class="icon--solid scroll-hint__plane" aria-hidden="true"><use href="#i-plane"></use></svg>
-                <svg class="icon scroll-hint__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                <span class="sr-only">Scroll down to explore</span>
-              </a>
+                <p class="m-0 max-w-[30rem] text-sm md:text-base text-brand-800">
+                  Smart search, flexible choices and personal service<br>
+                  from booking to boarding.
+                </p>
+              </div>
             </div>
 
             <!-- BLADE BOUNDARY: flight-search component -> <x-flight-search.search-form /> -->
@@ -222,7 +315,7 @@
                     </div>
 
                     <!-- Origin, flight path with the swap control, destination -->
-                    <div class="grid gap-2 items-stretch lg:grid-cols-[minmax(0,1fr)_96px_minmax(0,1fr)]">
+                    <div class="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] gap-2 items-stretch lg:grid-cols-[minmax(0,1fr)_96px_minmax(0,1fr)]">
                       <div class="search-field" data-airport-field>
                         <label class="search-field__label" for="origin">From</label>
                         <span class="search-field__line">
@@ -262,13 +355,13 @@
                     </div>
 
                     <!-- Depart, return, travellers, submit -->
-                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)_auto]">
+                    <div class="relative grid grid-cols-2 gap-2 items-stretch lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)_auto]" data-date-range>
                       <div class="search-field">
                         <label class="search-field__label" for="departure-date">Depart</label>
                         <span class="search-field__value">
                           <input class="search-field__control search-field__control--lg" type="date"
                                  id="departure-date" name="departure_date" value="2026-09-18"
-                                 required data-date-input>
+                                 required data-date-input="depart">
                           <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
                         </span>
                       </div>
@@ -277,7 +370,7 @@
                         <label class="search-field__label" for="return-date">Return</label>
                         <span class="search-field__value">
                           <input class="search-field__control search-field__control--lg" type="date"
-                                 id="return-date" name="return_date" value="2026-09-27" data-date-input>
+                                 id="return-date" name="return_date" value="2026-09-27" data-date-input="return">
                           <span class="search-field__display" data-date-display aria-hidden="true">27 Sep</span>
                         </span>
                       </div>
@@ -291,7 +384,7 @@
                           <span class="search-field__sub" data-pax-cabin>Economy</span>
                         </summary>
 
-                        <div class="pax__panel">
+                        <div class="pax__panel" data-pax-panel>
                           <div class="pax__row">
                             <span class="pax__name">
                               Adults
@@ -399,20 +492,39 @@
          Trusted airlines
          ==================================================================== -->
     <section class="page-container pt-5 pb-8" id="explore" aria-labelledby="airlines-title">
-      <h2 class="m-0 mb-4 text-[10px] font-semibold tracking-caps uppercase text-primary" id="airlines-title">Trusted airlines</h2>
+      <h2 class="sr-only" id="airlines-title">Trusted airlines</h2>
 
-      <!-- @brand-pending: text marks stand in until licensed airline logos
-           are supplied as SVGs in assets/images/airlines/. -->
-      <ul class="grid grid-cols-2 gap-x-3 gap-y-4 m-0 p-0 list-none sm:grid-cols-4 lg:grid-cols-8">
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Biman Bangladesh</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Emirates</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Qatar Airways</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Singapore Airlines</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Malaysia Airlines</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Thai Airways</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>ANA</li>
-        <li class="flex items-center justify-center gap-2 min-h-8 text-xs font-semibold text-center text-fg-muted"><svg class="icon icon--solid size-5 text-primary" aria-hidden="true"><use href="#i-plane"></use></svg>Turkish Airlines</li>
-      </ul>
+      <!-- @brand-pending: the airline marks are the carriers' own trademarks.
+           Confirm display rights with each carrier before launch. -->
+      <!-- BLADE BOUNDARY: airline marquee -> <x-ui.logo-marquee :logos="$airlines" /> -->
+      <div class="logo-marquee">
+        <div class="logo-marquee__track">
+          <ul class="logo-marquee__group" role="list">
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/biman%20bangladesh.png" alt="Biman Bangladesh Airlines" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/etihad.png" alt="Etihad Airways" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/qatar.png" alt="Qatar Airways" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/singapore.png" alt="Singapore Airlines" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/malaysia.png" alt="Malaysia Airlines" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/turkish.png" alt="Turkish Airlines" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/swiss.png" alt="SWISS" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/us-bangla.png" alt="US-Bangla Airlines" width="400" height="150" decoding="async"></li>
+          </ul>
+
+          <!-- The second copy is what makes the loop seamless. It carries no
+               information, so it is hidden from assistive technology. -->
+          <ul class="logo-marquee__group logo-marquee__group--clone" aria-hidden="true">
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/biman%20bangladesh.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/etihad.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/qatar.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/singapore.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/malaysia.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/turkish.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/swiss.png" alt="" width="400" height="150" decoding="async"></li>
+            <li class="logo-marquee__item"><img class="logo-marquee__logo" src="assets/images/us-bangla.png" alt="" width="400" height="150" decoding="async"></li>
+          </ul>
+        </div>
+      </div>
+      <!-- END BLADE BOUNDARY: airline marquee -->
     </section>
 
     <!-- ====================================================================
@@ -437,10 +549,6 @@
               <h3 class="preference-card__title">Halal Meal</h3>
               <p class="preference-card__text">Request a halal meal before your flight.</p>
             </div>
-            <button class="btn btn--primary btn--sm" type="button">
-              Add preference
-              <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
-            </button>
           </div>
         </article>
 
@@ -453,10 +561,6 @@
               <h3 class="preference-card__title">Window Seat</h3>
               <p class="preference-card__text">Choose your preferred window seat.</p>
             </div>
-            <button class="btn btn--primary btn--sm" type="button">
-              Add preference
-              <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
-            </button>
           </div>
         </article>
 
@@ -471,13 +575,175 @@
               <h3 class="preference-card__title">Meet &amp; Greet</h3>
               <p class="preference-card__text">Friendly help from arrival to check-in.</p>
             </div>
-            <button class="btn btn--primary btn--sm" type="button">
-              Add preference
-              <svg class="icon" aria-hidden="true"><use href="#i-plus"></use></svg>
-            </button>
           </div>
         </article>
 
+      </div>
+    </section>
+
+    <!-- ====================================================================
+         Most booked routes
+         Prices and availability shown here are illustrative. The backend
+         supplies and re-verifies every value before booking.
+         ==================================================================== -->
+    <section class="page-container py-8 lg:py-10" aria-labelledby="routes-title">
+      <div class="rounded-lg bg-surface-tint px-5 py-6 lg:p-8">
+        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+          <h2 class="m-0 text-xl font-semibold text-primary" id="routes-title">Most Booked Routes</h2>
+          <a class="inline-flex items-center gap-1 text-sm font-medium text-primary no-underline" href="pages/destinations.html">
+            View all routes
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </div>
+
+        <!-- Two up from the mid breakpoint; a swipe rail below it. -->
+        <div class="route-rail grid gap-4 mid:grid-cols-2" data-reveal-group>
+
+          <article class="route-card" data-reveal data-offer-id="off_dac_nrt_bg">
+            <div class="route-card__main">
+              <p class="route-card__airline">
+                <img class="route-card__logo" src="assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                Biman Bangladesh Airlines
+              </p>
+              <div class="route-card__route">
+                <span class="route-card__endpoint">
+                  <span class="route-card__iata">DAC</span>
+                  <span class="route-card__city">Dhaka</span>
+                </span>
+                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                <span class="route-card__endpoint route-card__endpoint--arrive">
+                  <span class="route-card__iata">NRT</span>
+                  <span class="route-card__city">Tokyo</span>
+                </span>
+              </div>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>18 Sep – 27 Sep</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>08:20 – 18:00</span>
+                <span class="route-card__meta-item">7h 10m</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
+              </p>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
+              </p>
+            </div>
+            <div class="route-card__aside">
+              <span class="route-card__from">From</span>
+              <span class="route-card__price">BDT 68,450</span>
+              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
+              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
+            </div>
+          </article>
+
+          <article class="route-card" data-reveal data-offer-id="off_dac_bkk_vz">
+            <div class="route-card__main">
+              <p class="route-card__airline">
+                <img class="route-card__logo" src="assets/images/VZ.avif" alt="" width="120" height="120" decoding="async">
+                Thai Vietjet Air
+              </p>
+              <div class="route-card__route">
+                <span class="route-card__endpoint">
+                  <span class="route-card__iata">DAC</span>
+                  <span class="route-card__city">Dhaka</span>
+                </span>
+                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                <span class="route-card__endpoint route-card__endpoint--arrive">
+                  <span class="route-card__iata">BKK</span>
+                  <span class="route-card__city">Bangkok</span>
+                </span>
+              </div>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>18 Sep – 27 Sep</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>09:15 – 14:20</span>
+                <span class="route-card__meta-item">3h 50m</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
+              </p>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
+              </p>
+            </div>
+            <div class="route-card__aside">
+              <span class="route-card__from">From</span>
+              <span class="route-card__price">BDT 24,990</span>
+              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
+              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
+            </div>
+          </article>
+
+          <article class="route-card" data-reveal data-offer-id="off_dac_cmb_ul">
+            <div class="route-card__main">
+              <p class="route-card__airline">
+                <img class="route-card__logo" src="assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                SriLankan Airlines
+              </p>
+              <div class="route-card__route">
+                <span class="route-card__endpoint">
+                  <span class="route-card__iata">DAC</span>
+                  <span class="route-card__city">Dhaka</span>
+                </span>
+                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                <span class="route-card__endpoint route-card__endpoint--arrive">
+                  <span class="route-card__iata">CMB</span>
+                  <span class="route-card__city">Colombo</span>
+                </span>
+              </div>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>19 Sep – 28 Sep</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>05:30 – 14:00</span>
+                <span class="route-card__meta-item">4h 30m</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
+              </p>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
+              </p>
+            </div>
+            <div class="route-card__aside">
+              <span class="route-card__from">From</span>
+              <span class="route-card__price">BDT 26,450</span>
+              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
+              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
+            </div>
+          </article>
+
+          <article class="route-card" data-reveal data-offer-id="off_dac_can_cz">
+            <div class="route-card__main">
+              <p class="route-card__airline">
+                <img class="route-card__logo" src="assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
+                China Southern
+              </p>
+              <div class="route-card__route">
+                <span class="route-card__endpoint">
+                  <span class="route-card__iata">DAC</span>
+                  <span class="route-card__city">Dhaka</span>
+                </span>
+                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                <span class="route-card__endpoint route-card__endpoint--arrive">
+                  <span class="route-card__iata">CAN</span>
+                  <span class="route-card__city">Guangzhou</span>
+                </span>
+              </div>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>21 Sep – 30 Sep</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>06:40 – 13:10</span>
+                <span class="route-card__meta-item">4h 00m</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
+              </p>
+              <p class="route-card__meta">
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
+                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
+              </p>
+            </div>
+            <div class="route-card__aside">
+              <span class="route-card__from">From</span>
+              <span class="route-card__price">BDT 30,450</span>
+              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
+              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
+            </div>
+          </article>
+
+        </div>
       </div>
     </section>
 
@@ -516,175 +782,10 @@
           <article class="feature-card" data-reveal>
             <span class="feature-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-headset"></use></svg></span>
             <div>
-              <h3 class="feature-card__title">24/7 Human Support</h3>
-              <p class="feature-card__text">Real people, here any time you need help.</p>
+              <h3 class="feature-card__title">Dedicated Customer Support</h3>
+              <p class="feature-card__text">Our team is ready to assist during business hours.</p>
             </div>
           </article>
-        </div>
-      </div>
-    </section>
-
-    <!-- ====================================================================
-         Most booked routes
-         Prices and availability shown here are illustrative. The backend
-         supplies and re-verifies every value before booking.
-         ==================================================================== -->
-    <section class="page-container py-8 lg:py-10" aria-labelledby="routes-title">
-      <div class="rounded-lg bg-surface-tint px-5 py-6 lg:p-8">
-        <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
-          <h2 class="m-0 text-xl font-semibold text-primary" id="routes-title">Most Booked Routes</h2>
-          <a class="inline-flex items-center gap-1 text-sm font-medium text-primary no-underline" href="pages/destinations.html">
-            View all routes
-            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-          </a>
-        </div>
-
-        <div class="grid gap-4 mid:grid-cols-2" data-reveal-group>
-
-          <article class="route-card" data-reveal data-offer-id="off_dac_nrt_bg">
-            <div class="route-card__main">
-              <p class="route-card__airline">
-                <svg class="icon--solid route-card__logo" aria-hidden="true"><use href="#i-plane"></use></svg>
-                Biman Bangladesh Airlines
-              </p>
-              <div class="route-card__route">
-                <span class="route-card__endpoint">
-                  <span class="route-card__iata">DAC</span>
-                  <span class="route-card__city">Dhaka</span>
-                </span>
-                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
-                <span class="route-card__endpoint route-card__endpoint--arrive">
-                  <span class="route-card__iata">NRT</span>
-                  <span class="route-card__city">Tokyo</span>
-                </span>
-              </div>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>18 Sep – 27 Sep</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>08:20 – 18:00</span>
-                <span class="route-card__meta-item">7h 10m</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
-              </p>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
-              </p>
-            </div>
-            <div class="route-card__aside">
-              <span class="route-card__from">From</span>
-              <span class="route-card__price">BDT 68,450</span>
-              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
-              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
-            </div>
-          </article>
-
-          <article class="route-card" data-reveal data-offer-id="off_dac_bkk_tg">
-            <div class="route-card__main">
-              <p class="route-card__airline">
-                <svg class="icon--solid route-card__logo" aria-hidden="true"><use href="#i-plane"></use></svg>
-                Thai Airways
-              </p>
-              <div class="route-card__route">
-                <span class="route-card__endpoint">
-                  <span class="route-card__iata">DAC</span>
-                  <span class="route-card__city">Dhaka</span>
-                </span>
-                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
-                <span class="route-card__endpoint route-card__endpoint--arrive">
-                  <span class="route-card__iata">BKK</span>
-                  <span class="route-card__city">Bangkok</span>
-                </span>
-              </div>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>18 Sep – 27 Sep</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>09:15 – 14:20</span>
-                <span class="route-card__meta-item">3h 50m</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
-              </p>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
-              </p>
-            </div>
-            <div class="route-card__aside">
-              <span class="route-card__from">From</span>
-              <span class="route-card__price">BDT 24,990</span>
-              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
-              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
-            </div>
-          </article>
-
-          <article class="route-card" data-reveal data-offer-id="off_dac_sin_sq">
-            <div class="route-card__main">
-              <p class="route-card__airline">
-                <svg class="icon--solid route-card__logo" aria-hidden="true"><use href="#i-plane"></use></svg>
-                Singapore Airlines
-              </p>
-              <div class="route-card__route">
-                <span class="route-card__endpoint">
-                  <span class="route-card__iata">DAC</span>
-                  <span class="route-card__city">Dhaka</span>
-                </span>
-                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
-                <span class="route-card__endpoint route-card__endpoint--arrive">
-                  <span class="route-card__iata">SIN</span>
-                  <span class="route-card__city">Singapore</span>
-                </span>
-              </div>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>19 Sep – 28 Sep</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>05:30 – 14:00</span>
-                <span class="route-card__meta-item">4h 30m</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
-              </p>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
-              </p>
-            </div>
-            <div class="route-card__aside">
-              <span class="route-card__from">From</span>
-              <span class="route-card__price">BDT 26,450</span>
-              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
-              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
-            </div>
-          </article>
-
-          <article class="route-card" data-reveal data-offer-id="off_dac_kul_mh">
-            <div class="route-card__main">
-              <p class="route-card__airline">
-                <svg class="icon--solid route-card__logo" aria-hidden="true"><use href="#i-plane"></use></svg>
-                Malaysia Airlines
-              </p>
-              <div class="route-card__route">
-                <span class="route-card__endpoint">
-                  <span class="route-card__iata">DAC</span>
-                  <span class="route-card__city">Dhaka</span>
-                </span>
-                <span class="route-card__line"><svg class="icon--solid" aria-hidden="true"><use href="#i-plane"></use></svg></span>
-                <span class="route-card__endpoint route-card__endpoint--arrive">
-                  <span class="route-card__iata">KUL</span>
-                  <span class="route-card__city">Kuala Lumpur</span>
-                </span>
-              </div>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>21 Sep – 30 Sep</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>06:40 – 13:10</span>
-                <span class="route-card__meta-item">4h 00m</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-plane"></use></svg>Direct</span>
-              </p>
-              <p class="route-card__meta">
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy</span>
-                <span class="route-card__meta-item"><svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage</span>
-              </p>
-            </div>
-            <div class="route-card__aside">
-              <span class="route-card__from">From</span>
-              <span class="route-card__price">BDT 30,450</span>
-              <a class="btn btn--primary btn--sm" href="pages/flights/flight-details.html">Select</a>
-              <span class="route-card__pax"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1</span>
-            </div>
-          </article>
-
         </div>
       </div>
     </section>
@@ -803,12 +904,21 @@
     <!-- ====================================================================
          Testimonials
          ==================================================================== -->
-    <section class="page-container py-8 lg:py-10" aria-labelledby="testimonials-title">
-      <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+    <section class="page-container py-8 lg:py-10" aria-labelledby="testimonials-title" data-rail-scope>
+      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
         <h2 class="m-0 text-xl font-semibold text-fg-heading" id="testimonials-title">Trusted by travelers</h2>
+
+        <div class="rail-nav" data-rail-nav hidden>
+          <button class="rail-nav__button" type="button" data-rail-prev aria-label="Previous reviews">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+          </button>
+          <button class="rail-nav__button" type="button" data-rail-next aria-label="Next reviews">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </button>
+        </div>
       </div>
 
-      <div class="grid gap-4 md:grid-cols-3" data-reveal-group>
+      <div class="review-rail" role="group" aria-labelledby="testimonials-title" tabindex="0" data-rail data-reveal-group>
 
         <article class="testimonial-card" data-reveal>
           <span class="testimonial-card__avatar" aria-hidden="true">NR</span>
@@ -864,6 +974,60 @@
           </div>
         </article>
 
+        <article class="testimonial-card" data-reveal>
+          <span class="testimonial-card__avatar" aria-hidden="true">SK</span>
+          <div>
+            <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+            </p>
+            <blockquote class="testimonial-card__quote">
+              &ldquo;Booked a multi-city trip in minutes. The fare breakdown was clear before I paid.&rdquo;
+            </blockquote>
+            <p class="text-sm font-semibold text-fg-heading">Sabbir Khan</p>
+            <p class="text-xs text-fg-muted">Khulna, Bangladesh</p>
+          </div>
+        </article>
+
+        <article class="testimonial-card" data-reveal>
+          <span class="testimonial-card__avatar" aria-hidden="true">TN</span>
+          <div>
+            <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+            </p>
+            <blockquote class="testimonial-card__quote">
+              &ldquo;The meet and greet at the airport was worth every taka. Made travelling with children easy.&rdquo;
+            </blockquote>
+            <p class="text-sm font-semibold text-fg-heading">Tahmina Noor</p>
+            <p class="text-xs text-fg-muted">Dhaka, Bangladesh</p>
+          </div>
+        </article>
+
+        <article class="testimonial-card" data-reveal>
+          <span class="testimonial-card__avatar" aria-hidden="true">RA</span>
+          <div>
+            <p class="testimonial-card__rating" aria-label="Rated 5 out of 5">
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+              <svg class="icon--solid" aria-hidden="true"><use href="#i-star"></use></svg>
+            </p>
+            <blockquote class="testimonial-card__quote">
+              &ldquo;Changed my return date twice and the fee was exactly what I was quoted. No surprises.&rdquo;
+            </blockquote>
+            <p class="text-sm font-semibold text-fg-heading">Rashed Ahmed</p>
+            <p class="text-xs text-fg-muted">Rajshahi, Bangladesh</p>
+          </div>
+        </article>
+
       </div>
     </section>
 
@@ -872,16 +1036,14 @@
          ==================================================================== -->
     <section class="page-container py-8 lg:py-10" aria-labelledby="cta-title">
       <div class="cta-panel" data-reveal="zoom">
-        <div class="flex flex-col items-center gap-3 p-6 rounded-md bg-white/85">
-          <h2 class="m-0 text-xl md:text-2xl font-semibold text-brand-900" id="cta-title">Ready to plan a better flight?</h2>
-          <p class="m-0 max-w-[46ch] text-sm text-brand-800">Smart search, flexible options and personal service you can trust.</p>
-          <div class="flex flex-wrap justify-center gap-3 mt-2">
-            <a class="btn btn--primary" href="#main-content">Search Flights</a>
-            <a class="btn btn--light" href="pages/deals.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-sparkles"></use></svg>
-              Plan with AI
-            </a>
-          </div>
+        <div class="cta-panel__card">
+          <p class="cta-panel__eyebrow">Your next journey</p>
+          <h2 class="cta-panel__title" id="cta-title">Ready to plan a better flight?</h2>
+          <p class="cta-panel__text">Smart search, flexible options and personal service you can trust.</p>
+          <a class="btn btn--primary cta-panel__action" href="#main-content">
+            Search Flights
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
         </div>
       </div>
     </section>
@@ -890,12 +1052,12 @@
   <!-- END BLADE BOUNDARY: main content -->
 
   <!-- BLADE BOUNDARY: site footer -> <x-layout.footer /> -->
-  <footer class="mt-12 pt-10 pb-8 lg:pt-12 bg-panel text-on-panel-muted rounded-t-lg">
+  <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
     <div class="page-container">
 
-      <div class="grid gap-8 sm:grid-cols-2 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
 
-        <div class="flex flex-col items-start gap-4">
+        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
           <a class="footer-logo" href="index.html" aria-label="Izumi Global Travels — home">
             <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
@@ -965,13 +1127,83 @@
           </ul>
         </nav>
 
-        <div class="flex flex-col items-start gap-4">
-          <label class="sr-only" for="footer-locale">Language and currency</label>
-          <select class="locale-select" id="footer-locale" name="locale">
-            <option value="en-BDT">EN/BDT</option>
-            <option value="en-USD">EN/USD</option>
-            <option value="bn-BDT">BN/BDT</option>
-          </select>
+        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
+          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
+          <details class="locale" data-locale>
+            <summary class="locale__trigger">
+              <span data-locale-label>EN/BDT</span>
+              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+              <span class="sr-only">Change language and currency</span>
+            </summary>
+
+            <div class="locale__panel">
+              <!-- Radios, not buttons: the two lists swap with no JavaScript, and
+                   the chosen values are real form values. -->
+              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-currency" checked>
+              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-language">
+
+              <div class="locale__tabs">
+                <label class="locale__tab" for="footer-locale-tab-currency">Currency</label>
+                <label class="locale__tab" for="footer-locale-tab-language">Language</label>
+              </div>
+
+              <ul class="locale__list locale__list--currency" role="list">
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-bdt" value="BDT" checked data-locale-currency>
+                  <label class="locale__option" for="footer-currency-bdt">
+                    <span class="locale__code">BDT</span>
+                    <span class="locale__name">Bangladeshi Taka</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-usd" value="USD" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-usd">
+                    <span class="locale__code">USD</span>
+                    <span class="locale__name">US Dollar</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-aed" value="AED" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-aed">
+                    <span class="locale__code">AED</span>
+                    <span class="locale__name">UAE Dirham</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-jpy" value="JPY" data-locale-currency>
+                  <label class="locale__option" for="footer-currency-jpy">
+                    <span class="locale__code">JPY</span>
+                    <span class="locale__name">Japanese Yen</span>
+                  </label>
+                </li>
+              </ul>
+
+              <ul class="locale__list locale__list--language" role="list">
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-en" value="EN" checked data-locale-language>
+                  <label class="locale__option" for="footer-language-en">
+                    <span class="locale__code">EN</span>
+                    <span class="locale__name">English</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-bn" value="BN" data-locale-language>
+                  <label class="locale__option" for="footer-language-bn">
+                    <span class="locale__code">BN</span>
+                    <span class="locale__name">বাংলা</span>
+                  </label>
+                </li>
+                <li>
+                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-ar" value="AR" data-locale-language>
+                  <label class="locale__option" for="footer-language-ar">
+                    <span class="locale__code">AR</span>
+                    <span class="locale__name">العربية</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+          </details>
+          <!-- END BLADE BOUNDARY: locale switch -->
 
           <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="pages/support/help-centre.html">

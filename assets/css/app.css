@@ -47,17 +47,20 @@
   --breakpoint-mid: 900px;
 
   /* --- Brand palette, sampled from the approved UI reference ------------- */
-  --color-brand-50:  #eff5ff;
-  --color-brand-100: #dbe8fe;
-  --color-brand-200: #bfd7fe;
-  --color-brand-300: #93bbfd;
-  --color-brand-400: #6096fa;
-  --color-brand-500: #3b76f6;
-  --color-brand-600: #1668e0;
-  --color-brand-700: #1450b5;
-  --color-brand-800: #163f8f;
-  --color-brand-900: #0a2472;
-  --color-brand-950: #071845;
+  /* Read off the logo mark: the disc runs from a deep indigo to a steel blue,
+     and the dot cluster is close to black. The ramp is built between those,
+     which also moves the whole site off the browser's own default blue. */
+  --color-brand-50:  #f1f4fa;
+  --color-brand-100: #e0e7f4;
+  --color-brand-200: #c5d3e9;
+  --color-brand-300: #9db4d8;
+  --color-brand-400: #7092c2;
+  --color-brand-500: #4a80bd;  /* the light edge of the disc */
+  --color-brand-600: #3a63a0;
+  --color-brand-700: #34508a;
+  --color-brand-800: #333f74;
+  --color-brand-900: #2b2f63;  /* the deep edge of the disc */
+  --color-brand-950: #1b1d42;  /* the dot cluster */
 
   /* Reserved for promotional highlights. @brand-pending */
   --color-accent-100: #f9e2c6;
@@ -126,7 +129,7 @@
 
   /* The deep navy bands — promise, app, footer. Brand surfaces, not theme
      backgrounds, so they stay navy in both themes. */
-  --color-panel:          var(--color-brand-900);
+  --color-panel:          color-mix(in srgb, var(--color-cta-from) 58%, black);
   --color-panel-raised:   light-dark(rgb(255 255 255 / 8%), rgb(255 255 255 / 6%));
   --color-on-panel:       var(--color-neutral-0);
   --color-on-panel-muted: light-dark(rgb(255 255 255 / 72%), rgb(255 255 255 / 66%));
@@ -134,13 +137,26 @@
 
   /* Glass over the hero photograph: frosted white in light, smoked navy in
      dark. Paint text on glass with --color-glass-fg, never --color-fg. */
-  --color-glass:         light-dark(rgb(255 255 255 / 32%), rgb(9 17 38 / 58%));
+  --color-glass:         light-dark(rgb(255 255 255 / 32%), rgb(9 32 71 / 58%));
   --color-glass-raised:  light-dark(rgb(255 255 255 / 64%), rgb(12 22 48 / 66%));
   --color-glass-hover:   light-dark(rgb(255 255 255 / 84%), rgb(20 34 68 / 82%));
   --color-glass-line:    light-dark(rgb(255 255 255 / 58%), rgb(255 255 255 / 16%));
   --color-glass-fg:      light-dark(var(--color-brand-900), var(--color-neutral-0));
   --color-glass-muted:   light-dark(var(--color-brand-800), rgb(255 255 255 / 62%));
   --color-glass-accent:  light-dark(var(--color-brand-600), var(--color-brand-300));
+
+  /* Glass laid over a photograph. Fixed rather than light-dark(): the picture
+     underneath does not change with the theme, so the tint over it must not
+     either. --solid is the fallback where backdrop-filter is unsupported and
+     the tint alone has to carry the text. */
+  --color-photo-glass:       rgb(15 18 25 / 46%);
+  --color-photo-glass-solid: rgb(15 18 25 / 80%);
+  --color-photo-glass-line:  rgb(255 255 255 / 18%);
+
+  /* Second line of the hero heading. Fixed rather than themed, like the rest
+     of the hero copy: it sits on the photograph, which does not change with
+     the theme. */
+  --color-hero-accent: #0ea5e9;
 
   --color-success:         light-dark(var(--color-success-700), #5ad48c);
   --color-success-surface: light-dark(var(--color-success-100), #123723);
@@ -152,6 +168,31 @@
   --color-info-surface:    light-dark(var(--color-info-100), #12263e);
 
   --color-route-line: light-dark(var(--color-brand-500), var(--color-brand-300));
+
+  /* The journey bar on a result card: time in the air, then time on the
+     ground. Fixed rather than light-dark() — the supplied pair carries enough
+     contrast on both themes, and the bar has to mean the same thing on each. */
+  --color-journey-leg:     #0c5ba5;
+  --color-journey-layover: #57a7e7;
+
+  /* The results rail is drawn lighter than the landing-page route line: it
+     runs the full width of a wide card, where the heavier weight would
+     dominate the times either side of it. */
+  --color-rail-line: light-dark(var(--color-brand-200), var(--color-neutral-700));
+  --color-rail-dot:  light-dark(var(--color-brand-300), var(--color-neutral-600));
+
+  /* The call-to-action gradient, supplied as brand colours. Fixed rather than
+     themed: one pair of stops in both themes, which is why anything painted
+     with it takes --color-on-cta rather than --color-on-primary. */
+  --color-cta-from: #1149a3;
+  --color-cta-to:   #29b0f2;
+  --color-on-cta:   var(--color-neutral-0);
+
+  /* Tooltips invert the surface so they read as an overlay, not as more card. */
+  --color-tooltip:    light-dark(var(--color-neutral-900), var(--color-neutral-0));
+  --color-on-tooltip: light-dark(var(--color-neutral-0), var(--color-neutral-900));
+  /* The pale wash the search-results page sits on. */
+  --color-results-bg: light-dark(#f4f8ff, var(--color-neutral-950));
   --color-star:       #f5a623;
 
   /* --- Type. System stacks until the licensed font arrives. @brand-pending */
@@ -193,6 +234,9 @@
   --shadow-md: 0 4px 12px light-dark(rgb(15 18 25 / 10%), rgb(0 0 0 / 50%));
   --shadow-lg: 0 12px 28px light-dark(rgb(15 18 25 / 12%), rgb(0 0 0 / 55%));
   --shadow-focus: 0 0 0 3px light-dark(rgb(53 80 111 / 35%), rgb(138 163 194 / 40%));
+  /* Just inside the rim of a punched hole, cast by the ticket beside it.
+     Small: any more fills the disc and the hole reads as a grey blob. */
+  --color-notch-shade: light-dark(rgb(15 18 25 / 16%), rgb(0 0 0 / 52%));
 
   /* --- Motion --- */
   --ease-entrance: cubic-bezier(0.22, 1, 0.36, 1);
@@ -202,6 +246,10 @@
   --animate-hint-drift: hint-drift 1.8s ease-in-out infinite;
   --animate-hint-bounce: hint-bounce 1.8s ease-in-out infinite;
   --animate-hint-dot: hint-dot 1.8s ease-in-out infinite;
+  /* Airline strip. Slow and linear so it reads as one continuous ribbon
+     rather than a slideshow. */
+  --animate-marquee: marquee 60s linear infinite;
+  --animate-sheet-in: sheet-in 220ms var(--ease-entrance);
 
   @keyframes rise-in {
     from { opacity: 0; translate: 0 16px; }
@@ -224,6 +272,15 @@
     0%, 100% { opacity: 0.25; }
     50%      { opacity: 1; }
   }
+  /* The track holds the same logos twice, so moving it exactly one half
+     puts the second copy where the first started: no seam, no reset jump. */
+  @keyframes marquee {
+    from { translate: 0 0; }
+    to   { translate: -50% 0; }
+  }
+  @keyframes sheet-in {
+    from { translate: -100% 0; }
+  }
 }
 
 /* ==========================================================================
@@ -244,15 +301,41 @@
   --header-height-lg: 72px;
   --control-height-sm: 36px;
   --control-height: 44px;
-  --search-field-height: 56px;
+  --search-field-height: 48px;
 
   --border-width: 1px;
   --border-width-strong: 2px;
   --radius-pill: 999px;
 
+  /*
+   * CTA fill. Each stop needs its own light-dark() pair: on the dark theme the
+   * primary button is a pale blue with dark text, so a fixed dark ramp would
+   * put dark text on a dark fill. These resolve against :root, which is where
+   * color-scheme is set, so the theme toggle flips them correctly.
+   */
+  /* The two supplied stops, corner to corner. Hover and active darken both
+     ends together with color-mix, so the pair above stays the single source
+     of truth for the brand gradient. */
+  --gradient-primary: linear-gradient(135deg,
+    var(--color-cta-from),
+    var(--color-cta-to));
+  --gradient-primary-hover: linear-gradient(135deg,
+    color-mix(in srgb, var(--color-cta-from) 84%, black),
+    color-mix(in srgb, var(--color-cta-to) 84%, black));
+  --gradient-primary-active: linear-gradient(135deg,
+    color-mix(in srgb, var(--color-cta-from) 72%, black),
+    color-mix(in srgb, var(--color-cta-to) 72%, black));
+
   --transition-fast: 120ms ease;
   --transition-base: 200ms ease;
   --duration-entrance: 620ms;
+
+  /*
+   * The check mark, carried as a mask rather than an image: a mask is painted
+   * with background-color, so the tick takes a token and inverts with the
+   * theme, which a colour baked into a data URI could never do.
+   */
+  --mask-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='3.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m5 13 4.5 4.5L19 6.5'/%3E%3C/svg%3E");
 
   --glass-blur: blur(20px) saturate(150%);
 
@@ -287,6 +370,17 @@
    * the browser's own [hidden] rule — without this the inline icon sprite
    * paints as a 150px block above the header.
    */
+  /*
+   * Browsers give a button the arrow cursor, not the hand. Every button on
+   * this site is a control, so the hand is right; one rule here saves each
+   * component repeating it and covers any button added later.
+   */
+  button:not(:disabled),
+  summary,
+  [role="button"] {
+    cursor: pointer;
+  }
+
   [hidden] {
     display: none !important; /* justified: must beat Preflight's display rules */
   }
@@ -396,6 +490,101 @@
    * Honours the OS motion setting. animation-delay matters as much as
    * duration: without it a staggered item still waits before appearing.
    */
+  /*
+   * Checkboxes and radios are drawn here rather than left to the platform.
+   * The native controls paint in the operating system's accent colour and
+   * keep its shape, which is what made them read as unstyled boxes.
+   *
+   * One rule covers every one on the site and needs no extra markup, so the
+   * Blade components stay exactly as they are. Controls that a component
+   * deliberately hides (the trip toggle, the cabin radios) override this from
+   * the components layer, which wins over base.
+   */
+  input[type="checkbox"],
+  input[type="radio"] {
+    appearance: none;
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    flex: none;
+    margin: 0;
+    border: var(--border-width-strong) solid var(--color-line-strong);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition: background-color var(--transition-fast),
+                border-color var(--transition-fast);
+  }
+
+  input[type="checkbox"] { border-radius: var(--radius-xs); }
+  input[type="radio"] { border-radius: 50%; }
+
+  input[type="checkbox"]:hover,
+  input[type="radio"]:hover {
+    border-color: var(--color-primary);
+  }
+
+  input[type="checkbox"]:checked,
+  input[type="radio"]:checked {
+    border-color: transparent;
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+  }
+
+  /* The mark itself. It scales up rather than appearing, so a change of state
+     is visible without being a flash. */
+  input[type="checkbox"]::before,
+  input[type="radio"]::before {
+    content: "";
+    /* Fixed for the same reason as the button label: the fill beneath it does
+       not change with the theme. */
+    background-color: var(--color-on-cta);
+    scale: 0;
+    transition: scale var(--transition-fast);
+  }
+
+  input[type="checkbox"]::before {
+    width: 12px;
+    height: 12px;
+    -webkit-mask-image: var(--mask-check);
+    mask-image: var(--mask-check);
+    -webkit-mask-size: contain;
+    mask-size: contain;
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    mask-position: center;
+  }
+
+  input[type="radio"]::before {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+  }
+
+  input[type="checkbox"]:checked::before,
+  input[type="radio"]:checked::before {
+    scale: 1;
+  }
+
+  input[type="checkbox"]:focus-visible,
+  input[type="radio"]:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  input[type="checkbox"]:disabled,
+  input[type="radio"]:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  /* Set by the filter drawer while its sheet covers the page, so the results
+     behind it do not scroll under the sheet. */
+  :root[data-scroll-lock="true"] body {
+    overflow: hidden;
+  }
+
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
       animation-duration: 0.01ms !important;
@@ -483,12 +672,23 @@
   }
 
   .btn--primary {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    /* The colour underneath is the flat fallback if the gradient cannot paint. */
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    /* Fixed, because the fill it sits on is fixed: --color-on-primary would
+       turn dark on the dark theme and leave dark text on a dark blue. */
+    color: var(--color-on-cta);
   }
 
-  .btn--primary:hover:not(:disabled) { background-color: var(--color-primary-hover); }
-  .btn--primary:active:not(:disabled) { background-color: var(--color-primary-active); }
+  .btn--primary:hover:not(:disabled) {
+    background-color: var(--color-primary-hover);
+    background-image: var(--gradient-primary-hover);
+  }
+
+  .btn--primary:active:not(:disabled) {
+    background-color: var(--color-primary-active);
+    background-image: var(--gradient-primary-active);
+  }
 
   .btn--secondary {
     background-color: var(--color-surface);
@@ -504,6 +704,18 @@
   }
 
   .btn--ghost:hover:not(:disabled) { background-color: var(--color-surface-muted); }
+
+  /* Outlined counterpart to the primary button. Used for the Back step, where
+     the action needs the same weight as Continue without competing with it. */
+  .btn--outline {
+    background-color: var(--color-surface);
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .btn--outline:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
 
   /* White button for use on photography and the navy panels. */
   .btn--light {
@@ -568,16 +780,148 @@
   }
 
   /* Locale and currency switcher. */
-  .locale-select {
+  /* --- Locale switch -----------------------------------------------------
+     A disclosure holding two lists. The tabs are radios and so are the
+     options, so both the swap and the choice work with no JavaScript; the
+     script only keeps the trigger's label in step and closes the panel.
+     ------------------------------------------------------------------- */
+  .locale {
+    position: relative;
+  }
+
+  .locale__trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1);
     min-height: var(--control-height-sm);
-    padding: 0 --spacing(6) 0 --spacing(2);
-    border: 0;
+    padding-inline: --spacing(2);
     border-radius: var(--radius-sm);
-    background-color: transparent;
     font-size: var(--text-sm);
     font-weight: 500;
     color: var(--color-fg);
     cursor: pointer;
+    list-style: none;
+  }
+
+  .locale__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .locale__trigger:hover {
+    background-color: var(--color-surface-muted);
+  }
+
+  .locale__chevron {
+    color: var(--color-fg-muted);
+    transition: rotate var(--transition-base);
+  }
+
+  .locale[open] .locale__chevron {
+    rotate: 180deg;
+  }
+
+  .locale__panel {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    inset-block-start: calc(100% + --spacing(2));
+    inset-inline-end: 0;
+    width: min(268px, calc(100vw - 2 * --spacing(4)));
+    padding: --spacing(2);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .locale__tabs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: --spacing(1);
+    padding: --spacing(1);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-muted);
+  }
+
+  .locale__tab {
+    display: grid;
+    place-items: center;
+    min-height: var(--control-height-sm);
+    border-radius: var(--radius-xs);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+  }
+
+  /* The radios sit before the tab strip, so the checked one can style its own
+     label through the sibling combinator. */
+  .locale__tab-input:nth-of-type(1):checked ~ .locale__tabs .locale__tab:nth-child(1),
+  .locale__tab-input:nth-of-type(2):checked ~ .locale__tabs .locale__tab:nth-child(2) {
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-xs);
+    color: var(--color-primary);
+  }
+
+  .locale__tab-input:nth-of-type(1):focus-visible ~ .locale__tabs .locale__tab:nth-child(1),
+  .locale__tab-input:nth-of-type(2):focus-visible ~ .locale__tabs .locale__tab:nth-child(2) {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* Whichever tab is checked hides the other list. */
+  .locale__panel:has(.locale__tab-input:nth-of-type(1):checked) .locale__list--language,
+  .locale__panel:has(.locale__tab-input:nth-of-type(2):checked) .locale__list--currency {
+    display: none;
+  }
+
+  .locale__list {
+    display: grid;
+    gap: 2px;
+    margin: --spacing(2) 0 0;
+    padding: 0;
+    list-style: none;
+    max-height: 240px;
+    overflow-y: auto;
+  }
+
+  .locale__option {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    min-height: 40px;
+    padding-inline: --spacing(3);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+  }
+
+  .locale__option:hover {
+    background-color: var(--color-surface-muted);
+  }
+
+  .locale__code {
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .locale__name {
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .locale__choice:checked + .locale__option {
+    background-color: var(--color-surface-tint);
+  }
+
+  .locale__choice:checked + .locale__option .locale__code,
+  .locale__choice:checked + .locale__option .locale__name {
+    color: var(--color-primary);
+  }
+
+  .locale__choice:focus-visible + .locale__option {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
   }
 
   .nav-toggle__icon--close,
@@ -628,10 +972,15 @@
 
   /* --- Theme switch: two options, light and dark --- */
   .theme-toggle {
+    /* Sized to finish at --control-height-sm, the same as the small button it
+       sits next to: the track's own padding and hairline come off the top. */
+    --theme-toggle-option: calc(var(--control-height-sm) - 6px);
+
     display: inline-flex;
     align-items: center;
+    min-height: var(--control-height-sm);
     gap: --spacing(1);
-    padding: --spacing(1);
+    padding: 2px;
     border: var(--border-width) solid var(--color-line);
     border-radius: var(--radius-pill);
     background-color: var(--color-surface);
@@ -641,9 +990,9 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    width: var(--control-height-sm);
-    min-width: var(--control-height-sm);
-    min-height: var(--control-height-sm);
+    width: var(--theme-toggle-option);
+    min-width: var(--theme-toggle-option);
+    min-height: var(--theme-toggle-option);
     border-radius: var(--radius-pill);
     color: var(--color-fg-muted);
     transition: background-color var(--transition-fast), color var(--transition-fast);
@@ -683,6 +1032,17 @@
     text-decoration: none;
   }
 
+  /* The flat panel colour underneath is the fallback wherever the gradient
+     cannot paint. */
+  .site-footer {
+    background-color: var(--color-panel);
+    background-image: linear-gradient(160deg,
+      color-mix(in srgb, var(--color-cta-from) 88%, black) 0%,
+      color-mix(in srgb, var(--color-cta-from) 62%, black) 55%,
+      color-mix(in srgb, var(--color-cta-from) 42%, black) 100%);
+    color: var(--color-on-panel-muted);
+  }
+
   .footer-nav__link {
     font-size: var(--text-sm);
     color: var(--color-on-panel-muted);
@@ -694,15 +1054,27 @@
     text-decoration: underline;
   }
 
-  .site-footer .locale-select {
-    padding-inline: --spacing(3) --spacing(6);
+  /* The footer instance of the locale switch sits on navy, so its trigger
+     takes the panel palette. The panel itself stays a light surface. */
+  .site-footer .locale__trigger {
     border: var(--border-width) solid var(--color-panel-line);
-    background-color: transparent;
     color: var(--color-on-panel);
   }
 
-  .site-footer .locale-select option {
-    color: var(--color-neutral-900);
+  .site-footer .locale__trigger:hover {
+    background-color: var(--color-panel-line);
+  }
+
+  .site-footer .locale__chevron {
+    color: var(--color-on-panel-muted);
+  }
+
+  /* It is the last thing on the page, so it opens upwards, and it is at the
+     start of its column rather than the end of a header row. */
+  .site-footer .locale__panel {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + --spacing(2));
+    inset-inline: 0 auto;
   }
 
   .social-link {
@@ -837,12 +1209,23 @@
   }
 
   .search-tab[aria-selected="true"] {
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    /* Fixed, like every other surface wearing the gradient: --color-on-primary
+       would go dark on the dark theme and leave dark text on dark blue. */
+    color: var(--color-on-cta);
   }
 
   /* --- Panel. No overflow clipping: the travellers pop-out must escape. --- */
   .search-panel {
+    /*
+     * backdrop-filter makes this a stacking context, so the date and traveller
+     * panels inside it cannot escape however high their own z-index is. Raising
+     * the panel itself lifts them clear of everything below the hero.
+     * --z-sticky, not --z-dropdown: the header still has to scroll over it.
+     */
+    position: relative;
+    z-index: var(--z-sticky);
     padding: --spacing(3);
     border: var(--border-width) solid var(--color-glass-line);
     border-radius: var(--search-panel-radius);
@@ -867,7 +1250,7 @@
   @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
     .search-panel,
     .search-tabs {
-      background-color: light-dark(rgb(255 255 255 / 92%), rgb(9 17 38 / 94%));
+      background-color: light-dark(rgb(255 255 255 / 92%), rgb(9 32 71 / 94%));
     }
   }
 
@@ -945,10 +1328,11 @@
     white-space: nowrap;
   }
 
-  .search-option input {
-    width: 1.05em;
-    height: 1.05em;
-    accent-color: var(--color-glass-accent);
+  /* On glass the box takes the glass palette; everything else about it comes
+     from the site-wide control rule. */
+  .search-option input[type="checkbox"] {
+    border-color: var(--color-glass-line);
+    background-color: var(--color-glass);
   }
 
   /* --- Field --- */
@@ -957,9 +1341,9 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    gap: 3px;
+    gap: 1px;
     min-height: var(--search-field-height);
-    padding: --spacing(2) --spacing(4);
+    padding: --spacing(1.5) --spacing(4);
     border: var(--border-width) solid var(--color-glass-line);
     border-radius: var(--radius-md);
     background-color: var(--color-glass-raised);
@@ -981,9 +1365,16 @@
     pointer-events: none;
   }
 
+  @media (width < 64rem) {
+    .search-field {
+      padding-inline: --spacing(3);
+    }
+  }
+
   .search-field__label {
     font-family: var(--font-mono);
     font-size: var(--text-2xs);
+    line-height: 1.4;
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--color-glass-muted);
@@ -1013,7 +1404,10 @@
   }
 
   .search-field__control--lg {
-    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    font-size: clamp(0.9375rem, 1.2vw, 1rem);
+    /* Tight, because the field is only as tall as the three lines inside it
+       and the default line box was adding most of the height. */
+    line-height: 1.35;
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
   }
@@ -1034,6 +1428,7 @@
 
   .search-field__sub {
     font-size: var(--text-xs);
+    line-height: 1.35;
     color: var(--color-glass-muted);
     white-space: nowrap;
     overflow: hidden;
@@ -1057,7 +1452,7 @@
     inset: 0;
     display: flex;
     align-items: center;
-    font-size: clamp(1rem, 1.5vw, 1.125rem);
+    font-size: clamp(0.9375rem, 1.2vw, 1rem);
     font-weight: 600;
     letter-spacing: var(--tracking-tight);
     color: var(--color-glass-fg);
@@ -1078,7 +1473,9 @@
     opacity: 0;
   }
 
-  /* Stretched over the field so clicking anywhere opens the picker. */
+  /* Stretched over the field so clicking anywhere opens the native picker.
+     Only while there is no JavaScript: the range picker hides it and opens
+     its own panel instead. */
   .search-field__control[type="date"]::-webkit-calendar-picker-indicator {
     position: absolute;
     inset: 0;
@@ -1086,6 +1483,193 @@
     height: 100%;
     opacity: 0;
     cursor: pointer;
+  }
+
+  [data-date-picker="custom"] .search-field__control[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  /* The field is the trigger now, so the whole box should say so. */
+  [data-date-picker="custom"] .search-field:has([data-date-input]) {
+    cursor: pointer;
+  }
+
+  /* --- Date range panel --------------------------------------------------
+     A solid surface like the travellers pop-out: it opens over the hero
+     photograph, and glass under a grid of small numbers is unreadable.
+     ------------------------------------------------------------------- */
+  .daterange {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    inset-block-start: calc(100% + --spacing(2));
+    inset-block-end: auto;
+    inset-inline-start: 0;
+    width: min(640px, calc(100vw - 2 * --spacing(4)));
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+    color: var(--color-fg);
+  }
+
+  /* The search panel sits at the foot of the hero, so a calendar dropped
+     below it usually runs off the screen. The script measures the room and
+     flips it above the row when there is not enough. */
+  .daterange[data-drop="up"] {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + --spacing(2));
+  }
+
+  .daterange__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    padding-block-end: --spacing(3);
+  }
+
+  .daterange__title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .daterange__nav {
+    display: grid;
+    place-items: center;
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+    flex: none;
+    border-radius: var(--radius-sm);
+    color: var(--color-fg-muted);
+    cursor: pointer;
+  }
+
+  .daterange__nav:hover:not(:disabled) {
+    background-color: var(--color-surface-muted);
+    color: var(--color-fg);
+  }
+
+  .daterange__nav:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+
+  /* The chevron points down; turn it to face along the row. */
+  [data-date-prev] .icon { rotate: 90deg; }
+  [data-date-next] .icon { rotate: -90deg; }
+
+  .daterange__months {
+    display: grid;
+    gap: --spacing(5);
+  }
+
+  @media (width >= 40rem) {
+    .daterange__months {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .daterange__month {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+  }
+
+  /* One month at a time on a narrow screen: two would put six-pixel columns
+     on the grid. The panel drops to the row's own width there, so a 640px
+     card cannot hang off the side of the screen. */
+  @media (width < 40rem) {
+    .daterange {
+      inset-inline: 0;
+      width: auto;
+    }
+
+    .daterange__month:last-child,
+    .daterange__title-next {
+      display: none;
+    }
+  }
+
+  .daterange__month th {
+    padding-block-end: --spacing(2);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--color-fg-muted);
+  }
+
+  .daterange__day {
+    display: grid;
+    place-items: center;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+
+  .daterange__day:hover:not(:disabled) {
+    background-color: var(--color-surface-tint);
+  }
+
+  .daterange__day:disabled {
+    color: var(--color-fg-muted);
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  /* Everything between the two ends, including the length being previewed
+     under the pointer. */
+  .daterange__day[data-date-state~="between"] {
+    border-radius: 0;
+    background-color: var(--color-surface-tint);
+    color: var(--color-primary);
+  }
+
+  .daterange__day[data-date-state~="start"],
+  .daterange__day[data-date-state~="end"] {
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    color: var(--color-on-cta);
+    font-weight: 600;
+  }
+
+  .daterange__day:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 1px;
+  }
+
+  .daterange__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    margin-block-start: --spacing(4);
+    padding-block-start: --spacing(3);
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  .daterange__hint {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .daterange__action {
+    min-height: var(--control-height-sm);
+    padding-inline: --spacing(4);
+    border-radius: var(--radius-sm);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .daterange__action:hover {
+    background-color: var(--color-surface-muted);
   }
 
   /* --- Route row: the dashed arc is desktop-only --- */
@@ -1139,6 +1723,7 @@
 
   .pax__panel {
     position: absolute;
+    /* Above the section that follows the hero, which it now hangs over. */
     z-index: var(--z-dropdown);
     inset-block-start: calc(100% + --spacing(2));
     inset-inline-end: 0;
@@ -1150,6 +1735,11 @@
     background-color: var(--color-surface);
     box-shadow: var(--shadow-lg);
     color: var(--color-fg);
+  }
+
+  .pax__panel[data-drop="up"] {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + --spacing(2));
   }
 
   .pax__row {
@@ -1204,6 +1794,10 @@
     position: absolute;
     opacity: 0;
     pointer-events: none;
+  }
+
+  .pax__cabin {
+    cursor: pointer;
   }
 
   .pax__cabin span {
@@ -1283,7 +1877,7 @@
     position: absolute;
     z-index: 1;
     inset-block-start: --spacing(5);
-    inset-inline-end: --spacing(5);
+    inset-inline-start: --spacing(5);
     display: grid;
     place-items: center;
     width: 84px;
@@ -1298,17 +1892,32 @@
     text-align: center;
   }
 
+  /* A glass panel floating over the photograph rather than a scrim across the
+     foot of the card, so the picture is still readable behind and beside it.
+     Absolutely positioned so it shrinks to its own text instead of spanning
+     the card. */
   .preference-card__body {
-    position: relative;
+    position: absolute;
     z-index: 1;
+    inset-block-end: --spacing(4);
+    inset-inline-start: --spacing(4);
+    max-inline-size: min(360px, calc(100% - --spacing(8)));
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: --spacing(3);
-    padding: --spacing(8) --spacing(4) --spacing(4);
-    background-image: linear-gradient(to top, rgb(6 22 62 / 92%), rgb(6 22 62 / 0%));
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-photo-glass-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-photo-glass);
+    backdrop-filter: var(--glass-blur);
     color: var(--color-neutral-0);
+  }
+
+  /* No backdrop-filter: the tint has to do the whole job on its own. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .preference-card__body { background-color: var(--color-photo-glass-solid); }
   }
 
   .preference-card__title {
@@ -1333,6 +1942,13 @@
     border: var(--border-width) solid var(--color-panel-line);
     border-radius: var(--radius-md);
     background-color: var(--color-panel-raised);
+  }
+
+  /* Stacked on a phone the cards sit right over the busiest part of the
+     panel photograph, so the picture is blurred behind them. The wider
+     layouts do not need it: the cards land on the quiet side of the image. */
+  @media (width < 48rem) {
+    .feature-card { backdrop-filter: blur(6px); }
   }
 
   .feature-card__icon {
@@ -1382,14 +1998,36 @@
     border-radius: var(--radius-md);
     background-color: var(--color-surface);
     /*
-     * The outline is an inset shadow rather than a border, so the punched
-     * notches can erase it. overflow:hidden clips descendants to the PADDING
-     * box, so against a real border the notch circles stop one pixel short
-     * and the border draws straight across the cut. An inset shadow paints
-     * below descendants and adds no border box, so the notch removes it.
+     * Elevation instead of an outline. A drop shadow also sidesteps the
+     * problem a real border has here: overflow:hidden clips descendants to
+     * the PADDING box, so a border would draw straight across the punched
+     * notches rather than being cut by them.
      */
-    box-shadow: inset 0 0 0 var(--border-width) var(--color-line);
+    box-shadow: var(--shadow-sm);
     overflow: hidden;
+  }
+
+  /*
+   * Hover lift. Gated on (hover: hover) so a tap on a touch screen does not
+   * leave the card stuck in the raised state until something else is tapped.
+   * The transition lives inside the query for the same reason.
+   */
+  @media (hover: hover) {
+    .route-card {
+      transition:
+        translate var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .route-card:hover {
+      translate: 0 -4px;
+      box-shadow: var(--shadow-lg);
+    }
+  }
+
+  /* Keyboard parity: reaching the Select link raises the card the same way. */
+  .route-card:focus-within {
+    box-shadow: var(--shadow-lg);
   }
 
   .route-card__main {
@@ -1412,10 +2050,13 @@
     width: var(--airline-logo-size);
     height: var(--airline-logo-size);
     flex: none;
-    padding: 5px;
     border-radius: 50%;
-    object-fit: contain;
-    background-color: var(--color-surface-muted);
+    /* The supplied marks are square tiles carrying the carrier's own colour,
+       so they need no plate behind them - only a hairline, so a white tile
+       does not dissolve into a white card. cover, so the tile fills the disc
+       rather than being letterboxed inside it. */
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
   }
 
   /* Origin — line with plane — destination. */
@@ -1450,9 +2091,22 @@
   }
 
   .route-card__line {
+    /*
+     * The rule is a gradient with a transparent window in the middle rather
+     * than a solid line, so it stops short of the plane on both sides. A
+     * background on the plane itself would not work: it is rotated 45deg, so
+     * its box would mask the line as a diamond.
+     */
+    --route-line-gap: 16px;
+
     position: relative;
     height: 2px;
-    background-color: var(--color-route-line);
+    background-image: linear-gradient(
+      to right,
+      var(--color-route-line) 0 calc(50% - var(--route-line-gap)),
+      transparent calc(50% - var(--route-line-gap)) calc(50% + var(--route-line-gap)),
+      var(--color-route-line) calc(50% + var(--route-line-gap)) 100%
+    );
   }
 
   .route-card__line svg {
@@ -1515,12 +2169,15 @@
     inset-block-start: 0;
     inset-inline-start: 0;
     translate: -50% -50%;
+    /* Stacked: on the left card edge, so the ticket is to its right. */
+    box-shadow: inset -3px 0 3px -1px var(--color-notch-shade);
   }
 
   .route-card__aside::after {
     inset-block-start: 0;
     inset-inline-end: 0;
     translate: 50% -50%;
+    box-shadow: inset 3px 0 3px -1px var(--color-notch-shade);
   }
 
   .route-card__from {
@@ -1564,12 +2221,130 @@
       inset-block-start: 0;
       inset-inline: 0 auto;
       translate: -50% -50%;
+      /* Side by side: on the top card edge, so the ticket is below it. */
+      box-shadow: inset 0 -3px 3px -1px var(--color-notch-shade);
     }
 
     .route-card__aside::after {
       inset-block: auto 0;
       inset-inline: 0 auto;
       translate: -50% 50%;
+      box-shadow: inset 0 3px 3px -1px var(--color-notch-shade);
+    }
+  }
+
+  /* --- Airline logo marquee ---------------------------------------------
+         A moving ribbon rather than a static grid. The track carries the same
+         eight logos twice; the animation moves it exactly one half, so the
+         second copy lands where the first began and the loop has no seam.
+
+         The gutter is padding on each item, not a gap on the track: a track
+         gap would sit between the two groups as well and the halves would no
+         longer be the same width, which is what a seamless -50% depends on.
+         ---------------------------------------------------------------- */
+  .logo-marquee {
+    --marquee-gap: --spacing(12);
+    --marquee-logo-width: 148px;
+
+    position: relative;
+    overflow: hidden;
+    /* Soften both ends so a logo fades out instead of being sliced off.
+       -webkit- prefix for Safari, which still needs it for mask-image. */
+    -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+    mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+
+  .logo-marquee__track {
+    display: flex;
+    width: max-content;
+    animation: var(--animate-marquee);
+  }
+
+  /* Let a reader stop the ribbon to look at one mark, by pointer or by
+     tabbing into it. */
+  .logo-marquee:hover .logo-marquee__track,
+  .logo-marquee:focus-within .logo-marquee__track {
+    animation-play-state: paused;
+  }
+
+  .logo-marquee__group {
+    display: flex;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .logo-marquee__item {
+    flex: none;
+    padding-inline: calc(var(--marquee-gap) / 2);
+  }
+
+  .logo-marquee__logo {
+    display: block;
+    width: var(--marquee-logo-width);
+    height: auto;
+    padding: --spacing(2) --spacing(3);
+    border-radius: var(--radius-sm);
+    /*
+     * The supplied marks are dark ink on transparency, so they need a light
+     * plate behind them or they disappear on the dark theme. Theme-independent
+     * on purpose: the artwork is fixed, the same reasoning as the hero card.
+     * In light mode the plate matches the surface and is invisible.
+     */
+    background-color: var(--color-neutral-0);
+  }
+
+  /*
+   * No auto-scroll when the reader has asked for less motion. The clone only
+   * exists to feed the loop, so it goes; the remaining set can be panned by
+   * hand. The global reduced-motion reset cannot do this on its own: it caps
+   * duration and iterations, which would just snap the track to its end.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    .logo-marquee {
+      overflow-x: auto;
+      -webkit-mask-image: none;
+      mask-image: none;
+    }
+
+    .logo-marquee__track {
+      animation: none;
+    }
+
+    .logo-marquee__group--clone {
+      display: none;
+    }
+  }
+
+  /* --- Most booked routes ------------------------------------------------
+     Two columns from the mid breakpoint, and below it a horizontal rail
+     instead: four full-width tickets is a long scroll for a section that is
+     a browse rather than a task. The next card is left peeking, which is the
+     only affordance a swipe rail needs.
+     ------------------------------------------------------------------- */
+  @media (width < 56.25rem) {
+    .route-rail {
+      grid-auto-flow: column;
+      /* Short of full width, so the edge of the next card shows. */
+      grid-auto-columns: 84%;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      /* Setting one axis to auto makes the other axis scroll too, which would
+         clip the cards' shadow; this gives it room. */
+      padding-block: --spacing(1);
+      overscroll-behavior-x: contain;
+      /* No bar: the rail still scrolls by touch, wheel and keyboard, and a
+         bar under the tickets reads as a stray line. */
+      scrollbar-width: none;
+    }
+
+    .route-rail::-webkit-scrollbar {
+      display: none;
+    }
+
+    .route-rail > * {
+      scroll-snap-align: start;
     }
   }
 
@@ -1582,6 +2357,35 @@
     border: var(--border-width) solid var(--color-line);
     border-radius: var(--radius-md);
     background-color: var(--color-surface);
+    /* The hairline stays: it is what the hover state tints. */
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (hover: hover) {
+    .step-card {
+      transition:
+        translate var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .step-card:hover {
+      translate: 0 -4px;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    /* The trailing icon fills in, so the step reads as the active one. */
+    .step-card__icon {
+      transition:
+        background-color var(--transition-base),
+        color var(--transition-base);
+    }
+
+    .step-card:hover .step-card__icon {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+    }
   }
 
   .step-card__number {
@@ -1592,8 +2396,9 @@
     flex: none;
     align-self: flex-start;
     border-radius: 50%;
-    background-color: var(--color-primary);
-    color: var(--color-on-primary);
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    color: var(--color-on-cta);
     font-size: var(--text-sm);
     font-weight: 600;
   }
@@ -1630,6 +2435,78 @@
   }
 
   /* --- Testimonial card --- */
+  /* --- Review rail --------------------------------------------------------
+     A scroll-snap track at every width, not just on a phone: there are more
+     reviews than fit a row, and the arrows beside the heading are how a
+     pointer moves through them.
+     ---------------------------------------------------------------------- */
+
+  .review-rail {
+    display: grid;
+    grid-auto-flow: column;
+    /* Short of full width, so the edge of the next card shows and the track
+       reads as something that scrolls. */
+    grid-auto-columns: 84%;
+    gap: --spacing(4);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    /* Setting one axis to auto makes the other axis scroll too, which would
+       clip the cards' shadow; this gives it room. */
+    padding-block: --spacing(1);
+    /* No bar: the rail still scrolls by touch, wheel and keyboard, and a bar
+       under the cards reads as a stray line. */
+    scrollbar-width: none;
+  }
+
+  .review-rail::-webkit-scrollbar { display: none; }
+
+  .review-rail > * { scroll-snap-align: start; }
+
+  @media (width >= 48rem) {
+    .review-rail { grid-auto-columns: 46%; }
+  }
+
+  @media (width >= 64rem) {
+    .review-rail { grid-auto-columns: 31.5%; }
+  }
+
+  /* --- Rail arrows -------------------------------------------------------- */
+
+  .rail-nav {
+    display: flex;
+    gap: --spacing(2);
+  }
+
+  .rail-nav__button {
+    display: grid;
+    place-items: center;
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    color: var(--color-fg);
+    transition: border-color var(--transition-fast),
+                color var(--transition-fast),
+                opacity var(--transition-fast);
+  }
+
+  .rail-nav__button:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .rail-nav__button:disabled {
+    opacity: 0.4;
+    cursor: default;
+  }
+
+  .rail-nav__button:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
   .testimonial-card {
     display: flex;
     align-items: flex-start;
@@ -1638,6 +2515,33 @@
     border: var(--border-width) solid var(--color-line);
     border-radius: var(--radius-md);
     background-color: var(--color-surface);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (hover: hover) {
+    .testimonial-card {
+      transition:
+        translate var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    }
+
+    .testimonial-card:hover {
+      translate: 0 -4px;
+      border-color: var(--color-primary);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .testimonial-card__avatar {
+      transition:
+        background-color var(--transition-base),
+        color var(--transition-base);
+    }
+
+    .testimonial-card:hover .testimonial-card__avatar {
+      background-color: var(--color-primary);
+      color: var(--color-on-primary);
+    }
   }
 
   /* Placeholder until real customer photographs are supplied. */
@@ -1680,9 +2584,9 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: --spacing(2);
-    width: 54px;
-    padding-block: --spacing(3);
+    gap: --spacing(1);
+    width: 40px;
+    padding-block: --spacing(2);
     border: var(--border-width) solid var(--color-glass-line);
     border-radius: var(--radius-pill);
     background-color: var(--color-glass-raised);
@@ -1697,9 +2601,48 @@
     color: var(--color-glass-fg);
   }
 
+  /* --- Hero heading. Two block lines so the second can be spaced and
+         painted independently of the first. --- */
+  .hero-title__line {
+    display: block;
+  }
+
+  .hero-title__accent {
+    display: block;
+    /* Space above the second line, so the pair reads as two statements
+       rather than one wrapped sentence. */
+    margin-block-start: --spacing(2);
+    /* The fallback colour: a flat accent wherever the gradient cannot be
+       clipped to the glyphs. */
+    color: var(--color-hero-accent);
+    /* The same two stops the buttons use. The old pair ran from a muted
+       slate, which barely read as a gradient against the sky behind it;
+       these are far enough apart to be seen as one. */
+    background-image: linear-gradient(100deg,
+      var(--color-cta-from) 0%,
+      var(--color-cta-to) 82%);
+    /* Safari still has no unprefixed background-clip: text. */
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* The clip box is the line box, which crops a descender; this gives the
+       "y" room without moving the baseline. */
+    padding-block-end: 0.08em;
+  }
+
+  /*
+   * Only make the text transparent where the gradient can actually paint
+   * through it. Without the guard a browser that ignores background-clip
+   * would render an invisible heading.
+   */
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .hero-title__accent {
+      color: transparent;
+    }
+  }
+
   .scroll-hint__dot {
-    width: 4px;
-    height: 4px;
+    width: 3px;
+    height: 3px;
     border-radius: 50%;
     background-color: currentColor;
     animation: var(--animate-hint-dot);
@@ -1709,8 +2652,8 @@
   .scroll-hint__dot:nth-child(3) { animation-delay: 0.4s; }
 
   .scroll-hint__plane {
-    width: 22px;
-    height: 22px;
+    width: 18px;
+    height: 18px;
     /* The sprite plane points up and to the right; turn its nose downwards. */
     rotate: 135deg;
     color: var(--color-glass-accent);
@@ -1718,8 +2661,8 @@
   }
 
   .scroll-hint__chevron {
-    width: 18px;
-    height: 18px;
+    width: 14px;
+    height: 14px;
     color: var(--color-glass-accent);
     animation: var(--animate-hint-bounce);
   }
@@ -1775,24 +2718,43 @@
        its responsive gutter, so the photograph scales with the screen. The
        copy inside sits on a nested .page-container and still lines up with
        every other section. */
-    padding-block: --spacing(6) --spacing(4);
+    padding-block: --spacing(5) --spacing(6);
     border-radius: var(--radius-lg);
     background-color: var(--color-brand-200);
-    background-image: url("../images/hero%20section.webp");
+    /* A low-opacity wash over the left of the photograph, where the copy
+       sits. It lifts the heading off the sky without dulling the aircraft on
+       the right, and fades out well before the middle of the band. */
+    background-image:
+      linear-gradient(to right,
+        rgb(255 255 255 / 34%) 0%,
+        rgb(255 255 255 / 18%) 30%,
+        rgb(255 255 255 / 0%) 58%),
+      url("../images/hero%20section.webp");
     background-size: cover;
     background-position: 62% center;
-    overflow: hidden;
+    /* No overflow:hidden. border-radius already clips the photograph, and
+       clipping was cutting the date and traveller panels off at the foot of
+       the band. */
     animation: var(--animate-fade-in);
   }
 
   @media (width >= 48rem) {
-    .hero-panel { padding-block: --spacing(8) --spacing(5); }
+    .hero-panel {
+      /* A column so the nested page container can stretch and push the search
+         panel to the bottom edge. min-height, not height: where the content is
+         already taller (narrow screens, stacked form) the band grows instead
+         of clipping. svh, not vh, so a collapsing mobile URL bar cannot
+         reflow the hero. */
+      display: flex;
+      flex-direction: column;
+      min-height: 78svh;
+      padding-block: --spacing(6) --spacing(7);
+    }
   }
 
   @media (width >= 80rem) {
     .hero-panel {
-      padding-block: --spacing(10) --spacing(6);
-      min-height: 520px;
+      padding-block: --spacing(7) --spacing(8);
     }
   }
 
@@ -1804,10 +2766,12 @@
     border-radius: var(--radius-lg);
     background-color: var(--color-panel);
     background-image:
-      linear-gradient(to right, rgb(8 28 92 / 96%) 0%, rgb(8 28 92 / 78%) 55%, rgb(8 28 92 / 35%) 100%),
+      linear-gradient(to right, rgb(11 43 96 / 96%) 0%, rgb(11 43 96 / 78%) 55%, rgb(11 43 96 / 35%) 100%),
       url("../images/section2.png");
     background-size: cover;
-    background-position: center right;
+    /* The family is high in the frame; 20% down keeps them in view instead of
+       cropping to the middle of the concourse. */
+    background-position: 50% 20%;
     color: var(--color-on-panel);
     overflow: hidden;
   }
@@ -1816,7 +2780,7 @@
     .promise-panel {
       padding: --spacing(10) --spacing(8);
       background-image:
-        linear-gradient(to right, rgb(8 28 92 / 96%) 0%, rgb(8 28 92 / 70%) 45%, rgb(8 28 92 / 0%) 78%),
+        linear-gradient(to right, rgb(11 43 96 / 96%) 0%, rgb(11 43 96 / 70%) 45%, rgb(11 43 96 / 0%) 78%),
         url("../images/section2.png");
     }
   }
@@ -1832,7 +2796,7 @@
     border-radius: var(--radius-lg);
     background-color: var(--color-brand-950);
     background-image:
-      linear-gradient(to bottom, rgb(4 14 46 / 82%), rgb(4 14 46 / 82%)),
+      linear-gradient(to bottom, rgb(7 28 63 / 82%), rgb(7 28 63 / 82%)),
       url("../images/everything%20you%20need%20after%20booking%20banner.png");
     background-size: cover;
     background-position: center;
@@ -1856,23 +2820,69 @@
     }
   }
 
-  /* --- Closing call to action --- */
+  /* --- Closing call to action. A glass card held to one side of the
+         photograph, rather than a centred block over the middle of it. --- */
   .cta-panel {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: --spacing(4);
-    padding: --spacing(8) --spacing(5);
+    padding: --spacing(5);
     border-radius: var(--radius-lg);
     background-color: var(--color-brand-100);
-    background-image: url("../images/hero%20section.webp");
+    background-image: url("../images/CTA.webp");
     background-size: cover;
-    background-position: center 30%;
-    text-align: center;
+    /* The photograph is much wider than the band, so cover crops it top and
+       bottom; this keeps the mountain and the lake in frame. */
+    background-position: center 45%;
   }
 
   @media (width >= 48rem) {
-    .cta-panel { padding-block: --spacing(12); }
+    .cta-panel {
+      min-height: 360px;
+      padding: --spacing(8);
+    }
+  }
+
+  .cta-panel__card {
+    width: min(440px, 100%);
+    padding: --spacing(6);
+    border: var(--border-width) solid var(--color-glass-line);
+    border-radius: var(--radius-lg);
+    /* Glass, because it sits on the photograph: everything inside paints with
+       the --color-glass-* tokens rather than --color-fg. The lighter of the
+       two fills, so the lake and the sky read through it. */
+    background-color: var(--color-glass);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .cta-panel__eyebrow {
+    margin: 0 0 --spacing(3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-glass-accent);
+  }
+
+  .cta-panel__title {
+    margin: 0 0 --spacing(3);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-glass-fg);
+  }
+
+  .cta-panel__text {
+    margin: 0 0 --spacing(5);
+    max-width: 34ch;
+    font-size: var(--text-base);
+    line-height: var(--leading-snug);
+    color: var(--color-glass-muted);
+  }
+
+  .cta-panel__action {
+    min-height: 52px;
+    padding-inline: --spacing(6);
   }
 
   /* The bento tiles need more height once they sit two-up. */
@@ -1904,5 +2914,1781 @@
     background-color: var(--color-surface-raised);
     color: var(--color-fg);
     box-shadow: var(--shadow-lg);
+  }
+}
+
+/* ==========================================================================
+   SEARCH RESULTS PAGE
+   Summary bar, filter panel, sort tabs, result tickets and the trust strip.
+   Every number shown here comes from the backend; nothing is recalculated.
+   ========================================================================== */
+
+@layer components {
+
+  /* The page sits on a pale wash rather than plain white. */
+  .results-page {
+    background-color: var(--color-results-bg);
+  }
+
+  /* --- Search summary band --------------------------------------------- */
+
+  .search-summary {
+    padding-block: --spacing(5) --spacing(8);
+    background-color: var(--color-brand-100);
+    background-image:
+      linear-gradient(light-dark(rgb(255 255 255 / 28%), rgb(9 32 71 / 45%)),
+                      light-dark(rgb(255 255 255 / 28%), rgb(9 32 71 / 45%))),
+      url("../images/hero%20section.webp");
+    background-size: cover;
+    background-position: center 18%;
+  }
+
+  /* The bar is the disclosure control, so the whole of it is clickable. */
+  .summary-bar {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(2);
+    cursor: pointer;
+    /* A summary is a list-item by default; grid already drops the marker in
+       Chrome and Firefox, and this drops it in Safari. */
+    list-style: none;
+    padding: --spacing(3);
+    /*
+     * Glass, like the search panel it opens into. It sits on the photograph,
+     * so everything inside it is painted with the --color-glass-* tokens
+     * rather than --color-fg / --color-primary.
+     */
+    border: var(--border-width) solid var(--color-glass-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-glass-raised);
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+    box-shadow: var(--shadow-lg);
+    color: var(--color-glass-fg);
+  }
+
+  /*
+   * The glass search panel carries a backdrop-filter, which makes it a
+   * stacking context: the date panel's own z-index only applies inside it, so
+   * the whole disclosure has to be raised for its popovers to clear the
+   * results below. Kept under --z-header so the band still scrolls beneath
+   * the sticky header.
+   */
+  .summary-edit {
+    position: relative;
+    z-index: var(--z-sticky);
+  }
+
+  .summary-bar::-webkit-details-marker {
+    display: none;
+  }
+
+  .summary-edit__chevron {
+    transition: rotate var(--transition-base);
+  }
+
+  .summary-edit[open] .summary-edit__chevron {
+    rotate: 180deg;
+  }
+
+  /* The editable form drops below the bar, on the same photograph, so it
+     keeps the glass treatment it has on the landing page. */
+  .summary-edit__panel {
+    padding-block-start: --spacing(3);
+  }
+
+  .summary-bar__route {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: --spacing(4);
+    padding-inline: --spacing(2);
+  }
+
+  .summary-bar__field {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .summary-bar__label {
+    font-size: var(--text-xs);
+    color: var(--color-glass-muted);
+  }
+
+  .summary-bar__value {
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-glass-fg);
+  }
+
+  /* Dashed rail with the plane riding it, between origin and destination. */
+  .summary-bar__rail {
+    position: relative;
+    display: block;
+    height: 2px;
+    min-width: 60px;
+    background-image: linear-gradient(to right, var(--color-glass-accent) 60%, transparent 0%);
+    background-size: 10px 2px;
+    background-repeat: repeat-x;
+  }
+
+  .summary-bar__plane {
+    position: absolute;
+    inset-inline-end: -4px;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+    /* The sprite plane points up and to the right; square it along the rail. */
+    rotate: 45deg;
+    width: 22px;
+    height: 22px;
+    color: var(--color-glass-accent);
+  }
+
+  .summary-bar__cell {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    padding-inline: --spacing(2);
+    min-height: var(--control-height);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--color-glass-fg);
+  }
+
+  .summary-bar__icon {
+    width: 22px;
+    height: 22px;
+    flex: none;
+    color: var(--color-glass-accent);
+  }
+
+  .summary-bar__submit {
+    min-height: 52px;
+    padding-inline: --spacing(6);
+  }
+
+  @media (width >= 64rem) {
+    .search-summary {
+      padding-block: --spacing(6) --spacing(10);
+    }
+
+    .summary-bar {
+      /* route | dates | travellers | cabin | submit */
+      grid-template-columns: minmax(0, 1.5fr) auto auto auto auto;
+      align-items: center;
+      gap: 0;
+      padding: --spacing(2) --spacing(2) --spacing(2) --spacing(4);
+    }
+
+    /* Hairlines between the cells, as in the reference. */
+    .summary-bar__cell {
+      border-inline-start: var(--border-width) solid var(--color-glass-line);
+      padding-inline: --spacing(5);
+    }
+  }
+
+  /* --- Page layout ------------------------------------------------------ */
+
+  .results-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+    padding-block: --spacing(6) --spacing(10);
+  }
+
+  @media (width >= 64rem) {
+    .results-layout {
+      grid-template-columns: 264px minmax(0, 1fr);
+      gap: --spacing(6);
+      align-items: start;
+    }
+  }
+
+  /* --- Filter panel ----------------------------------------------------- */
+
+  .filter-panel {
+    padding: --spacing(5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    /* Elevation rather than an outline, so the sidebar reads as the same kind
+       of surface as the result tickets it sits beside. */
+    box-shadow: var(--shadow-md);
+  }
+
+  /* --- Filter drawer: the sidebar at lg, a sheet below it ----------------- */
+
+  .filter-drawer__trigger {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    min-height: var(--control-height);
+    padding-inline: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg-heading);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .filter-drawer__trigger::-webkit-details-marker {
+    display: none;
+  }
+
+  .filter-drawer__trigger-icon {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--color-primary);
+  }
+
+  /* Pushed to the far end, and it turns over once the sheet is open. */
+  .filter-drawer__trigger-chevron {
+    margin-inline-start: auto;
+    color: var(--color-fg-muted);
+    transition: rotate var(--transition-base);
+  }
+
+  .filter-drawer[open] .filter-drawer__trigger-chevron {
+    rotate: 180deg;
+  }
+
+  .filter-drawer__close {
+    display: grid;
+    place-items: center;
+    width: var(--control-height-sm);
+    height: var(--control-height-sm);
+    margin-inline-start: auto;
+    border-radius: var(--radius-sm);
+    color: var(--color-fg-muted);
+    cursor: pointer;
+  }
+
+  .filter-drawer__close:hover {
+    background-color: var(--color-surface-muted);
+    color: var(--color-fg);
+  }
+
+  @media (width < 64rem) {
+    /* The details box itself is the backdrop: its only children are the
+       trigger and the sheet, so a click that lands on it is a click outside
+       the sheet, which is what the script listens for. */
+    .filter-drawer[open]::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: var(--z-overlay);
+      background-color: rgb(9 32 71 / 55%);
+    }
+
+    .filter-drawer[open] .filter-drawer__sheet {
+      position: fixed;
+      inset-block: 0;
+      inset-inline-start: 0;
+      z-index: var(--z-modal);
+      width: min(320px, 88vw);
+      overflow-y: auto;
+      /* Scrolling the sheet to its end must not start scrolling the page. */
+      overscroll-behavior: contain;
+      background-color: var(--color-surface);
+      animation: var(--animate-sheet-in);
+    }
+
+    /* Edge to edge inside the sheet; the sheet supplies the surface. */
+    .filter-drawer[open] .filter-panel {
+      min-height: 100%;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* The sliders mark is the trigger's job down here. */
+    .filter-panel__mark {
+      display: none;
+    }
+  }
+
+  @media (width >= 64rem) {
+    /* Sticky on the drawer, not on the panel: the drawer is the grid item, so
+       this is the element whose containing block is the layout column. */
+    .filter-drawer {
+      position: sticky;
+      inset-block-start: calc(var(--header-height-lg) + --spacing(4));
+    }
+
+    .filter-drawer__trigger,
+    .filter-drawer__close {
+      display: none;
+    }
+  }
+
+  .filter-panel__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    padding-block-end: --spacing(4);
+  }
+
+  .filter-panel__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .filter-group {
+    border-block-start: var(--border-width) solid var(--color-line);
+    padding-block: --spacing(4);
+  }
+
+  .filter-group__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    cursor: pointer;
+    list-style: none;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .filter-group__summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .filter-group__chevron {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    color: var(--color-fg-muted);
+    transition: rotate var(--transition-base);
+  }
+
+  .filter-group[open] .filter-group__chevron {
+    rotate: 180deg;
+  }
+
+  .filter-group__body {
+    display: grid;
+    gap: --spacing(1);
+    padding-block-start: --spacing(3);
+  }
+
+  .filter-option {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    min-height: var(--control-height-sm);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+
+  .filter-option__logo {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
+  }
+
+  .filter-option__label {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .filter-option__count {
+    flex: none;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .filter-panel__clear {
+    margin-block-start: --spacing(4);
+    padding-block-start: --spacing(4);
+    border-block-start: var(--border-width) solid var(--color-line);
+    width: 100%;
+    text-align: start;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-primary);
+    cursor: pointer;
+  }
+
+  .filter-panel__clear:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /* --- Dual-handle range ------------------------------------------------
+     Two real inputs stacked on one track. There is no native dual-handle
+     control, and two inputs keep the values submittable without JavaScript.
+     -------------------------------------------------------------------- */
+
+  .range__bounds {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 --spacing(2);
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .range {
+    position: relative;
+    height: 24px;
+  }
+
+  .range__input {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 0;
+    width: 100%;
+    height: 24px;
+    margin: 0;
+    background: none;
+    appearance: none;
+    /* Only the thumbs should catch the pointer, so the lower input stays
+       reachable where the two overlap. */
+    pointer-events: none;
+  }
+
+  /* The first input paints the rail; the second stacks on top of it with no
+     track of its own, so only one bar is ever drawn. */
+  .range__input::-webkit-slider-runnable-track {
+    height: 3px;
+    margin-block-start: 11px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface-muted);
+    background-image: var(--gradient-primary);
+  }
+
+  .range__input:last-of-type::-webkit-slider-runnable-track {
+    background: none;
+  }
+
+  .range__input::-moz-range-track {
+    height: 3px;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface-muted);
+    background-image: var(--gradient-primary);
+  }
+
+  .range__input:last-of-type::-moz-range-track {
+    background: none;
+  }
+
+  .range__input::-webkit-slider-thumb {
+    appearance: none;
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    /* Half the thumb less half the rail, so it rides centred on the line. */
+    margin-block-start: -7px;
+    border: var(--border-width-strong) solid var(--color-primary);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    cursor: grab;
+    transition: scale var(--transition-fast), border-color var(--transition-fast);
+  }
+
+  .range__input::-webkit-slider-thumb:hover {
+    scale: 1.12;
+    border-color: var(--color-primary-hover);
+  }
+
+  .range__input::-webkit-slider-thumb:active {
+    cursor: grabbing;
+  }
+
+  .range__input::-moz-range-thumb {
+    pointer-events: auto;
+    width: 16px;
+    height: 16px;
+    border: var(--border-width-strong) solid var(--color-primary);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    cursor: grab;
+  }
+
+  .range__input:focus-visible::-webkit-slider-thumb {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* --- Results column --------------------------------------------------- */
+
+  .results__title {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .results__count {
+    margin: --spacing(1) 0 --spacing(5);
+    font-size: var(--text-sm);
+    color: var(--color-primary);
+  }
+
+  .sort-tabs {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    margin-block-end: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    overflow: hidden;
+  }
+
+  .sort-tab {
+    position: relative;
+    min-height: 52px;
+    padding-inline: --spacing(4);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-fg-muted);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+  }
+
+  .sort-tab:hover {
+    color: var(--color-fg);
+  }
+
+  .sort-tab[aria-selected="true"] {
+    color: var(--color-primary);
+    font-weight: 600;
+  }
+
+  /* The active tab is marked by a rule along its lower edge. */
+  .sort-tab::after {
+    content: "";
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    height: 3px;
+    background-color: var(--color-primary);
+    scale: 0 1;
+    transition: scale var(--transition-base);
+  }
+
+  .sort-tab[aria-selected="true"]::after {
+    scale: 1 1;
+  }
+
+  .results__list {
+    display: grid;
+    /* Wide enough for the punched notches, which reach half their width past
+       the card edge. */
+    gap: --spacing(4);
+  }
+
+  /* --- Result ticket ---------------------------------------------------- */
+
+  .result-card {
+    --result-card-surround: var(--color-results-bg);
+    --result-card-notch: 30px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    /* Elevation rather than an outline. A drop shadow also sidesteps the
+       problem an outline has here: overflow:hidden clips descendants to the
+       PADDING box, so a border would draw straight across the punched
+       notches.
+
+       No overflow:hidden here on purpose. Clipping the notches to the card
+       left the card's own rectangular shadow showing around the outer half
+       of each one; unclipped, the disc paints over that shadow in the page
+       colour, which is what a hole through the ticket should do. */
+    box-shadow: var(--shadow-sm);
+  }
+
+  .result-card__main {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(4);
+    padding: --spacing(5);
+  }
+
+  .result-card__airline {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-primary);
+  }
+
+  .result-card__logo {
+    width: 30px;
+    height: 30px;
+    flex: none;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
+  }
+
+  .result-card__leg {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: --spacing(4);
+  }
+
+  .result-card__time {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .result-card__time--arrive {
+    text-align: end;
+  }
+
+  .result-card__clock {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .result-card__iata {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .result-card__path {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  /* --- Journey bar -------------------------------------------------------
+     One segment per flight leg and per layover, laid out in proportion to the
+     minutes the backend returned. Thick segments are time in the air, thin
+     ones time on the ground; each carries a tooltip with its own detail.
+     ---------------------------------------------------------------------- */
+
+  .journey {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    width: 100%;
+    /* Room below the track for the stop codes, which are positioned. */
+    padding-block-end: --spacing(4);
+  }
+
+  /* Departure and arrival marks. The sprite plane points up and to the right,
+     so it already reads as climbing; turning it a quarter has it descending. */
+  .journey__mark {
+    width: 16px;
+    height: 16px;
+    flex: none;
+    color: var(--color-route-line);
+  }
+
+  .journey__mark--arrive {
+    rotate: 90deg;
+  }
+
+  .journey__track {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .journey__leg,
+  .journey__layover {
+    position: relative;
+    /* The grow factor is the segment's length in minutes, so the bar is drawn
+       to scale. min-width keeps a very short hop from vanishing. */
+    flex: var(--segment-minutes, 1) 1 0;
+    min-width: 12px;
+    border-radius: var(--radius-pill);
+    cursor: default;
+    transition: background-color var(--transition-fast),
+                height var(--transition-fast);
+  }
+
+  /* A 2px line is not a pointer target: this widens the hit area vertically
+     without changing what is drawn. */
+  .journey__leg::before,
+  .journey__layover::before {
+    content: "";
+    position: absolute;
+    inset-block: -11px;
+    inset-inline: 0;
+  }
+
+  .journey__leg {
+    height: 5px;
+    background-color: var(--color-journey-leg);
+  }
+
+  .journey__layover {
+    height: 1px;
+    background-color: var(--color-journey-layover);
+  }
+
+  /* Hover darkens each segment from its own colour, so the pair above stays
+     the single source of truth for the bar. */
+  .journey__leg:hover,
+  .journey__leg:focus-visible {
+    background-color: color-mix(in srgb, var(--color-journey-leg) 82%, black);
+  }
+
+  /* The layover thickens to the height of a leg, which is what makes a
+     one-pixel line worth pointing at. */
+  .journey__layover:hover,
+  .journey__layover:focus-visible {
+    height: 5px;
+    background-color: color-mix(in srgb, var(--color-journey-layover) 82%, black);
+  }
+
+  .journey__leg:focus-visible,
+  .journey__layover:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 3px;
+  }
+
+  /* The stop code sits under the layover it belongs to. */
+  .journey__code {
+    position: absolute;
+    inset-block-start: calc(100% + --spacing(2));
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-fg-muted);
+  }
+
+  /*
+   * The tooltip is present but clipped away, and hover or keyboard focus
+   * simply un-clips it. The same technique as the skip link: one element, one
+   * set of content, nothing built or moved by script.
+   */
+  .journey__tip {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  .journey__leg:hover > .journey__tip,
+  .journey__leg:focus-visible > .journey__tip,
+  .journey__layover:hover > .journey__tip,
+  .journey__layover:focus-visible > .journey__tip {
+    z-index: var(--z-dropdown);
+    inset-block-end: calc(100% + --spacing(2));
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    width: max-content;
+    max-width: 210px;
+    height: auto;
+    padding: --spacing(2) --spacing(3);
+    overflow: visible;
+    clip-path: none;
+    border-radius: var(--radius-sm);
+    background-color: var(--color-tooltip);
+    color: var(--color-on-tooltip);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    line-height: var(--leading-snug);
+    text-align: center;
+  }
+
+  .result-card__duration {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .result-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(2) --spacing(4);
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .result-card__meta-item {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .result-card__meta-item svg {
+    width: 14px;
+    height: 14px;
+    flex: none;
+  }
+
+  .result-card__divider {
+    width: var(--border-width);
+    height: 16px;
+    background-color: var(--color-line);
+  }
+
+  /* --- The stub --------------------------------------------------------- */
+
+  .result-card__aside {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: --spacing(1);
+    padding: --spacing(5);
+    border-block-start: var(--border-width) dashed var(--color-line);
+    text-align: center;
+  }
+
+  /* The punched holes that make the divider read as a perforation. */
+  .result-card__aside::before,
+  .result-card__aside::after {
+    content: "";
+    position: absolute;
+    width: var(--result-card-notch);
+    height: var(--result-card-notch);
+    border-radius: 50%;
+    background-color: var(--result-card-surround);
+  }
+
+  .result-card__aside::before {
+    inset-block-start: 0;
+    inset-inline-start: 0;
+    translate: -50% -50%;
+    /* Stacked: on the left card edge, so the ticket is to its right. */
+    box-shadow: inset -3px 0 3px -1px var(--color-notch-shade);
+  }
+
+  .result-card__aside::after {
+    inset-block-start: 0;
+    inset-inline-end: 0;
+    translate: 50% -50%;
+    box-shadow: inset 3px 0 3px -1px var(--color-notch-shade);
+  }
+
+  .result-card__trip {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* Rendered exactly as the backend supplies it. */
+  .result-card__price {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  @media (width >= 48rem) {
+    .result-card {
+      grid-template-columns: minmax(0, 1fr) minmax(200px, auto);
+    }
+
+    /* The perforation turns vertical, and the holes move to the card edges. */
+    .result-card__aside {
+      border-block-start: 0;
+      border-inline-start: var(--border-width) dashed var(--color-line);
+    }
+
+    .result-card__aside::before {
+      inset-block-start: 0;
+      inset-inline: 0 auto;
+      translate: -50% -50%;
+      /* Side by side: on the top card edge, so the ticket is below it. */
+      box-shadow: inset 0 -3px 3px -1px var(--color-notch-shade);
+    }
+
+    .result-card__aside::after {
+      inset-block: auto 0;
+      inset-inline: 0 auto;
+      translate: -50% 50%;
+      box-shadow: inset 0 3px 3px -1px var(--color-notch-shade);
+    }
+  }
+
+  .results__more {
+    display: flex;
+    justify-content: center;
+    margin: --spacing(6) 0 0;
+  }
+
+  .results__more-button {
+    min-height: 48px;
+    padding-inline: --spacing(6);
+    border-radius: var(--radius-md);
+    color: var(--color-primary);
+  }
+
+  /* --- Trust strip ------------------------------------------------------ */
+
+  .trust-strip {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: --spacing(3) --spacing(8);
+    margin: 0;
+    padding: 0 var(--container-padding) --spacing(10);
+    list-style: none;
+  }
+
+  .trust-strip__item {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+}
+
+/* ==========================================================================
+   BOOKING FLOW — REVIEW YOUR FLIGHT
+   The page a Select button opens. Everything on it is a redisplay of what the
+   backend returned for one offer: times, allowances, fare rules and price are
+   read-only here and are re-checked server-side before anything is booked.
+   ========================================================================== */
+@layer components {
+
+  /* --- Page shell ------------------------------------------------------- */
+
+  .review-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+    padding-block: --spacing(6) --spacing(10);
+  }
+
+  @media (width >= 64rem) {
+    .review-layout {
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: --spacing(6);
+      align-items: start;
+    }
+
+    /* The summary follows the itinerary down the page. The offset clears the
+       sticky header and keeps the layout gap above it. */
+    .review-aside {
+      position: sticky;
+      inset-block-start: calc(var(--header-height-lg) + --spacing(4));
+    }
+  }
+
+  /* Shared surface for every box on this page, so the review reads as the
+     same kind of card as the result tickets it came from. */
+  .review-panel {
+    padding: --spacing(5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .review-back {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-link);
+    text-decoration: none;
+  }
+
+  .review-back:hover { text-decoration: underline; }
+
+  /* --- Step indicator ---------------------------------------------------
+     Four steps of the booking flow. The state lives on the list item as a
+     data attribute so the Blade view can set it from the server idea of where
+     the traveller is, not from anything the browser decides.
+     ---------------------------------------------------------------------- */
+
+  .booking-steps {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .booking-steps__item {
+    position: relative;
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: --spacing(2);
+    text-align: center;
+  }
+
+  /* The connector runs from this dot to the next one, so it belongs to the
+     step it leaves rather than to the space between two of them. */
+  .booking-steps__item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    inset-block-start: calc(var(--step-indicator-size) / 2 - 1px);
+    inset-inline-start: calc(50% + var(--step-indicator-size) / 2 + --spacing(2));
+    inline-size: calc(100% - var(--step-indicator-size) - --spacing(4));
+    block-size: 2px;
+    background-color: var(--color-line);
+  }
+
+  .booking-steps__item[data-state="done"]::after {
+    background-color: var(--color-cta-from);
+  }
+
+  /* Before anything is complete the first step still shows its line filled:
+     the flow has been entered, which is what the first screen has to say. */
+  .booking-steps:not(:has([data-state="done"])) .booking-steps__item[data-state="current"]::after {
+    background-color: var(--color-cta-from);
+  }
+
+  .booking-steps__dot {
+    display: grid;
+    place-items: center;
+    inline-size: var(--step-indicator-size);
+    block-size: var(--step-indicator-size);
+    border: var(--border-width) solid var(--color-line-strong);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-muted);
+  }
+
+  .booking-steps__item[data-state="current"] .booking-steps__dot {
+    border-color: transparent;
+    background-image: var(--gradient-primary);
+    /* Fixed like the primary button: the fill under it is fixed too. */
+    color: var(--color-on-cta);
+  }
+
+  .booking-steps__item[data-state="done"] .booking-steps__dot {
+    border-color: var(--color-cta-from);
+    color: var(--color-cta-from);
+  }
+
+  .booking-steps__label {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .booking-steps__item[data-state="current"] .booking-steps__label {
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* --- Itinerary ticket -------------------------------------------------- */
+
+  .itinerary__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: --spacing(2);
+    margin: 0 0 --spacing(4);
+    font-size: var(--text-sm);
+  }
+
+  .itinerary__label {
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .itinerary__date { color: var(--color-fg-muted); }
+
+  .itinerary__airline {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+  }
+
+  .itinerary__logo {
+    inline-size: 34px;
+    block-size: 34px;
+    flex: none;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
+  }
+
+  .itinerary__carrier {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .itinerary__flight {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__leg {
+    display: grid;
+    /* Both ends of the flight side by side, the route line under them. One
+       above the other reads as two separate flights on a narrow screen. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: --spacing(4);
+    margin-block-start: --spacing(4);
+  }
+
+  @media (width < 48rem) {
+    .itinerary__point {
+      grid-row: 1;
+      grid-column: 1;
+      /* Half the width each: the time cannot sit beside the airport name. */
+      flex-direction: column;
+      align-items: flex-start;
+      gap: --spacing(1);
+    }
+
+    .itinerary__point--arrive { grid-column: 2; }
+
+    .itinerary__path {
+      grid-row: 2;
+      grid-column: 1 / -1;
+    }
+  }
+
+  @media (width >= 48rem) {
+    .itinerary__leg {
+      /* Fixed side columns, so the departure and return tickets line their
+         times and their route lines up with each other. */
+      grid-template-columns: minmax(0, 240px) minmax(0, 1fr) minmax(0, 240px);
+      align-items: center;
+      gap: --spacing(5);
+    }
+
+    /* Only once the leg is a row: stacked, both ends read from the left. */
+    .itinerary__point--arrive { justify-content: flex-end; }
+  }
+
+  .itinerary__point {
+    display: flex;
+    align-items: baseline;
+    gap: --spacing(3);
+    min-inline-size: 0;
+  }
+
+  .itinerary__time {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: none;
+  }
+
+  .itinerary__clock {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .itinerary__iata {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__place { min-inline-size: 0; }
+
+  .itinerary__city {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .itinerary__airport {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__path {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+    min-inline-size: 0;
+  }
+
+  .itinerary__duration,
+  .itinerary__note {
+    text-align: center;
+    font-size: var(--text-xs);
+  }
+
+  .itinerary__duration { color: var(--color-fg-muted); }
+  .itinerary__note { color: var(--color-success); }
+
+  /*
+   * The rule stops short of the plane rather than running under it: the plane
+   * is rotated 45deg, so a background on the glyph itself would mask the line
+   * as a diamond. Same trick as the route card, but the plane sits at the end
+   * of the line here instead of the middle.
+   */
+  .itinerary__line {
+    --itinerary-line-gap: 22px;
+
+    position: relative;
+    block-size: 2px;
+    background-image: linear-gradient(
+      to right,
+      var(--color-route-line) 0 calc(100% - var(--itinerary-line-gap)),
+      transparent calc(100% - var(--itinerary-line-gap)) 100%
+    );
+  }
+
+  .itinerary__line svg {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    /* The sprite plane points up and to the right; square it up along the line. */
+    translate: 0 -50%;
+    rotate: 45deg;
+    width: 18px;
+    height: 18px;
+    color: var(--color-route-line);
+  }
+
+  /* --- Per-segment detail disclosure ------------------------------------- */
+
+  .itinerary__more {
+    margin-block-start: --spacing(4);
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  .itinerary__summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    padding-block-start: --spacing(3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-link);
+    cursor: pointer;
+    /* A summary is a list-item by default; this drops the marker in Safari. */
+    list-style: none;
+  }
+
+  .itinerary__summary::-webkit-details-marker { display: none; }
+
+  .itinerary__chevron {
+    flex: none;
+    transition: rotate var(--transition-base);
+  }
+
+  .itinerary__more[open] .itinerary__chevron { rotate: 180deg; }
+
+  .itinerary__facts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(4);
+    margin: --spacing(4) 0 0;
+  }
+
+  @media (width >= 30rem) {
+    .itinerary__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (width >= 48rem) {
+    .itinerary__facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .itinerary__facts dt {
+    font-size: var(--text-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__facts dd {
+    margin: 2px 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  /* --- Baggage and fare rules -------------------------------------------- */
+
+  .rule-icon {
+    display: grid;
+    place-items: center;
+    inline-size: 26px;
+    block-size: 26px;
+    flex: none;
+    border-radius: 50%;
+    background-color: var(--color-info-surface);
+    color: var(--color-info);
+  }
+
+  .rule-icon svg {
+    width: 15px;
+    height: 15px;
+  }
+
+  .rule-icon--change {
+    background-color: var(--color-success-surface);
+    color: var(--color-success);
+  }
+
+  .rule-icon--brand {
+    background-color: color-mix(in srgb, var(--color-primary) 14%, transparent);
+    color: var(--color-primary);
+  }
+
+  /* --- Price summary ------------------------------------------------------ */
+
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: --spacing(4);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  .price-row--total {
+    padding-block-start: --spacing(4);
+    border-block-start: var(--border-width) solid var(--color-line);
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .price-row--total .price-row__value {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+  }
+
+  .price-assurance {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  .price-assurance svg {
+    width: 20px;
+    height: 20px;
+    color: var(--color-primary);
+  }
+
+  /* --- Step action bar ----------------------------------------------------
+     Closes every step of the booking flow: Back on the left, the step's own
+     primary action on the right. Step one has nowhere to go back to, so it
+     ships the bar with the Continue button alone.
+     ---------------------------------------------------------------------- */
+
+  .step-actions {
+    display: flex;
+    align-items: center;
+    gap: --spacing(4);
+    padding: --spacing(4) --spacing(5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* Holds the primary action at the end of the bar whether or not a Back
+     button precedes it. */
+  .step-actions__next { margin-inline-start: auto; }
+
+  /* On a phone the bar follows the page up and sits above the fold, so the way
+     on is reachable without scrolling to the end of a long form. Both buttons
+     stay on one row; they shrink instead of stacking. */
+  @media (width < 64rem) {
+    .step-actions {
+      position: sticky;
+      inset-block-end: --spacing(3);
+      z-index: var(--z-sticky);
+      /* It floats over the content behind it, so it needs the deeper shadow. */
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-actions .btn {
+      padding-inline: --spacing(3);
+      font-size: var(--text-sm);
+    }
+  }
+}
+
+/* ==========================================================================
+   BOOKING FLOW — FORM FIELDS
+   The bordered field used by the passenger, contact and payment steps. It is
+   deliberately not the flight-search field: a long form needs a label above a
+   visible box, not the borderless panel style the search bar uses.
+   ========================================================================== */
+@layer components {
+
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+    min-inline-size: 0;
+  }
+
+  .field__label {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-fg);
+  }
+
+  .field__optional {
+    font-weight: 400;
+    color: var(--color-fg-muted);
+  }
+
+  .field__control {
+    inline-size: 100%;
+    min-block-size: var(--search-field-height);
+    padding-inline: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    color: var(--color-fg-heading);
+    font: inherit;
+    font-size: var(--text-sm);
+    transition: border-color var(--transition-fast),
+                box-shadow var(--transition-fast);
+  }
+
+  .field__control::placeholder { color: var(--color-fg-muted); }
+
+  .field__control:hover:not(:disabled) { border-color: var(--color-line-strong); }
+
+  /* :focus rather than :focus-visible — a text box being typed into has to
+     show where the caret is, mouse or keyboard. */
+  .field__control:focus {
+    outline: none;
+    border-color: var(--color-ring);
+    box-shadow: var(--shadow-focus);
+  }
+
+  .field__control[aria-invalid="true"] { border-color: var(--color-error); }
+
+  .field__error {
+    font-size: var(--text-xs);
+    color: var(--color-error);
+  }
+
+  /* Selects: the chevron is a sibling SVG rather than a background image, so
+     it takes a token and follows the theme. */
+  .field__select {
+    position: relative;
+    display: flex;
+  }
+
+  .field__select select {
+    appearance: none;
+    padding-inline-end: --spacing(10);
+    cursor: pointer;
+  }
+
+  .field__chevron {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: --spacing(4);
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--color-fg-muted);
+  }
+
+  /* The browser's own calendar button stays: it is the affordance people look
+     for, and it follows color-scheme so it inverts with the theme. The date
+     format shown in an empty field is the browser's, not ours. */
+  .field__control[type="date"]::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    opacity: 0.55;
+  }
+
+  .field__control[type="date"]:hover::-webkit-calendar-picker-indicator { opacity: 1; }
+
+  /* --- File field ---------------------------------------------------------
+     The input is visually hidden inside its own label, so the box below is the
+     control. Without JavaScript it still picks a file; the name beside it is
+     what assets/js/components/file-field.js fills in.
+     ---------------------------------------------------------------------- */
+
+  .field__file {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    cursor: pointer;
+  }
+
+  .field__file:hover { border-color: var(--color-line-strong); }
+
+  /* The hidden input still takes focus, so the box has to show it. */
+  .field__file:has(input:focus-visible) {
+    border-color: var(--color-ring);
+    box-shadow: var(--shadow-focus);
+  }
+
+  .field__file-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+
+  .field__file[data-filled="true"] .field__file-name { color: var(--color-fg-heading); }
+
+  .field__file svg {
+    flex: none;
+    color: var(--color-fg-muted);
+  }
+
+  /* --- Field rows --------------------------------------------------------- */
+
+  .field-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+  }
+
+  @media (width >= 48rem) {
+    .field-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* Dialling code beside the number, as two boxes rather than one joined
+     control: they are two separate values to the backend. */
+  .phone-field {
+    display: grid;
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr);
+    gap: --spacing(2);
+  }
+
+  /* --- Hint popover -------------------------------------------------------
+     The guidance beside a field label. It opens on hover and on focus, so it
+     is reachable from the keyboard, and it is linked to the control it
+     explains with aria-describedby.
+     ---------------------------------------------------------------------- */
+
+  .hint {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .hint__trigger {
+    display: grid;
+    place-items: center;
+    inline-size: 18px;
+    block-size: 18px;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: none;
+    color: var(--color-primary);
+  }
+
+  .hint__trigger:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .hint__pop {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    inline-size: 264px;
+    padding: --spacing(4);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-panel);
+    color: var(--color-on-panel);
+    box-shadow: var(--shadow-lg);
+    /* Hidden by opacity rather than display, so the panel can fade and so a
+       screen reader still reaches it through aria-describedby. */
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--transition-fast), visibility var(--transition-fast);
+    /* Stacked below the field by default: at this width there is no room
+       beside it. */
+    inset-block-start: calc(100% + --spacing(3));
+    inset-inline-start: 50%;
+    translate: -50% 0;
+  }
+
+  .hint:hover .hint__pop,
+  .hint:focus-within .hint__pop {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* The tail. A rotated square rather than a border triangle, so it takes the
+     panel colour from the same token. */
+  .hint__pop::before {
+    content: "";
+    position: absolute;
+    inline-size: 12px;
+    block-size: 12px;
+    background-color: var(--color-panel);
+    rotate: 45deg;
+    inset-block-start: -5px;
+    inset-inline-start: calc(50% - 6px);
+  }
+
+  @media (width >= 64rem) {
+    /* Room beside the field now, which is where the guidance belongs: it can
+       be read at the same time as the box it describes. */
+    .hint__pop {
+      inset-block-start: -12px;
+      inset-inline-start: calc(100% + --spacing(4));
+      translate: 0 0;
+    }
+
+    .hint__pop::before {
+      inset-block-start: 18px;
+      inset-inline-start: -5px;
+    }
+  }
+
+  .hint__title {
+    display: block;
+    margin: 0 0 --spacing(3);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-on-panel);
+  }
+
+  .hint__example {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    padding: --spacing(3);
+    border-radius: var(--radius-md);
+    background-color: var(--color-panel-raised);
+  }
+
+  /* Stands in for the photo page of a travel document. */
+  .hint__photo {
+    display: grid;
+    place-items: center;
+    inline-size: 48px;
+    block-size: 60px;
+    flex: none;
+    border-radius: var(--radius-xs);
+    background-color: var(--color-panel-raised);
+    color: var(--color-on-panel-muted);
+  }
+
+  .hint__row { display: block; }
+  .hint__row + .hint__row { margin-block-start: --spacing(2); }
+
+  .hint__key {
+    display: block;
+    font-size: var(--text-2xs);
+    color: var(--color-on-panel-muted);
+  }
+
+  .hint__value {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--color-on-panel);
+  }
+
+  .hint__value--boxed {
+    padding: --spacing(1) --spacing(2);
+    border: var(--border-width) solid var(--color-panel-line);
+    border-radius: var(--radius-xs);
+  }
+
+  .hint__note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin: --spacing(3) 0 0;
+    font-size: var(--text-xs);
+    line-height: var(--leading-snug);
+    color: var(--color-on-panel-muted);
+  }
+
+  .hint__note svg {
+    flex: none;
+    margin-block-start: 1px;
+    color: var(--color-glass-accent);
+  }
+
+  /* --- Small pill, for facts the backend returned ------------------------- */
+
+  .tag-pill {
+    display: inline-flex;
+    align-items: center;
+    min-block-size: 22px;
+    padding-inline: --spacing(2);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-success-surface);
+    color: var(--color-success);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+  }
+
+  /* --- Trip summary, the aside on the passenger step ---------------------- */
+
+  .trip-summary__route {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, auto) minmax(0, 1fr);
+    align-items: center;
+    gap: --spacing(3);
+  }
+
+  .trip-summary__end--arrive { text-align: end; }
+
+  .trip-summary__clock {
+    display: block;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .trip-summary__iata,
+  .trip-summary__city,
+  .trip-summary__date {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .trip-summary__city { margin-block-start: --spacing(2); }
+
+  .trip-summary__rule {
+    margin: 0;
+    border: 0;
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  /* The step's done state carries a check instead of its number. */
+  .booking-steps__dot svg {
+    inline-size: 16px;
+    block-size: 16px;
   }
 }
