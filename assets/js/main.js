@@ -22,6 +22,7 @@ const pageModules = {
   home: () => import('./pages/home.js'),
   'search-results': () => import('./pages/search-results.js'),
   passengers: () => import('./pages/passengers.js'),
+  'add-ons': () => import('./pages/add-ons.js'),
 };
 
 async function startPageModule() {

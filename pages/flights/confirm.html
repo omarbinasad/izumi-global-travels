@@ -6,12 +6,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Review the flight you selected — times, baggage, fare rules and the total price before you enter passenger details.">
-  <!-- One priced offer, reached from a result card. Not a page a search engine
-       should hold on to: the offer behind it expires. -->
+  <meta name="description" content="Your booking request has been submitted. Our team confirms availability and the final fare before any payment.">
+  <!-- A receipt for one request. Nothing here belongs in an index. -->
   <meta name="robots" content="noindex">
 
-  <title>Review your flight — Izumi Global Travels</title>
+  <title>Booking request submitted — Izumi Global Travels</title>
 
   <!--
     Runs before paint so the dark theme never flashes light.
@@ -23,7 +22,7 @@
   <link rel="stylesheet" href="../../assets/css/build.css">
 </head>
 
-<body class="results-page" data-page="flight-details">
+<body class="results-page" data-page="confirm">
 
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
@@ -230,330 +229,215 @@
   <main id="main-content">
 
     <!-- ====================================================================
-         Review of one offer. data-offer-id is the only thing the next step
-         submits; every figure on this page is a redisplay of what the backend
-         returned and is re-priced and re-checked server-side before booking.
+         Step four. Nothing is bought here: the request has been lodged and the
+         team confirms availability and the final fare before anyone pays. The
+         reference, the status and every figure below are the backend's — the
+         browser does not generate a reference or add up a total.
          ==================================================================== -->
-    <div class="page-container pt-6" data-offer-id="off_1">
+    <div class="page-container pt-6" data-booking-reference="IGT-BR-240918">
 
-      <a class="review-back" href="search-results.html">
-        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-        Back to flight results
-      </a>
-
-      <h1 class="mt-4 mb-0 text-3xl font-bold tracking-tight text-fg-heading">Review your flight</h1>
-      <p class="mt-2 mb-0 text-sm text-fg-muted">Round trip &middot; 1 traveller &middot; Economy</p>
-
-      <!-- BLADE BOUNDARY: booking steps -> <x-booking.steps current="1" /> -->
-      <nav class="mt-6" aria-label="Booking progress">
+      <!-- BLADE BOUNDARY: booking steps -> <x-booking.steps current="4" /> -->
+      <nav aria-label="Booking progress">
         <ol class="booking-steps">
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Flight Details<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Passenger<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Add-ons<span class="sr-only"> — completed</span></span>
+          </li>
           <li class="booking-steps__item" data-state="current" aria-current="step">
-            <span class="booking-steps__dot" aria-hidden="true">1</span>
-            <span class="booking-steps__label">Flight Details</span>
-          </li>
-          <li class="booking-steps__item" data-state="upcoming">
-            <span class="booking-steps__dot" aria-hidden="true">2</span>
-            <span class="booking-steps__label">Passenger</span>
-          </li>
-          <li class="booking-steps__item" data-state="upcoming">
-            <span class="booking-steps__dot" aria-hidden="true">3</span>
-            <span class="booking-steps__label">Add-ons</span>
-          </li>
-          <li class="booking-steps__item" data-state="upcoming">
             <span class="booking-steps__dot" aria-hidden="true">4</span>
-            <span class="booking-steps__label">Confirm</span>
+            <span class="booking-steps__label">Confirm Booking Request</span>
           </li>
         </ol>
       </nav>
       <!-- END BLADE BOUNDARY: booking steps -->
     </div>
 
-    <div class="page-container review-layout">
+    <div class="page-container confirm-layout">
 
-      <div class="grid gap-5">
+      <!-- BLADE BOUNDARY: request receipt -> <x-booking.request-receipt /> -->
+      <div class="confirm-hero">
+        <!-- Decorative. The status it illustrates is written out below it. -->
+        <svg class="confirm-hero__art" viewBox="0 0 200 200" aria-hidden="true">
+          <defs>
+            <linearGradient id="confirm-disc" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--color-cta-from)"/>
+              <stop offset="100%" stop-color="#25b39a"/>
+            </linearGradient>
+          </defs>
+          <circle cx="100" cy="100" r="58" fill="url(#confirm-disc)"/>
+          <rect x="78" y="70" width="44" height="58" rx="6" fill="#fff"/>
+          <path d="M87 84h26M87 94h26M87 104h14" stroke="var(--color-cta-from)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="118" cy="118" r="15" fill="#1f9d76"/>
+          <path d="m111 118 4.5 4.5L125 113" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="var(--color-primary)" opacity="0.55">
+            <circle cx="42" cy="74" r="3"/>
+            <circle cx="52" cy="132" r="2.4"/>
+            <circle cx="160" cy="72" r="2.6"/>
+            <circle cx="150" cy="140" r="3.2"/>
+          </g>
+          <g fill="#1f9d76" opacity="0.6">
+            <circle cx="60" cy="58" r="2.4"/>
+            <circle cx="146" cy="52" r="2"/>
+            <circle cx="36" cy="112" r="2.2"/>
+          </g>
+        </svg>
 
-        <!-- BLADE BOUNDARY: itinerary slice -> <x-booking.itinerary :slice="$slice" /> -->
-        <section class="review-panel" data-slice-id="slc_out">
-          <h2 class="itinerary__head">
-            <span class="itinerary__label">Departure</span>
-            <span aria-hidden="true">&middot;</span>
-            <span class="itinerary__date">Thu, 18 Sep</span>
-          </h2>
+        <h1 class="confirm-hero__title">Booking Request Submitted!</h1>
+        <p class="confirm-hero__text">
+          Your request was submitted successfully. Our team will review availability and the final fare, then contact you.
+        </p>
 
-          <p class="itinerary__airline" data-segment-id="seg_out_1">
-            <img class="itinerary__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-            <span>
-              <span class="itinerary__carrier">Biman Bangladesh Airlines</span>
-              <span class="itinerary__flight">BG 376 &middot; Boeing 787-8 &middot; Economy</span>
-            </span>
-          </p>
+        <p class="confirm-ref">
+          <span class="confirm-ref__label">Booking Request Reference</span>
+          <span class="confirm-ref__code">IGT-BR-240918</span>
+        </p>
 
-          <div class="itinerary__leg">
-            <p class="itinerary__point">
-              <span class="itinerary__time">
-                <span class="itinerary__clock">02:20</span>
-                <span class="itinerary__iata">DAC</span>
-              </span>
-              <span class="itinerary__place">
-                <span class="itinerary__city">Dhaka (DAC)</span>
-                <span class="itinerary__airport">Hazrat Shahjalal International Airport</span>
-              </span>
-            </p>
+        <p class="confirm-hero__status">
+          <span class="status-pill status-pill--pending">Pending Review</span>
+        </p>
 
-            <p class="itinerary__path">
-              <span class="itinerary__duration">6h 45m &middot; Direct</span>
-              <span class="itinerary__line" aria-hidden="true">
-                <svg class="icon--solid"><use href="#i-plane"></use></svg>
-              </span>
-              <span class="itinerary__note">Arrives same day</span>
-            </p>
-
-            <p class="itinerary__point itinerary__point--arrive">
-              <span class="itinerary__time">
-                <span class="itinerary__clock">10:05</span>
-                <span class="itinerary__iata">NRT</span>
-              </span>
-              <span class="itinerary__place">
-                <span class="itinerary__city">Tokyo (NRT)</span>
-                <span class="itinerary__airport">Narita International Airport</span>
-              </span>
-            </p>
-          </div>
-
-          <details class="itinerary__more">
-            <summary class="itinerary__summary">
-              Flight details
-              <svg class="icon size-4 itinerary__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-            </summary>
-
-            <dl class="itinerary__facts">
-              <div><dt>Aircraft</dt><dd>Boeing 787-8</dd></div>
-              <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-              <div><dt>Departs from</dt><dd>Terminal 2, Dhaka</dd></div>
-              <div><dt>Arrives at</dt><dd>Terminal 1, Narita</dd></div>
-              <div><dt>Flight time</dt><dd>6h 45m</dd></div>
-              <div><dt>Operated by</dt><dd>Biman Bangladesh Airlines</dd></div>
-              <div><dt>Seat</dt><dd>Standard, 79 cm pitch</dd></div>
-              <div><dt>Meal</dt><dd>Meal included</dd></div>
-            </dl>
-          </details>
-        </section>
-        <!-- END BLADE BOUNDARY: itinerary slice -->
-
-        <section class="review-panel" data-slice-id="slc_ret">
-          <h2 class="itinerary__head">
-            <span class="itinerary__label">Return</span>
-            <span aria-hidden="true">&middot;</span>
-            <span class="itinerary__date">Sat, 27 Sep</span>
-          </h2>
-
-          <p class="itinerary__airline" data-segment-id="seg_ret_1">
-            <img class="itinerary__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-            <span>
-              <span class="itinerary__carrier">Biman Bangladesh Airlines</span>
-              <span class="itinerary__flight">BG 377 &middot; Boeing 787-8 &middot; Economy</span>
-            </span>
-          </p>
-
-          <div class="itinerary__leg">
-            <p class="itinerary__point">
-              <span class="itinerary__time">
-                <span class="itinerary__clock">11:00</span>
-                <span class="itinerary__iata">NRT</span>
-              </span>
-              <span class="itinerary__place">
-                <span class="itinerary__city">Tokyo (NRT)</span>
-                <span class="itinerary__airport">Narita International Airport</span>
-              </span>
-            </p>
-
-            <p class="itinerary__path">
-              <span class="itinerary__duration">7h 15m &middot; Direct</span>
-              <span class="itinerary__line" aria-hidden="true">
-                <svg class="icon--solid"><use href="#i-plane"></use></svg>
-              </span>
-              <span class="itinerary__note">Arrives same day</span>
-            </p>
-
-            <p class="itinerary__point itinerary__point--arrive">
-              <span class="itinerary__time">
-                <span class="itinerary__clock">15:15</span>
-                <span class="itinerary__iata">DAC</span>
-              </span>
-              <span class="itinerary__place">
-                <span class="itinerary__city">Dhaka (DAC)</span>
-                <span class="itinerary__airport">Hazrat Shahjalal International Airport</span>
-              </span>
-            </p>
-          </div>
-
-          <details class="itinerary__more">
-            <summary class="itinerary__summary">
-              Flight details
-              <svg class="icon size-4 itinerary__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-            </summary>
-
-            <dl class="itinerary__facts">
-              <div><dt>Aircraft</dt><dd>Boeing 787-8</dd></div>
-              <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-              <div><dt>Departs from</dt><dd>Terminal 1, Narita</dd></div>
-              <div><dt>Arrives at</dt><dd>Terminal 2, Dhaka</dd></div>
-              <div><dt>Flight time</dt><dd>7h 15m</dd></div>
-              <div><dt>Operated by</dt><dd>Biman Bangladesh Airlines</dd></div>
-              <div><dt>Seat</dt><dd>Standard, 79 cm pitch</dd></div>
-              <div><dt>Meal</dt><dd>Meal included</dd></div>
-            </dl>
-          </details>
-        </section>
-
-        <div class="grid gap-5 md:grid-cols-2">
-
-          <!-- BLADE BOUNDARY: baggage allowance -> <x-booking.baggage /> -->
-          <section class="review-panel">
-            <h2 class="m-0 text-base font-semibold text-fg-heading">Baggage included</h2>
-            <ul class="grid gap-4 sm:grid-cols-2 mt-4 m-0 p-0 list-none">
-              <li class="flex items-center gap-3">
-                <svg class="icon size-8 text-primary" aria-hidden="true"><use href="#i-bag"></use></svg>
-                <span>
-                  <span class="block text-xs text-fg-muted">Cabin baggage</span>
-                  <span class="block text-base font-semibold text-fg-heading">7 kg</span>
-                  <span class="block text-xs text-fg-muted">One adult</span>
-                </span>
-              </li>
-              <li class="flex items-center gap-3">
-                <svg class="icon size-8 text-primary" aria-hidden="true"><use href="#i-bag"></use></svg>
-                <span>
-                  <span class="block text-xs text-fg-muted">Checked baggage</span>
-                  <span class="block text-base font-semibold text-fg-heading">23 kg</span>
-                  <span class="block text-xs text-fg-muted">One adult</span>
-                </span>
-              </li>
-            </ul>
-          </section>
-          <!-- END BLADE BOUNDARY: baggage allowance -->
-
-          <!-- BLADE BOUNDARY: fare rules -> <x-booking.fare-rules /> -->
-          <section class="review-panel" data-fare-id="far_saver">
-            <h2 class="m-0 text-base font-semibold text-fg-heading">Fare rules</h2>
-            <ul class="grid gap-3 mt-4 m-0 p-0 list-none">
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon rule-icon--change" aria-hidden="true">
-                  <svg class="icon"><use href="#i-refresh"></use></svg>
-                </span>
-                Changes allowed with fee
-              </li>
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon" aria-hidden="true">
-                  <svg class="icon"><use href="#i-target"></use></svg>
-                </span>
-                Refundable with fee
-              </li>
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                  <svg class="icon"><use href="#i-shield"></use></svg>
-                </span>
-                Economy Saver
-              </li>
-            </ul>
-
-            <a class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-link no-underline hover:underline" href="#full-fare-rules">
-              View full fare rules
-              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-            </a>
-          </section>
-          <!-- END BLADE BOUNDARY: fare rules -->
-        </div>
-
-        <!-- The conditions the "View full fare rules" link points at. They are
-             the carrier rules the backend returned; the amounts are quoted
-             again before any change or refund is taken. -->
-        <section class="review-panel" id="full-fare-rules">
-          <h2 class="m-0 text-base font-semibold text-fg-heading">Full fare rules</h2>
-          <dl class="grid gap-4 sm:grid-cols-2 mt-4 m-0">
-            <div>
-              <dt class="text-2xs uppercase tracking-caps text-fg-muted">Changes</dt>
-              <dd class="mt-1 mb-0 text-sm text-fg">Permitted up to 24 hours before departure. Change fee plus any fare difference.</dd>
-            </div>
-            <div>
-              <dt class="text-2xs uppercase tracking-caps text-fg-muted">Cancellation</dt>
-              <dd class="mt-1 mb-0 text-sm text-fg">Refundable to the original payment method, less the carrier cancellation fee.</dd>
-            </div>
-            <div>
-              <dt class="text-2xs uppercase tracking-caps text-fg-muted">No-show</dt>
-              <dd class="mt-1 mb-0 text-sm text-fg">The fare is forfeited if the flight is missed without notice. Taxes stay refundable.</dd>
-            </div>
-            <div>
-              <dt class="text-2xs uppercase tracking-caps text-fg-muted">Name changes</dt>
-              <dd class="mt-1 mb-0 text-sm text-fg">Not permitted. The passenger name must match the travel document exactly.</dd>
-            </div>
-          </dl>
-        </section>
-
-        <p class="m-0 text-xs text-fg-muted">Fares and seat availability are confirmed again before payment.</p>
-
-        <!-- BLADE BOUNDARY: step actions -> <x-booking.step-actions /> -->
-        <!--
-          Every step of the booking flow ends with this bar. From step two on it
-          also carries the way back, as the first child:
-            <a class="btn btn--outline" href="flight-details.html">Back</a>
-          Step one omits it: there is nothing behind this page but the results
-          list, which the link at the top of the page already offers.
-        -->
-        <div class="step-actions">
-          <a class="btn btn--primary step-actions__next" href="passengers.html">Continue to passenger details</a>
-        </div>
-        <!-- END BLADE BOUNDARY: step actions -->
+        <p class="confirm-hero__note">
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-lock"></use></svg>
+          No payment has been taken.
+        </p>
       </div>
+      <!-- END BLADE BOUNDARY: request receipt -->
 
-      <!-- BLADE BOUNDARY: price summary -> <x-booking.price-summary /> -->
-      <aside class="review-aside grid gap-5">
-        <section class="review-panel">
-          <h2 class="m-0 text-lg font-semibold text-fg-heading">Price summary</h2>
+      <!-- BLADE BOUNDARY: request summary -> <x-booking.request-summary /> -->
+      <section class="review-panel" aria-labelledby="request-summary-title">
+        <div class="confirm-head">
+          <h2 class="m-0 text-lg font-semibold text-fg-heading" id="request-summary-title">Request Summary</h2>
+          <p class="confirm-head__status">
+            Status
+            <span class="status-pill status-pill--pending">Pending Review</span>
+          </p>
+        </div>
 
-          <dl class="grid gap-3 mt-4 m-0">
-            <div class="price-row">
-              <dt>Adult &times; 1</dt>
-              <dd class="m-0 price-row__value">BDT 61,900</dd>
-            </div>
-            <div class="price-row">
-              <dt>Taxes &amp; fees</dt>
-              <dd class="m-0 price-row__value">BDT 6,550</dd>
-            </div>
-            <div class="price-row price-row--total">
-              <dt>Total</dt>
-              <dd class="m-0 price-row__value">BDT 68,450</dd>
-            </div>
-          </dl>
+        <dl class="summary-rows">
 
-          <p class="mt-2 mb-0 text-xs text-fg-muted">Round-trip total &middot; Includes taxes and fees</p>
-
-          <ul class="grid gap-3 mt-5 m-0 p-0 list-none">
-            <li class="price-assurance">
-              <svg class="icon" aria-hidden="true"><use href="#i-shield"></use></svg>
-              Secure booking
-            </li>
-            <li class="price-assurance">
-              <svg class="icon" aria-hidden="true"><use href="#i-tag"></use></svg>
-              No hidden fees
-            </li>
-          </ul>
-        </section>
-        <!-- END BLADE BOUNDARY: price summary -->
-
-        <section class="review-panel">
-          <div class="flex items-center gap-4">
-            <span class="rule-icon rule-icon--brand size-12" aria-hidden="true">
-              <svg class="icon size-6"><use href="#i-headset"></use></svg>
-            </span>
-            <div>
-              <h2 class="m-0 text-base font-semibold text-fg-heading">Need help?</h2>
-              <p class="mt-1 mb-0 text-sm text-fg-muted">Our support team is ready to assist.</p>
-            </div>
+          <div class="summary-row" data-offer-id="off_1">
+            <dt class="summary-row__label">
+              <img class="summary-row__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120">
+              Flight details
+            </dt>
+            <dd class="summary-row__value">
+              <span class="summary-row__line">Biman Bangladesh Airlines <span aria-hidden="true">&middot;</span> BG 376 <span aria-hidden="true">&middot;</span> Non-stop</span>
+              <span class="summary-row__line">
+                18 Sep <span aria-hidden="true">&middot;</span>
+                <strong>02:20</strong> DAC
+                <svg class="icon size-4 summary-row__arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <strong>10:05</strong> NRT <span aria-hidden="true">&middot;</span>
+                <span class="summary-row__muted">6h 45m</span>
+              </span>
+              <span class="summary-row__line">
+                27 Sep <span aria-hidden="true">&middot;</span>
+                <strong>11:00</strong> NRT
+                <svg class="icon size-4 summary-row__arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                <strong>15:15</strong> DAC <span aria-hidden="true">&middot;</span>
+                <span class="summary-row__muted">7h 15m</span>
+              </span>
+            </dd>
           </div>
 
-          <a class="btn btn--secondary w-full mt-4" href="../support/help-centre.html">Contact support</a>
-        </section>
-      </aside>
+          <div class="summary-row">
+            <dt class="summary-row__label">
+              <svg class="icon size-5 summary-row__icon" aria-hidden="true"><use href="#i-user"></use></svg>
+              Passengers
+            </dt>
+            <dd class="summary-row__value">
+              <span class="summary-row__line">2 Adults <span aria-hidden="true">&middot;</span> 1 Child <span aria-hidden="true">&middot;</span> Economy</span>
+              <span class="summary-row__line summary-row__muted">Passenger details completed</span>
+            </dd>
+            <span class="summary-row__done" aria-label="Complete">
+              <svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg>
+            </span>
+          </div>
+
+          <div class="summary-row">
+            <dt class="summary-row__label">
+              <svg class="icon size-5 summary-row__icon" aria-hidden="true"><use href="#i-bag"></use></svg>
+              Add-ons
+            </dt>
+            <dd class="summary-row__value">
+              <span class="summary-row__line"><span class="summary-row__who">P1:</span> Window &times; 2 <span aria-hidden="true">&middot;</span> Halal <span aria-hidden="true">&middot;</span> Standard insurance</span>
+              <span class="summary-row__line"><span class="summary-row__who">P2:</span> Aisle &times; 2 <span aria-hidden="true">&middot;</span> Regular <span aria-hidden="true">&middot;</span> Premium insurance</span>
+              <span class="summary-row__line"><span class="summary-row__who">P3:</span> No preference <span aria-hidden="true">&middot;</span> Vegetarian <span aria-hidden="true">&middot;</span> No insurance</span>
+            </dd>
+          </div>
+
+          <div class="summary-row">
+            <dt class="summary-row__label">
+              <svg class="icon size-5 summary-row__icon" aria-hidden="true"><use href="#i-mail"></use></svg>
+              Contact
+            </dt>
+            <dd class="summary-row__value">
+              <span class="summary-row__line">
+                <a href="mailto:name@example.com">name@example.com</a>
+                <span aria-hidden="true">&middot;</span>
+                <a href="tel:+8801XXXXXXXX">+880 1XXXXXXXXX</a>
+              </span>
+            </dd>
+          </div>
+
+          <div class="summary-row summary-row--price">
+            <dt class="summary-row__label">
+              <svg class="icon size-5 summary-row__icon" aria-hidden="true"><use href="#i-tag"></use></svg>
+              <span class="sr-only">Estimated price</span>
+            </dt>
+            <dd class="summary-row__value">
+              <span class="price-row">
+                <span>Fare &amp; taxes</span>
+                <span class="price-row__value">BDT 191,560</span>
+              </span>
+              <span class="price-row">
+                <span>Add-ons</span>
+                <span class="price-row__value">BDT 8,500</span>
+              </span>
+              <span class="price-row price-row--total">
+                <span>Estimated total</span>
+                <span class="price-row__value">BDT 200,060</span>
+              </span>
+              <span class="summary-row__line summary-row__muted">Final fare and availability will be confirmed by our team.</span>
+            </dd>
+          </div>
+        </dl>
+      </section>
+      <!-- END BLADE BOUNDARY: request summary -->
+    </div>
+
+    <div class="page-container confirm-foot">
+      <p class="confirm-actions">
+        <a class="btn btn--secondary" href="../../index.html">
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-home"></use></svg>
+          Go to Home
+        </a>
+      </p>
+
+      <p class="next-steps">
+        <svg class="icon size-5 next-steps__icon" aria-hidden="true"><use href="#i-info"></use></svg>
+        <span>
+          <strong class="next-steps__lead">What happens next?</strong>
+          We review your request
+          <svg class="icon size-4 next-steps__arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          confirm availability and fare
+          <svg class="icon size-4 next-steps__arrow" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          contact you to complete the booking.
+        </span>
+      </p>
     </div>
   </main>
   <!-- END BLADE BOUNDARY: main content -->

@@ -8,12 +8,31 @@
 
 import { qs, qsa, on } from '../core/dom.js';
 import { initDateRange } from './date-range.js';
+import { initSteppers } from './stepper.js';
+import { initAirportFields } from './airport-field.js';
 
 /** Product tabs: Flights / eSIM / Flight status. */
 function initTabs(root) {
   const tabs = qsa('[data-search-tab]', root);
 
   if (tabs.length === 0) return;
+
+  const list = tabs[0].closest('[role="tablist"]');
+
+  /*
+   * The pill is drawn by the stylesheet; the two values below are the only
+   * things that can only be known at runtime, which is why they are set here
+   * as custom properties rather than as styles.
+   */
+  function slide(target) {
+    if (!list) return;
+
+    list.style.setProperty('--tab-x', `${target.offsetLeft}px`);
+    list.style.setProperty('--tab-w', `${target.offsetWidth}px`);
+    /* Added last, so the pill appears already in position instead of sliding
+       in from the start of the row on the first paint. */
+    list.dataset.slider = 'true';
+  }
 
   function select(target) {
     tabs.forEach((tab) => {
@@ -25,7 +44,15 @@ function initTabs(root) {
 
       if (panel) panel.hidden = !isSelected;
     });
+
+    slide(target);
   }
+
+  /* Label widths change with the viewport, so the pill is measured again. */
+  on(window, 'resize', () => {
+    const current = tabs.find((tab) => tab.getAttribute('aria-selected') === 'true');
+    if (current) slide(current);
+  });
 
   /* Set the initial roving tabindex: only the selected tab is a tab stop. */
   select(tabs.find((tab) => tab.getAttribute('aria-selected') === 'true') ?? tabs[0]);
@@ -224,6 +251,8 @@ export function initFlightSearch(scope = document) {
   initTripType(root);
   initSwap(root);
   initPax(root);
+  initSteppers(root);
+  initAirportFields(root);
   initDateDisplays(root);
   initDateRange(root);
 }
