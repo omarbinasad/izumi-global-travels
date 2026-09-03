@@ -281,6 +281,14 @@
   @keyframes sheet-in {
     from { translate: -100% 0; }
   }
+
+  /* The tick lands after the disc it sits on, so the two read as one event
+     rather than as a single fade. */
+  @keyframes stamp-in {
+    from { opacity: 0; scale: 0.3; }
+    70%  { scale: 1.12; }
+    to   { opacity: 1; scale: 1; }
+  }
 }
 
 /* ==========================================================================
@@ -968,6 +976,20 @@
     .site-nav {
       display: contents;
     }
+  }
+
+  /* --- Header elevation ---------------------------------------------------
+     Flat while the page is at the top, lifted once content is moving under
+     it. assets/js/components/header.js sets the attribute; everything the
+     shadow looks like is here.
+     ---------------------------------------------------------------------- */
+
+  [data-site-header] {
+    transition: box-shadow var(--transition-base);
+  }
+
+  [data-site-header][data-scrolled="true"] {
+    box-shadow: var(--shadow-md);
   }
 
   /* --- Theme switch: two options, light and dark --- */
@@ -3662,7 +3684,7 @@
 
   .result-card {
     --result-card-surround: var(--color-results-bg);
-    --result-card-notch: 30px;
+    --result-card-notch: 26px;
 
     display: grid;
     grid-template-columns: 1fr;
@@ -3700,12 +3722,42 @@
 
   .result-card__carrier { min-width: 0; }
 
-  /* Pushed to the end of the row, whatever the airline name is called. */
+  /* --- Per-slice carrier ---------------------------------------------------
+     A round trip can be flown by two airlines, so each leg names its own.
+     ---------------------------------------------------------------------- */
+
+  .result-card__slice-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(2) --spacing(3);
+    margin-block-end: --spacing(3);
+  }
+
+  .result-card__slice-carrier {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .result-card__slice-logo {
+    width: 18px;
+    height: 18px;
+    flex: none;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
+  }
+
   .result-card__badges {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: --spacing(2);
-    margin-inline-start: auto;
   }
 
   /* --- Result badges -------------------------------------------------------
@@ -3765,7 +3817,7 @@
     display: inline-flex;
     align-items: center;
     gap: --spacing(2);
-    margin: 0 0 --spacing(3);
+    margin: 0;
     padding: --spacing(1) --spacing(3);
     border-radius: var(--radius-pill);
     /* Mixed from the brand rather than a surface token: the chip sits on the
@@ -4051,11 +4103,6 @@
   }
 
   /* Rendered exactly as the backend supplies it. */
-  .result-card__note {
-    font-size: var(--text-xs);
-    color: var(--color-fg-muted);
-  }
-
   .result-card__price {
     font-size: var(--text-2xl);
     font-weight: 700;
@@ -4087,6 +4134,15 @@
       inset-inline: 0 auto;
       translate: -50% 50%;
       box-shadow: inset 0 3px 3px -1px var(--color-notch-shade);
+    }
+
+    /* Both notches sit on the left edge at this width, so the top right
+       corner of the aside is free for the badge. Below it the badge stays in
+       the flow, where it would otherwise land on a notch. */
+    .result-card__badges {
+      position: absolute;
+      inset-block-start: --spacing(3);
+      inset-inline-end: --spacing(4);
     }
   }
 
@@ -4367,7 +4423,10 @@
     color: var(--color-fg-heading);
   }
 
-  .itinerary__iata {
+  /* The date under the clock. The code is not repeated here: it is already
+     beside the city name to the right of it. */
+  .itinerary__when {
+    white-space: nowrap;
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
   }
@@ -5405,11 +5464,38 @@
     text-align: center;
   }
 
+  /*
+   * The receipt plays itself in on arrival, one part after the next. Every
+   * from-state lives inside its @keyframes and the fill is backwards, so with
+   * animation unavailable — no JavaScript involved either way — the page is
+   * simply the finished state. The global prefers-reduced-motion rule cuts all
+   * of it to a single frame.
+   */
   .confirm-hero__art {
     width: 200px;
     height: 200px;
     max-width: 100%;
+    animation: zoom-in 520ms var(--ease-entrance) backwards;
   }
+
+  .confirm-hero__tick {
+    /* Without a fill box the origin would be the whole 200x200 canvas, and the
+       tick would swing in from the corner instead of growing in place. */
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: stamp-in 480ms var(--ease-entrance) 380ms backwards;
+  }
+
+  .confirm-hero__title { animation: rise-in 520ms var(--ease-entrance) 160ms backwards; }
+  .confirm-hero__text { animation: rise-in 520ms var(--ease-entrance) 220ms backwards; }
+  .confirm-ref { animation: rise-in 520ms var(--ease-entrance) 300ms backwards; }
+  .confirm-hero__status { animation: rise-in 520ms var(--ease-entrance) 380ms backwards; }
+  .confirm-hero__note { animation: rise-in 520ms var(--ease-entrance) 440ms backwards; }
+  .confirm-actions { animation: rise-in 520ms var(--ease-entrance) 500ms backwards; }
+
+  .confirm-layout > .review-panel { animation: rise-in 560ms var(--ease-entrance) 240ms backwards; }
+
+  .next-steps { animation: fade-in 560ms var(--ease-entrance) 560ms backwards; }
 
   .confirm-hero__title {
     margin: --spacing(2) 0 0;
@@ -5604,16 +5690,12 @@
 
   /* --- Foot ---------------------------------------------------------------- */
 
-  .confirm-foot {
-    display: grid;
-    gap: --spacing(4);
-    padding-block-end: --spacing(10);
-  }
+  .confirm-foot { padding-block-end: --spacing(10); }
 
   .confirm-actions {
     display: flex;
     justify-content: center;
-    margin: 0;
+    margin: --spacing(6) 0 0;
   }
 
   .next-steps {

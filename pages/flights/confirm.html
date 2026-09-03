@@ -281,8 +281,10 @@
           <circle cx="100" cy="100" r="58" fill="url(#confirm-disc)"/>
           <rect x="78" y="70" width="44" height="58" rx="6" fill="#fff"/>
           <path d="M87 84h26M87 94h26M87 104h14" stroke="var(--color-cta-from)" stroke-width="4" stroke-linecap="round"/>
-          <circle cx="118" cy="118" r="15" fill="#1f9d76"/>
-          <path d="m111 118 4.5 4.5L125 113" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <g class="confirm-hero__tick">
+            <circle cx="118" cy="118" r="15" fill="#1f9d76"/>
+            <path d="m111 118 4.5 4.5L125 113" stroke="#fff" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          </g>
           <g fill="var(--color-primary)" opacity="0.55">
             <circle cx="42" cy="74" r="3"/>
             <circle cx="52" cy="132" r="2.4"/>
@@ -313,6 +315,13 @@
         <p class="confirm-hero__note">
           <svg class="icon size-4" aria-hidden="true"><use href="#i-lock"></use></svg>
           No payment has been taken.
+        </p>
+
+        <p class="confirm-actions">
+          <a class="btn btn--secondary" href="../../index.html">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-home"></use></svg>
+            Go to Home
+          </a>
         </p>
       </div>
       <!-- END BLADE BOUNDARY: request receipt -->
@@ -420,13 +429,6 @@
     </div>
 
     <div class="page-container confirm-foot">
-      <p class="confirm-actions">
-        <a class="btn btn--secondary" href="../../index.html">
-          <svg class="icon size-4" aria-hidden="true"><use href="#i-home"></use></svg>
-          Go to Home
-        </a>
-      </p>
-
       <p class="next-steps">
         <svg class="icon size-5 next-steps__icon" aria-hidden="true"><use href="#i-info"></use></svg>
         <span>

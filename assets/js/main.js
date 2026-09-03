@@ -11,6 +11,7 @@
 
 import { initTheme } from './core/theme.js';
 import { initNavigation } from './components/navigation.js';
+import { initHeaderShadow } from './components/header.js';
 import { initReveal } from './components/reveal.js';
 import { initLocale } from './components/locale.js';
 
@@ -37,6 +38,7 @@ async function startPageModule() {
 
 initTheme();
 initNavigation();
+initHeaderShadow();
 initReveal();
 initLocale();
 startPageModule();

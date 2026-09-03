@@ -699,6 +699,13 @@
                   <span class="filter-option__label">China Southern</span>
                   <span class="filter-option__count">8</span>
                 </label>
+
+                <label class="filter-option" for="airline-china-eastern">
+                  <input type="checkbox" id="airline-china-eastern" name="airlines[]" value="china-eastern" checked>
+                  <img class="filter-option__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                  <span class="filter-option__label">China Eastern</span>
+                  <span class="filter-option__count">6</span>
+                </label>
             </div>
           </details>
 
@@ -776,23 +783,27 @@
                 <p class="result-card__airline">
                   <img class="result-card__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
                   <span class="result-card__carrier">Biman Bangladesh Airlines</span>
-                  <span class="result-card__badges">
-                    <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
-                  </span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Departure</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Thu, 18 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                      Biman Bangladesh Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">02:20</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">02:20</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">6h 45m &middot; Direct</span>
@@ -801,34 +812,41 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 405" role="img" tabindex="0" aria-label="Flight DAC to NRT, 6h 45m">
-                          <span class="journey__tip" aria-hidden="true">DAC – NRT<br>Flight time 6h 45m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 405" role="img" tabindex="0" aria-label="Flight DAC to NRT, 6h 45m">
+                            <span class="journey__tip" aria-hidden="true">DAC – NRT<br>Flight time 6h 45m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">10:05</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">10:05</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Return</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Sat, 27 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                      Biman Bangladesh Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">11:00</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">11:00</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">7h 15m &middot; Direct</span>
@@ -837,19 +855,19 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 435" role="img" tabindex="0" aria-label="Flight NRT to DAC, 7h 15m">
-                          <span class="journey__tip" aria-hidden="true">NRT – DAC<br>Flight time 7h 15m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 435" role="img" tabindex="0" aria-label="Flight NRT to DAC, 7h 15m">
+                            <span class="journey__tip" aria-hidden="true">NRT – DAC<br>Flight time 7h 15m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">15:15</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">15:15</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
                   </div>
                 </div>
 
@@ -861,6 +879,9 @@
               </div>
 
               <div class="result-card__aside">
+                <span class="result-card__badges">
+                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -869,7 +890,6 @@
                   <span data-trip-only="round">BDT 68,450</span>
                   <span data-trip-only="one">BDT 39,900</span>
                 </span>
-                <span class="result-card__note">Includes taxes &amp; fees</span>
                 <a class="btn btn--primary w-full mt-3" href="flight-details.html">Select</a>
               </div>
             </article>
@@ -881,24 +901,27 @@
                 <p class="result-card__airline">
                   <img class="result-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
                   <span class="result-card__carrier">Cathay Pacific</span>
-                
-                  <span class="result-card__badges">
-                    <span class="result-badge" data-result-badge hidden></span>
-                  </span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Departure</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Thu, 18 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">02:00</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">02:00</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">10h 45m &middot; 1 stop in HKG</span>
@@ -907,41 +930,48 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 165" role="img" tabindex="0" aria-label="Flight DAC to HKG, 2h 45m">
-                          <span class="journey__tip" aria-hidden="true">DAC – HKG<br>Flight time 2h 45m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 155" role="img" tabindex="0" aria-label="Layover at Hong Kong International, 2h 35m">
-                          <span class="journey__code" aria-hidden="true">HKG</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in HKG<br>2h 35m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 325" role="img" tabindex="0" aria-label="Flight HKG to NRT, 5h 25m">
-                          <span class="journey__tip" aria-hidden="true">HKG – NRT<br>Flight time 5h 25m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 165" role="img" tabindex="0" aria-label="Flight DAC to HKG, 2h 45m">
+                            <span class="journey__tip" aria-hidden="true">DAC – HKG<br>Flight time 2h 45m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 155" role="img" tabindex="0" aria-label="Layover at Hong Kong International, 2h 35m">
+                            <span class="journey__code" aria-hidden="true">HKG</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in HKG<br>2h 35m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 325" role="img" tabindex="0" aria-label="Flight HKG to NRT, 5h 25m">
+                            <span class="journey__tip" aria-hidden="true">HKG – NRT<br>Flight time 5h 25m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">15:45</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">15:45</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Return</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Sat, 27 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">18:30</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">18:30</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">9h 45m &middot; 1 stop in HKG</span>
@@ -950,26 +980,26 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 270" role="img" tabindex="0" aria-label="Flight NRT to HKG, 4h 30m">
-                          <span class="journey__tip" aria-hidden="true">NRT – HKG<br>Flight time 4h 30m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 95" role="img" tabindex="0" aria-label="Layover at Hong Kong International, 1h 35m">
-                          <span class="journey__code" aria-hidden="true">HKG</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in HKG<br>1h 35m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 220" role="img" tabindex="0" aria-label="Flight HKG to DAC, 3h 40m">
-                          <span class="journey__tip" aria-hidden="true">HKG – DAC<br>Flight time 3h 40m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 270" role="img" tabindex="0" aria-label="Flight NRT to HKG, 4h 30m">
+                            <span class="journey__tip" aria-hidden="true">NRT – HKG<br>Flight time 4h 30m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 95" role="img" tabindex="0" aria-label="Layover at Hong Kong International, 1h 35m">
+                            <span class="journey__code" aria-hidden="true">HKG</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in HKG<br>1h 35m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 220" role="img" tabindex="0" aria-label="Flight HKG to DAC, 3h 40m">
+                            <span class="journey__tip" aria-hidden="true">HKG – DAC<br>Flight time 3h 40m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
                   </div>
                 </div>
 
@@ -981,6 +1011,9 @@
               </div>
 
               <div class="result-card__aside">
+                <span class="result-card__badges">
+                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -989,7 +1022,6 @@
                   <span data-trip-only="round">BDT 72,900</span>
                   <span data-trip-only="one">BDT 42,500</span>
                 </span>
-                <span class="result-card__note">Includes taxes &amp; fees</span>
                 <a class="btn btn--primary w-full mt-3" href="flight-details.html">Select</a>
               </div>
             </article>
@@ -1001,24 +1033,27 @@
                 <p class="result-card__airline">
                   <img class="result-card__logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
                   <span class="result-card__carrier">SriLankan Airlines</span>
-                
-                  <span class="result-card__badges">
-                    <span class="result-badge" data-result-badge hidden></span>
-                  </span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Departure</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Thu, 18 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                      SriLankan Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">23:55</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">23:55</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">14h 35m &middot; 1 stop in CMB</span>
@@ -1027,41 +1062,48 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 260" role="img" tabindex="0" aria-label="Flight DAC to CMB, 4h 20m">
-                          <span class="journey__tip" aria-hidden="true">DAC – CMB<br>Flight time 4h 20m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 205" role="img" tabindex="0" aria-label="Layover at Bandaranaike International, Colombo, 3h 25m">
-                          <span class="journey__code" aria-hidden="true">CMB</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in CMB<br>3h 25m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CMB to NRT, 6h 50m">
-                          <span class="journey__tip" aria-hidden="true">CMB – NRT<br>Flight time 6h 50m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 260" role="img" tabindex="0" aria-label="Flight DAC to CMB, 4h 20m">
+                            <span class="journey__tip" aria-hidden="true">DAC – CMB<br>Flight time 4h 20m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 205" role="img" tabindex="0" aria-label="Layover at Bandaranaike International, Colombo, 3h 25m">
+                            <span class="journey__code" aria-hidden="true">CMB</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in CMB<br>3h 25m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CMB to NRT, 6h 50m">
+                            <span class="journey__tip" aria-hidden="true">CMB – NRT<br>Flight time 6h 50m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Return</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Sat, 27 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                      SriLankan Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">11:20</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">11:20</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">13h 55m &middot; 1 stop in CMB</span>
@@ -1070,26 +1112,26 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 545" role="img" tabindex="0" aria-label="Flight NRT to CMB, 9h 05m">
-                          <span class="journey__tip" aria-hidden="true">NRT – CMB<br>Flight time 9h 05m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 90" role="img" tabindex="0" aria-label="Layover at Bandaranaike International, Colombo, 1h 30m">
-                          <span class="journey__code" aria-hidden="true">CMB</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in CMB<br>1h 30m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 200" role="img" tabindex="0" aria-label="Flight CMB to DAC, 3h 20m">
-                          <span class="journey__tip" aria-hidden="true">CMB – DAC<br>Flight time 3h 20m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 545" role="img" tabindex="0" aria-label="Flight NRT to CMB, 9h 05m">
+                            <span class="journey__tip" aria-hidden="true">NRT – CMB<br>Flight time 9h 05m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 90" role="img" tabindex="0" aria-label="Layover at Bandaranaike International, Colombo, 1h 30m">
+                            <span class="journey__code" aria-hidden="true">CMB</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in CMB<br>1h 30m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 200" role="img" tabindex="0" aria-label="Flight CMB to DAC, 3h 20m">
+                            <span class="journey__tip" aria-hidden="true">CMB – DAC<br>Flight time 3h 20m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">22:15</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">22:15</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
                   </div>
                 </div>
 
@@ -1101,6 +1143,9 @@
               </div>
 
               <div class="result-card__aside">
+                <span class="result-card__badges">
+                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -1109,7 +1154,6 @@
                   <span data-trip-only="round">BDT 78,200</span>
                   <span data-trip-only="one">BDT 45,800</span>
                 </span>
-                <span class="result-card__note">Includes taxes &amp; fees</span>
                 <a class="btn btn--primary w-full mt-3" href="flight-details.html">Select</a>
               </div>
             </article>
@@ -1119,26 +1163,28 @@
                      data-sort-price-one="43200" data-sort-duration-one="985">
               <div class="result-card__main">
                 <p class="result-card__airline">
-                  <img class="result-card__logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
-                  <span class="result-card__carrier">China Southern</span>
-                
-                  <span class="result-card__badges">
-                    <span class="result-badge" data-result-badge hidden></span>
-                  </span>
+                  <span class="result-card__carrier">China Southern &middot; China Eastern</span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Departure</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Thu, 18 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
+                      China Southern
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">12:15</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">12:15</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
 
                     <span class="result-card__path">
                       <span class="result-card__duration">16h 25m &middot; 1 stop in CAN</span>
@@ -1147,69 +1193,76 @@
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 255" role="img" tabindex="0" aria-label="Flight DAC to CAN, 4h 15m">
-                          <span class="journey__tip" aria-hidden="true">DAC – CAN<br>Flight time 4h 15m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 320" role="img" tabindex="0" aria-label="Layover at Baiyun International, Guangzhou, 5h 20m">
-                          <span class="journey__code" aria-hidden="true">CAN</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in CAN<br>5h 20m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CAN to NRT, 6h 50m">
-                          <span class="journey__tip" aria-hidden="true">CAN – NRT<br>Flight time 6h 50m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 255" role="img" tabindex="0" aria-label="Flight DAC to CAN, 4h 15m">
+                            <span class="journey__tip" aria-hidden="true">DAC – CAN<br>Flight time 4h 15m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 320" role="img" tabindex="0" aria-label="Layover at Baiyun International, Guangzhou, 5h 20m">
+                            <span class="journey__code" aria-hidden="true">CAN</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in CAN<br>5h 20m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CAN to NRT, 6h 50m">
+                            <span class="journey__tip" aria-hidden="true">CAN – NRT<br>Flight time 6h 50m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">07:40<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">07:40<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Return</span>
+                      <span aria-hidden="true">&middot;</span>
+                      Sat, 27 Sep
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                      China Eastern
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
-                  <span class="result-card__time">
-                    <span class="result-card__clock">09:30</span>
-                    <span class="result-card__iata">NRT</span>
-                  </span>
+                    <span class="result-card__time">
+                      <span class="result-card__clock">09:30</span>
+                      <span class="result-card__iata">NRT</span>
+                    </span>
 
                     <span class="result-card__path">
-                      <span class="result-card__duration">15h 50m &middot; 1 stop in CAN</span>
+                      <span class="result-card__duration">15h 50m &middot; 1 stop in PVG</span>
 
                       <span class="journey">
                         <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
                         <span class="journey__track">
-                        <span class="journey__leg" style="--segment-minutes: 295" role="img" tabindex="0" aria-label="Flight NRT to CAN, 4h 55m">
-                          <span class="journey__tip" aria-hidden="true">NRT – CAN<br>Flight time 4h 55m</span>
-                        </span>
-                        <span class="journey__layover" style="--segment-minutes: 435" role="img" tabindex="0" aria-label="Layover at Baiyun International, Guangzhou, 7h 15m">
-                          <span class="journey__code" aria-hidden="true">CAN</span>
-                          <span class="journey__tip" aria-hidden="true">Layover in CAN<br>7h 15m on the ground</span>
-                        </span>
-                        <span class="journey__leg" style="--segment-minutes: 220" role="img" tabindex="0" aria-label="Flight CAN to DAC, 3h 40m">
-                          <span class="journey__tip" aria-hidden="true">CAN – DAC<br>Flight time 3h 40m</span>
-                        </span>
+                          <span class="journey__leg" style="--segment-minutes: 185" role="img" tabindex="0" aria-label="Flight NRT to PVG, 3h 05m">
+                            <span class="journey__tip" aria-hidden="true">NRT – PVG<br>Flight time 3h 05m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 485" role="img" tabindex="0" aria-label="Layover at Pudong International, Shanghai, 8h 05m">
+                            <span class="journey__code" aria-hidden="true">PVG</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in PVG<br>8h 05m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 280" role="img" tabindex="0" aria-label="Flight PVG to DAC, 4h 40m">
+                            <span class="journey__tip" aria-hidden="true">PVG – DAC<br>Flight time 4h 40m</span>
+                          </span>
                         </span>
 
                         <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                       </span>
                     </span>
 
-                  <span class="result-card__time result-card__time--arrive">
-                    <span class="result-card__clock">22:20</span>
-                    <span class="result-card__iata">DAC</span>
-                  </span>
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">22:20</span>
+                      <span class="result-card__iata">DAC</span>
+                    </span>
                   </div>
                 </div>
 
@@ -1221,6 +1274,9 @@
               </div>
 
               <div class="result-card__aside">
+                <span class="result-card__badges">
+                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -1229,11 +1285,9 @@
                   <span data-trip-only="round">BDT 74,650</span>
                   <span data-trip-only="one">BDT 43,200</span>
                 </span>
-                <span class="result-card__note">Includes taxes &amp; fees</span>
                 <a class="btn btn--primary w-full mt-3" href="flight-details.html">Select</a>
               </div>
             </article>
-
         </div>
         <!-- END BLADE BOUNDARY: result card -->
 
