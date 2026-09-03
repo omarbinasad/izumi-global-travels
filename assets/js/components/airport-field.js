@@ -7,8 +7,10 @@
  * the code beside it, the airport name under it, and the hidden IATA field,
  * which is the only value the form actually submits.
  *
- * Typing a city name does not resolve to a code. That needs a lookup the
- * backend owns; until then the code stays whatever was last chosen.
+ * Typing narrows that list by code, city and airport name. It searches what is
+ * already on the page and nothing else: resolving free text to an airport is a
+ * lookup the backend owns, so a search that matches nothing leaves the code
+ * alone rather than guessing at one.
  */
 
 import { qs, qsa, on } from '../core/dom.js';
@@ -24,14 +26,18 @@ export function initAirportFields(root = document) {
 
     if (!input || !list) return;
 
+    const options = qsa('[data-airport-option]', field);
+    const empty = qs('[data-airport-empty]', field);
+
     /* True only while a choice is being applied. */
     let picking = false;
 
     function open() {
-      if (!list.hidden) return;
+      if (list.hidden) {
+        list.hidden = false;
+        input.setAttribute('aria-expanded', 'true');
+      }
 
-      list.hidden = false;
-      input.setAttribute('aria-expanded', 'true');
       place();
     }
 
@@ -50,6 +56,26 @@ export function initAirportFields(root = document) {
       list.dataset.drop = (height + 16 > below && box.top > below) ? 'up' : 'down';
     }
 
+    /* Matches the code, the city and the airport name, so "nrt", "tok" and
+       "narita" all find the same airport. */
+    function filter(query) {
+      const needle = query.trim().toLowerCase();
+      let matches = 0;
+
+      options.forEach((option) => {
+        const { iata = '', city = '', name = '' } = option.dataset;
+        const hit = needle === '' ||
+          `${iata} ${city} ${name}`.toLowerCase().includes(needle);
+
+        /* The row, not the button: hiding the button would leave its bullet. */
+        option.closest('li').hidden = !hit;
+
+        if (hit) matches += 1;
+      });
+
+      if (empty) empty.hidden = matches > 0;
+    }
+
     function choose(option) {
       const code = qs('[data-airport-code]', field);
       const sub = qs('[data-airport-sub]', field);
@@ -61,7 +87,7 @@ export function initAirportFields(root = document) {
       /* The code, never the label: this is what the backend receives. */
       if (value) value.value = option.dataset.iata;
 
-      qsa('[data-airport-option]', field).forEach((other) => {
+      options.forEach((other) => {
         other.setAttribute('aria-current', String(other === option));
       });
 
@@ -74,10 +100,22 @@ export function initAirportFields(root = document) {
       close();
     }
 
-    on(input, 'focus', () => { if (!picking) open(); });
-    on(input, 'pointerdown', open);
+    /* Opening the field offers everything; typing is what narrows it. The box
+       holds the last chosen city, which is not a search the visitor made. */
+    function reveal() {
+      filter('');
+      open();
+    }
 
-    qsa('[data-airport-option]', field).forEach((option) => {
+    on(input, 'focus', () => { if (!picking) reveal(); });
+    on(input, 'pointerdown', reveal);
+
+    on(input, 'input', () => {
+      filter(input.value);
+      open();
+    });
+
+    options.forEach((option) => {
       on(option, 'click', () => choose(option));
     });
 

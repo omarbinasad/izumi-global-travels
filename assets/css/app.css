@@ -1913,6 +1913,14 @@
     inset-block-end: calc(100% + --spacing(2));
   }
 
+  /* Shown only when a search matches nothing; a live region, so it is
+     announced rather than silently swapping the list out. */
+  .airport-list__empty {
+    padding: --spacing(3);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
   .airport-option {
     display: flex;
     align-items: center;
