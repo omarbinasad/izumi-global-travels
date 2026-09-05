@@ -1638,7 +1638,9 @@
       width: auto;
     }
 
-    .daterange__month:last-child,
+    /* :nth-child(2), not :last-child — the single-date picker has one month,
+       which is its own last child and would disappear with it. */
+    .daterange__month:nth-child(2),
     .daterange__title-next {
       display: none;
     }
@@ -3728,9 +3730,37 @@
     color: var(--color-primary);
   }
 
-  /* Each leg heads with the airline flying it, so the return leg carries one
-     of its own above its chip. */
-  .result-card__slice > .result-card__airline { margin-block-end: --spacing(3); }
+  /* Each leg heads with the airline flying it, on the same line as the chip
+     that names the leg — two rows there would make every card taller. */
+  .result-card__slice-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* The airline reads straight on from the chip that names the leg, rather
+       than sitting across the card from it. */
+    gap: --spacing(2) --spacing(4);
+    margin-block-end: --spacing(3);
+  }
+
+  .result-card__slice-carrier {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    min-width: 0;
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-fg-heading);
+  }
+
+  .result-card__slice-logo {
+    width: var(--airline-logo-size);
+    height: var(--airline-logo-size);
+    flex: none;
+    border-radius: 50%;
+    border: var(--border-width) solid var(--color-line);
+    object-fit: cover;
+  }
 
   .result-card__carrier {
     display: inline-flex;
@@ -3812,7 +3842,7 @@
     display: inline-flex;
     align-items: center;
     gap: --spacing(2);
-    margin: 0 0 --spacing(3);
+    margin: 0;
     padding: --spacing(1) --spacing(3);
     border-radius: var(--radius-pill);
     /* Mixed from the brand rather than a surface token: the chip sits on the
@@ -3872,6 +3902,14 @@
   .result-card__iata {
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
+  }
+
+  /* The calendar day the clock above belongs to — a return leg can land on a
+     different date from the one that was searched. */
+  .result-card__date {
+    font-size: var(--text-2xs);
+    color: var(--color-fg-muted);
+    white-space: nowrap;
   }
 
   .result-card__path {
@@ -4309,29 +4347,52 @@
     color: var(--color-primary);
   }
 
-  /* --- Itinerary ticket -------------------------------------------------- */
+  /* --- Itinerary ticket ---------------------------------------------------
+     One leg to a panel: which leg and when along the top, the flight across
+     the middle, and the cabin plus the detail toggle along the foot. The
+     airport code and city sit under the clock, so the whole leg reads in three
+     short columns instead of a tall stack.
+     ---------------------------------------------------------------------- */
 
   .itinerary__head {
     display: flex;
     flex-wrap: wrap;
-    align-items: baseline;
-    gap: --spacing(2);
-    margin: 0 0 --spacing(4);
-    font-size: var(--text-sm);
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3) --spacing(4);
   }
 
-  .itinerary__label {
+  .itinerary__when {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 400;
+    color: var(--color-fg-muted);
+  }
+
+  /* The pill names the leg; the rule belongs to the date beside it, because a
+     border on the pill itself is clipped by its own radius. */
+  .itinerary__date {
+    padding-inline-start: --spacing(3);
+    border-inline-start: var(--border-width) solid var(--color-line);
+  }
+
+  .itinerary__kind {
+    padding: --spacing(1) --spacing(3);
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
     font-weight: 700;
     color: var(--color-fg-heading);
   }
-
-  .itinerary__date { color: var(--color-fg-muted); }
 
   .itinerary__airline {
     display: flex;
     align-items: center;
     gap: --spacing(3);
     margin: 0;
+    min-inline-size: 0;
   }
 
   .itinerary__logo {
@@ -4342,6 +4403,8 @@
     border: var(--border-width) solid var(--color-line);
     object-fit: cover;
   }
+
+  .itinerary__names { min-inline-size: 0; }
 
   .itinerary__carrier {
     display: block;
@@ -4356,23 +4419,28 @@
     color: var(--color-fg-muted);
   }
 
+  /* --- The leg itself ----------------------------------------------------- */
+
   .itinerary__leg {
     display: grid;
-    /* Both ends of the flight side by side, the route line under them. One
-       above the other reads as two separate flights on a narrow screen. */
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(0, auto) minmax(0, 1fr) minmax(0, auto);
+    align-items: center;
     gap: --spacing(4);
-    margin-block-start: --spacing(4);
+    margin-block-start: --spacing(5);
   }
 
+  .itinerary__point { margin: 0; }
+
+  .itinerary__point--arrive { text-align: end; }
+
+  /* Too narrow for three columns once a leg has stops in it: both ends take
+     the top row and the route runs the full width underneath. */
   @media (width < 48rem) {
+    .itinerary__leg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
     .itinerary__point {
       grid-row: 1;
       grid-column: 1;
-      /* Half the width each: the time cannot sit beside the airport name. */
-      flex-direction: column;
-      align-items: flex-start;
-      gap: --spacing(1);
     }
 
     .itinerary__point--arrive { grid-column: 2; }
@@ -4383,61 +4451,25 @@
     }
   }
 
-  @media (width >= 48rem) {
-    .itinerary__leg {
-      /* Fixed side columns, so the departure and return tickets line their
-         times and their route lines up with each other. */
-      grid-template-columns: minmax(0, 240px) minmax(0, 1fr) minmax(0, 240px);
-      align-items: center;
-      gap: --spacing(5);
-    }
-
-    /* Only once the leg is a row: stacked, both ends read from the left. */
-    .itinerary__point--arrive { justify-content: flex-end; }
-  }
-
-  .itinerary__point {
-    display: flex;
-    align-items: baseline;
-    gap: --spacing(3);
-    min-inline-size: 0;
-  }
-
-  .itinerary__time {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    flex: none;
-  }
-
   .itinerary__clock {
-    font-size: var(--text-2xl);
+    display: block;
+    font-size: var(--text-3xl);
     font-weight: 700;
-    line-height: 1;
+    line-height: 1.1;
     letter-spacing: var(--tracking-tight);
     color: var(--color-fg-heading);
   }
 
-  /* The date under the clock. The code is not repeated here: it is already
-     beside the city name to the right of it. */
-  .itinerary__when {
-    white-space: nowrap;
-    font-size: var(--text-xs);
-    color: var(--color-fg-muted);
-  }
-
-  .itinerary__place { min-inline-size: 0; }
-
-  .itinerary__city {
+  .itinerary__iata {
     display: block;
-    font-size: var(--text-sm);
+    font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-fg-heading);
   }
 
-  .itinerary__airport {
+  .itinerary__city {
     display: block;
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
     color: var(--color-fg-muted);
   }
 
@@ -4445,70 +4477,215 @@
     display: flex;
     flex-direction: column;
     gap: --spacing(2);
+    margin: 0;
     min-inline-size: 0;
   }
 
-  .itinerary__duration,
-  .itinerary__note {
+  .itinerary__duration {
     text-align: center;
-    font-size: var(--text-xs);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
   }
 
-  .itinerary__duration { color: var(--color-fg-muted); }
-  .itinerary__note { color: var(--color-success); }
+  /* Under the arrival it belongs to, not under the middle of the route. */
+  .itinerary__note {
+    display: block;
+    margin-block-start: --spacing(1);
+    font-size: var(--text-sm);
+    color: var(--color-success);
+  }
+
+  .itinerary__day {
+    margin-inline-start: 2px;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  /* --- Route bar -----------------------------------------------------------
+     One plane per flight and one circle per stop, laid out evenly rather than
+     to scale: a two-hour transit and a nine-hour flight are both a step in the
+     journey here, and the times beside them say which is which.
+     ---------------------------------------------------------------------- */
+
+  .route {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(1);
+    /* Room for the labels that hang under each stop without being in the row. */
+    padding-block-end: --spacing(14);
+    min-inline-size: 0;
+  }
+
+  /* Nudged down so the rule runs through the middle of the marks beside it. */
+  .route__line {
+    flex: 1 1 auto;
+    min-inline-size: --spacing(3);
+    block-size: 2px;
+    margin-block-start: 7px;
+    background-color: var(--color-route-line);
+  }
+
+  .route__plane {
+    inline-size: 16px;
+    block-size: 16px;
+    flex: none;
+    /* The sprite plane points up and to the right; square it up along the
+       line it is flying down. */
+    rotate: 45deg;
+    color: var(--color-route-line);
+  }
+
+  /* Only as wide as its dot: the code and the transit time hang beneath it,
+     out of the flow, so the rule runs right up to the circle instead of
+     stopping short of a label-sized box. */
+  .route__stop {
+    position: relative;
+    inline-size: 16px;
+    flex: none;
+  }
+
+  .route__labels {
+    position: absolute;
+    inset-block-start: calc(100% + --spacing(1));
+    inset-inline-start: 50%;
+    translate: -50% 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    white-space: nowrap;
+  }
+
+  .route__dot {
+    /* A span: without this it stays inline and the circle collapses to a bar. */
+    display: block;
+    inline-size: 16px;
+    block-size: 16px;
+    border: var(--border-width-strong) solid var(--color-route-line);
+    border-radius: 50%;
+    background-color: var(--color-surface);
+  }
+
+  .route__code {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .route__wait {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* The airport in words, under the time spent in it. */
+  .route__place {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* --- Per-segment detail --------------------------------------------------- */
+
+  .itinerary__segments {
+    display: grid;
+    gap: --spacing(5);
+    margin: --spacing(4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .itinerary__segment + .itinerary__segment {
+    padding-block-start: --spacing(4);
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  .itinerary__segment-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__segment-flight {
+    font-weight: 700;
+    color: var(--color-primary);
+  }
+
+  .itinerary__segment .itinerary__facts { margin-block-start: --spacing(3); }
 
   /*
    * The rule stops short of the plane rather than running under it: the plane
    * is rotated 45deg, so a background on the glyph itself would mask the line
-   * as a diamond. Same trick as the route card, but the plane sits at the end
-   * of the line here instead of the middle.
+   * as a diamond. The gap is centred, which is where the aircraft sits.
    */
   .itinerary__line {
-    --itinerary-line-gap: 22px;
+    --itinerary-line-gap: 16px;
 
     position: relative;
     block-size: 2px;
     background-image: linear-gradient(
       to right,
-      var(--color-route-line) 0 calc(100% - var(--itinerary-line-gap)),
-      transparent calc(100% - var(--itinerary-line-gap)) 100%
+      var(--color-route-line) 0 calc(50% - var(--itinerary-line-gap)),
+      transparent calc(50% - var(--itinerary-line-gap)) calc(50% + var(--itinerary-line-gap)),
+      var(--color-route-line) calc(50% + var(--itinerary-line-gap)) 100%
     );
   }
 
   .itinerary__line svg {
     position: absolute;
     inset-block-start: 50%;
-    inset-inline-end: 0;
+    inset-inline-start: 50%;
     /* The sprite plane points up and to the right; square it up along the line. */
-    translate: 0 -50%;
+    translate: -50% -50%;
     rotate: 45deg;
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     color: var(--color-route-line);
   }
 
-  /* --- Per-segment detail disclosure ------------------------------------- */
+  /* --- Foot: the cabin, and the way into the detail ----------------------- */
 
   .itinerary__more {
-    margin-block-start: --spacing(4);
+    margin-block-start: --spacing(5);
     border-block-start: var(--border-width) solid var(--color-line);
   }
 
   .itinerary__summary {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: --spacing(3);
-    padding-block-start: --spacing(3);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-link);
+    padding-block-start: --spacing(4);
     cursor: pointer;
     /* A summary is a list-item by default; this drops the marker in Safari. */
     list-style: none;
   }
 
   .itinerary__summary::-webkit-details-marker { display: none; }
+
+  .itinerary__cabin {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .itinerary__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-link);
+  }
 
   .itinerary__chevron {
     flex: none;
@@ -4632,6 +4809,10 @@
      button precedes it. */
   .step-actions__next { margin-inline-start: auto; }
 
+  /* Nothing to go back to, so nothing to sit opposite: the one action takes
+     the middle of the bar instead of hugging the far edge. */
+  .step-actions__next:only-child { margin-inline: auto; }
+
   /* On a phone the bar follows the page up and sits above the fold, so the way
      on is reachable without scrolling to the end of a long form. Both buttons
      stay on one row; they shrink instead of stacking. */
@@ -4745,6 +4926,118 @@
 
   .field__control[type="date"]:hover::-webkit-calendar-picker-indicator { opacity: 1; }
 
+  /* --- Date field ----------------------------------------------------------
+     The native input keeps the value; the button beside it opens the picker
+     from assets/js/components/date-field.js. Until that runs the platform's
+     own calendar button is the one on show, so the field never has none.
+     ---------------------------------------------------------------------- */
+
+  .field__date { position: relative; }
+
+  .field__date .field__control { padding-inline-end: --spacing(12); }
+
+  .field__date-button {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: --spacing(2);
+    translate: 0 -50%;
+    display: grid;
+    place-items: center;
+    inline-size: var(--control-height-sm);
+    block-size: var(--control-height-sm);
+    border-radius: var(--radius-sm);
+    color: var(--color-fg-muted);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .field__date-button:hover {
+    background-color: var(--color-surface-muted);
+    color: var(--color-primary);
+  }
+
+  .field__date-button:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 1px;
+  }
+
+  /* Ours is in place, so the platform's own button steps aside. */
+  [data-date-picker="custom"] .field__control[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+
+  /* --- Single-date panel ---------------------------------------------------
+     One month rather than two, and given more room than the compact range
+     picker: this one is a field's whole picker, not a strip under a search bar.
+     ---------------------------------------------------------------------- */
+
+  .daterange--single {
+    inline-size: min(332px, calc(100vw - 2 * --spacing(4)));
+    padding: --spacing(3);
+    border-radius: var(--radius-lg);
+  }
+
+  /* A definite track, so the month table can fill it: an auto one sizes to
+     the table's own content and leaves the grid bunched to the left. */
+  .daterange--single .daterange__months { grid-template-columns: minmax(0, 1fr); }
+
+  .daterange--single .daterange__head {
+    margin-block-end: --spacing(2);
+    padding-block-end: --spacing(3);
+    border-block-end: var(--border-width) solid var(--color-line);
+  }
+
+  .daterange--single .daterange__title {
+    font-size: var(--text-base);
+    font-weight: 700;
+  }
+
+  .daterange--single .daterange__nav {
+    inline-size: 32px;
+    block-size: 32px;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: 50%;
+    color: var(--color-fg);
+  }
+
+  .daterange--single .daterange__nav:hover:not(:disabled) {
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .daterange--single .daterange__month th {
+    padding-block-end: --spacing(3);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+  }
+
+  .daterange--single .daterange__day {
+    aspect-ratio: auto;
+    block-size: 38px;
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .daterange--single .daterange__day:hover:not(:disabled) {
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    color: var(--color-primary);
+  }
+
+  /* The chosen day wears the same fill as every other primary surface. */
+  .daterange--single .daterange__day[data-date-state] {
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    color: var(--color-on-cta);
+    font-weight: 700;
+  }
+
+  .daterange--single .daterange__day[data-date-state]:hover {
+    color: var(--color-on-cta);
+  }
+
   /* --- File field ---------------------------------------------------------
      The input is visually hidden inside its own label, so the box below is the
      control. Without JavaScript it still picks a file; the name beside it is
@@ -4799,6 +5092,134 @@
     display: grid;
     grid-template-columns: minmax(0, auto) minmax(0, 1fr);
     gap: --spacing(2);
+  }
+
+  /* --- Phone country -------------------------------------------------------
+     The select stays as the value store; phone-field.js draws the trigger and
+     the list beside it, because the platform's own list cannot show a flag or
+     take the site's styling. Until that runs the select is the control.
+     ---------------------------------------------------------------------- */
+
+  .phone-code { position: relative; }
+
+  /* Only once there is a replacement to show. */
+  .phone-code[data-enhanced] select {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .phone-code__trigger {
+    display: none;
+    align-items: center;
+    gap: --spacing(2);
+    inline-size: 100%;
+    min-block-size: var(--search-field-height);
+    padding-inline: --spacing(3);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    font-size: var(--text-sm);
+    color: var(--color-fg-heading);
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+
+  .phone-code[data-enhanced] .phone-code__trigger { display: flex; }
+
+  .phone-code__trigger:hover { border-color: var(--color-line-strong); }
+
+  .phone-code__trigger[aria-expanded="true"],
+  .phone-code__trigger:focus-visible {
+    outline: none;
+    border-color: var(--color-ring);
+    box-shadow: var(--shadow-focus);
+  }
+
+  .phone-code__value {
+    flex: 1 1 auto;
+    text-align: start;
+  }
+
+  .phone-code__chevron {
+    flex: none;
+    color: var(--color-fg-muted);
+    transition: rotate var(--transition-base);
+  }
+
+  .phone-code__trigger[aria-expanded="true"] .phone-code__chevron { rotate: 180deg; }
+
+  .phone-code__flag {
+    inline-size: 24px;
+    block-size: 16px;
+    flex: none;
+    border-radius: 2px;
+    /* The flags are drawn light; a hairline keeps a white one off a white box. */
+    box-shadow: 0 0 0 var(--border-width) var(--color-line);
+    object-fit: cover;
+  }
+
+  .phone-code__list {
+    position: absolute;
+    z-index: var(--z-dropdown);
+    inset-inline-start: 0;
+    inset-block-start: calc(100% + --spacing(2));
+    inline-size: max(100%, 260px);
+    max-block-size: 288px;
+    overflow-y: auto;
+    margin: 0;
+    padding: --spacing(2);
+    list-style: none;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .phone-code__list[data-drop="up"] {
+    inset-block-start: auto;
+    inset-block-end: calc(100% + --spacing(2));
+  }
+
+  .phone-code__option {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    inline-size: 100%;
+    padding: --spacing(2) --spacing(3);
+    border-radius: var(--radius-sm);
+    text-align: start;
+    transition: background-color var(--transition-fast);
+  }
+
+  .phone-code__option:hover { background-color: var(--color-surface-muted); }
+
+  .phone-code__option:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: -2px;
+  }
+
+  .phone-code__option[aria-current="true"] {
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+  }
+
+  .phone-code__code {
+    flex: none;
+    inline-size: --spacing(12);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .phone-code__country {
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
   }
 
   /* --- Hint popover -------------------------------------------------------
@@ -5722,4 +6143,425 @@
     margin-inline: --spacing(1);
     color: var(--color-primary);
   }
+}
+
+/* ==========================================================================
+   CONTENT PAGES — ABOUT AND CONTACT
+   The pages that are not part of the booking flow: a heading band, a couple of
+   panels, and the enquiry form. Everything else is borrowed from the booking
+   components, so these two pages add almost nothing of their own.
+   ========================================================================== */
+@layer components {
+
+  .page-head {
+    padding-block: --spacing(8) --spacing(6);
+  }
+
+  .page-head__eyebrow {
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-primary);
+  }
+
+  .page-head__title {
+    max-inline-size: 22ch;
+    margin: --spacing(2) 0 0;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  @media (width >= 48rem) {
+    .page-head__title { font-size: var(--text-4xl); }
+  }
+
+  .page-head__text {
+    max-inline-size: var(--container-prose);
+    margin: --spacing(4) 0 0;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  /* --- About --------------------------------------------------------------- */
+
+  .prose-cols {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(4);
+  }
+
+  @media (width >= 48rem) {
+    .prose-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .about-stats {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: --spacing(4);
+    margin: 0;
+    padding-block-start: --spacing(6);
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  @media (width >= 48rem) {
+    .about-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  /* The value reads first, so it comes second in the source and is flipped
+     here: a definition list keeps the label as the term either way. */
+  .about-stat {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: --spacing(1);
+  }
+
+  .about-stat__value {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-primary);
+  }
+
+  .about-stat__label {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* --- Contact ------------------------------------------------------------- */
+
+  .contact-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+    padding-block-end: --spacing(10);
+  }
+
+  @media (width >= 64rem) {
+    .contact-layout {
+      grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+      gap: --spacing(6);
+      align-items: start;
+    }
+  }
+
+  /* A field that takes the whole row rather than half of it. */
+  .field--wide { grid-column: 1 / -1; }
+
+  .field__hint {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .field__control--area {
+    min-block-size: 0;
+    padding-block: --spacing(3);
+    line-height: var(--leading-base);
+    resize: vertical;
+  }
+
+  .contact-details {
+    display: grid;
+    gap: --spacing(5);
+    margin: 0;
+  }
+
+  .contact-detail {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(3);
+  }
+
+  .contact-detail__label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-fg-muted);
+  }
+
+  .contact-detail__value {
+    margin: --spacing(1) 0 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-snug);
+    color: var(--color-fg);
+  }
+}
+
+/* ==========================================================================
+   FAQ AND BLOG
+   Two content pages that lean on the panels the booking flow already defines.
+   ========================================================================== */
+@layer components {
+
+  /* --- FAQ ----------------------------------------------------------------
+     Native disclosures: every answer is in the page whether or not JavaScript
+     runs, and the browser handles opening them. The groups sit two to a row,
+     because one column of them makes a very tall page out of very little.
+     ---------------------------------------------------------------------- */
+
+  /* Two groups to a row, each group's questions stacked inside it. A group is
+     only as tall as its own questions, so a short one is not stretched to
+     match a long one beside it. */
+  .faq-groups {
+    display: grid;
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: --spacing(5);
+  }
+
+  @media (width >= 64rem) {
+    .faq-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .faq {
+    display: grid;
+    gap: --spacing(3);
+  }
+
+  .faq__item {
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .faq__item:hover { border-color: var(--color-line-strong); }
+
+  .faq__item[open] {
+    border-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);
+  }
+
+  .faq__question {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    padding: --spacing(4);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+    /* A summary is a list-item by default; this drops the marker in Safari. */
+    list-style: none;
+  }
+
+  .faq__question::-webkit-details-marker { display: none; }
+
+  .faq__question:hover { color: var(--color-primary); }
+
+  .faq__question:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: -2px;
+    border-radius: var(--radius-md);
+  }
+
+  .faq__chevron {
+    flex: none;
+    color: var(--color-fg-muted);
+    transition: rotate var(--transition-base), color var(--transition-fast);
+  }
+
+  /* Open reads as open in three ways: the title, the chevron and the border. */
+  .faq__item[open] .faq__question { color: var(--color-primary); }
+  .faq__item[open] .faq__chevron {
+    rotate: 180deg;
+    color: var(--color-primary);
+  }
+
+  .faq__answer {
+    margin: 0;
+    padding: 0 --spacing(4) --spacing(4);
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+    /* The panel's own height is animated below where that is supported; this
+       carries the content in behind it, and is the whole effect elsewhere. */
+    animation: rise-in 260ms var(--ease-entrance);
+  }
+
+  /*
+   * A real expand where the browser can do it. ::details-content is what makes
+   * the panel animatable at all, and interpolate-size is what lets it run to
+   * auto rather than a guessed pixel height. Elsewhere the panel simply
+   * appears, with the answer still easing in.
+   */
+  @supports selector(::details-content) {
+    .faq { interpolate-size: allow-keywords; }
+
+    .faq__item::details-content {
+      block-size: 0;
+      overflow: hidden;
+      transition: block-size var(--transition-base) var(--ease-entrance),
+                  content-visibility var(--transition-base);
+      transition-behavior: allow-discrete;
+    }
+
+    .faq__item[open]::details-content { block-size: auto; }
+  }
+
+  /* --- Blog ---------------------------------------------------------------- */
+
+  .post-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+  }
+
+  @media (width >= 48rem) {
+    .post-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (width >= 64rem) {
+    .post-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+  .post-card {
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+    transition: translate var(--transition-base), box-shadow var(--transition-base);
+  }
+
+  .post-card:hover {
+    translate: 0 -4px;
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* The whole card is the link, so the title is not the only target. */
+  .post-card__link {
+    display: flex;
+    flex-direction: column;
+    block-size: 100%;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .post-card__link:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .post-card__media {
+    inline-size: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+  }
+
+  .post-card__body {
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+    flex: 1 1 auto;
+    padding: --spacing(5);
+  }
+
+  .post-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .post-card__tag {
+    padding: --spacing(1) --spacing(3);
+    border-radius: var(--radius-pill);
+    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .post-card__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    line-height: var(--leading-heading);
+    color: var(--color-fg-heading);
+  }
+
+  .post-card__text {
+    font-size: var(--text-sm);
+    line-height: var(--leading-base);
+    color: var(--color-fg-muted);
+  }
+
+  /* Pushed to the foot of the card, so it lines up across a row. */
+  .post-card__more {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin-block-start: auto;
+    padding-block-start: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-link);
+  }
+
+  .post-card:hover .post-card__more { text-decoration: underline; }
+
+  /* --- One post ------------------------------------------------------------ */
+
+  .post {
+    max-inline-size: var(--container-narrow);
+    padding-block: --spacing(6) --spacing(10);
+  }
+
+  .post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(2);
+    margin: --spacing(6) 0 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .post__title {
+    margin: --spacing(3) 0 0;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  @media (width >= 48rem) {
+    .post__title { font-size: var(--text-4xl); }
+  }
+
+  .post__media {
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    margin-block-start: --spacing(6);
+    border-radius: var(--radius-lg);
+    object-fit: cover;
+  }
+
+  .post__body {
+    max-inline-size: var(--container-prose);
+    margin-block-start: --spacing(6);
+  }
+
+  .post__body h2 {
+    margin: --spacing(8) 0 --spacing(3);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .post__body p {
+    margin: 0;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg);
+  }
+
+  .post__foot { margin: --spacing(8) 0 0; }
 }

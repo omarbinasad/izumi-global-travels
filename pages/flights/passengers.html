@@ -49,6 +49,7 @@
     <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM12 15v2"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM3.5 6.5l8.5 6 8.5-6"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.5 9-7 9 7M5.5 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9M9.5 20v-6h5v6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M4 20h16"/></symbol>
     <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2"/></symbol>
@@ -94,10 +95,10 @@
       <div class="site-nav" id="site-nav" data-nav-panel>
         <nav class="lg:justify-self-center" aria-label="Primary">
           <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="../../pages/flights/search-results.html">Flights</a></li>
-            <li><a class="nav-link" href="../../pages/destinations.html">Destinations</a></li>
-            <li><a class="nav-link" href="../../pages/deals.html">Deals</a></li>
-            <li><a class="nav-link" href="../../pages/support/help-centre.html">Help</a></li>
+            <li><a class="nav-link" href="../../index.html">Flights</a></li>
+            <li><a class="nav-link" href="../../pages/about.html">About</a></li>
+            <li><a class="nav-link" href="../../pages/contact.html">Contact</a></li>
+            <li><a class="nav-link" href="../../pages/faq.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -277,7 +278,7 @@
           Continue link at the foot of the page into its submit button. It stays
           a plain anchor here so the static prototype can be clicked through.
         -->
-        <form class="review-panel" action="add-ons.html">
+        <form class="review-panel" id="passenger-form" action="add-ons.html" data-validate novalidate>
           <h1 class="m-0 text-2xl font-bold tracking-tight text-fg-heading">Passenger Details</h1>
 
           <fieldset class="mt-6 border-0 p-0 m-0">
@@ -322,7 +323,9 @@
                 </div>
                 <input class="field__control" type="text" id="given-name-0"
                        name="passengers[0][given_name]" placeholder="Enter given name"
-                       autocomplete="given-name" aria-describedby="given-name-guidance" required>
+                       autocomplete="given-name" aria-describedby="given-name-guidance" required
+                       data-required="Enter the given name exactly as it appears on the travel document.">
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
@@ -358,13 +361,16 @@
                 </div>
                 <input class="field__control" type="text" id="family-name-0"
                        name="passengers[0][family_name]" placeholder="Enter surname"
-                       autocomplete="family-name" aria-describedby="family-name-guidance" required>
+                       autocomplete="family-name" aria-describedby="family-name-guidance" required
+                       data-required="Enter the surname exactly as it appears on the travel document.">
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="gender-0">Gender</label>
                 <span class="field__select">
-                  <select class="field__control" id="gender-0" name="passengers[0][gender]" required>
+                  <select class="field__control" id="gender-0" name="passengers[0][gender]" required
+                       data-required="Choose a gender.">
                     <option value="" selected>Select gender</option>
                     <option value="M">Male</option>
                     <option value="F">Female</option>
@@ -373,14 +379,22 @@
                   </select>
                   <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
                 </span>
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="dob-0">Date of Birth</label>
-                <input class="field__control" type="date" id="dob-0"
-                       name="passengers[0][date_of_birth]" autocomplete="bday"
-                       aria-describedby="dob-hint" required>
-                <span class="field__error sr-only" id="dob-hint">Date of birth, as shown on the travel document</span>
+                <div class="field__date" data-date-field>
+                  <input class="field__control" type="date" id="dob-0"
+                    name="passengers[0][date_of_birth]" autocomplete="bday"
+                    required
+                    data-required="Enter the date of birth.">
+                  <button class="field__date-button" type="button" data-date-open
+                          aria-expanded="false" aria-label="Choose a date">
+                    <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                  </button>
+                </div>
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
@@ -388,7 +402,8 @@
                 <span class="field__select">
                   <!-- A short list stands in for the full ISO 3166-1 set the
                        backend renders. The value submitted is the alpha-2 code. -->
-                  <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required>
+                  <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required
+                       data-required="Choose a nationality.">
                     <option value="" selected>Select nationality</option>
                     <option value="BD">Bangladesh</option>
                     <option value="IN">India</option>
@@ -400,13 +415,16 @@
                   </select>
                   <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
                 </span>
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="document-number-0">Passport Number</label>
                 <input class="field__control" type="text" id="document-number-0"
                        name="passengers[0][document_number]" placeholder="Enter passport number"
-                       autocomplete="off" spellcheck="false" required>
+                       autocomplete="off" spellcheck="false" required
+                       data-required="Enter the passport number.">
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
@@ -425,9 +443,17 @@
                     </span>
                   </span>
                 </div>
-                <input class="field__control" type="date" id="document-expiry-0"
-                       name="passengers[0][document_expiry]"
-                       aria-describedby="document-expiry-guidance" required>
+                <div class="field__date" data-date-field>
+                  <input class="field__control" type="date" id="document-expiry-0"
+                    name="passengers[0][document_expiry]"
+                    aria-describedby="document-expiry-guidance" required
+                    data-required="Enter the passport expiry date.">
+                  <button class="field__date-button" type="button" data-date-open
+                          aria-expanded="false" aria-label="Choose a date">
+                    <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>
+                  </button>
+                </div>
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
@@ -440,35 +466,43 @@
                   <input class="sr-only" type="file" id="document-photo-0"
                          name="passengers[0][document_photo]" accept="image/jpeg,image/png">
                 </label>
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="contact-email">Email Address</label>
                 <input class="field__control" type="email" id="contact-email"
                        name="contact_email" placeholder="name@example.com"
-                       autocomplete="email" required>
+                       autocomplete="email" required
+                       data-required="Enter an email address we can reach you on.">
+                <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="contact-phone-number">Phone Number</label>
                 <span class="phone-field">
-                  <span class="field__select">
+                  <span class="phone-code" data-phone-code>
+                    <!-- The list the platform draws for a select cannot hold a flag
+                         or take the site's styling, so phone-field.js builds one from
+                         these options. The select stays: it is the value store, and
+                         it is what works with no JavaScript. -->
                     <select class="field__control" id="contact-phone-country" name="contact_phone_country"
-                            aria-label="Dialling code">
-                      <option value="880" selected>+880</option>
-                      <option value="91">+91</option>
-                      <option value="81">+81</option>
-                      <option value="60">+60</option>
-                      <option value="971">+971</option>
-                      <option value="44">+44</option>
-                      <option value="1">+1</option>
+                            aria-label="Dialling code" data-phone-country>
+                      <option value="880" data-flag="bd" data-country="Bangladesh" selected>+880</option>
+                      <option value="91" data-flag="in" data-country="India">+91</option>
+                      <option value="81" data-flag="jp" data-country="Japan">+81</option>
+                      <option value="60" data-flag="my" data-country="Malaysia">+60</option>
+                      <option value="971" data-flag="ae" data-country="United Arab Emirates">+971</option>
+                      <option value="44" data-flag="gb" data-country="United Kingdom">+44</option>
+                      <option value="1" data-flag="us" data-country="United States">+1</option>
                     </select>
-                    <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
                   </span>
                   <input class="field__control" type="tel" id="contact-phone-number"
                          name="contact_phone_number" placeholder="1XXXXXXXXX"
-                         autocomplete="tel-national" required>
+                         autocomplete="tel-national" required
+                       data-required="Enter a phone number.">
                 </span>
+                <span class="field__error" data-field-error hidden></span>
               </div>
             </div>
           </fieldset>
@@ -481,9 +515,11 @@
         <!-- END BLADE BOUNDARY: passenger form -->
 
         <!-- BLADE BOUNDARY: step actions -> <x-booking.step-actions /> -->
+        <!-- The bar sits outside the form, so the button names the form it
+             submits. Blade keeps this exactly as it is. -->
         <div class="step-actions">
           <a class="btn btn--outline" href="flight-details.html">Back</a>
-          <a class="btn btn--primary step-actions__next" href="add-ons.html">Continue to add-ons</a>
+          <button class="btn btn--primary step-actions__next" type="submit" form="passenger-form">Continue to add-ons</button>
         </div>
         <!-- END BLADE BOUNDARY: step actions -->
       </div>
@@ -565,7 +601,7 @@
   <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
     <div class="page-container">
 
-      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(4,1fr)_auto] lg:gap-6">
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
           <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
@@ -582,21 +618,9 @@
           <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
         </div>
 
-        <nav class="" aria-labelledby="footer-flights">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-flights">Flights</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/flights/search-results.html">Search Flights</a></li>
-            <li><a class="footer-nav__link" href="../../pages/deals.html">Flight Deals</a></li>
-            <li><a class="footer-nav__link" href="../../pages/destinations.html">Popular Routes</a></li>
-            <li><a class="footer-nav__link" href="../../pages/flight-status.html">Flight Status</a></li>
-            <li><a class="footer-nav__link" href="../../pages/airlines.html">Airlines</a></li>
-          </ul>
-        </nav>
-
         <nav class="" aria-labelledby="footer-services">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/deals.html">AI Trip Planner</a></li>
             <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">eSIM Plans</a></li>
             <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Halal Meals</a></li>
             <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Meet &amp; Greet</a></li>
@@ -607,7 +631,6 @@
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">Help Center</a></li>
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
             <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
@@ -619,10 +642,7 @@
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Careers</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Press Room</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Blog</a></li>
-            <li><a class="footer-nav__link" href="../../pages/contact.html">Become a Partner</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
           </ul>
         </nav>
 
@@ -631,89 +651,12 @@
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/legal/terms.html">Terms &amp; Conditions</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Privacy Policy</a></li>
-            <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Cookie Policy</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/refund-policy.html">Refund Policy</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/booking-conditions.html">Booking Conditions</a></li>
           </ul>
         </nav>
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
-          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
-          <details class="locale" data-locale>
-            <summary class="locale__trigger">
-              <span data-locale-label>EN/BDT</span>
-              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-              <span class="sr-only">Change language and currency</span>
-            </summary>
-
-            <div class="locale__panel">
-              <!-- Radios, not buttons: the two lists swap with no JavaScript, and
-                   the chosen values are real form values. -->
-              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-currency" checked>
-              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-language">
-
-              <div class="locale__tabs">
-                <label class="locale__tab" for="footer-locale-tab-currency">Currency</label>
-                <label class="locale__tab" for="footer-locale-tab-language">Language</label>
-              </div>
-
-              <ul class="locale__list locale__list--currency" role="list">
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-bdt" value="BDT" checked data-locale-currency>
-                  <label class="locale__option" for="footer-currency-bdt">
-                    <span class="locale__code">BDT</span>
-                    <span class="locale__name">Bangladeshi Taka</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-usd" value="USD" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-usd">
-                    <span class="locale__code">USD</span>
-                    <span class="locale__name">US Dollar</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-aed" value="AED" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-aed">
-                    <span class="locale__code">AED</span>
-                    <span class="locale__name">UAE Dirham</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-jpy" value="JPY" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-jpy">
-                    <span class="locale__code">JPY</span>
-                    <span class="locale__name">Japanese Yen</span>
-                  </label>
-                </li>
-              </ul>
-
-              <ul class="locale__list locale__list--language" role="list">
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-en" value="EN" checked data-locale-language>
-                  <label class="locale__option" for="footer-language-en">
-                    <span class="locale__code">EN</span>
-                    <span class="locale__name">English</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-bn" value="BN" data-locale-language>
-                  <label class="locale__option" for="footer-language-bn">
-                    <span class="locale__code">BN</span>
-                    <span class="locale__name">বাংলা</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-ar" value="AR" data-locale-language>
-                  <label class="locale__option" for="footer-language-ar">
-                    <span class="locale__code">AR</span>
-                    <span class="locale__name">العربية</span>
-                  </label>
-                </li>
-              </ul>
-            </div>
-          </details>
-          <!-- END BLADE BOUNDARY: locale switch -->
 
           <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="../../pages/support/help-centre.html">

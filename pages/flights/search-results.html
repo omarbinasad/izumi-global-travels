@@ -51,6 +51,7 @@
     <symbol id="i-lock" viewBox="0 0 24 24"><path d="M7 10V7a5 5 0 0 1 10 0v3M5 10h14a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-9a1 1 0 0 1 1-1zM12 15v2"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><path d="M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1zM3.5 6.5l8.5 6 8.5-6"/></symbol>
     <symbol id="i-home" viewBox="0 0 24 24"><path d="m3 10.5 9-7 9 7M5.5 9v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1V9M9.5 20v-6h5v6"/></symbol>
+    <symbol id="i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 1 0-14 0c0 4.8 7 11 7 11zM12 7a3 3 0 1 0 0 6 3 3 0 0 0 0-6z"/></symbol>
     <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7.5 10.5 12 15l4.5-4.5M4 20h16"/></symbol>
     <symbol id="i-plane" viewBox="0 0 24 24"><path d="M17.8 19.2 16 11l3.5-3.5C21 6 21.5 4 21 3c-1-.5-3 0-4.5 1.5L13 8 4.8 6.2c-.5-.1-.9.1-1.1.5l-.3.5c-.2.5-.1 1 .3 1.3L9 12l-2 3H4l-1 1 3 2 2 3 1-1v-3l3-2 3.5 5.3c.3.4.8.5 1.3.3l.5-.2c.4-.3.6-.7.5-1.2z"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 6v6l4 2"/></symbol>
@@ -96,10 +97,10 @@
       <div class="site-nav" id="site-nav" data-nav-panel>
         <nav class="lg:justify-self-center" aria-label="Primary">
           <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="../../pages/flights/search-results.html">Flights</a></li>
-            <li><a class="nav-link" href="../../pages/destinations.html">Destinations</a></li>
-            <li><a class="nav-link" href="../../pages/deals.html">Deals</a></li>
-            <li><a class="nav-link" href="../../pages/support/help-centre.html">Help</a></li>
+            <li><a class="nav-link" href="../../index.html">Flights</a></li>
+            <li><a class="nav-link" href="../../pages/about.html">About</a></li>
+            <li><a class="nav-link" href="../../pages/contact.html">Contact</a></li>
+            <li><a class="nav-link" href="../../pages/faq.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -323,7 +324,7 @@
                                  data-airport="origin">
                   <span class="search-field__code" data-airport-code>DAC</span>
                 </span>
-                <span class="search-field__sub" data-airport-sub>Hazrat Shahjalal International</span>
+                <span class="search-field__sub" data-airport-sub>Hazrat Shahjalal International Airport</span>
                 <input type="hidden" name="origin_iata" value="DAC" data-airport-value>
 
                 <!-- Placeholder set. The backend renders the real list; each option only
@@ -332,55 +333,55 @@
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="true"
-                            data-iata="DAC" data-city="Dhaka" data-name="Hazrat Shahjalal International">
+                            data-iata="DAC" data-city="Dhaka" data-name="Hazrat Shahjalal International Airport">
                       <span class="airport-option__code">DAC</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Dhaka</span>
-                        <span class="airport-option__name">Hazrat Shahjalal International</span>
+                        <span class="airport-option__name">Hazrat Shahjalal International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="NRT" data-city="Tokyo" data-name="Narita International">
+                            data-iata="NRT" data-city="Tokyo" data-name="Narita International Airport">
                       <span class="airport-option__code">NRT</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Tokyo</span>
-                        <span class="airport-option__name">Narita International</span>
+                        <span class="airport-option__name">Narita International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="HND" data-city="Tokyo" data-name="Haneda International">
+                            data-iata="HND" data-city="Tokyo" data-name="Haneda International Airport">
                       <span class="airport-option__code">HND</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Tokyo</span>
-                        <span class="airport-option__name">Haneda International</span>
+                        <span class="airport-option__name">Haneda International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="DXB" data-city="Dubai" data-name="Dubai International">
+                            data-iata="DXB" data-city="Dubai" data-name="Dubai International Airport">
                       <span class="airport-option__code">DXB</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Dubai</span>
-                        <span class="airport-option__name">Dubai International</span>
+                        <span class="airport-option__name">Dubai International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="SIN" data-city="Singapore" data-name="Changi International">
+                            data-iata="SIN" data-city="Singapore" data-name="Changi International Airport">
                       <span class="airport-option__code">SIN</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Singapore</span>
-                        <span class="airport-option__name">Changi International</span>
+                        <span class="airport-option__name">Changi International Airport</span>
                       </span>
                     </button>
                   </li>
@@ -410,7 +411,7 @@
                                  data-airport="destination">
                   <span class="search-field__code" data-airport-code>NRT</span>
                 </span>
-                <span class="search-field__sub" data-airport-sub>Narita International</span>
+                <span class="search-field__sub" data-airport-sub>Narita International Airport</span>
                 <input type="hidden" name="destination_iata" value="NRT" data-airport-value>
 
                 <!-- Placeholder set. The backend renders the real list; each option only
@@ -419,55 +420,55 @@
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="DAC" data-city="Dhaka" data-name="Hazrat Shahjalal International">
+                            data-iata="DAC" data-city="Dhaka" data-name="Hazrat Shahjalal International Airport">
                       <span class="airport-option__code">DAC</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Dhaka</span>
-                        <span class="airport-option__name">Hazrat Shahjalal International</span>
+                        <span class="airport-option__name">Hazrat Shahjalal International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="true"
-                            data-iata="NRT" data-city="Tokyo" data-name="Narita International">
+                            data-iata="NRT" data-city="Tokyo" data-name="Narita International Airport">
                       <span class="airport-option__code">NRT</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Tokyo</span>
-                        <span class="airport-option__name">Narita International</span>
+                        <span class="airport-option__name">Narita International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="HND" data-city="Tokyo" data-name="Haneda International">
+                            data-iata="HND" data-city="Tokyo" data-name="Haneda International Airport">
                       <span class="airport-option__code">HND</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Tokyo</span>
-                        <span class="airport-option__name">Haneda International</span>
+                        <span class="airport-option__name">Haneda International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="DXB" data-city="Dubai" data-name="Dubai International">
+                            data-iata="DXB" data-city="Dubai" data-name="Dubai International Airport">
                       <span class="airport-option__code">DXB</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Dubai</span>
-                        <span class="airport-option__name">Dubai International</span>
+                        <span class="airport-option__name">Dubai International Airport</span>
                       </span>
                     </button>
                   </li>
                   <li>
                     <button class="airport-option" type="button" data-airport-option
                             aria-current="false"
-                            data-iata="SIN" data-city="Singapore" data-name="Changi International">
+                            data-iata="SIN" data-city="Singapore" data-name="Changi International Airport">
                       <span class="airport-option__code">SIN</span>
                       <span class="airport-option__text">
                         <span class="airport-option__city">Singapore</span>
-                        <span class="airport-option__name">Changi International</span>
+                        <span class="airport-option__name">Changi International Airport</span>
                       </span>
                     </button>
                   </li>
@@ -783,23 +784,29 @@
                      data-sort-price-one="39900" data-sort-duration-one="405">
               <div class="result-card__main">
                 <p class="result-card__airline">
-                  <span class="result-card__carrier">
+                  <span class="result-card__logos">
                     <img class="result-card__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-                    Biman Bangladesh Airlines
                   </span>
+                  <span class="result-card__carrier">Biman Bangladesh Airlines</span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Inbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                      Biman Bangladesh Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">02:20</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -821,28 +828,28 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">10:05</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__airline">
-                    <span class="result-card__carrier">
-                      <img class="result-card__logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-                      Biman Bangladesh Airlines
-                    </span>
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Outbound</span>
+                    </p>
 
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                      Biman Bangladesh Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">11:00</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -864,6 +871,7 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">15:15</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
                 </div>
@@ -896,23 +904,29 @@
                      data-sort-price-one="42500" data-sort-duration-one="645">
               <div class="result-card__main">
                 <p class="result-card__airline">
-                  <span class="result-card__carrier">
+                  <span class="result-card__logos">
                     <img class="result-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                    Cathay Pacific
                   </span>
+                  <span class="result-card__carrier">Cathay Pacific</span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Inbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">02:00</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -941,28 +955,28 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">15:45</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__airline">
-                    <span class="result-card__carrier">
-                      <img class="result-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                      Cathay Pacific
-                    </span>
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Outbound</span>
+                    </p>
 
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">18:30</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -991,6 +1005,7 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Sun, 28 Sep</span>
                     </span>
                   </div>
                 </div>
@@ -1023,23 +1038,29 @@
                      data-sort-price-one="45800" data-sort-duration-one="875">
               <div class="result-card__main">
                 <p class="result-card__airline">
-                  <span class="result-card__carrier">
+                  <span class="result-card__logos">
                     <img class="result-card__logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
-                    SriLankan Airlines
                   </span>
+                  <span class="result-card__carrier">SriLankan Airlines</span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Inbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                      SriLankan Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">23:55</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -1068,28 +1089,28 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__airline">
-                    <span class="result-card__carrier">
-                      <img class="result-card__logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
-                      SriLankan Airlines
-                    </span>
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Outbound</span>
+                    </p>
 
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                      SriLankan Airlines
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">11:20</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -1118,6 +1139,7 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">22:15</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
                 </div>
@@ -1150,23 +1172,30 @@
                      data-sort-price-one="43200" data-sort-duration-one="985">
               <div class="result-card__main">
                 <p class="result-card__airline">
-                  <span class="result-card__carrier">
+                  <span class="result-card__logos">
                     <img class="result-card__logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
-                    China Southern
+                    <img class="result-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
                   </span>
+                  <span class="result-card__carrier">China Southern &middot; China Eastern</span>
                 </p>
 
                 <div class="result-card__slice" data-slice-id="slc_out">
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Departure</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Thu, 18 Sep
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Inbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
+                      China Southern
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">12:15</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -1195,28 +1224,28 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">07:40<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
-                  <p class="result-card__airline">
-                    <span class="result-card__carrier">
-                      <img class="result-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
-                      China Eastern
-                    </span>
-                  </p>
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Outbound</span>
+                    </p>
 
-                  <p class="result-card__slice-label">
-                    <span class="result-card__slice-kind">Return</span>
-                    <span aria-hidden="true">&middot;</span>
-                    Sat, 27 Sep
-                  </p>
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                      China Eastern
+                    </p>
+                  </div>
 
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">09:30</span>
                       <span class="result-card__iata">NRT</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
                     <span class="result-card__path">
@@ -1245,6 +1274,7 @@
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">22:20</span>
                       <span class="result-card__iata">DAC</span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
                 </div>
@@ -1305,7 +1335,7 @@
   <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
     <div class="page-container">
 
-      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(5,1fr)_auto] lg:gap-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(4,1fr)_auto] lg:gap-6">
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
           <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
@@ -1322,21 +1352,9 @@
           <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
         </div>
 
-        <nav class="" aria-labelledby="footer-flights">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-flights">Flights</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/flights/search-results.html">Search Flights</a></li>
-            <li><a class="footer-nav__link" href="../../pages/deals.html">Flight Deals</a></li>
-            <li><a class="footer-nav__link" href="../../pages/destinations.html">Popular Routes</a></li>
-            <li><a class="footer-nav__link" href="../../pages/flight-status.html">Flight Status</a></li>
-            <li><a class="footer-nav__link" href="../../pages/airlines.html">Airlines</a></li>
-          </ul>
-        </nav>
-
         <nav class="" aria-labelledby="footer-services">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/deals.html">AI Trip Planner</a></li>
             <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">eSIM Plans</a></li>
             <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Halal Meals</a></li>
             <li><a class="footer-nav__link" href="../../pages/booking/add-ons.html">Meet &amp; Greet</a></li>
@@ -1347,7 +1365,6 @@
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/support/help-centre.html">Help Center</a></li>
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
             <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
@@ -1359,10 +1376,7 @@
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Careers</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Press Room</a></li>
-            <li><a class="footer-nav__link" href="../../pages/about.html">Blog</a></li>
-            <li><a class="footer-nav__link" href="../../pages/contact.html">Become a Partner</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
           </ul>
         </nav>
 
@@ -1371,89 +1385,12 @@
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/legal/terms.html">Terms &amp; Conditions</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Privacy Policy</a></li>
-            <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Cookie Policy</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/refund-policy.html">Refund Policy</a></li>
             <li><a class="footer-nav__link" href="../../pages/legal/booking-conditions.html">Booking Conditions</a></li>
           </ul>
         </nav>
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
-          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch /> -->
-          <details class="locale" data-locale>
-            <summary class="locale__trigger">
-              <span data-locale-label>EN/BDT</span>
-              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-              <span class="sr-only">Change language and currency</span>
-            </summary>
-
-            <div class="locale__panel">
-              <!-- Radios, not buttons: the two lists swap with no JavaScript, and
-                   the chosen values are real form values. -->
-              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-currency" checked>
-              <input class="locale__tab-input sr-only" type="radio" name="footer-locale-tab" id="footer-locale-tab-language">
-
-              <div class="locale__tabs">
-                <label class="locale__tab" for="footer-locale-tab-currency">Currency</label>
-                <label class="locale__tab" for="footer-locale-tab-language">Language</label>
-              </div>
-
-              <ul class="locale__list locale__list--currency" role="list">
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-bdt" value="BDT" checked data-locale-currency>
-                  <label class="locale__option" for="footer-currency-bdt">
-                    <span class="locale__code">BDT</span>
-                    <span class="locale__name">Bangladeshi Taka</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-usd" value="USD" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-usd">
-                    <span class="locale__code">USD</span>
-                    <span class="locale__name">US Dollar</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-aed" value="AED" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-aed">
-                    <span class="locale__code">AED</span>
-                    <span class="locale__name">UAE Dirham</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-currency" id="footer-currency-jpy" value="JPY" data-locale-currency>
-                  <label class="locale__option" for="footer-currency-jpy">
-                    <span class="locale__code">JPY</span>
-                    <span class="locale__name">Japanese Yen</span>
-                  </label>
-                </li>
-              </ul>
-
-              <ul class="locale__list locale__list--language" role="list">
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-en" value="EN" checked data-locale-language>
-                  <label class="locale__option" for="footer-language-en">
-                    <span class="locale__code">EN</span>
-                    <span class="locale__name">English</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-bn" value="BN" data-locale-language>
-                  <label class="locale__option" for="footer-language-bn">
-                    <span class="locale__code">BN</span>
-                    <span class="locale__name">বাংলা</span>
-                  </label>
-                </li>
-                <li>
-                  <input class="locale__choice sr-only" type="radio" name="footer-language" id="footer-language-ar" value="AR" data-locale-language>
-                  <label class="locale__option" for="footer-language-ar">
-                    <span class="locale__code">AR</span>
-                    <span class="locale__name">العربية</span>
-                  </label>
-                </li>
-              </ul>
-            </div>
-          </details>
-          <!-- END BLADE BOUNDARY: locale switch -->
 
           <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="../../pages/support/help-centre.html">
