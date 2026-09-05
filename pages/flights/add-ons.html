@@ -336,22 +336,22 @@
 
               <div class="choice-grid" role="group" aria-label="Departure seat preference for Passenger 1">
                 <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_window" checked data-add-on="seat_out">
+                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_any" data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_out">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_window" checked data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_aisle" data-add-on="seat_out">
+                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_aisle" data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_out]" value="add_seat_any" data-add-on="seat_out">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -365,22 +365,22 @@
 
               <div class="choice-grid" role="group" aria-label="Return seat preference for Passenger 1">
                 <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_window" checked data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_any" data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_ret">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_window" checked data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_aisle" data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_aisle" data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[0][seat_ret]" value="add_seat_any" data-add-on="seat_ret">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -398,7 +398,21 @@
 
           <div class="meal-grid" role="group" aria-label="Meal preference for Passenger 1">
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_regular" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_none" data-label="No meal" data-price="0" data-price-label="Included" data-add-on="meal">
+                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
+                <span class="meal-card__body">
+                  <span class="meal-card__dot" aria-hidden="true"></span>
+                  <span class="meal-card__text">
+                    <span class="meal-card__name">No meal</span>
+                    <span class="meal-card__note">Included</span>
+                  </span>
+                </span>
+                <span class="meal-card__mark" aria-hidden="true">
+                  <svg class="icon"><use href="#i-check"></use></svg>
+                </span>
+              </label>
+              <label class="meal-card">
+                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_regular" data-label="Regular meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/reg.webp" alt="A regular in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -412,7 +426,7 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_halal" checked data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_halal" checked data-label="Halal meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/halalmeal.webp" alt="A halal in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -426,26 +440,12 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_vegetarian" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_vegetarian" data-label="Vegetarian" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/veg.webp" alt="A vegetarian in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
                   <span class="meal-card__text">
                     <span class="meal-card__name">Vegetarian</span>
-                    <span class="meal-card__note">Included</span>
-                  </span>
-                </span>
-                <span class="meal-card__mark" aria-hidden="true">
-                  <svg class="icon"><use href="#i-check"></use></svg>
-                </span>
-              </label>
-              <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[0][meal]" value="add_meal_none" data-add-on="meal">
-                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
-                <span class="meal-card__body">
-                  <span class="meal-card__dot" aria-hidden="true"></span>
-                  <span class="meal-card__text">
-                    <span class="meal-card__name">No meal</span>
                     <span class="meal-card__note">Included</span>
                   </span>
                 </span>
@@ -469,7 +469,7 @@
 
           <div class="cover-grid" role="group" aria-label="Travel insurance for Passenger 1">
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_none" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_none" data-label="No insurance" data-price="0" data-price-label="BDT 0" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">No insurance</span>
@@ -482,7 +482,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_standard" checked data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_standard" checked data-label="Standard cover" data-price="1250" data-price-label="BDT 1,250" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Standard cover</span>
@@ -501,7 +501,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_premium" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[0][insurance]" value="add_ins_premium" data-label="Premium cover" data-price="2450" data-price-label="BDT 2,450" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Premium cover</span>
@@ -551,22 +551,22 @@
 
               <div class="choice-grid" role="group" aria-label="Departure seat preference for Passenger 2">
                 <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_window" data-add-on="seat_out">
+                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_any" data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_out">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_window" data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_aisle" checked data-add-on="seat_out">
+                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_aisle" checked data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_out]" value="add_seat_any" data-add-on="seat_out">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -580,22 +580,22 @@
 
               <div class="choice-grid" role="group" aria-label="Return seat preference for Passenger 2">
                 <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_window" data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_any" data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_ret">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_window" data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_aisle" checked data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_aisle" checked data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[1][seat_ret]" value="add_seat_any" data-add-on="seat_ret">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -613,7 +613,21 @@
 
           <div class="meal-grid" role="group" aria-label="Meal preference for Passenger 2">
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_regular" checked data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_none" data-label="No meal" data-price="0" data-price-label="Included" data-add-on="meal">
+                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
+                <span class="meal-card__body">
+                  <span class="meal-card__dot" aria-hidden="true"></span>
+                  <span class="meal-card__text">
+                    <span class="meal-card__name">No meal</span>
+                    <span class="meal-card__note">Included</span>
+                  </span>
+                </span>
+                <span class="meal-card__mark" aria-hidden="true">
+                  <svg class="icon"><use href="#i-check"></use></svg>
+                </span>
+              </label>
+              <label class="meal-card">
+                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_regular" checked data-label="Regular meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/reg.webp" alt="A regular in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -627,7 +641,7 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_halal" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_halal" data-label="Halal meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/halalmeal.webp" alt="A halal in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -641,26 +655,12 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_vegetarian" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_vegetarian" data-label="Vegetarian" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/veg.webp" alt="A vegetarian in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
                   <span class="meal-card__text">
                     <span class="meal-card__name">Vegetarian</span>
-                    <span class="meal-card__note">Included</span>
-                  </span>
-                </span>
-                <span class="meal-card__mark" aria-hidden="true">
-                  <svg class="icon"><use href="#i-check"></use></svg>
-                </span>
-              </label>
-              <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[1][meal]" value="add_meal_none" data-add-on="meal">
-                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
-                <span class="meal-card__body">
-                  <span class="meal-card__dot" aria-hidden="true"></span>
-                  <span class="meal-card__text">
-                    <span class="meal-card__name">No meal</span>
                     <span class="meal-card__note">Included</span>
                   </span>
                 </span>
@@ -684,7 +684,7 @@
 
           <div class="cover-grid" role="group" aria-label="Travel insurance for Passenger 2">
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_none" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_none" data-label="No insurance" data-price="0" data-price-label="BDT 0" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">No insurance</span>
@@ -697,7 +697,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_standard" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_standard" data-label="Standard cover" data-price="1250" data-price-label="BDT 1,250" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Standard cover</span>
@@ -716,7 +716,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_premium" checked data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[1][insurance]" value="add_ins_premium" checked data-label="Premium cover" data-price="2450" data-price-label="BDT 2,450" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Premium cover</span>
@@ -766,22 +766,22 @@
 
               <div class="choice-grid" role="group" aria-label="Departure seat preference for Passenger 3">
                 <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_window" data-add-on="seat_out">
+                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_any" checked data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_out">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_window" data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_aisle" data-add-on="seat_out">
+                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_aisle" data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_out">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_out]" value="add_seat_any" checked data-add-on="seat_out">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -795,22 +795,22 @@
 
               <div class="choice-grid" role="group" aria-label="Return seat preference for Passenger 3">
                 <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_window" data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_any" checked data-label="No seat preference" data-price="0" data-price-label="Free" data-add-on="seat_ret">
+                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span class="choice__label">No preference</span>
+                  <span class="choice__price">Free</span>
+                </label>
+                <label class="choice">
+                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_window" data-label="Window seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Window</span>
                   <span class="choice__price">BDT 1,200</span>
                 </label>
                 <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_aisle" data-add-on="seat_ret">
+                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_aisle" data-label="Aisle seat" data-price="1200" data-price-label="BDT 1,200" data-add-on="seat_ret">
                   <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
                   <span class="choice__label">Aisle</span>
                   <span class="choice__price">BDT 1,200</span>
-                </label>
-                <label class="choice">
-                  <input type="radio" name="add_ons[2][seat_ret]" value="add_seat_any" checked data-add-on="seat_ret">
-                  <svg class="icon size-5 choice__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
-                  <span class="choice__label">No preference</span>
-                  <span class="choice__price">Free</span>
                 </label>
               </div>
             </div>
@@ -828,7 +828,21 @@
 
           <div class="meal-grid" role="group" aria-label="Meal preference for Passenger 3">
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_regular" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_none" data-label="No meal" data-price="0" data-price-label="Included" data-add-on="meal">
+                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
+                <span class="meal-card__body">
+                  <span class="meal-card__dot" aria-hidden="true"></span>
+                  <span class="meal-card__text">
+                    <span class="meal-card__name">No meal</span>
+                    <span class="meal-card__note">Included</span>
+                  </span>
+                </span>
+                <span class="meal-card__mark" aria-hidden="true">
+                  <svg class="icon"><use href="#i-check"></use></svg>
+                </span>
+              </label>
+              <label class="meal-card">
+                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_regular" data-label="Regular meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/reg.webp" alt="A regular in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -842,7 +856,7 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_halal" data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_halal" data-label="Halal meal" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/halalmeal.webp" alt="A halal in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
@@ -856,26 +870,12 @@
                 </span>
               </label>
               <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_vegetarian" checked data-add-on="meal">
+                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_vegetarian" checked data-label="Vegetarian" data-price="0" data-price-label="Included" data-add-on="meal">
                 <img class="meal-card__media" src="../../assets/images/veg.webp" alt="A vegetarian in-flight meal tray" width="640" height="400">
                 <span class="meal-card__body">
                   <span class="meal-card__dot" aria-hidden="true"></span>
                   <span class="meal-card__text">
                     <span class="meal-card__name">Vegetarian</span>
-                    <span class="meal-card__note">Included</span>
-                  </span>
-                </span>
-                <span class="meal-card__mark" aria-hidden="true">
-                  <svg class="icon"><use href="#i-check"></use></svg>
-                </span>
-              </label>
-              <label class="meal-card">
-                <input class="sr-only" type="radio" name="add_ons[2][meal]" value="add_meal_none" data-add-on="meal">
-                <img class="meal-card__media meal-card__media--icon" src="../../assets/images/nomeal.webp" alt="An empty meal tray" width="640" height="400">
-                <span class="meal-card__body">
-                  <span class="meal-card__dot" aria-hidden="true"></span>
-                  <span class="meal-card__text">
-                    <span class="meal-card__name">No meal</span>
                     <span class="meal-card__note">Included</span>
                   </span>
                 </span>
@@ -899,7 +899,7 @@
 
           <div class="cover-grid" role="group" aria-label="Travel insurance for Passenger 3">
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_none" checked data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_none" checked data-label="No insurance" data-price="0" data-price-label="BDT 0" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">No insurance</span>
@@ -912,7 +912,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_standard" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_standard" data-label="Standard cover" data-price="1250" data-price-label="BDT 1,250" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Standard cover</span>
@@ -931,7 +931,7 @@
                 </span>
               </label>
               <label class="cover-card">
-                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_premium" data-add-on="insurance">
+                <input class="cover-card__input" type="radio" name="add_ons[2][insurance]" value="add_ins_premium" data-label="Premium cover" data-price="2450" data-price-label="BDT 2,450" data-add-on="insurance">
                 <svg class="icon size-6 cover-card__icon" aria-hidden="true"><use href="#i-shield"></use></svg>
                 <span class="cover-card__body">
                   <span class="cover-card__name">Premium cover</span>
@@ -1018,30 +1018,69 @@
             3 travellers, Economy
           </p>
 
+
+          <hr class="trip-summary__rule mt-4">
+
+          <!-- BLADE BOUNDARY: add-ons summary -> <x-booking.add-ons-summary :selection="$selection" /> -->
+          <!-- The selection as it stands, priced from the options themselves:
+               every figure here was rendered onto the option it belongs to, and
+               assets/js/components/add-ons.js only re-reads them as the choices
+               change. The backend prices the request again when it is sent. -->
+          <div class="addon-summary" data-addon-summary data-currency="BDT">
+            <h3 class="addon-summary__title">Selected add-ons</h3>
+
+            <div class="addon-summary__body" data-addon-summary-body>
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 1 &middot; Adult</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>Window seat &times; 2</dt><dd class="price-row__value m-0">BDT 2,400</dd></div>
+                  <div class="price-row"><dt>Halal meal</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>Standard cover</dt><dd class="price-row__value m-0">BDT 1,250</dd></div>
+                </dl>
+              </div>
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 2 &middot; Adult</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>Aisle seat &times; 2</dt><dd class="price-row__value m-0">BDT 2,400</dd></div>
+                  <div class="price-row"><dt>Regular meal</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>Premium cover</dt><dd class="price-row__value m-0">BDT 2,450</dd></div>
+                </dl>
+              </div>
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 3 &middot; Child</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>No seat preference &times; 2</dt><dd class="price-row__value m-0">Free</dd></div>
+                  <div class="price-row"><dt>Vegetarian</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>No insurance</dt><dd class="price-row__value m-0">BDT 0</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <!-- END BLADE BOUNDARY: add-ons summary -->
           <hr class="trip-summary__rule mt-4">
 
           <dl class="grid gap-3 mt-4 m-0">
             <div class="price-row">
               <dt>Base Fare</dt>
-              <dd class="m-0 price-row__value">BDT 61,900</dd>
+              <dd class="m-0 price-row__value" data-amount="173400">BDT 173,400</dd>
             </div>
             <div class="price-row">
               <dt>Taxes &amp; Fees</dt>
-              <dd class="m-0 price-row__value">BDT 6,550</dd>
+              <dd class="m-0 price-row__value" data-amount="18160">BDT 18,160</dd>
             </div>
             <div class="price-row">
               <dt>Add-ons</dt>
-              <dd class="m-0 price-row__value">BDT 0</dd>
+              <dd class="m-0 price-row__value" data-addon-total>BDT 8,500</dd>
             </div>
             <div class="price-row price-row--total">
               <dt>Total</dt>
-              <dd class="m-0 price-row__value">BDT 68,450</dd>
+              <dd class="m-0 price-row__value" data-grand-total>BDT 200,060</dd>
             </div>
           </dl>
 
-          <!-- The browser never adds an add-on to a total: the backend prices
-               the selection and returns the figure the next step shows. -->
-          <p class="mt-2 mb-0 text-xs text-fg-muted">Add-ons are priced when you continue.</p>
+          <!-- The figures are the backend's own; the browser only adds up the
+               ones that were chosen. The request is priced again on submit. -->
+          <p class="mt-2 mb-0 text-xs text-fg-muted">Our team confirms the final fare before ticketing.</p>
         </section>
       </aside>
       <!-- END BLADE BOUNDARY: trip summary -->

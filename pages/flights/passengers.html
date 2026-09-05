@@ -384,15 +384,16 @@
 
               <div class="field">
                 <label class="field__label" for="dob-0">Date of Birth</label>
+                <!-- The ages the passenger type allows, which is what limits the
+                     years the picker offers: ADT 12 and over, CHD 2 to 11, INF
+                     under 2. Blade renders these from the type above; the form
+                     request is what actually enforces the policy. -->
                 <div class="field__date" data-date-field>
                   <input class="field__control" type="date" id="dob-0"
                     name="passengers[0][date_of_birth]" autocomplete="bday"
-                    required
-                    data-required="Enter the date of birth.">
-                  <button class="field__date-button" type="button" data-date-open
-                          aria-expanded="false" aria-label="Choose a date">
-                    <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>
-                  </button>
+                    required data-min-age="12" data-max-age="120"
+                    data-required="Enter the date of birth."
+                    data-invalid="Enter a date of birth for an adult passenger.">
                 </div>
                 <span class="field__error" data-field-error hidden></span>
               </div>
@@ -443,15 +444,15 @@
                     </span>
                   </span>
                 </div>
+                <!-- A passport that expires today cannot be travelled on, so the
+                     earliest date on offer is tomorrow. -->
                 <div class="field__date" data-date-field>
                   <input class="field__control" type="date" id="document-expiry-0"
                     name="passengers[0][document_expiry]"
                     aria-describedby="document-expiry-guidance" required
-                    data-required="Enter the passport expiry date.">
-                  <button class="field__date-button" type="button" data-date-open
-                          aria-expanded="false" aria-label="Choose a date">
-                    <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>
-                  </button>
+                    data-min-days="1"
+                    data-required="Enter the passport expiry date."
+                    data-invalid="The passport must be valid beyond today.">
                 </div>
                 <span class="field__error" data-field-error hidden></span>
               </div>
