@@ -227,167 +227,217 @@
   <!-- BLADE BOUNDARY: main content -> @yield('content') -->
   <main id="main-content">
 
-    <!-- BLADE BOUNDARY: page head -> <x-ui.page-head /> -->
-    <div class="page-container page-head">
-      <p class="page-head__eyebrow">Blog</p>
-      <h1 class="page-head__title">Notes from the counter</h1>
-      <p class="page-head__text">
-        What we learn booking flights out of Dhaka — routes worth knowing, fare rules worth reading,
-        and the parts of a journey nobody warns you about.
-      </p>
-    </div>
-    <!-- END BLADE BOUNDARY: page head -->
+    <!-- BLADE BOUNDARY: blog banner -> <x-blog.banner /> -->
+    <!-- The photograph is decorative; everything readable sits in the markup
+         over it, and the tint below it is what keeps the text legible. -->
+    <section class="blog-banner" aria-labelledby="blog-title">
+      <img class="blog-banner__media" src="../assets/images/banner.webp" alt=""
+           width="2172" height="724" fetchpriority="high" decoding="async">
+
+      <div class="page-container blog-banner__body">
+        <p class="blog-banner__eyebrow">Izumi Travel Journal</p>
+        <h1 class="blog-banner__title" id="blog-title">Travel smarter. Explore further.</h1>
+        <p class="blog-banner__text">Practical guides, destination ideas and flight tips for a smoother journey.</p>
+      </div>
+    </section>
+    <!-- END BLADE BOUNDARY: blog banner -->
 
     <div class="page-container pb-10">
-      <!-- BLADE BOUNDARY: post list -> <x-blog.post-list :posts="$posts" /> -->
-      <!-- @content-pending: placeholder posts. Every card points at the same
-           article until the backend renders one page per post. -->
-      <div class="post-grid">
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/hero%20section.webp" alt="An aircraft climbing away through cloud"
-                 width="1200" height="750" loading="lazy" decoding="async">
 
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Routes</span>
-                <span>12 August 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>6 min read</span>
-              </span>
-
-              <span class="post-card__title">Dhaka to Tokyo: which connection is actually worth it</span>
-              <span class="post-card__text">Direct is not always the answer. We compare the Biman non-stop against one-stop routings through Hong Kong, Bangkok and Guangzhou on price, total time and how much of your first day you lose.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
-
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/search-result-banner.webp" alt="A departures board seen through an airport window"
-                 width="1200" height="750" loading="lazy" decoding="async">
-
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Fares</span>
-                <span>29 July 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>5 min read</span>
-              </span>
-
-              <span class="post-card__title">What a fare rule is really telling you</span>
-              <span class="post-card__text">Refundable, changeable, non-endorsable. The two lines under a price decide what happens when your plans move, and they are worth thirty seconds before you book.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
-
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/window.webp" alt="Clouds and an aircraft wing seen through a cabin window"
-                 width="1200" height="750" loading="lazy" decoding="async">
-
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Baggage</span>
-                <span>15 July 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>4 min read</span>
-              </span>
-
-              <span class="post-card__title">Baggage allowances across the Gulf carriers</span>
-              <span class="post-card__text">Piece or weight, what the cabin bag limit really is, and where a cheaper fare quietly costs you a suitcase.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
-
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/halal%20meal.png" alt="A tray of halal meal dishes served on board"
-                 width="1200" height="750" loading="lazy" decoding="async">
-
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Food</span>
-                <span>2 July 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>4 min read</span>
-              </span>
-
-              <span class="post-card__title">Ordering a halal meal, and what turns up</span>
-              <span class="post-card__text">How special meal codes work, when to request one, and which airlines out of Dhaka do it well.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
-
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/meet-geet.png" alt="An airport host welcoming a traveller at the terminal"
-                 width="1200" height="750" loading="lazy" decoding="async">
-
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Airports</span>
-                <span>20 June 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>7 min read</span>
-              </span>
-
-              <span class="post-card__title">A short transit at Suvarnabhumi, step by step</span>
-              <span class="post-card__text">Where you land, how long the walk is, whether you clear immigration, and how tight is too tight when the connection is on one ticket.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
-
-        <article class="post-card">
-          <a class="post-card__link" href="blog-post.html">
-            <img class="post-card__media" src="../assets/images/section2.png" alt="A traveller planning a trip"
-                 width="1200" height="750" loading="lazy" decoding="async">
-
-            <span class="post-card__body">
-              <span class="post-card__meta">
-                <span class="post-card__tag">Planning</span>
-                <span>4 June 2026</span>
-                <span aria-hidden="true">&middot;</span>
-                <span>5 min read</span>
-              </span>
-
-              <span class="post-card__title">When to book: the honest version</span>
-              <span class="post-card__text">There is no magic Tuesday. There are booking windows that behave differently by route and season, and this is what we see on ours.</span>
-
-              <span class="post-card__more">
-                Read the post
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </span>
-            </span>
-          </a>
-        </article>
+      <!-- BLADE BOUNDARY: post filters -> <x-blog.filters :categories="$categories" /> -->
+      <!-- Every post is in the markup below; these only narrow what is shown.
+           With no JavaScript the whole journal is simply on display. -->
+      <div class="post-filters" role="group" aria-label="Filter articles by category">
+        <button class="post-filter" type="button" data-post-filter="all"
+                aria-pressed="true">All</button>
+        <button class="post-filter" type="button" data-post-filter="japan"
+                aria-pressed="false">Japan</button>
+        <button class="post-filter" type="button" data-post-filter="travel-tips"
+                aria-pressed="false">Travel Tips</button>
+        <button class="post-filter" type="button" data-post-filter="flight-guides"
+                aria-pressed="false">Flight Guides</button>
+        <button class="post-filter" type="button" data-post-filter="esim"
+                aria-pressed="false">eSIM &amp; Connectivity</button>
+        <button class="post-filter" type="button" data-post-filter="halal-travel"
+                aria-pressed="false">Halal Travel</button>
       </div>
+      <!-- END BLADE BOUNDARY: post filters -->
+
+      <!-- BLADE BOUNDARY: featured post -> <x-blog.featured :post="$featured" /> -->
+      <!-- @content-pending: placeholder copy. Every card points at the same
+           article until the backend renders one page per post. -->
+      <section class="mt-8" aria-labelledby="featured-title" data-post-category="japan">
+        <h2 class="section-title" id="featured-title">Featured story</h2>
+
+        <article class="feature-post">
+          <p class="feature-post__figure">
+            <img class="feature-post__media" src="../assets/images/blogbig.webp"
+                 alt="A train passing Mount Fuji under cherry blossom"
+                 width="1664" height="936" loading="lazy" decoding="async">
+            <span class="post-card__tag">Japan Guide</span>
+          </p>
+
+          <div class="feature-post__body">
+            <h3 class="feature-post__title">Your complete guide to visiting Japan in every season</h3>
+            <p class="feature-post__text">
+              From cherry blossoms to autumn leaves, discover the best times to visit, what to see
+              and how to make the most of your trip.
+            </p>
+
+            <p class="feature-post__meta">
+              <span class="post-card__fact">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>8 min read
+              </span>
+              <span class="post-card__fact">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 15, 2026
+              </span>
+            </p>
+
+            <a class="btn btn--primary feature-post__action" href="blog-post.html">
+              Read article
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </a>
+          </div>
+        </article>
+      </section>
+      <!-- END BLADE BOUNDARY: featured post -->
+
+      <!-- BLADE BOUNDARY: post list -> <x-blog.post-list :posts="$posts" /> -->
+      <section class="mt-10" aria-labelledby="latest-title">
+        <div class="section-head">
+          <h2 class="section-title" id="latest-title">Latest travel insights</h2>
+          <a class="section-link" href="blog.html">
+            View all articles
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </div>
+
+        <div class="post-grid" data-post-list>
+          <article class="post-card" data-post-category="travel-tips japan">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog1.webp" alt="Tokyo at dusk, with the tower lit and Mount Fuji on the horizon"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">Travel Tips</span>
+              <span class="post-card__body">
+                <span class="post-card__title">How to find the best-value flights to Tokyo</span>
+                <span class="post-card__text">Smart tips to help you book cheaper flights and get more from your travel budget.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Jan 28, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>6 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <article class="post-card" data-post-category="flight-guides">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog2.webp" alt="Travellers walking towards the gates under a departures board"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">Flight Guides</span>
+              <span class="post-card__body">
+                <span class="post-card__title">What to know before choosing a connecting flight</span>
+                <span class="post-card__text">Make your journey smoother with these essential tips for layovers and transit airports.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 3, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>5 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <article class="post-card" data-post-category="esim japan">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog3.webp" alt="A phone showing a map of Japan, held up in front of a temple gate"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">eSIM &amp; Connectivity</span>
+              <span class="post-card__body">
+                <span class="post-card__title">Stay connected in Japan with an eSIM</span>
+                <span class="post-card__text">Find out how eSIMs work, what to consider and the best options for travellers in Japan.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 10, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>4 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <article class="post-card" data-post-category="halal-travel japan">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog4.webp" alt="A table of Japanese dishes laid out by a window over Kyoto"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">Halal Travel</span>
+              <span class="post-card__body">
+                <span class="post-card__title">A practical halal travel guide to Japan</span>
+                <span class="post-card__text">Where to find halal food, prayer facilities and traveller-friendly places across major cities.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 12, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>6 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <article class="post-card" data-post-category="travel-tips">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog5.webp" alt="An empty row of cabin seats beside a window above the clouds"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">Travel Tips</span>
+              <span class="post-card__body">
+                <span class="post-card__title">Window, aisle or middle: choosing the right seat</span>
+                <span class="post-card__text">Discover the pros and cons of each seat type to make your next flight more comfortable.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 18, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>4 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+
+          <article class="post-card" data-post-category="flight-guides">
+            <a class="post-card__link" href="blog-post.html">
+              <img class="post-card__media" src="../assets/images/blog6.webp" alt="Three suitcases standing beside a baggage scale in a terminal"
+                   width="1200" height="750" loading="lazy" decoding="async">
+              <span class="post-card__tag">Flight Guides</span>
+              <span class="post-card__body">
+                <span class="post-card__title">Understanding baggage allowances before you fly</span>
+                <span class="post-card__text">A clear guide to cabin and checked baggage rules, so you can avoid extra fees at the airport.</span>
+                <span class="post-card__meta">
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 20, 2026
+                  </span>
+                  <span class="post-card__fact">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>5 min read
+                  </span>
+                </span>
+              </span>
+            </a>
+          </article>
+        </div>
+
+        <p class="post-empty" hidden data-post-empty>No articles in that category yet.</p>
+      </section>
       <!-- END BLADE BOUNDARY: post list -->
+
     </div>
   </main>
   <!-- END BLADE BOUNDARY: main content -->
@@ -396,7 +446,7 @@
   <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
     <div class="page-container">
 
-      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(4,1fr)_auto] lg:gap-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
           <a class="footer-logo" href="../index.html" aria-label="Izumi Global Travels — home">
@@ -412,16 +462,6 @@
           </a>
           <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
         </div>
-
-        <nav class="" aria-labelledby="footer-services">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="support/help-centre.html">eSIM Plans</a></li>
-            <li><a class="footer-nav__link" href="booking/add-ons.html">Halal Meals</a></li>
-            <li><a class="footer-nav__link" href="booking/add-ons.html">Meet &amp; Greet</a></li>
-            <li><a class="footer-nav__link" href="booking/add-ons.html">Travel Insurance</a></li>
-          </ul>
-        </nav>
 
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>

@@ -2639,7 +2639,9 @@
      pointer moves through them.
      ---------------------------------------------------------------------- */
 
-  .review-rail {
+  /* Named for the shape, not the section: the reviews and the journal both
+     ride the same track. */
+  .card-rail {
     display: grid;
     grid-auto-flow: column;
     /* Short of full width, so the edge of the next card shows and the track
@@ -2657,16 +2659,16 @@
     scrollbar-width: none;
   }
 
-  .review-rail::-webkit-scrollbar { display: none; }
+  .card-rail::-webkit-scrollbar { display: none; }
 
-  .review-rail > * { scroll-snap-align: start; }
+  .card-rail > * { scroll-snap-align: start; }
 
   @media (width >= 48rem) {
-    .review-rail { grid-auto-columns: 46%; }
+    .card-rail { grid-auto-columns: 46%; }
   }
 
   @media (width >= 64rem) {
-    .review-rail { grid-auto-columns: 31.5%; }
+    .card-rail { grid-auto-columns: 31.5%; }
   }
 
   /* --- Rail arrows -------------------------------------------------------- */
@@ -6516,6 +6518,222 @@
 
   /* --- Blog ---------------------------------------------------------------- */
 
+  /* --- Section headings ----------------------------------------------------
+     A title with an optional link opposite it, used down the journal.
+     ---------------------------------------------------------------------- */
+
+  .section-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: --spacing(3);
+  }
+
+  .section-title {
+    margin: 0 0 --spacing(4);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .section-link {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-primary);
+  }
+
+  .section-link:hover { text-decoration: underline; }
+
+  /* --- Journal banner ------------------------------------------------------
+     A photograph with the title over it. The image is a real <img> rather than
+     a background so it can carry sizes and load early; the tint above it is
+     what makes the white text legible whatever the photograph is doing.
+     ---------------------------------------------------------------------- */
+
+  .blog-banner {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-block-size: 260px;
+    overflow: hidden;
+    border-end-start-radius: var(--radius-lg);
+    border-end-end-radius: var(--radius-lg);
+  }
+
+  .blog-banner__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    /* The wing is at the right of this photograph; the text sits over the
+       water, which is the darker half. */
+    object-position: 60% 50%;
+  }
+
+  /* Dark at the start, clear at the end: the text has a floor to sit on and
+     the photograph still shows. */
+  .blog-banner::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(
+      100deg,
+      rgb(6 20 40 / 82%) 0%,
+      rgb(6 20 40 / 62%) 45%,
+      rgb(6 20 40 / 20%) 100%
+    );
+  }
+
+  .blog-banner__body { padding-block: --spacing(10); }
+
+  .blog-banner__eyebrow {
+    margin: 0;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-on-panel-muted);
+  }
+
+  .blog-banner__title {
+    max-inline-size: 20ch;
+    margin: --spacing(2) 0 0;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-on-panel);
+  }
+
+  .blog-banner__text {
+    max-inline-size: 52ch;
+    margin: --spacing(3) 0 0;
+    font-size: var(--text-base);
+    color: var(--color-hero-accent);
+  }
+
+  @media (width >= 48rem) {
+    .blog-banner { min-block-size: 320px; }
+    .blog-banner__title { font-size: var(--text-4xl); }
+  }
+
+  /* --- Category filter ----------------------------------------------------- */
+
+  .post-filters {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: --spacing(2);
+    margin-block-start: --spacing(6);
+  }
+
+  .post-filter {
+    padding: --spacing(2) --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    transition: border-color var(--transition-fast),
+                background-color var(--transition-fast),
+                color var(--transition-fast);
+  }
+
+  .post-filter:hover { border-color: var(--color-primary); }
+
+  .post-filter[aria-pressed="true"] {
+    border-color: transparent;
+    background-color: var(--color-primary);
+    font-weight: 600;
+    color: var(--color-on-primary);
+  }
+
+  .post-filter:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* --- Featured story ------------------------------------------------------
+     The photograph beside the piece rather than above it: one story given the
+     room the six below it share.
+     ---------------------------------------------------------------------- */
+
+  .feature-post {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+    padding: --spacing(4);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (width >= 64rem) {
+    .feature-post {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: --spacing(6);
+    }
+  }
+
+  .feature-post__figure {
+    position: relative;
+    display: block;
+    margin: 0;
+  }
+
+  .feature-post__media {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+  }
+
+  .feature-post__body { padding-inline-end: --spacing(2); }
+
+  .feature-post__title {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .feature-post__text {
+    margin: --spacing(3) 0 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .feature-post__meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: --spacing(2) --spacing(5);
+    margin: --spacing(4) 0 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .feature-post__action { margin-block-start: --spacing(5); }
+
+  .post-empty {
+    margin: --spacing(6) 0 0;
+    text-align: center;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
   .post-grid {
     display: grid;
     grid-template-columns: 1fr;
@@ -6531,6 +6749,8 @@
   }
 
   .post-card {
+    /* The chip on the photograph is pinned to this box. */
+    position: relative;
     border-radius: var(--radius-lg);
     background-color: var(--color-surface);
     box-shadow: var(--shadow-sm);
@@ -6575,17 +6795,35 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    gap: --spacing(2);
+    gap: --spacing(2) --spacing(4);
+    /* Pushed to the foot of the card, so it lines up across a row. */
+    margin-block-start: auto;
+    padding-block-start: --spacing(3);
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
   }
 
+  .post-card__fact {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  /* A chip in the corner of the photograph rather than a line above the
+     headline: the card leads with its title, and the category still reads
+     first. Dark enough to hold white text over any photograph. */
   .post-card__tag {
+    position: absolute;
+    inset-block-start: --spacing(3);
+    inset-inline-end: --spacing(3);
     padding: --spacing(1) --spacing(3);
     border-radius: var(--radius-pill);
-    background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
-    font-weight: 600;
-    color: var(--color-primary);
+    background-color: var(--color-photo-glass-solid);
+    font-size: var(--text-2xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-on-panel);
   }
 
   .post-card__title {
@@ -6600,20 +6838,6 @@
     line-height: var(--leading-base);
     color: var(--color-fg-muted);
   }
-
-  /* Pushed to the foot of the card, so it lines up across a row. */
-  .post-card__more {
-    display: inline-flex;
-    align-items: center;
-    gap: --spacing(2);
-    margin-block-start: auto;
-    padding-block-start: --spacing(2);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    color: var(--color-link);
-  }
-
-  .post-card:hover .post-card__more { text-decoration: underline; }
 
   /* --- One post ------------------------------------------------------------ */
 

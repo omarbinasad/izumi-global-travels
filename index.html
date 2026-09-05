@@ -1069,7 +1069,7 @@
         </div>
       </div>
 
-      <div class="review-rail" role="group" aria-labelledby="testimonials-title" tabindex="0" data-rail data-reveal-group>
+      <div class="card-rail" role="group" aria-labelledby="testimonials-title" tabindex="0" data-rail data-reveal-group>
 
         <article class="testimonial-card" data-reveal>
           <span class="testimonial-card__avatar" aria-hidden="true">NR</span>
@@ -1183,6 +1183,160 @@
     </section>
 
     <!-- ====================================================================
+         From the journal
+         ==================================================================== -->
+    <!-- BLADE BOUNDARY: journal rail -> <x-blog.rail :posts="$posts" /> -->
+    <section class="page-container py-8 lg:py-10" aria-labelledby="journal-title" data-rail-scope>
+      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+        <div>
+          <h2 class="m-0 text-xl font-semibold text-fg-heading" id="journal-title">From the journal</h2>
+          <p class="mt-1 mb-0 text-sm text-fg-muted">Guides and flight tips from the counter.</p>
+        </div>
+
+        <div class="flex items-center gap-4">
+          <a class="section-link" href="pages/blog.html">
+            View all articles
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+
+          <div class="rail-nav" data-rail-nav hidden>
+            <button class="rail-nav__button" type="button" data-rail-prev aria-label="Previous articles">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </button>
+            <button class="rail-nav__button" type="button" data-rail-next aria-label="Next articles">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-rail" role="group" aria-labelledby="journal-title" tabindex="0" data-rail data-reveal-group>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog1.webp" alt="Tokyo at dusk, with the tower lit and Mount Fuji on the horizon"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">Travel Tips</span>
+            <span class="post-card__body">
+              <span class="post-card__title">How to find the best-value flights to Tokyo</span>
+              <span class="post-card__text">Smart tips to help you book cheaper flights and get more from your travel budget.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Jan 28, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>6 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog2.webp" alt="Travellers walking towards the gates under a departures board"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">Flight Guides</span>
+            <span class="post-card__body">
+              <span class="post-card__title">What to know before choosing a connecting flight</span>
+              <span class="post-card__text">Make your journey smoother with these essential tips for layovers and transit airports.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 3, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>5 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog3.webp" alt="A phone showing a map of Japan, held up in front of a temple gate"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">eSIM &amp; Connectivity</span>
+            <span class="post-card__body">
+              <span class="post-card__title">Stay connected in Japan with an eSIM</span>
+              <span class="post-card__text">Find out how eSIMs work, what to consider and the best options for travellers in Japan.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 10, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>4 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog4.webp" alt="A table of Japanese dishes laid out by a window over Kyoto"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">Halal Travel</span>
+            <span class="post-card__body">
+              <span class="post-card__title">A practical halal travel guide to Japan</span>
+              <span class="post-card__text">Where to find halal food, prayer facilities and traveller-friendly places across major cities.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 12, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>6 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog5.webp" alt="An empty row of cabin seats beside a window above the clouds"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">Travel Tips</span>
+            <span class="post-card__body">
+              <span class="post-card__title">Window, aisle or middle: choosing the right seat</span>
+              <span class="post-card__text">Discover the pros and cons of each seat type to make your next flight more comfortable.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 18, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>4 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+        <article class="post-card">
+          <a class="post-card__link" href="pages/blog-post.html">
+            <img class="post-card__media" src="assets/images/blog6.webp" alt="Three suitcases standing beside a baggage scale in a terminal"
+                 width="1200" height="750" loading="lazy" decoding="async">
+            <span class="post-card__tag">Flight Guides</span>
+            <span class="post-card__body">
+              <span class="post-card__title">Understanding baggage allowances before you fly</span>
+              <span class="post-card__text">A clear guide to cabin and checked baggage rules, so you can avoid extra fees at the airport.</span>
+              <span class="post-card__meta">
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-calendar"></use></svg>Feb 20, 2026
+                </span>
+                <span class="post-card__fact">
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>5 min read
+                </span>
+              </span>
+            </span>
+          </a>
+        </article>
+
+      </div>
+    </section>
+    <!-- END BLADE BOUNDARY: journal rail -->
+
+    <!-- ====================================================================
          Closing call to action
          ==================================================================== -->
     <section class="page-container py-8 lg:py-10" aria-labelledby="cta-title">
@@ -1206,7 +1360,7 @@
   <footer class="site-footer mt-12 pt-10 pb-8 lg:pt-12 text-on-panel-muted rounded-t-lg">
     <div class="page-container">
 
-      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(4,1fr)_auto] lg:gap-6">
+      <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
           <a class="footer-logo" href="index.html" aria-label="Izumi Global Travels — home">
@@ -1222,16 +1376,6 @@
           </a>
           <p class="max-w-[34ch] text-sm leading-snug">Your trusted travel partner for flawless journeys worldwide.</p>
         </div>
-
-        <nav class="" aria-labelledby="footer-services">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-services">Services</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="pages/support/help-centre.html">eSIM Plans</a></li>
-            <li><a class="footer-nav__link" href="pages/booking/add-ons.html">Halal Meals</a></li>
-            <li><a class="footer-nav__link" href="pages/booking/add-ons.html">Meet &amp; Greet</a></li>
-            <li><a class="footer-nav__link" href="pages/booking/add-ons.html">Travel Insurance</a></li>
-          </ul>
-        </nav>
 
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
