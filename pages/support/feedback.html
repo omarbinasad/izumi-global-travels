@@ -6,26 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Talk to the Izumi Global Travels team about a booking, a new trip, or a change to an existing one.">
+  <meta name="description" content="Tell Izumi Global Travels how a booking went, and what we should change.">
 
-  <title>Contact us — Izumi Global Travels</title>
+  <title>Feedback — Izumi Global Travels</title>
 
   <!--
     Runs before paint so the dark theme never flashes light.
     Must stay synchronous and must not be type="module".
     Blade: resources/views/layouts/app.blade.php
   -->
-  <script src="../assets/js/core/theme-boot.js"></script>
+  <script src="../../assets/js/core/theme-boot.js"></script>
 
-  <link rel="stylesheet" href="../assets/css/build.css">
+  <link rel="stylesheet" href="../../assets/css/build.css">
 </head>
 
-<body class="results-page" data-page="contact">
+<body class="results-page" data-page="feedback">
 
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
-       One request-free sprite for every icon on the page. Reference an icon
+       One request-free sprite for every icon on the page.
        Reference one with a use element pointing at its symbol id. -->
   <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
     <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM18.5 14.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></symbol>
@@ -78,7 +78,7 @@
     <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:grid lg:grid-cols-[1fr_auto_1fr] lg:min-h-(--header-height-lg) lg:gap-8">
 
       <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
-      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../index.html" aria-label="Izumi Global Travels — home">
+      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../../index.html" aria-label="Izumi Global Travels — home">
         <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
           <circle cx="20" cy="20" r="20" fill="#1668e0"/>
           <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -93,10 +93,10 @@
       <div class="site-nav" id="site-nav" data-nav-panel>
         <nav class="lg:justify-self-center" aria-label="Primary">
           <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="../index.html">Flights</a></li>
-            <li><a class="nav-link" href="about.html">About</a></li>
-            <li><a class="nav-link" href="contact.html">Contact</a></li>
-            <li><a class="nav-link" href="faq.html">FAQ</a></li>
+            <li><a class="nav-link" href="../../index.html">Flights</a></li>
+            <li><a class="nav-link" href="../about.html">About</a></li>
+            <li><a class="nav-link" href="../contact.html">Contact</a></li>
+            <li><a class="nav-link" href="../faq.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -208,7 +208,7 @@
         </div>
         <!-- END BLADE BOUNDARY: theme toggle -->
 
-        <a class="btn btn--primary btn--sm" href="auth/login.html">Login/Register</a>
+        <a class="btn btn--primary btn--sm" href="../auth/login.html">Login/Register</a>
       </div>
 
       <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
@@ -229,61 +229,89 @@
 
     <!-- BLADE BOUNDARY: page head -> <x-ui.page-head /> -->
     <div class="page-container page-head">
-      <p class="page-head__eyebrow">Contact us</p>
-      <h1 class="page-head__title">Talk to someone about your trip</h1>
+      <p class="page-head__eyebrow">Feedback</p>
+      <h1 class="page-head__title">Tell us how we did</h1>
       <p class="page-head__text">
-        Send us the details and we will come back to you within one working day. If your flight is today,
-        call instead — that reaches us faster than any form.
+        Good or bad, we read every message. It is the fastest way to change how we book, what we quote
+        and how we answer.
       </p>
     </div>
     <!-- END BLADE BOUNDARY: page head -->
 
     <div class="page-container contact-layout">
 
-      <!-- BLADE BOUNDARY: contact form -> <x-support.contact-form /> -->
+      <!-- BLADE BOUNDARY: feedback form -> <x-support.feedback-form /> -->
       <!--
-        Laravel routes this POST to the contact controller, which validates it,
-        stores the enquiry and sends the notification. Nothing is sent from the
+        Laravel routes this POST to the feedback controller, which validates it,
+        stores the message and notifies the team. Nothing is sent from the
         browser, and the static prototype has nothing to post to.
       -->
-      <form class="review-panel" method="post" action="contact.html" data-validate novalidate>
-        <h2 class="m-0 text-lg font-semibold text-fg-heading">Send us a message</h2>
+      <form class="review-panel" method="post" action="feedback.html" data-validate novalidate>
+        <h2 class="m-0 text-lg font-semibold text-fg-heading">Share your feedback</h2>
         <p class="mt-1 mb-0 text-sm text-fg-muted">Fields marked with an asterisk are required.</p>
+
+        <fieldset class="field rating mt-5" role="radiogroup" aria-describedby="rating-hint">
+          <legend class="field__label">How was your experience? *</legend>
+          <p class="field__hint m-0" id="rating-hint">One is poor, five is excellent.</p>
+
+          <div class="rating__scale">
+            <label class="rating__step">
+              <input class="sr-only" type="radio" name="rating" value="1" required
+                     data-required="Choose a rating from one to five.">
+              <span class="rating__mark">1</span>
+              <span class="rating__word">Poor</span>
+            </label>
+            <label class="rating__step">
+              <input class="sr-only" type="radio" name="rating" value="2">
+              <span class="rating__mark">2</span>
+              <span class="rating__word">Fair</span>
+            </label>
+            <label class="rating__step">
+              <input class="sr-only" type="radio" name="rating" value="3">
+              <span class="rating__mark">3</span>
+              <span class="rating__word">Good</span>
+            </label>
+            <label class="rating__step">
+              <input class="sr-only" type="radio" name="rating" value="4">
+              <span class="rating__mark">4</span>
+              <span class="rating__word">Very good</span>
+            </label>
+            <label class="rating__step">
+              <input class="sr-only" type="radio" name="rating" value="5">
+              <span class="rating__mark">5</span>
+              <span class="rating__word">Excellent</span>
+            </label>
+          </div>
+          <span class="field__error" data-field-error hidden></span>
+        </fieldset>
 
         <div class="field-grid mt-5">
           <div class="field">
-            <label class="field__label" for="contact-name">Your name *</label>
-            <input class="field__control" type="text" id="contact-name" name="name"
+            <label class="field__label" for="feedback-name">Your name *</label>
+            <input class="field__control" type="text" id="feedback-name" name="name"
                    placeholder="Full name" autocomplete="name" required
-                   data-required="Tell us who we are replying to.">
+                   data-required="Tell us who the feedback is from.">
             <span class="field__error" data-field-error hidden></span>
           </div>
 
           <div class="field">
-            <label class="field__label" for="contact-email">Email address *</label>
-            <input class="field__control" type="email" id="contact-email" name="email"
+            <label class="field__label" for="feedback-email">Email address *</label>
+            <input class="field__control" type="email" id="feedback-email" name="email"
                    placeholder="name@example.com" autocomplete="email" required
                    data-required="Enter an email address we can reply to.">
             <span class="field__error" data-field-error hidden></span>
           </div>
 
           <div class="field">
-            <label class="field__label" for="contact-phone">Phone number</label>
-            <input class="field__control" type="tel" id="contact-phone" name="phone"
-                   placeholder="+880 1XXXXXXXXX" autocomplete="tel">
-            <span class="field__error" data-field-error hidden></span>
-          </div>
-
-          <div class="field">
-            <label class="field__label" for="contact-subject">What is it about? *</label>
+            <label class="field__label" for="feedback-topic">What is it about? *</label>
             <span class="field__select">
-              <select class="field__control" id="contact-subject" name="subject" required
-                      data-required="Choose what your message is about.">
-                <option value="" selected>Choose a subject</option>
-                <option value="booking">A booking I have made</option>
-                <option value="new_trip">Planning a new trip</option>
-                <option value="group">Group or corporate travel</option>
-                <option value="refund">Change or refund</option>
+              <select class="field__control" id="feedback-topic" name="topic" required
+                      data-required="Choose what your feedback is about.">
+                <option value="" selected>Choose a topic</option>
+                <option value="booking">Booking a flight</option>
+                <option value="support">Talking to our team</option>
+                <option value="website">This website</option>
+                <option value="add_ons">Seats, meals and extras</option>
                 <option value="other">Something else</option>
               </select>
               <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
@@ -291,102 +319,75 @@
             <span class="field__error" data-field-error hidden></span>
           </div>
 
-          <div class="field field--wide">
-            <label class="field__label" for="contact-reference">Booking reference</label>
-            <input class="field__control" type="text" id="contact-reference" name="booking_reference"
-                   placeholder="IGT-BR-000000" aria-describedby="contact-reference-hint"
+          <div class="field">
+            <label class="field__label" for="feedback-reference">Booking reference</label>
+            <input class="field__control" type="text" id="feedback-reference" name="booking_reference"
+                   placeholder="IGT-BR-000000" aria-describedby="feedback-reference-hint"
                    autocomplete="off" spellcheck="false">
-            <span class="field__hint" id="contact-reference-hint">Only if your message is about a booking you have already made.</span>
+            <span class="field__hint" id="feedback-reference-hint">Only if the feedback is about a trip you booked with us.</span>
             <span class="field__error" data-field-error hidden></span>
           </div>
 
           <div class="field field--wide">
-            <label class="field__label" for="contact-message">Message *</label>
-            <textarea class="field__control field__control--area" id="contact-message" name="message"
-                      rows="6" placeholder="Dates, route, number of travellers — whatever you have so far." required
-                      data-required="Tell us what you need, even briefly."></textarea>
+            <label class="field__label" for="feedback-message">Your feedback *</label>
+            <textarea class="field__control field__control--area" id="feedback-message" name="message"
+                      rows="6" placeholder="What worked, what did not, and what you would change." required
+                      data-required="Tell us what happened."></textarea>
+            <span class="field__error" data-field-error hidden></span>
+          </div>
+
+          <div class="field field--wide">
+            <label class="flex items-start gap-3 text-sm text-fg">
+              <input type="checkbox" name="contact_consent" value="1">
+              You may contact me about this feedback.
+            </label>
             <span class="field__error" data-field-error hidden></span>
           </div>
         </div>
 
-        <div class="field mt-5">
-          <label class="flex items-start gap-3 text-sm text-fg">
-            <input type="checkbox" name="contact_consent" value="1" required
-                   data-required="Tick the box so we can reply to your enquiry.">
-            I agree that Izumi Global Travels may use these details to answer my enquiry. *
-          </label>
-          <span class="field__error" data-field-error hidden></span>
-        </div>
-
-        <div class="mt-6">
-          <button class="btn btn--primary" type="submit">
-            Send message
-            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-          </button>
-        </div>
+        <button class="btn btn--primary mt-6" type="submit">
+          Send feedback
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+        </button>
       </form>
-      <!-- END BLADE BOUNDARY: contact form -->
+      <!-- END BLADE BOUNDARY: feedback form -->
 
-      <!-- BLADE BOUNDARY: contact details -> <x-support.contact-details /> -->
+      <!-- BLADE BOUNDARY: feedback aside -> <x-support.feedback-aside /> -->
       <aside class="grid gap-5">
-        <!-- @content-pending: placeholder address, number and inbox. Swap for
-             the real ones before launch. -->
         <section class="review-panel">
-          <h2 class="m-0 text-lg font-semibold text-fg-heading">Reach us directly</h2>
-
-          <dl class="contact-details mt-4">
-            <div class="contact-detail">
-              <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                <svg class="icon"><use href="#i-pin"></use></svg>
-              </span>
-              <div>
-                <dt class="contact-detail__label">Office</dt>
-                <dd class="contact-detail__value">Level 4, 27 Gulshan Avenue<br>Gulshan 1, Dhaka 1212<br>Bangladesh</dd>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                <svg class="icon"><use href="#i-headset"></use></svg>
-              </span>
-              <div>
-                <dt class="contact-detail__label">Phone</dt>
-                <dd class="contact-detail__value"><a href="tel:+8802XXXXXXXX">+880 2 XXXX XXXX</a></dd>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                <svg class="icon"><use href="#i-mail"></use></svg>
-              </span>
-              <div>
-                <dt class="contact-detail__label">Email</dt>
-                <dd class="contact-detail__value"><a href="mailto:hello@izumiglobaltravels.com">hello@izumiglobaltravels.com</a></dd>
-              </div>
-            </div>
-            <div class="contact-detail">
-              <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                <svg class="icon"><use href="#i-clock"></use></svg>
-              </span>
-              <div>
-                <dt class="contact-detail__label">Hours</dt>
-                <dd class="contact-detail__value">Saturday to Thursday, 10:00 – 19:00<br>Closed on Friday and public holidays</dd>
-              </div>
-            </div>
-          </dl>
-        </section>
-
-        <section class="review-panel">
-          <h2 class="m-0 text-base font-semibold text-fg-heading">Already booked?</h2>
+          <h2 class="m-0 text-lg font-semibold text-fg-heading">Need an answer, not a comment?</h2>
           <p class="mt-2 mb-0 text-sm text-fg-muted">
-            Quote your booking reference and we can pick the enquiry up without asking you to repeat yourself.
+            Feedback is read, but it is not a support queue. If something needs fixing on a live booking,
+            the contact page reaches the team that can act on it.
           </p>
-          <a class="add-ons__link mt-4" href="support/help-centre.html">
-            Visit the help centre
+          <a class="btn btn--outline mt-4" href="../contact.html">
+            Contact us
             <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
           </a>
         </section>
+
+        <section class="review-panel">
+          <h2 class="m-0 text-lg font-semibold text-fg-heading">What happens to it</h2>
+          <ul class="grid gap-3 mt-3 m-0 p-0 list-none text-sm text-fg-muted">
+            <li class="flex items-start gap-3">
+              <svg class="icon size-4 mt-1 text-primary" aria-hidden="true"><use href="#i-check"></use></svg>
+              Every message is read by the team that handles bookings.
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="icon size-4 mt-1 text-primary" aria-hidden="true"><use href="#i-check"></use></svg>
+              We reply when you ask us to, usually within two working days.
+            </li>
+            <li class="flex items-start gap-3">
+              <svg class="icon size-4 mt-1 text-primary" aria-hidden="true"><use href="#i-check"></use></svg>
+              Nothing is published without your permission.
+            </li>
+          </ul>
+        </section>
       </aside>
-      <!-- END BLADE BOUNDARY: contact details -->
+      <!-- END BLADE BOUNDARY: feedback aside -->
+
     </div>
+
   </main>
   <!-- END BLADE BOUNDARY: main content -->
 
@@ -397,7 +398,7 @@
       <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
-          <a class="footer-logo" href="../index.html" aria-label="Izumi Global Travels — home">
+          <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
             <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
               <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -414,42 +415,42 @@
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="manage-booking/find-booking.html">Manage Booking</a></li>
-            <li><a class="footer-nav__link" href="faq.html">FAQs</a></li>
-            <li><a class="footer-nav__link" href="support/feedback.html">Feedback</a></li>
+            <li><a class="footer-nav__link" href="../contact.html">Contact Us</a></li>
+            <li><a class="footer-nav__link" href="../manage-booking/find-booking.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../faq.html">FAQs</a></li>
+            <li><a class="footer-nav__link" href="../support/feedback.html">Feedback</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-company">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="blog.html">Blog</a></li>
+            <li><a class="footer-nav__link" href="../about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../blog.html">Blog</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="legal/terms.html">Terms &amp; Conditions</a></li>
-            <li><a class="footer-nav__link" href="legal/privacy-policy.html">Privacy Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/refund-policy.html">Refund Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/booking-conditions.html">Booking Conditions</a></li>
+            <li><a class="footer-nav__link" href="../legal/terms.html">Terms &amp; Conditions</a></li>
+            <li><a class="footer-nav__link" href="../legal/privacy-policy.html">Privacy Policy</a></li>
+            <li><a class="footer-nav__link" href="../legal/refund-policy.html">Refund Policy</a></li>
+            <li><a class="footer-nav__link" href="../legal/booking-conditions.html">Booking Conditions</a></li>
           </ul>
         </nav>
 
         <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
 
           <div class="flex flex-wrap gap-3">
-            <a class="store-badge" href="support/help-centre.html">
+            <a class="store-badge" href="../support/help-centre.html">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
               <span>
                 <span class="store-badge__small">Download on the</span>
                 <span class="store-badge__name">App Store</span>
               </span>
             </a>
-            <a class="store-badge" href="support/help-centre.html">
+            <a class="store-badge" href="../support/help-centre.html">
               <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
               <span>
                 <span class="store-badge__small">Get it on</span>
@@ -463,9 +464,9 @@
 
       <div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-panel-line">
         <ul class="flex items-center gap-2 m-0 p-0 list-none" role="list">
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
         </ul>
 
         <!-- @brand-pending: text marks stand in for the licensed payment
@@ -486,6 +487,6 @@
   </footer>
   <!-- END BLADE BOUNDARY: site footer -->
 
-  <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../../assets/js/main.js"></script>
 </body>
 </html>

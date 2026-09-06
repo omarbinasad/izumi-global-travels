@@ -186,10 +186,10 @@
             </label>
           </li>
           <li>
-            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ar" value="AR" data-locale-language>
-            <label class="locale__option" for="header-language-ar">
-              <span class="locale__code">AR</span>
-              <span class="locale__name">العربية</span>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ja" value="JA" data-locale-language>
+            <label class="locale__option" for="header-language-ja">
+              <span class="locale__code">JA</span>
+              <span class="locale__name">日本語</span>
             </label>
           </li>
             </ul>
@@ -324,6 +324,7 @@
                 <input class="field__control" type="text" id="given-name-0"
                        name="passengers[0][given_name]" placeholder="Enter given name"
                        autocomplete="given-name" aria-describedby="given-name-guidance" required
+                       autocapitalize="characters" spellcheck="false" data-uppercase
                        data-required="Enter the given name exactly as it appears on the travel document.">
                 <span class="field__error" data-field-error hidden></span>
               </div>
@@ -362,13 +363,14 @@
                 <input class="field__control" type="text" id="family-name-0"
                        name="passengers[0][family_name]" placeholder="Enter surname"
                        autocomplete="family-name" aria-describedby="family-name-guidance" required
+                       autocapitalize="characters" spellcheck="false" data-uppercase
                        data-required="Enter the surname exactly as it appears on the travel document.">
                 <span class="field__error" data-field-error hidden></span>
               </div>
 
               <div class="field">
                 <label class="field__label" for="gender-0">Gender</label>
-                <span class="field__select">
+                <span class="field__select" data-select>
                   <select class="field__control" id="gender-0" name="passengers[0][gender]" required
                        data-required="Choose a gender.">
                     <option value="" selected>Select gender</option>
@@ -400,7 +402,7 @@
 
               <div class="field">
                 <label class="field__label" for="nationality-0">Nationality</label>
-                <span class="field__select">
+                <span class="field__select" data-select data-select-search>
                   <!-- A short list stands in for the full ISO 3166-1 set the
                        backend renders. The value submitted is the alpha-2 code. -->
                   <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required
@@ -501,7 +503,9 @@
                   <input class="field__control" type="tel" id="contact-phone-number"
                          name="contact_phone_number" placeholder="1XXXXXXXXX"
                          autocomplete="tel-national" required
-                       data-required="Enter a phone number.">
+                         inputmode="numeric" pattern="[0-9]{6,15}" maxlength="15" data-digits
+                         data-required="Enter a phone number."
+                         data-invalid="Enter the phone number in digits only, 6 to 15 of them.">
                 </span>
                 <span class="field__error" data-field-error hidden></span>
               </div>
@@ -625,7 +629,7 @@
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
             <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
-            <li><a class="footer-nav__link" href="../../pages/support/support-request.html">Feedback</a></li>
+            <li><a class="footer-nav__link" href="../../pages/support/feedback.html">Feedback</a></li>
           </ul>
         </nav>
 

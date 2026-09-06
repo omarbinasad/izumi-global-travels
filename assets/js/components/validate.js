@@ -15,8 +15,14 @@ import { qs, qsa, on } from '../core/dom.js';
 
 export function initValidation(root = document) {
   qsa('[data-validate]', root).forEach((form) => {
-    /* Fields the browser has a rule for. Anything without one is skipped. */
-    const fields = () => qsa('input, select, textarea', form).filter((el) => el.willValidate);
+    /*
+     * Fields the browser has a rule for. Anything without one is skipped, and
+     * so is anything a component put there for its own use: the search box
+     * inside a dropdown is a control in the form, but it is not a field of it,
+     * and checking it would clear the message belonging to the field it sits in.
+     */
+    const fields = () => qsa('input, select, textarea', form)
+      .filter((el) => el.willValidate && !('validateSkip' in el.dataset));
 
     function messageFor(control) {
       /* The markup's own wording first: it is translatable and specific. */

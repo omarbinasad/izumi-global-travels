@@ -48,18 +48,19 @@ export function initPhoneFields(root = document) {
     `;
 
     const panel = document.createElement('div');
-    panel.className = 'phone-code__panel';
+    panel.className = 'listbox';
     panel.hidden = true;
     panel.innerHTML = `
-      <div class="phone-code__search">
-        <svg class="icon size-4 phone-code__search-icon" aria-hidden="true"><use href="#i-search"></use></svg>
-        <input class="phone-code__search-input" type="search" autocomplete="off"
-               placeholder="Search country or code" aria-label="Search countries" data-phone-search>
+      <div class="listbox__search">
+        <svg class="icon size-4 listbox__search-icon" aria-hidden="true"><use href="#i-search"></use></svg>
+        <input class="listbox__input" type="search" autocomplete="off"
+               placeholder="Search country or code" aria-label="Search countries"
+               data-validate-skip data-phone-search>
       </div>
-      <ul class="phone-code__list" data-phone-list>
+      <ul class="listbox__list" data-phone-list>
         ${options.map((option) => `
         <li data-phone-item>
-          <button class="phone-code__option" type="button" data-phone-option="${option.value}"
+          <button class="listbox__option" type="button" data-phone-option="${option.value}"
                   aria-current="${option.selected}">
             <img class="phone-code__flag" src="${folder}${option.dataset.flag}.svg" alt="" width="24" height="16">
             <span class="phone-code__code">${option.textContent.trim()}</span>
@@ -67,7 +68,7 @@ export function initPhoneFields(root = document) {
           </button>
         </li>`).join('')}
       </ul>
-      <p class="phone-code__empty" hidden data-phone-empty>No country matches that.</p>
+      <p class="listbox__empty" hidden data-phone-empty>No country matches that.</p>
     `;
 
     field.append(trigger, panel);

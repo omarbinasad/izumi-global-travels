@@ -187,10 +187,10 @@
             </label>
           </li>
           <li>
-            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ar" value="AR" data-locale-language>
-            <label class="locale__option" for="header-language-ar">
-              <span class="locale__code">AR</span>
-              <span class="locale__name">العربية</span>
+            <input class="locale__choice sr-only" type="radio" name="header-language" id="header-language-ja" value="JA" data-locale-language>
+            <label class="locale__option" for="header-language-ja">
+              <span class="locale__code">JA</span>
+              <span class="locale__name">日本語</span>
             </label>
           </li>
             </ul>
@@ -285,7 +285,7 @@
               <img class="itinerary__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
               <span class="itinerary__names">
                 <span class="itinerary__carrier">Cathay Pacific</span>
-                <span class="itinerary__flight">CX 750 / CX 520 &middot; Economy</span>
+                <span class="itinerary__flight">CX 750 / CX 520</span>
               </span>
             </p>
           </div>
@@ -293,8 +293,7 @@
           <div class="itinerary__leg">
             <p class="itinerary__point">
               <span class="itinerary__clock">02:00</span>
-              <span class="itinerary__iata">DAC</span>
-              <span class="itinerary__city">Dhaka</span>
+              <span class="itinerary__where"><span class="itinerary__iata">DAC</span><span aria-hidden="true">&middot;</span><span class="itinerary__city">Dhaka</span></span>
             </p>
 
             <div class="itinerary__path">
@@ -308,8 +307,8 @@
                   <span class="route__dot" aria-hidden="true"></span>
                   <span class="route__labels">
                     <span class="route__code">HKG</span>
-                    <span class="route__wait">2h 10m transit</span>
-                    <span class="route__place">Hong Kong International Airport</span>
+                    <span class="route__wait">2h 10m<span class="sr-only"> transit</span></span>
+                    <span class="route__place">Hong Kong</span>
                   </span>
                 </span>
                 <span class="route__line" aria-hidden="true"></span>
@@ -320,8 +319,7 @@
 
             <p class="itinerary__point itinerary__point--arrive">
               <span class="itinerary__clock">15:45</span>
-              <span class="itinerary__iata">NRT</span>
-              <span class="itinerary__city">Tokyo</span>
+              <span class="itinerary__where"><span class="itinerary__iata">NRT</span><span aria-hidden="true">&middot;</span><span class="itinerary__city">Tokyo</span></span>
             </p>
           </div>
 
@@ -346,8 +344,10 @@
                 <dl class="itinerary__facts">
                   <div><dt>Aircraft</dt><dd>Airbus A330-300</dd></div>
                   <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Departs from</dt><dd>Terminal 2, Dhaka</dd></div>
                   <div><dt>Flight time</dt><dd>4h 15m</dd></div>
+                  <div><dt>Operated by</dt><dd>Cathay Pacific</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Hazrat Shahjalal International Airport, Terminal 2</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Hong Kong International Airport, Terminal 1</dd></div>
                 </dl>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_out_2">
@@ -359,8 +359,10 @@
                 <dl class="itinerary__facts">
                   <div><dt>Aircraft</dt><dd>Boeing 777-300ER</dd></div>
                   <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Arrives at</dt><dd>Terminal 1, Narita</dd></div>
                   <div><dt>Flight time</dt><dd>4h 20m</dd></div>
+                  <div><dt>Operated by</dt><dd>Cathay Pacific</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Hong Kong International Airport, Terminal 1</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Narita International Airport, Terminal 1</dd></div>
                 </dl>
               </li>
             </ol>
@@ -379,7 +381,7 @@
               <img class="itinerary__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
               <span class="itinerary__names">
                 <span class="itinerary__carrier">China Eastern</span>
-                <span class="itinerary__flight">MU 524 / MU 5379 / CZ 8447 &middot; Economy</span>
+                <span class="itinerary__flight">MU 524 / MU 5379 / CZ 8447</span>
               </span>
             </p>
           </div>
@@ -387,8 +389,7 @@
           <div class="itinerary__leg">
             <p class="itinerary__point">
               <span class="itinerary__clock">11:00</span>
-              <span class="itinerary__iata">NRT</span>
-              <span class="itinerary__city">Tokyo</span>
+              <span class="itinerary__where"><span class="itinerary__iata">NRT</span><span aria-hidden="true">&middot;</span><span class="itinerary__city">Tokyo</span></span>
             </p>
 
             <div class="itinerary__path">
@@ -402,8 +403,8 @@
                   <span class="route__dot" aria-hidden="true"></span>
                   <span class="route__labels">
                     <span class="route__code">PVG</span>
-                    <span class="route__wait">3h 20m transit</span>
-                    <span class="route__place">Shanghai Pudong International Airport</span>
+                    <span class="route__wait">3h 20m<span class="sr-only"> transit</span></span>
+                    <span class="route__place">Shanghai</span>
                   </span>
                 </span>
                 <span class="route__line" aria-hidden="true"></span>
@@ -413,8 +414,8 @@
                   <span class="route__dot" aria-hidden="true"></span>
                   <span class="route__labels">
                     <span class="route__code">CAN</span>
-                    <span class="route__wait">1h 45m transit</span>
-                    <span class="route__place">Guangzhou Baiyun International Airport</span>
+                    <span class="route__wait">1h 45m<span class="sr-only"> transit</span></span>
+                    <span class="route__place">Guangzhou</span>
                   </span>
                 </span>
                 <span class="route__line" aria-hidden="true"></span>
@@ -425,8 +426,7 @@
 
             <p class="itinerary__point itinerary__point--arrive">
               <span class="itinerary__clock">08:20<sup class="itinerary__day">+1<span class="sr-only"> day later</span></sup></span>
-              <span class="itinerary__iata">DAC</span>
-              <span class="itinerary__city">Dhaka</span>
+              <span class="itinerary__where"><span class="itinerary__iata">DAC</span><span aria-hidden="true">&middot;</span><span class="itinerary__city">Dhaka</span></span>
             </p>
           </div>
 
@@ -451,8 +451,10 @@
                 <dl class="itinerary__facts">
                   <div><dt>Aircraft</dt><dd>Airbus A330-300</dd></div>
                   <div><dt>Cabin</dt><dd>Economy &middot; class N</dd></div>
-                  <div><dt>Departs from</dt><dd>Terminal 1, Narita</dd></div>
                   <div><dt>Flight time</dt><dd>3h 05m</dd></div>
+                  <div><dt>Operated by</dt><dd>China Eastern</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Narita International Airport, Terminal 1</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Shanghai Pudong International Airport, Terminal 1</dd></div>
                 </dl>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_ret_2">
@@ -464,8 +466,10 @@
                 <dl class="itinerary__facts">
                   <div><dt>Aircraft</dt><dd>Boeing 737-800</dd></div>
                   <div><dt>Cabin</dt><dd>Economy &middot; class N</dd></div>
-                  <div><dt>Transit at</dt><dd>Pudong Terminal 1</dd></div>
                   <div><dt>Flight time</dt><dd>2h 20m</dd></div>
+                  <div><dt>Operated by</dt><dd>China Eastern</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Shanghai Pudong International Airport, Terminal 1</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Guangzhou Baiyun International Airport, Terminal 2</dd></div>
                 </dl>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_ret_3">
@@ -477,8 +481,10 @@
                 <dl class="itinerary__facts">
                   <div><dt>Aircraft</dt><dd>Boeing 737-800</dd></div>
                   <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Arrives at</dt><dd>Terminal 2, Dhaka</dd></div>
                   <div><dt>Flight time</dt><dd>2h 35m</dd></div>
+                  <div><dt>Operated by</dt><dd>China Southern</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Guangzhou Baiyun International Airport, Terminal 2</dd></div>
+                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Hazrat Shahjalal International Airport, Terminal 2</dd></div>
                 </dl>
               </li>
             </ol>
@@ -490,7 +496,7 @@
           <!-- BLADE BOUNDARY: baggage allowance -> <x-booking.baggage /> -->
           <section class="review-panel">
             <h2 class="m-0 text-base font-semibold text-fg-heading">Baggage included</h2>
-            <ul class="grid gap-4 sm:grid-cols-2 mt-4 m-0 p-0 list-none">
+            <ul class="grid grid-cols-2 gap-4 mt-4 m-0 p-0 list-none">
               <li class="flex items-center gap-3">
                 <svg class="icon size-8 text-primary" aria-hidden="true"><use href="#i-bag"></use></svg>
                 <span>
@@ -664,7 +670,7 @@
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
             <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
-            <li><a class="footer-nav__link" href="../../pages/support/support-request.html">Feedback</a></li>
+            <li><a class="footer-nav__link" href="../../pages/support/feedback.html">Feedback</a></li>
           </ul>
         </nav>
 

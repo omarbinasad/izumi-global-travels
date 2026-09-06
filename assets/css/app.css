@@ -4109,6 +4109,28 @@
     color: var(--color-fg-heading);
   }
 
+  /* On a phone the aside is a strip across the foot of the card, so the price
+     and the button share a line: the trip type is already written on the card
+     above, and a column of three would add half a card's height to every
+     result in the list. */
+  @media (width < 48rem) {
+    .result-card__aside {
+      flex-flow: row wrap;
+      justify-content: space-between;
+      gap: --spacing(2) --spacing(4);
+      padding-block: --spacing(4);
+      text-align: start;
+    }
+
+    .result-card__trip { display: none; }
+
+    /* Its own line above the pair, out of the way of both notches. */
+    .result-card__badges {
+      flex-basis: 100%;
+      justify-content: flex-start;
+    }
+  }
+
   @media (width >= 48rem) {
     .result-card {
       grid-template-columns: minmax(0, 1fr) minmax(200px, auto);
@@ -4215,6 +4237,7 @@
   /* Shared surface for every box on this page, so the review reads as the
      same kind of card as the result tickets it came from. */
   .review-panel {
+    min-inline-size: 0;
     padding: --spacing(5);
     border-radius: var(--radius-lg);
     background-color: var(--color-surface);
@@ -4322,16 +4345,17 @@
 
   .itinerary__head {
     display: flex;
-    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    gap: --spacing(3) --spacing(4);
+    gap: --spacing(3);
   }
 
   .itinerary__when {
     display: inline-flex;
     align-items: center;
+    flex: none;
     gap: --spacing(3);
+    white-space: nowrap;
     margin: 0;
     font-size: var(--text-sm);
     font-weight: 400;
@@ -4356,6 +4380,7 @@
   .itinerary__airline {
     display: flex;
     align-items: center;
+    flex: 0 1 auto;
     gap: --spacing(3);
     margin: 0;
     min-inline-size: 0;
@@ -4370,19 +4395,48 @@
     object-fit: cover;
   }
 
-  .itinerary__names { min-inline-size: 0; }
+  /* Both are needed: min-inline-size lets the box shrink, and overflow keeps
+     the nowrap text inside from setting the card's minimum width — without it
+     a long list of flight numbers makes the whole panel wider than the phone. */
+  .itinerary__names {
+    min-inline-size: 0;
+    overflow: hidden;
+  }
+
+  /* One line each, cut with an ellipsis rather than wrapped. */
+  .itinerary__carrier,
+  .itinerary__flight {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
 
   .itinerary__carrier {
-    display: block;
     font-size: var(--text-sm);
     font-weight: 600;
     color: var(--color-primary);
   }
 
   .itinerary__flight {
-    display: block;
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
+  }
+
+  /* Neither side wraps to its own row; the airline gives way first, because
+     the flight numbers are listed again inside the disclosure below. */
+  @media (width < 30rem) {
+    .itinerary__head { font-size: var(--text-xs); }
+
+    .itinerary__when,
+    .itinerary__carrier { font-size: var(--text-xs); }
+
+    .itinerary__flight { font-size: var(--text-2xs); }
+
+    .itinerary__logo {
+      inline-size: 28px;
+      block-size: 28px;
+    }
   }
 
   /* --- The leg itself ----------------------------------------------------- */
@@ -4400,9 +4454,20 @@
   .itinerary__point--arrive { text-align: end; }
 
   /* Too narrow for three columns once a leg has stops in it: both ends take
-     the top row and the route runs the full width underneath. */
+     the top row and the route runs the full width underneath. The gaps come in
+     too: on a phone the card is read whole, and every step of air between its
+     parts is a step less of the next flight on the screen. */
   @media (width < 48rem) {
-    .itinerary__leg { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .itinerary {
+      padding-block: --spacing(4);
+    }
+
+    .itinerary__leg {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: --spacing(3);
+      margin-block-start: --spacing(4);
+    }
+
 
     .itinerary__point {
       grid-row: 1;
@@ -4426,15 +4491,23 @@
     color: var(--color-fg-heading);
   }
 
+  .itinerary__where {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: --spacing(2);
+    margin-block-start: --spacing(1);
+  }
+
+  .itinerary__point--arrive .itinerary__where { justify-content: flex-end; }
+
   .itinerary__iata {
-    display: block;
     font-size: var(--text-lg);
     font-weight: 600;
     color: var(--color-fg-heading);
   }
 
   .itinerary__city {
-    display: block;
     font-size: var(--text-sm);
     color: var(--color-fg-muted);
   }
@@ -4470,16 +4543,12 @@
     display: flex;
     align-items: flex-start;
     gap: --spacing(1);
-    /* Room for the labels that hang under each stop without being in the row.
-       Deeper on a phone, where the narrow label box wraps the airport name
-       onto three lines. */
-    padding-block-end: --spacing(30);
+    /* Room for the labels that hang under each stop without being in the row:
+       a code, the transit time and a city name, which measure 65px together. */
+    padding-block-end: --spacing(18);
     min-inline-size: 0;
   }
 
-  @media (width >= 48rem) {
-    .route { padding-block-end: --spacing(20); }
-  }
 
   /* Nudged down so the rule runs through the middle of the marks beside it. */
   .route__line {
@@ -4520,18 +4589,14 @@
     flex-direction: column;
     align-items: center;
     gap: 2px;
-    inline-size: --spacing(20);
+    inline-size: --spacing(24);
     white-space: nowrap;
   }
 
   /* The stops sit further apart as the card grows, so the label box can grow
-     with them and the airport name needs fewer lines. */
-  @media (width >= 30rem) {
-    .route__labels { inline-size: --spacing(28); }
-  }
-
+     with them. */
   @media (width >= 48rem) {
-    .route__labels { inline-size: --spacing(36); }
+    .route__labels { inline-size: --spacing(32); }
   }
 
   .route__dot {
@@ -4649,6 +4714,13 @@
     list-style: none;
   }
 
+  /* Part of the same narrow-screen tightening as the leg above. */
+  @media (width < 48rem) {
+    .itinerary__more { margin-block-start: --spacing(3); }
+
+    .itinerary__summary { padding-block-start: --spacing(3); }
+  }
+
   .itinerary__summary::-webkit-details-marker { display: none; }
 
   .itinerary__cabin {
@@ -4686,6 +4758,12 @@
 
   @media (width >= 48rem) {
     .itinerary__facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .itinerary__fact--wide { grid-column: 1 / -1; }
+
+  @media (width >= 48rem) {
+    .itinerary__fact--wide { grid-column: span 2; }
   }
 
   .itinerary__facts dt {
@@ -4900,6 +4978,13 @@
 
   .field__control::placeholder { color: var(--color-fg-muted); }
 
+  /* A travel document prints the name in capitals, so the field shows them
+     even before assets/js/components/text-case.js stores them that way. */
+  .field__control[data-uppercase] { text-transform: uppercase; }
+
+  /* The prompt is a sentence, not a name. */
+  .field__control[data-uppercase]::placeholder { text-transform: none; }
+
   .field__control:hover:not(:disabled) { border-color: var(--color-line-strong); }
 
   /* :focus rather than :focus-visible — a text box being typed into has to
@@ -4930,12 +5015,74 @@
     cursor: pointer;
   }
 
+  /* --- Select field --------------------------------------------------------
+     The select keeps the value; assets/js/components/select-field.js draws the
+     trigger and the listbox beside it, because a native list cannot take the
+     site's styling. Until that runs the select is the control, chevron and
+     all, so the field is never without one.
+     ---------------------------------------------------------------------- */
+
+  /* Only once there is a replacement to show. */
+  .field__select[data-enhanced] select {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  .select-field__trigger {
+    display: none;
+    align-items: center;
+    gap: --spacing(2);
+    padding-inline-end: --spacing(10);
+    text-align: start;
+  }
+
+  .field__select[data-enhanced] .select-field__trigger { display: flex; }
+
+  .select-field__trigger:hover { border-color: var(--color-line-strong); }
+
+  .select-field__trigger[aria-expanded="true"],
+  .select-field__trigger:focus-visible {
+    outline: none;
+    border-color: var(--color-ring);
+    box-shadow: var(--shadow-focus);
+  }
+
+  /* Nothing chosen yet: the prompt reads as a placeholder, not an answer. */
+  .select-field__trigger[data-select-empty="true"] .select-field__value {
+    color: var(--color-fg-muted);
+  }
+
+  .select-field__value {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* The select carries the invalid state, but it is off screen once enhanced. */
+  .field__select:has(select[aria-invalid="true"]) .select-field__trigger {
+    border-color: var(--color-error);
+  }
+
+  .field__select[data-enhanced] .field__chevron { z-index: 1; }
+
+  /* The chevron is written before the trigger, so it is not a later sibling. */
+  .field__select:has(.select-field__trigger[aria-expanded="true"]) .field__chevron {
+    rotate: 180deg;
+  }
+
   .field__chevron {
     position: absolute;
     inset-block-start: 50%;
     inset-inline-end: --spacing(4);
     translate: 0 -50%;
     pointer-events: none;
+    transition: rotate var(--transition-base);
     color: var(--color-fg-muted);
   }
 
@@ -5213,7 +5360,7 @@
 
   /* The panel holds the search box still while the list under it scrolls, so
      the query stays in view however long the country list is. */
-  .phone-code__panel {
+  .listbox {
     position: absolute;
     z-index: var(--z-dropdown);
     inset-inline-start: 0;
@@ -5226,12 +5373,12 @@
     box-shadow: var(--shadow-lg);
   }
 
-  .phone-code__panel[data-drop="up"] {
+  .listbox[data-drop="up"] {
     inset-block-start: auto;
     inset-block-end: calc(100% + --spacing(2));
   }
 
-  .phone-code__search {
+  .listbox__search {
     position: relative;
     display: flex;
     align-items: center;
@@ -5239,14 +5386,14 @@
     border-block-end: var(--border-width) solid var(--color-line);
   }
 
-  .phone-code__search-icon {
+  .listbox__search-icon {
     position: absolute;
     inset-inline-start: --spacing(5);
     color: var(--color-fg-muted);
     pointer-events: none;
   }
 
-  .phone-code__search-input {
+  .listbox__input {
     inline-size: 100%;
     padding: --spacing(2) --spacing(3) --spacing(2) --spacing(9);
     border: var(--border-width) solid var(--color-line);
@@ -5256,7 +5403,7 @@
     color: var(--color-fg-heading);
   }
 
-  .phone-code__search-input:focus-visible {
+  .listbox__input:focus-visible {
     outline: none;
     border-color: var(--color-ring);
     box-shadow: var(--shadow-focus);
@@ -5264,9 +5411,9 @@
 
   /* The platform's own clear button on a search input is drawn in its colours
      and cannot be styled; the field is short enough to clear by hand. */
-  .phone-code__search-input::-webkit-search-cancel-button { display: none; }
+  .listbox__input::-webkit-search-cancel-button { display: none; }
 
-  .phone-code__list {
+  .listbox__list {
     max-block-size: 264px;
     overflow-y: auto;
     /* A slim rail rather than the platform's wide one: the panel is narrow. */
@@ -5277,7 +5424,7 @@
     list-style: none;
   }
 
-  .phone-code__empty {
+  .listbox__empty {
     margin: 0;
     padding: --spacing(4) --spacing(3);
     text-align: center;
@@ -5285,7 +5432,7 @@
     color: var(--color-fg-muted);
   }
 
-  .phone-code__option {
+  .listbox__option {
     display: flex;
     align-items: center;
     gap: --spacing(3);
@@ -5296,14 +5443,14 @@
     transition: background-color var(--transition-fast);
   }
 
-  .phone-code__option:hover { background-color: var(--color-surface-muted); }
+  .listbox__option:hover { background-color: var(--color-surface-muted); }
 
-  .phone-code__option:focus-visible {
+  .listbox__option:focus-visible {
     outline: var(--border-width-strong) solid var(--color-ring);
     outline-offset: -2px;
   }
 
-  .phone-code__option[aria-current="true"] {
+  .listbox__option[aria-current="true"] {
     background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
   }
 
@@ -6895,5 +7042,119 @@
     color: var(--color-fg);
   }
 
+  .post__body p + p { margin-block-start: --spacing(4); }
+
+  .post__body ul {
+    margin: --spacing(4) 0 0;
+    padding-inline-start: --spacing(5);
+    list-style: disc;
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg);
+  }
+
+  .post__body li + li { margin-block-start: --spacing(2); }
+
   .post__foot { margin: --spacing(8) 0 0; }
+
+  /* --- Legal documents -----------------------------------------------------
+     The same article body as a blog post, with the two lines a legal page
+     needs above it: when it last changed, and — while the wording is a
+     placeholder — that it is one.
+     ---------------------------------------------------------------------- */
+
+  .legal-note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(3);
+    margin: 0 0 --spacing(5);
+    padding: --spacing(3) --spacing(4);
+    border: var(--border-width) solid var(--color-warning);
+    border-radius: var(--radius-md);
+    background-color: var(--color-warning-surface);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  .legal-note svg {
+    flex: none;
+    margin-block-start: 2px;
+    color: var(--color-warning);
+  }
+
+  .legal-updated {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  /* --- Rating scale --------------------------------------------------------
+     Five radios drawn as a row of steps. The radio stays the control, so the
+     scale works by keyboard and submits a real value with no JavaScript.
+     ---------------------------------------------------------------------- */
+
+  .rating {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .rating__scale {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: --spacing(2);
+    margin-block-start: --spacing(3);
+  }
+
+  .rating__step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: --spacing(2);
+    padding: --spacing(3) --spacing(1);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .rating__step:hover { border-color: var(--color-primary); }
+
+  .rating__mark {
+    display: grid;
+    place-items: center;
+    inline-size: var(--control-height-sm);
+    block-size: var(--control-height-sm);
+    border-radius: 50%;
+    background-color: var(--color-surface-muted);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .rating__word {
+    font-size: var(--text-2xs);
+    text-align: center;
+    color: var(--color-fg-muted);
+  }
+
+  .rating__step:has(:checked) {
+    border-color: var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 8%, transparent);
+  }
+
+  .rating__step:has(:checked) .rating__mark {
+    background-color: var(--color-cta-from);
+    background-image: var(--gradient-primary);
+    color: var(--color-on-cta);
+  }
+
+  /* The radio is off screen, so the step it sits in shows the focus. */
+  .rating__step:has(:focus-visible) {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .rating [aria-invalid="true"] ~ .rating__mark { border-color: var(--color-error); }
 }

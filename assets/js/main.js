@@ -26,6 +26,7 @@ const pageModules = {
   'add-ons': () => import('./pages/add-ons.js'),
   blog: () => import('./pages/blog.js'),
   contact: () => import('./pages/contact.js'),
+  feedback: () => import('./pages/feedback.js'),
 };
 
 async function startPageModule() {
