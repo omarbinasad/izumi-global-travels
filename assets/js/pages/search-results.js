@@ -8,6 +8,7 @@ import { initFilters } from '../components/filters.js';
 import { initSortTabs } from '../components/sort-tabs.js';
 import { initTripView } from '../components/trip-view.js';
 import { initStickyBar } from '../components/sticky-bar.js';
+import { initModifySearch } from '../components/modify-search.js';
 
 export function init() {
   /* The "Modify search" disclosure holds the same form as the landing page,
@@ -18,4 +19,5 @@ export function init() {
   initFilters();
   initSortTabs();
   initStickyBar();
+  initModifySearch();
 }

@@ -73,7 +73,9 @@ function bounds(input) {
   let min = input.min || '';
   let max = input.max || '';
 
-  if (minAge > 0) max = toISO(shiftYears(today, minAge));
+  /* Zero counts: an infant has no lower age, but a date of birth still
+     cannot be in the future, so the shorthand has to be honoured at 0. */
+  if (Number.isFinite(minAge)) max = toISO(shiftYears(today, minAge));
   /* One day inside the birthday, so someone who turns that age today is out. */
   if (maxAge > 0) min = toISO(shiftDays(shiftYears(today, maxAge), 1));
   if (minDays > 0) min = toISO(shiftDays(today, minDays));

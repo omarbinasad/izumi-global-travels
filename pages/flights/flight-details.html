@@ -336,34 +336,105 @@
 
             <ol class="itinerary__segments">
               <li class="itinerary__segment" data-segment-id="seg_out_1">
-                <p class="itinerary__segment-head">
-                  <span class="itinerary__segment-flight">CX 750</span>
-                  <span aria-hidden="true">&middot;</span>
-                  DAC &rarr; HKG
+                <p class="itinerary__segment-index">
+                  <span class="itinerary__segment-dot" aria-hidden="true"></span>
+                  Flight 1
                 </p>
-                <dl class="itinerary__facts">
-                  <div><dt>Aircraft</dt><dd>Airbus A330-300</dd></div>
-                  <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Flight time</dt><dd>4h 15m</dd></div>
-                  <div><dt>Operated by</dt><dd>Cathay Pacific</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Hazrat Shahjalal International Airport, Terminal 2</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Hong Kong International Airport, Terminal 1</dd></div>
-                </dl>
+
+                <div class="itinerary__segment-body">
+                  <p class="itinerary__segment-head">
+                    <span class="itinerary__segment-route">
+                      <span class="itinerary__segment-flight">CX 750</span>
+                      <span aria-hidden="true">&middot;</span>
+                      DAC &rarr; HKG
+                    </span>
+                    <span class="itinerary__segment-carrier">
+                      <img class="itinerary__segment-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </span>
+                  </p>
+
+                  <div class="itinerary__hop">
+                    <p class="itinerary__stop">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">From</span>
+                      <span class="itinerary__stop-code">DAC</span>
+                      <span class="itinerary__stop-name">Hazrat Shahjalal &middot; T2</span>
+                    </p>
+
+                    <p class="itinerary__hop-path">
+                      <span class="itinerary__line" aria-hidden="true">
+                        <svg class="icon--solid"><use href="#i-plane"></use></svg>
+                      </span>
+                      <span class="itinerary__hop-time">4h 15m<span class="sr-only"> flight time</span></span>
+                    </p>
+
+                    <p class="itinerary__stop itinerary__stop--arrive">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">To</span>
+                      <span class="itinerary__stop-code">HKG</span>
+                      <span class="itinerary__stop-name">Hong Kong Intl &middot; T1</span>
+                    </p>
+                  </div>
+
+                  <p class="itinerary__segment-meta">
+                    <span>Airbus A330-300</span>
+                    <span>Economy &middot; class T</span>
+                    <span>Operated by Cathay Pacific</span>
+                  </p>
+
+                  <p class="itinerary__layover">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+                    <span class="itinerary__layover-wait">2h 10m layover in Hong Kong</span>
+                    <span class="itinerary__layover-note">Change aircraft</span>
+                  </p>
+                </div>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_out_2">
-                <p class="itinerary__segment-head">
-                  <span class="itinerary__segment-flight">CX 520</span>
-                  <span aria-hidden="true">&middot;</span>
-                  HKG &rarr; NRT
+                <p class="itinerary__segment-index">
+                  <span class="itinerary__segment-dot" aria-hidden="true"></span>
+                  Flight 2
                 </p>
-                <dl class="itinerary__facts">
-                  <div><dt>Aircraft</dt><dd>Boeing 777-300ER</dd></div>
-                  <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Flight time</dt><dd>4h 20m</dd></div>
-                  <div><dt>Operated by</dt><dd>Cathay Pacific</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Hong Kong International Airport, Terminal 1</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Narita International Airport, Terminal 1</dd></div>
-                </dl>
+
+                <div class="itinerary__segment-body">
+                  <p class="itinerary__segment-head">
+                    <span class="itinerary__segment-route">
+                      <span class="itinerary__segment-flight">CX 520</span>
+                      <span aria-hidden="true">&middot;</span>
+                      HKG &rarr; NRT
+                    </span>
+                    <span class="itinerary__segment-carrier">
+                      <img class="itinerary__segment-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                      Cathay Pacific
+                    </span>
+                  </p>
+
+                  <div class="itinerary__hop">
+                    <p class="itinerary__stop">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">From</span>
+                      <span class="itinerary__stop-code">HKG</span>
+                      <span class="itinerary__stop-name">Hong Kong Intl &middot; T1</span>
+                    </p>
+
+                    <p class="itinerary__hop-path">
+                      <span class="itinerary__line" aria-hidden="true">
+                        <svg class="icon--solid"><use href="#i-plane"></use></svg>
+                      </span>
+                      <span class="itinerary__hop-time">4h 20m<span class="sr-only"> flight time</span></span>
+                    </p>
+
+                    <p class="itinerary__stop itinerary__stop--arrive">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">To</span>
+                      <span class="itinerary__stop-code">NRT</span>
+                      <span class="itinerary__stop-name">Narita Intl &middot; T1</span>
+                    </p>
+                  </div>
+
+                  <p class="itinerary__segment-meta">
+                    <span>Boeing 777-300ER</span>
+                    <span>Economy &middot; class T</span>
+                    <span>Operated by Cathay Pacific</span>
+                  </p>
+
+                </div>
               </li>
             </ol>
           </details>
@@ -443,49 +514,158 @@
 
             <ol class="itinerary__segments">
               <li class="itinerary__segment" data-segment-id="seg_ret_1">
-                <p class="itinerary__segment-head">
-                  <span class="itinerary__segment-flight">MU 524</span>
-                  <span aria-hidden="true">&middot;</span>
-                  NRT &rarr; PVG
+                <p class="itinerary__segment-index">
+                  <span class="itinerary__segment-dot" aria-hidden="true"></span>
+                  Flight 1
                 </p>
-                <dl class="itinerary__facts">
-                  <div><dt>Aircraft</dt><dd>Airbus A330-300</dd></div>
-                  <div><dt>Cabin</dt><dd>Economy &middot; class N</dd></div>
-                  <div><dt>Flight time</dt><dd>3h 05m</dd></div>
-                  <div><dt>Operated by</dt><dd>China Eastern</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Narita International Airport, Terminal 1</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Shanghai Pudong International Airport, Terminal 1</dd></div>
-                </dl>
+
+                <div class="itinerary__segment-body">
+                  <p class="itinerary__segment-head">
+                    <span class="itinerary__segment-route">
+                      <span class="itinerary__segment-flight">MU 524</span>
+                      <span aria-hidden="true">&middot;</span>
+                      NRT &rarr; PVG
+                    </span>
+                    <span class="itinerary__segment-carrier">
+                      <img class="itinerary__segment-logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                      China Eastern
+                    </span>
+                  </p>
+
+                  <div class="itinerary__hop">
+                    <p class="itinerary__stop">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">From</span>
+                      <span class="itinerary__stop-code">NRT</span>
+                      <span class="itinerary__stop-name">Narita Intl &middot; T1</span>
+                    </p>
+
+                    <p class="itinerary__hop-path">
+                      <span class="itinerary__line" aria-hidden="true">
+                        <svg class="icon--solid"><use href="#i-plane"></use></svg>
+                      </span>
+                      <span class="itinerary__hop-time">3h 05m<span class="sr-only"> flight time</span></span>
+                    </p>
+
+                    <p class="itinerary__stop itinerary__stop--arrive">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">To</span>
+                      <span class="itinerary__stop-code">PVG</span>
+                      <span class="itinerary__stop-name">Shanghai Pudong &middot; T1</span>
+                    </p>
+                  </div>
+
+                  <p class="itinerary__segment-meta">
+                    <span>Airbus A330-300</span>
+                    <span>Economy &middot; class N</span>
+                    <span>Operated by China Eastern</span>
+                  </p>
+
+                  <p class="itinerary__layover">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+                    <span class="itinerary__layover-wait">3h 20m layover in Shanghai</span>
+                    <span class="itinerary__layover-note">Change aircraft</span>
+                  </p>
+                </div>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_ret_2">
-                <p class="itinerary__segment-head">
-                  <span class="itinerary__segment-flight">MU 5379</span>
-                  <span aria-hidden="true">&middot;</span>
-                  PVG &rarr; CAN
+                <p class="itinerary__segment-index">
+                  <span class="itinerary__segment-dot" aria-hidden="true"></span>
+                  Flight 2
                 </p>
-                <dl class="itinerary__facts">
-                  <div><dt>Aircraft</dt><dd>Boeing 737-800</dd></div>
-                  <div><dt>Cabin</dt><dd>Economy &middot; class N</dd></div>
-                  <div><dt>Flight time</dt><dd>2h 20m</dd></div>
-                  <div><dt>Operated by</dt><dd>China Eastern</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Shanghai Pudong International Airport, Terminal 1</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Guangzhou Baiyun International Airport, Terminal 2</dd></div>
-                </dl>
+
+                <div class="itinerary__segment-body">
+                  <p class="itinerary__segment-head">
+                    <span class="itinerary__segment-route">
+                      <span class="itinerary__segment-flight">MU 5379</span>
+                      <span aria-hidden="true">&middot;</span>
+                      PVG &rarr; CAN
+                    </span>
+                    <span class="itinerary__segment-carrier">
+                      <img class="itinerary__segment-logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                      China Eastern
+                    </span>
+                  </p>
+
+                  <div class="itinerary__hop">
+                    <p class="itinerary__stop">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">From</span>
+                      <span class="itinerary__stop-code">PVG</span>
+                      <span class="itinerary__stop-name">Shanghai Pudong &middot; T1</span>
+                    </p>
+
+                    <p class="itinerary__hop-path">
+                      <span class="itinerary__line" aria-hidden="true">
+                        <svg class="icon--solid"><use href="#i-plane"></use></svg>
+                      </span>
+                      <span class="itinerary__hop-time">2h 20m<span class="sr-only"> flight time</span></span>
+                    </p>
+
+                    <p class="itinerary__stop itinerary__stop--arrive">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">To</span>
+                      <span class="itinerary__stop-code">CAN</span>
+                      <span class="itinerary__stop-name">Guangzhou Baiyun &middot; T2</span>
+                    </p>
+                  </div>
+
+                  <p class="itinerary__segment-meta">
+                    <span>Boeing 737-800</span>
+                    <span>Economy &middot; class N</span>
+                    <span>Operated by China Eastern</span>
+                  </p>
+
+                  <p class="itinerary__layover">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+                    <span class="itinerary__layover-wait">1h 45m layover in Guangzhou</span>
+                    <span class="itinerary__layover-note">Change airline</span>
+                  </p>
+                </div>
               </li>
               <li class="itinerary__segment" data-segment-id="seg_ret_3">
-                <p class="itinerary__segment-head">
-                  <span class="itinerary__segment-flight">CZ 8447</span>
-                  <span aria-hidden="true">&middot;</span>
-                  CAN &rarr; DAC
+                <p class="itinerary__segment-index">
+                  <span class="itinerary__segment-dot" aria-hidden="true"></span>
+                  Flight 3
                 </p>
-                <dl class="itinerary__facts">
-                  <div><dt>Aircraft</dt><dd>Boeing 737-800</dd></div>
-                  <div><dt>Cabin</dt><dd>Economy &middot; class T</dd></div>
-                  <div><dt>Flight time</dt><dd>2h 35m</dd></div>
-                  <div><dt>Operated by</dt><dd>China Southern</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Departs from</dt><dd>Guangzhou Baiyun International Airport, Terminal 2</dd></div>
-                  <div class="itinerary__fact--wide"><dt>Arrives at</dt><dd>Hazrat Shahjalal International Airport, Terminal 2</dd></div>
-                </dl>
+
+                <div class="itinerary__segment-body">
+                  <p class="itinerary__segment-head">
+                    <span class="itinerary__segment-route">
+                      <span class="itinerary__segment-flight">CZ 8447</span>
+                      <span aria-hidden="true">&middot;</span>
+                      CAN &rarr; DAC
+                    </span>
+                    <span class="itinerary__segment-carrier">
+                      <img class="itinerary__segment-logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
+                      China Southern
+                    </span>
+                  </p>
+
+                  <div class="itinerary__hop">
+                    <p class="itinerary__stop">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">From</span>
+                      <span class="itinerary__stop-code">CAN</span>
+                      <span class="itinerary__stop-name">Guangzhou Baiyun &middot; T2</span>
+                    </p>
+
+                    <p class="itinerary__hop-path">
+                      <span class="itinerary__line" aria-hidden="true">
+                        <svg class="icon--solid"><use href="#i-plane"></use></svg>
+                      </span>
+                      <span class="itinerary__hop-time">2h 35m<span class="sr-only"> flight time</span></span>
+                    </p>
+
+                    <p class="itinerary__stop itinerary__stop--arrive">
+                      <span class="itinerary__stop-label sr-only lg:not-sr-only">To</span>
+                      <span class="itinerary__stop-code">DAC</span>
+                      <span class="itinerary__stop-name">Hazrat Shahjalal &middot; T2</span>
+                    </p>
+                  </div>
+
+                  <p class="itinerary__segment-meta">
+                    <span>Boeing 737-800</span>
+                    <span>Economy &middot; class T</span>
+                    <span>Operated by China Southern</span>
+                  </p>
+
+                </div>
               </li>
             </ol>
           </details>
@@ -601,12 +781,20 @@
               <dd class="m-0 price-row__value">BDT 61,900</dd>
             </div>
             <div class="price-row">
+              <dt>Child &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 49,600</dd>
+            </div>
+            <div class="price-row">
+              <dt>Infant &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 6,200</dd>
+            </div>
+            <div class="price-row">
               <dt>Taxes &amp; fees</dt>
-              <dd class="m-0 price-row__value">BDT 6,550</dd>
+              <dd class="m-0 price-row__value">BDT 12,810</dd>
             </div>
             <div class="price-row price-row--total">
               <dt>Total</dt>
-              <dd class="m-0 price-row__value">BDT 68,450</dd>
+              <dd class="m-0 price-row__value">BDT 130,510</dd>
             </div>
           </dl>
 
@@ -636,7 +824,7 @@
             </div>
           </div>
 
-          <a class="btn btn--secondary w-full mt-4" href="../support/help-centre.html">Contact support</a>
+          <a class="btn btn--secondary w-full mt-4" href="../contact.html">Contact support</a>
         </section>
       </aside>
     </div>
@@ -674,14 +862,6 @@
           </ul>
         </nav>
 
-        <nav class="" aria-labelledby="footer-company">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
-          </ul>
-        </nav>
-
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
@@ -692,23 +872,23 @@
           </ul>
         </nav>
 
+        <nav class="" aria-labelledby="footer-company">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
+          </ul>
+        </nav>
+
         <div class="flex flex-col items-start gap-4">
 
           <div class="flex flex-wrap gap-3">
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
-              <span>
-                <span class="store-badge__small">Download on the</span>
-                <span class="store-badge__name">App Store</span>
-              </span>
-            </a>
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
-              <span>
-                <span class="store-badge__small">Get it on</span>
-                <span class="store-badge__name">Google Play</span>
-              </span>
-            </a>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
+            </span>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
+            </span>
           </div>
         </div>
 

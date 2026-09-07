@@ -294,7 +294,7 @@
                   id="add-ons-tab-1" aria-controls="add-ons-panel-1"
                   aria-selected="false" tabindex="-1" data-add-ons-tab>
             <span class="pax-tab__text">
-              <span class="pax-tab__name">Passenger 2 <span aria-hidden="true">&middot;</span> Adult</span>
+              <span class="pax-tab__name">Passenger 2 <span aria-hidden="true">&middot;</span> Child</span>
               <span class="pax-tab__summary" data-pax-tab-summary>Aisle &middot; Regular &middot; Premium</span>
             </span>
             <span class="pax-tab__mark" aria-hidden="true">
@@ -305,7 +305,7 @@
                   id="add-ons-tab-2" aria-controls="add-ons-panel-2"
                   aria-selected="false" tabindex="-1" data-add-ons-tab>
             <span class="pax-tab__text">
-              <span class="pax-tab__name">Passenger 3 <span aria-hidden="true">&middot;</span> Child</span>
+              <span class="pax-tab__name">Passenger 3 <span aria-hidden="true">&middot;</span> Infant</span>
               <span class="pax-tab__summary" data-pax-tab-summary>No preference &middot; Vegetarian &middot; No insurance</span>
             </span>
             <span class="pax-tab__mark" aria-hidden="true">
@@ -1015,7 +1015,7 @@
 
           <p class="flex items-center gap-2 mt-4 mb-0 text-sm text-fg">
             <svg class="icon size-4 text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
-            3 travellers, Economy
+            1 Adult, 1 Child, 1 Infant &middot; Economy
           </p>
 
 
@@ -1039,7 +1039,7 @@
                 </dl>
               </div>
               <div class="addon-summary__group">
-                <p class="addon-summary__who">Passenger 2 &middot; Adult</p>
+                <p class="addon-summary__who">Passenger 2 &middot; Child</p>
                 <dl class="addon-summary__list">
                   <div class="price-row"><dt>Aisle seat &times; 2</dt><dd class="price-row__value m-0">BDT 2,400</dd></div>
                   <div class="price-row"><dt>Regular meal</dt><dd class="price-row__value m-0">Included</dd></div>
@@ -1047,7 +1047,7 @@
                 </dl>
               </div>
               <div class="addon-summary__group">
-                <p class="addon-summary__who">Passenger 3 &middot; Child</p>
+                <p class="addon-summary__who">Passenger 3 &middot; Infant</p>
                 <dl class="addon-summary__list">
                   <div class="price-row"><dt>No seat preference &times; 2</dt><dd class="price-row__value m-0">Free</dd></div>
                   <div class="price-row"><dt>Vegetarian</dt><dd class="price-row__value m-0">Included</dd></div>
@@ -1062,11 +1062,11 @@
           <dl class="grid gap-3 mt-4 m-0">
             <div class="price-row">
               <dt>Base Fare</dt>
-              <dd class="m-0 price-row__value" data-amount="173400">BDT 173,400</dd>
+              <dd class="m-0 price-row__value" data-amount="117700">BDT 117,700</dd>
             </div>
             <div class="price-row">
               <dt>Taxes &amp; Fees</dt>
-              <dd class="m-0 price-row__value" data-amount="18160">BDT 18,160</dd>
+              <dd class="m-0 price-row__value" data-amount="12810">BDT 12,810</dd>
             </div>
             <div class="price-row">
               <dt>Add-ons</dt>
@@ -1074,7 +1074,7 @@
             </div>
             <div class="price-row price-row--total">
               <dt>Total</dt>
-              <dd class="m-0 price-row__value" data-grand-total>BDT 200,060</dd>
+              <dd class="m-0 price-row__value" data-grand-total>BDT 139,010</dd>
             </div>
           </dl>
 
@@ -1119,14 +1119,6 @@
           </ul>
         </nav>
 
-        <nav class="" aria-labelledby="footer-company">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
-          </ul>
-        </nav>
-
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
@@ -1137,23 +1129,23 @@
           </ul>
         </nav>
 
+        <nav class="" aria-labelledby="footer-company">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
+          </ul>
+        </nav>
+
         <div class="flex flex-col items-start gap-4">
 
           <div class="flex flex-wrap gap-3">
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
-              <span>
-                <span class="store-badge__small">Download on the</span>
-                <span class="store-badge__name">App Store</span>
-              </span>
-            </a>
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
-              <span>
-                <span class="store-badge__small">Get it on</span>
-                <span class="store-badge__name">Google Play</span>
-              </span>
-            </a>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
+            </span>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
+            </span>
           </div>
         </div>
 

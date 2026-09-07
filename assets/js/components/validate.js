@@ -83,6 +83,13 @@ export function initValidation(root = document) {
 
       /* The browser would otherwise show its own bubble on the first one. */
       event.preventDefault();
+
+      /* A field inside a folded panel cannot be focused while it is folded, so
+         whatever is holding the first bad one is opened first. */
+      for (let panel = invalid[0].closest('details'); panel; panel = panel.parentElement?.closest('details')) {
+        panel.open = true;
+      }
+
       invalid[0].focus();
     });
 

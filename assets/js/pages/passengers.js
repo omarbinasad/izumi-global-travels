@@ -5,18 +5,22 @@
 
 import { qs, on } from '../core/dom.js';
 import { initFileField } from '../components/file-field.js';
+import { initHints } from '../components/hint.js';
 import { initPhoneFields } from '../components/phone-field.js';
 import { initSelectFields } from '../components/select-field.js';
 import { initDateFields } from '../components/date-field.js';
 import { initDigitsOnly } from '../components/digits.js';
+import { initTextFilter } from '../components/text-filter.js';
 import { initUpperCase } from '../components/text-case.js';
 import { initValidation } from '../components/validate.js';
 
 export function init() {
   initFileField();
+  initHints();
   initPhoneFields();
   initSelectFields();
   initDateFields();
+  initTextFilter();
   initUpperCase();
   initDigitsOnly();
   initValidation();

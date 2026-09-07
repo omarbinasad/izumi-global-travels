@@ -279,198 +279,14 @@
           a plain anchor here so the static prototype can be clicked through.
         -->
         <form class="review-panel" id="passenger-form" action="add-ons.html" data-validate novalidate>
-          <h1 class="m-0 text-2xl font-bold tracking-tight text-fg-heading">Passenger Details</h1>
+          <!-- BLADE BOUNDARY: contact details -> <x-booking.contact-details /> -->
+          <!-- One set of details for the whole booking, not one per traveller:
+               this is the address and number the airline and we write to. -->
+          <section aria-labelledby="contact-title">
+            <h1 class="m-0 text-2xl font-bold tracking-tight text-fg-heading" id="contact-title">Contact Details</h1>
+            <p class="mt-1 mb-0 text-sm text-fg-muted">Where the confirmation goes, and how we reach you if the flight changes.</p>
 
-          <fieldset class="mt-6 border-0 p-0 m-0">
-            <legend class="mb-5 p-0 text-base font-bold text-fg-heading">Passenger 1 (Adult)</legend>
-
-            <!-- The passenger type is a code the backend set, not something the
-                 traveller picks on this page. -->
-            <input type="hidden" name="passengers[0][type]" value="ADT">
-
-            <div class="field-grid">
-
-              <div class="field">
-                <div class="field__label">
-                  <label for="given-name-0">First Name/Given Name</label>
-                  <span class="hint">
-                    <button class="hint__trigger" type="button" aria-label="How to enter a given name">
-                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
-                    </button>
-                    <span class="hint__pop" role="tooltip" id="given-name-guidance">
-                      <span class="hint__title">Passenger Name Guidelines</span>
-                      <span class="hint__example">
-                        <span class="hint__photo" aria-hidden="true">
-                          <svg class="icon size-6"><use href="#i-user"></use></svg>
-                        </span>
-                        <span>
-                          <span class="hint__row">
-                            <span class="hint__key">Given names</span>
-                            <span class="hint__value hint__value--boxed">MARY ISABELLE</span>
-                          </span>
-                          <span class="hint__row">
-                            <span class="hint__key">Surname</span>
-                            <span class="hint__value">SMITH</span>
-                          </span>
-                        </span>
-                      </span>
-                      <span class="hint__note">
-                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
-                        Enter every given name shown on your passport, in the same order.
-                      </span>
-                    </span>
-                  </span>
-                </div>
-                <input class="field__control" type="text" id="given-name-0"
-                       name="passengers[0][given_name]" placeholder="Enter given name"
-                       autocomplete="given-name" aria-describedby="given-name-guidance" required
-                       autocapitalize="characters" spellcheck="false" data-uppercase
-                       data-required="Enter the given name exactly as it appears on the travel document.">
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <div class="field__label">
-                  <label for="family-name-0">Last Name/Surname</label>
-                  <span class="hint">
-                    <button class="hint__trigger" type="button" aria-label="How to enter a surname">
-                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
-                    </button>
-                    <span class="hint__pop" role="tooltip" id="family-name-guidance">
-                      <span class="hint__title">Passenger Name Guidelines</span>
-                      <span class="hint__example">
-                        <span class="hint__photo" aria-hidden="true">
-                          <svg class="icon size-6"><use href="#i-user"></use></svg>
-                        </span>
-                        <span>
-                          <span class="hint__row">
-                            <span class="hint__key">Given names</span>
-                            <span class="hint__value">MARY ISABELLE</span>
-                          </span>
-                          <span class="hint__row">
-                            <span class="hint__key">Surname</span>
-                            <span class="hint__value hint__value--boxed">SMITH</span>
-                          </span>
-                        </span>
-                      </span>
-                      <span class="hint__note">
-                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
-                        Please enter your surname exactly as it appears on your passport or travel document.
-                      </span>
-                    </span>
-                  </span>
-                </div>
-                <input class="field__control" type="text" id="family-name-0"
-                       name="passengers[0][family_name]" placeholder="Enter surname"
-                       autocomplete="family-name" aria-describedby="family-name-guidance" required
-                       autocapitalize="characters" spellcheck="false" data-uppercase
-                       data-required="Enter the surname exactly as it appears on the travel document.">
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <label class="field__label" for="gender-0">Gender</label>
-                <span class="field__select" data-select>
-                  <select class="field__control" id="gender-0" name="passengers[0][gender]" required
-                       data-required="Choose a gender.">
-                    <option value="" selected>Select gender</option>
-                    <option value="M">Male</option>
-                    <option value="F">Female</option>
-                    <option value="X">Another gender</option>
-                    <option value="U">Prefer not to say</option>
-                  </select>
-                  <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                </span>
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <label class="field__label" for="dob-0">Date of Birth</label>
-                <!-- The ages the passenger type allows, which is what limits the
-                     years the picker offers: ADT 12 and over, CHD 2 to 11, INF
-                     under 2. Blade renders these from the type above; the form
-                     request is what actually enforces the policy. -->
-                <div class="field__date" data-date-field>
-                  <input class="field__control" type="date" id="dob-0"
-                    name="passengers[0][date_of_birth]" autocomplete="bday"
-                    required data-min-age="12" data-max-age="120"
-                    data-required="Enter the date of birth."
-                    data-invalid="Enter a date of birth for an adult passenger.">
-                </div>
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <label class="field__label" for="nationality-0">Nationality</label>
-                <span class="field__select" data-select data-select-search>
-                  <!-- A short list stands in for the full ISO 3166-1 set the
-                       backend renders. The value submitted is the alpha-2 code. -->
-                  <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required
-                       data-required="Choose a nationality.">
-                    <option value="" selected>Select nationality</option>
-                    <option value="BD">Bangladesh</option>
-                    <option value="IN">India</option>
-                    <option value="JP">Japan</option>
-                    <option value="MY">Malaysia</option>
-                    <option value="AE">United Arab Emirates</option>
-                    <option value="GB">United Kingdom</option>
-                    <option value="US">United States</option>
-                  </select>
-                  <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                </span>
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <label class="field__label" for="document-number-0">Passport Number</label>
-                <input class="field__control" type="text" id="document-number-0"
-                       name="passengers[0][document_number]" placeholder="Enter passport number"
-                       autocomplete="off" spellcheck="false" required
-                       data-required="Enter the passport number.">
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <div class="field__label">
-                  <label for="document-expiry-0">Passport Expiry Date</label>
-                  <span class="hint">
-                    <button class="hint__trigger" type="button" aria-label="About passport expiry">
-                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
-                    </button>
-                    <span class="hint__pop" role="tooltip" id="document-expiry-guidance">
-                      <span class="hint__title">Passport validity</span>
-                      <span class="hint__note">
-                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
-                        Many destinations require a passport valid for six months beyond your return date. The airline checks this at the airport.
-                      </span>
-                    </span>
-                  </span>
-                </div>
-                <!-- A passport that expires today cannot be travelled on, so the
-                     earliest date on offer is tomorrow. -->
-                <div class="field__date" data-date-field>
-                  <input class="field__control" type="date" id="document-expiry-0"
-                    name="passengers[0][document_expiry]"
-                    aria-describedby="document-expiry-guidance" required
-                    data-min-days="1"
-                    data-required="Enter the passport expiry date."
-                    data-invalid="The passport must be valid beyond today.">
-                </div>
-                <span class="field__error" data-field-error hidden></span>
-              </div>
-
-              <div class="field">
-                <label class="field__label" for="document-photo-0">
-                  Upload Passport Photo <span class="field__optional">(Optional)</span>
-                </label>
-                <label class="field__control field__file" data-file-field>
-                  <span class="field__file-name" data-file-name>Upload file (JPG, PNG)</span>
-                  <svg class="icon size-5" aria-hidden="true"><use href="#i-image"></use></svg>
-                  <input class="sr-only" type="file" id="document-photo-0"
-                         name="passengers[0][document_photo]" accept="image/jpeg,image/png">
-                </label>
-                <span class="field__error" data-field-error hidden></span>
-              </div>
+            <div class="field-grid mt-5">
 
               <div class="field">
                 <label class="field__label" for="contact-email">Email Address</label>
@@ -507,10 +323,652 @@
                          data-required="Enter a phone number."
                          data-invalid="Enter the phone number in digits only, 6 to 15 of them.">
                 </span>
+                <span class="field__hint">Choose a country code, then enter the local number.</span>
                 <span class="field__error" data-field-error hidden></span>
               </div>
             </div>
-          </fieldset>
+          </section>
+          <!-- END BLADE BOUNDARY: contact details -->
+
+          <hr class="pax-rule">
+
+          <!-- BLADE BOUNDARY: passenger list -> <x-booking.passenger-list :party="$party" /> -->
+          <!-- One panel per traveller. They are details elements, so the party
+               folds down to a readable list and opens with nothing running. -->
+          <section aria-labelledby="passengers-title">
+            <h2 class="m-0 text-xl font-bold tracking-tight text-fg-heading" id="passengers-title">Passenger Details</h2>
+            <p class="mt-1 mb-0 text-sm text-fg-muted">1 Adult, 1 Child, 1 Infant</p>
+
+            <div class="pax-list">
+              <details class="pax-card" open>
+                <summary class="pax-card__head">
+                  <span class="pax-card__who">
+                    <span class="pax-card__name">Passenger 1</span>
+                    <span class="pax-card__type">Adult</span>
+                  </span>
+                  <svg class="icon size-5 pax-card__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </summary>
+
+                <fieldset class="pax-card__body">
+                  <legend class="sr-only">Passenger 1, adult</legend>
+
+                  <!-- The passenger type is a code the backend set, not something
+                       the traveller picks on this page. -->
+                  <input type="hidden" name="passengers[0][type]" value="ADT">
+
+                  <div class="field-grid">
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="given-name-0">First Name/Given Name</label>
+                  <span class="hint" data-hint-for="given-name-0">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a given name">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="given-name-guidance-0">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value hint__value--boxed">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Enter every given name shown on your passport, in the same order.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="given-name-0"
+                             name="passengers[0][given_name]" placeholder="Enter given name"
+                             autocomplete="given-name" aria-describedby="given-name-guidance-0" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the given name exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="family-name-0">Last Name/Surname</label>
+                  <span class="hint" data-hint-for="family-name-0">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a surname">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="family-name-guidance-0">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value hint__value--boxed">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Please enter your surname exactly as it appears on your passport or travel document.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="family-name-0"
+                             name="passengers[0][family_name]" placeholder="Enter surname"
+                             autocomplete="family-name" aria-describedby="family-name-guidance-0" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the surname exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="gender-0">Gender</label>
+                      <span class="field__select" data-select>
+                        <select class="field__control" id="gender-0" name="passengers[0][gender]" required
+                             data-required="Choose a gender.">
+                          <option value="" selected>Select gender</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                          <option value="X">Another gender</option>
+                          <option value="U">Prefer not to say</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="dob-0">Date of Birth</label>
+                      <!-- The ages this passenger type allows, which is what limits
+                           the years the picker offers. Blade renders these from the
+                           type above; the form request is what enforces the policy. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="dob-0"
+                          name="passengers[0][date_of_birth]" autocomplete="bday"
+                          required data-min-age="12" data-max-age="120"
+                          data-required="Enter the date of birth."
+                          data-invalid="Enter a date of birth for an adult passenger.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="nationality-0">Nationality</label>
+                      <span class="field__select" data-select data-select-search>
+                        <!-- A short list stands in for the full ISO 3166-1 set the
+                             backend renders. The value submitted is the alpha-2 code. -->
+                        <select class="field__control" id="nationality-0" name="passengers[0][nationality]" autocomplete="country" required
+                             data-required="Choose a nationality.">
+                          <option value="" selected>Select nationality</option>
+                          <option value="BD">Bangladesh</option>
+                          <option value="IN">India</option>
+                          <option value="JP">Japan</option>
+                          <option value="MY">Malaysia</option>
+                          <option value="AE">United Arab Emirates</option>
+                          <option value="GB">United Kingdom</option>
+                          <option value="US">United States</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-number-0">Passport Number</label>
+                      <input class="field__control" type="text" id="document-number-0"
+                             name="passengers[0][document_number]" placeholder="Enter passport number"
+                             autocomplete="off" spellcheck="false" required
+                             autocapitalize="characters" data-uppercase data-allow="document"
+                             pattern="[A-Za-z0-9]{5,15}" maxlength="15"
+                             data-required="Enter the passport number."
+                             data-invalid="A passport number is 5 to 15 letters and digits, nothing else.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="document-expiry-0">Passport Expiry Date</label>
+                        <span class="hint" data-hint-for="document-expiry-0">
+                          <button class="hint__trigger" type="button" aria-label="About passport expiry">
+                            <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                          </button>
+                          <span class="hint__pop" role="tooltip" id="document-expiry-guidance-0">
+                            <span class="hint__title">Passport validity</span>
+                            <span class="hint__note">
+                              <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                              Many destinations require a passport valid for six months beyond your return date. The airline checks this at the airport.
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                      <!-- A passport that expires today cannot be travelled on, so
+                           the earliest date on offer is tomorrow. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="document-expiry-0"
+                          name="passengers[0][document_expiry]"
+                          aria-describedby="document-expiry-guidance-0" required
+                          data-min-days="1"
+                          data-required="Enter the passport expiry date."
+                          data-invalid="The passport must be valid beyond today.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-photo-0">
+                        Upload Passport Photo <span class="field__optional">(Optional)</span>
+                      </label>
+                      <label class="field__control field__file" data-file-field>
+                        <span class="field__file-name" data-file-name>Upload file (JPG, PNG)</span>
+                        <svg class="icon size-5" aria-hidden="true"><use href="#i-image"></use></svg>
+                        <input class="sr-only" type="file" id="document-photo-0"
+                               name="passengers[0][document_photo]" accept="image/jpeg,image/png">
+                      </label>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+                  </div>
+                </fieldset>
+              </details>
+
+              <details class="pax-card">
+                <summary class="pax-card__head">
+                  <span class="pax-card__who">
+                    <span class="pax-card__name">Passenger 2</span>
+                    <span class="pax-card__type">Child</span>
+                  </span>
+                  <svg class="icon size-5 pax-card__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </summary>
+
+                <fieldset class="pax-card__body">
+                  <legend class="sr-only">Passenger 2, child</legend>
+
+                  <!-- The passenger type is a code the backend set, not something
+                       the traveller picks on this page. -->
+                  <input type="hidden" name="passengers[1][type]" value="CHD">
+
+                  <div class="field-grid">
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="given-name-1">First Name/Given Name</label>
+                  <span class="hint" data-hint-for="given-name-1">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a given name">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="given-name-guidance-1">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value hint__value--boxed">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Enter every given name shown on your passport, in the same order.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="given-name-1"
+                             name="passengers[1][given_name]" placeholder="Enter given name"
+                             autocomplete="given-name" aria-describedby="given-name-guidance-1" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the given name exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="family-name-1">Last Name/Surname</label>
+                  <span class="hint" data-hint-for="family-name-1">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a surname">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="family-name-guidance-1">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value hint__value--boxed">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Please enter your surname exactly as it appears on your passport or travel document.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="family-name-1"
+                             name="passengers[1][family_name]" placeholder="Enter surname"
+                             autocomplete="family-name" aria-describedby="family-name-guidance-1" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the surname exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="gender-1">Gender</label>
+                      <span class="field__select" data-select>
+                        <select class="field__control" id="gender-1" name="passengers[1][gender]" required
+                             data-required="Choose a gender.">
+                          <option value="" selected>Select gender</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                          <option value="X">Another gender</option>
+                          <option value="U">Prefer not to say</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="dob-1">Date of Birth</label>
+                      <!-- The ages this passenger type allows, which is what limits
+                           the years the picker offers. Blade renders these from the
+                           type above; the form request is what enforces the policy. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="dob-1"
+                          name="passengers[1][date_of_birth]" autocomplete="bday"
+                          required data-min-age="2" data-max-age="11"
+                          data-required="Enter the date of birth."
+                          data-invalid="A child is 2 to 11 years old on the day of travel.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="nationality-1">Nationality</label>
+                      <span class="field__select" data-select data-select-search>
+                        <!-- A short list stands in for the full ISO 3166-1 set the
+                             backend renders. The value submitted is the alpha-2 code. -->
+                        <select class="field__control" id="nationality-1" name="passengers[1][nationality]" autocomplete="country" required
+                             data-required="Choose a nationality.">
+                          <option value="" selected>Select nationality</option>
+                          <option value="BD">Bangladesh</option>
+                          <option value="IN">India</option>
+                          <option value="JP">Japan</option>
+                          <option value="MY">Malaysia</option>
+                          <option value="AE">United Arab Emirates</option>
+                          <option value="GB">United Kingdom</option>
+                          <option value="US">United States</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-number-1">Passport Number</label>
+                      <input class="field__control" type="text" id="document-number-1"
+                             name="passengers[1][document_number]" placeholder="Enter passport number"
+                             autocomplete="off" spellcheck="false" required
+                             autocapitalize="characters" data-uppercase data-allow="document"
+                             pattern="[A-Za-z0-9]{5,15}" maxlength="15"
+                             data-required="Enter the passport number."
+                             data-invalid="A passport number is 5 to 15 letters and digits, nothing else.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="document-expiry-1">Passport Expiry Date</label>
+                        <span class="hint" data-hint-for="document-expiry-1">
+                          <button class="hint__trigger" type="button" aria-label="About passport expiry">
+                            <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                          </button>
+                          <span class="hint__pop" role="tooltip" id="document-expiry-guidance-1">
+                            <span class="hint__title">Passport validity</span>
+                            <span class="hint__note">
+                              <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                              Many destinations require a passport valid for six months beyond your return date. The airline checks this at the airport.
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                      <!-- A passport that expires today cannot be travelled on, so
+                           the earliest date on offer is tomorrow. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="document-expiry-1"
+                          name="passengers[1][document_expiry]"
+                          aria-describedby="document-expiry-guidance-1" required
+                          data-min-days="1"
+                          data-required="Enter the passport expiry date."
+                          data-invalid="The passport must be valid beyond today.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-photo-1">
+                        Upload Passport Photo <span class="field__optional">(Optional)</span>
+                      </label>
+                      <label class="field__control field__file" data-file-field>
+                        <span class="field__file-name" data-file-name>Upload file (JPG, PNG)</span>
+                        <svg class="icon size-5" aria-hidden="true"><use href="#i-image"></use></svg>
+                        <input class="sr-only" type="file" id="document-photo-1"
+                               name="passengers[1][document_photo]" accept="image/jpeg,image/png">
+                      </label>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+                  </div>
+                </fieldset>
+              </details>
+
+              <details class="pax-card">
+                <summary class="pax-card__head">
+                  <span class="pax-card__who">
+                    <span class="pax-card__name">Passenger 3</span>
+                    <span class="pax-card__type">Infant</span>
+                  </span>
+                  <svg class="icon size-5 pax-card__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                </summary>
+
+                <fieldset class="pax-card__body">
+                  <legend class="sr-only">Passenger 3, infant</legend>
+
+                  <!-- The passenger type is a code the backend set, not something
+                       the traveller picks on this page. -->
+                  <input type="hidden" name="passengers[2][type]" value="INF">
+
+                  <div class="field-grid">
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="given-name-2">First Name/Given Name</label>
+                  <span class="hint" data-hint-for="given-name-2">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a given name">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="given-name-guidance-2">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value hint__value--boxed">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Enter every given name shown on your passport, in the same order.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="given-name-2"
+                             name="passengers[2][given_name]" placeholder="Enter given name"
+                             autocomplete="given-name" aria-describedby="given-name-guidance-2" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the given name exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="family-name-2">Last Name/Surname</label>
+                  <span class="hint" data-hint-for="family-name-2">
+                    <button class="hint__trigger" type="button" aria-label="How to enter a surname">
+                      <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                    </button>
+                    <span class="hint__pop" role="tooltip" id="family-name-guidance-2">
+                      <span class="hint__title">Passenger Name Guidelines</span>
+                      <span class="hint__example">
+                        <span class="hint__photo" aria-hidden="true">
+                          <svg class="icon size-6"><use href="#i-user"></use></svg>
+                        </span>
+                        <span>
+                          <span class="hint__row">
+                            <span class="hint__key">Given names</span>
+                            <span class="hint__value">MARY ISABELLE</span>
+                          </span>
+                          <span class="hint__row">
+                            <span class="hint__key">Surname</span>
+                            <span class="hint__value hint__value--boxed">SMITH</span>
+                          </span>
+                        </span>
+                      </span>
+                      <span class="hint__note">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                        Please enter your surname exactly as it appears on your passport or travel document.
+                      </span>
+                    </span>
+                  </span>
+                      </div>
+                      <input class="field__control" type="text" id="family-name-2"
+                             name="passengers[2][family_name]" placeholder="Enter surname"
+                             autocomplete="family-name" aria-describedby="family-name-guidance-2" required
+                             autocapitalize="characters" spellcheck="false" data-uppercase data-allow="name"
+                             pattern="[A-Za-z][A-Za-z '.-]*"
+                             data-required="Enter the surname exactly as it appears on the travel document."
+                             data-invalid="A name holds letters, and may hold a space, hyphen or apostrophe.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="gender-2">Gender</label>
+                      <span class="field__select" data-select>
+                        <select class="field__control" id="gender-2" name="passengers[2][gender]" required
+                             data-required="Choose a gender.">
+                          <option value="" selected>Select gender</option>
+                          <option value="M">Male</option>
+                          <option value="F">Female</option>
+                          <option value="X">Another gender</option>
+                          <option value="U">Prefer not to say</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="dob-2">Date of Birth</label>
+                      <!-- The ages this passenger type allows, which is what limits
+                           the years the picker offers. Blade renders these from the
+                           type above; the form request is what enforces the policy. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="dob-2"
+                          name="passengers[2][date_of_birth]" autocomplete="bday"
+                          required data-min-age="0" data-max-age="1"
+                          data-required="Enter the date of birth."
+                          data-invalid="An infant is under 2 years old on the day of travel.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="nationality-2">Nationality</label>
+                      <span class="field__select" data-select data-select-search>
+                        <!-- A short list stands in for the full ISO 3166-1 set the
+                             backend renders. The value submitted is the alpha-2 code. -->
+                        <select class="field__control" id="nationality-2" name="passengers[2][nationality]" autocomplete="country" required
+                             data-required="Choose a nationality.">
+                          <option value="" selected>Select nationality</option>
+                          <option value="BD">Bangladesh</option>
+                          <option value="IN">India</option>
+                          <option value="JP">Japan</option>
+                          <option value="MY">Malaysia</option>
+                          <option value="AE">United Arab Emirates</option>
+                          <option value="GB">United Kingdom</option>
+                          <option value="US">United States</option>
+                        </select>
+                        <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                      </span>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-number-2">Passport Number</label>
+                      <input class="field__control" type="text" id="document-number-2"
+                             name="passengers[2][document_number]" placeholder="Enter passport number"
+                             autocomplete="off" spellcheck="false" required
+                             autocapitalize="characters" data-uppercase data-allow="document"
+                             pattern="[A-Za-z0-9]{5,15}" maxlength="15"
+                             data-required="Enter the passport number."
+                             data-invalid="A passport number is 5 to 15 letters and digits, nothing else.">
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <div class="field__label">
+                        <label for="document-expiry-2">Passport Expiry Date</label>
+                        <span class="hint" data-hint-for="document-expiry-2">
+                          <button class="hint__trigger" type="button" aria-label="About passport expiry">
+                            <svg class="icon size-[18px]" aria-hidden="true"><use href="#i-info"></use></svg>
+                          </button>
+                          <span class="hint__pop" role="tooltip" id="document-expiry-guidance-2">
+                            <span class="hint__title">Passport validity</span>
+                            <span class="hint__note">
+                              <svg class="icon size-4" aria-hidden="true"><use href="#i-info"></use></svg>
+                              Many destinations require a passport valid for six months beyond your return date. The airline checks this at the airport.
+                            </span>
+                          </span>
+                        </span>
+                      </div>
+                      <!-- A passport that expires today cannot be travelled on, so
+                           the earliest date on offer is tomorrow. -->
+                      <div class="field__date" data-date-field>
+                        <input class="field__control" type="date" id="document-expiry-2"
+                          name="passengers[2][document_expiry]"
+                          aria-describedby="document-expiry-guidance-2" required
+                          data-min-days="1"
+                          data-required="Enter the passport expiry date."
+                          data-invalid="The passport must be valid beyond today.">
+                      </div>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+
+                    <div class="field">
+                      <label class="field__label" for="document-photo-2">
+                        Upload Passport Photo <span class="field__optional">(Optional)</span>
+                      </label>
+                      <label class="field__control field__file" data-file-field>
+                        <span class="field__file-name" data-file-name>Upload file (JPG, PNG)</span>
+                        <svg class="icon size-5" aria-hidden="true"><use href="#i-image"></use></svg>
+                        <input class="sr-only" type="file" id="document-photo-2"
+                               name="passengers[2][document_photo]" accept="image/jpeg,image/png">
+                      </label>
+                      <span class="field__error" data-field-error hidden></span>
+                    </div>
+                  </div>
+                </fieldset>
+              </details>
+            </div>
+          </section>
+          <!-- END BLADE BOUNDARY: passenger list -->
 
           <label class="flex items-center gap-3 mt-6 text-sm text-fg">
             <input type="checkbox" name="save_passenger_details" value="1">
@@ -570,19 +1028,27 @@
 
           <p class="flex items-center gap-2 mt-4 mb-0 text-sm text-fg">
             <svg class="icon size-4 text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
-            1 Adult, Economy
+            1 Adult, 1 Child, 1 Infant &middot; Economy
           </p>
 
           <hr class="trip-summary__rule mt-4">
 
           <dl class="grid gap-3 mt-4 m-0">
             <div class="price-row">
-              <dt>Base Fare</dt>
+              <dt>Adult &times; 1</dt>
               <dd class="m-0 price-row__value">BDT 61,900</dd>
             </div>
             <div class="price-row">
+              <dt>Child &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 49,600</dd>
+            </div>
+            <div class="price-row">
+              <dt>Infant &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 6,200</dd>
+            </div>
+            <div class="price-row">
               <dt>Taxes &amp; Fees</dt>
-              <dd class="m-0 price-row__value">BDT 6,550</dd>
+              <dd class="m-0 price-row__value">BDT 12,810</dd>
             </div>
             <div class="price-row">
               <dt>Add-ons</dt>
@@ -590,7 +1056,7 @@
             </div>
             <div class="price-row price-row--total">
               <dt>Total</dt>
-              <dd class="m-0 price-row__value">BDT 68,450</dd>
+              <dd class="m-0 price-row__value">BDT 130,510</dd>
             </div>
           </dl>
 
@@ -633,14 +1099,6 @@
           </ul>
         </nav>
 
-        <nav class="" aria-labelledby="footer-company">
-          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
-          <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
-          </ul>
-        </nav>
-
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
@@ -651,23 +1109,23 @@
           </ul>
         </nav>
 
+        <nav class="" aria-labelledby="footer-company">
+          <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
+          <ul class="grid gap-2 m-0 p-0 list-none">
+            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
+          </ul>
+        </nav>
+
         <div class="flex flex-col items-start gap-4">
 
           <div class="flex flex-wrap gap-3">
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-apple"></use></svg>
-              <span>
-                <span class="store-badge__small">Download on the</span>
-                <span class="store-badge__name">App Store</span>
-              </span>
-            </a>
-            <a class="store-badge" href="../../pages/support/help-centre.html">
-              <svg class="icon icon--solid" aria-hidden="true"><use href="#i-play"></use></svg>
-              <span>
-                <span class="store-badge__small">Get it on</span>
-                <span class="store-badge__name">Google Play</span>
-              </span>
-            </a>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
+            </span>
+            <span class="store-badge">
+              <img class="store-badge__art" src="../../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
+            </span>
           </div>
         </div>
 
