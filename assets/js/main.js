@@ -14,6 +14,7 @@ import { initNavigation } from './components/navigation.js';
 import { initHeaderShadow } from './components/header.js';
 import { initReveal } from './components/reveal.js';
 import { initLocale } from './components/locale.js';
+import { initToTop } from './components/to-top.js';
 
 /**
  * Page modules, added as pages are built. Each value is a dynamic import so
@@ -50,4 +51,5 @@ initNavigation();
 initHeaderShadow();
 initReveal();
 initLocale();
+initToTop();
 startPageModule();

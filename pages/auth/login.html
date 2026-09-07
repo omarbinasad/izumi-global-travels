@@ -241,6 +241,15 @@
   </main>
   <!-- END BLADE BOUNDARY: main content -->
 
+  <!-- BLADE BOUNDARY: back to top -> <x-layout.to-top /> -->
+  <!-- A link, not a button: "#top" is the top of the document in HTML, so this
+       returns there with the stylesheet's smooth scroll and nothing running. -->
+  <a class="to-top" href="#top" data-to-top>
+    <svg class="icon size-5" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+    <span class="sr-only">Back to top</span>
+  </a>
+  <!-- END BLADE BOUNDARY: back to top -->
+
   <script type="module" src="../../assets/js/main.js"></script>
 </body>
 </html>

@@ -268,13 +268,6 @@
             </summary>
             <p class="faq__answer">Yes. Enter their details exactly as they appear on their passport. The contact email and phone are yours if you are arranging the trip, and that is where we send the confirmation.</p>
           </details>
-          <details class="faq__item">
-            <summary class="faq__question">
-              Do I need to create an account?
-              <svg class="icon size-5 faq__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-            </summary>
-            <p class="faq__answer">No. An account keeps your bookings and traveller details in one place, but a request can be made without one.</p>
-          </details>
         </div>
       </section>
       <!-- END BLADE BOUNDARY: faq group -->
@@ -390,7 +383,7 @@
 
       <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
-        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
+        <div class="flex items-center gap-4 col-span-2 mid:flex-col mid:items-start mid:col-span-1">
           <a class="footer-logo" href="../index.html" aria-label="Izumi Global Travels — home">
             <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
@@ -433,7 +426,7 @@
           </ul>
         </nav>
 
-        <div class="flex flex-col items-start gap-4 col-span-2 mid:col-span-1">
+        <div class="flex flex-col items-start gap-4">
 
           <div class="flex flex-wrap gap-3">
             <a class="store-badge" href="support/help-centre.html">
@@ -479,6 +472,15 @@
     </div>
   </footer>
   <!-- END BLADE BOUNDARY: site footer -->
+
+  <!-- BLADE BOUNDARY: back to top -> <x-layout.to-top /> -->
+  <!-- A link, not a button: "#top" is the top of the document in HTML, so this
+       returns there with the stylesheet's smooth scroll and nothing running. -->
+  <a class="to-top" href="#top" data-to-top>
+    <svg class="icon size-5" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+    <span class="sr-only">Back to top</span>
+  </a>
+  <!-- END BLADE BOUNDARY: back to top -->
 
   <script type="module" src="../assets/js/main.js"></script>
 </body>

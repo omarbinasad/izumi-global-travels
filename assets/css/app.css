@@ -228,6 +228,7 @@
   --container-prose: 72ch;
 
   /* --- Radius --- */
+  --radius-2xs: 3px;
   --radius-xs: 4px;
   --radius-sm: 6px;
   --radius-md: 10px;
@@ -313,7 +314,10 @@
 
   --header-height: 64px;
   --header-height-lg: 72px;
+  --control-height-xs: 38px;
   --control-height-sm: 36px;
+  /* Between the two: the summary bar's button on a phone. */
+  --control-height-md: 42px;
   --control-height: 44px;
   --search-field-height: 48px;
 
@@ -1051,6 +1055,7 @@
 
   .footer-logo {
     display: inline-flex;
+    flex: none;
     align-items: center;
     gap: --spacing(2);
     padding: --spacing(3) --spacing(4);
@@ -1181,6 +1186,55 @@
     font-size: var(--text-sm);
     font-weight: 600;
     line-height: 1.2;
+  }
+}
+
+/* ==========================================================================
+   BACK TO TOP
+   ========================================================================== */
+
+@layer components {
+
+  /* --z-sticky keeps it over the page but under the header and under anything
+     that opens on top of the page. */
+  .to-top {
+    position: fixed;
+    z-index: var(--z-sticky);
+    inset-block-end: --spacing(5);
+    inset-inline-end: --spacing(5);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: var(--control-height);
+    block-size: var(--control-height);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    color: var(--color-primary);
+    transition: opacity var(--transition-base), visibility var(--transition-base),
+                background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  /* The sprite has no upward chevron, and the one it has is symmetrical. */
+  .to-top svg { rotate: 180deg; }
+
+  .to-top:hover {
+    border-color: transparent;
+    background-color: var(--color-primary);
+    color: var(--color-on-cta);
+  }
+
+  .to-top:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* There is nothing to go back to at the top of a page. The module sets this;
+     with it absent the link is simply always on screen, and still works. */
+  .to-top[data-at-top="true"] {
+    opacity: 0;
+    visibility: hidden;
   }
 }
 
@@ -3280,12 +3334,6 @@
       height: 17px;
     }
 
-    /* The button is the widest thing in the bar, so it does not need to be the
-       tallest as well. */
-    .summary-bar__submit {
-      min-height: var(--control-height);
-      padding-inline: --spacing(4);
-    }
 
     .summary-bar__route,
     .summary-bar__submit { flex-basis: 100%; }
@@ -3312,6 +3360,16 @@
   .summary-bar__submit {
     min-height: 52px;
     padding-inline: --spacing(6);
+  }
+
+  /* On a phone the button is the widest thing in the bar, so it does not need
+     to be the tallest as well, and it takes a step away from the line above. */
+  @media (width < 64rem) {
+    .summary-bar__submit {
+      min-height: var(--control-height-md);
+      margin-block-start: --spacing(2);
+      padding-inline: --spacing(4);
+    }
   }
 
   @media (width >= 64rem) {
@@ -3371,13 +3429,31 @@
        * a stacking context paints its own background before any negative-z
        * child, and the child would cover the panel instead of ringing it.
        */
-      box-shadow: 0 0 0 --spacing(2) var(--color-results-bg);
+      box-shadow: 0 0 0 --spacing(5) var(--color-results-bg);
     }
 
     /* The heading says what the list is; the controls under it change it. */
     .results-bar > .results__head {
       flex-basis: 100%;
       order: -1;
+      text-align: center;
+    }
+
+    /* Centred as a group, the way the count above them is. */
+    .results-bar { justify-content: center; }
+
+    /*
+     * At the top of the page the search bar above already names the route, so
+     * the heading would only say it twice; it appears once the bar is stuck and
+     * that search bar has scrolled away. assets/js/components/sticky-bar.js is
+     * what marks the bar as stuck — CSS cannot tell.
+     */
+    .results__title { display: none; }
+
+    .results-bar[data-stuck="true"] .results__title {
+      display: block;
+      font-size: var(--text-base);
+      color: var(--color-fg-heading);
     }
 
     /* Tight enough that the three of them make one line on a 390px screen;
@@ -4361,8 +4437,26 @@
        chip or the airline beside it. A booking has no badge — its status sits
        in the head row — so it keeps its own padding. */
     .result-card:has(.result-card__badges) .result-card__main {
-      padding-block-start: --spacing(10);
+      padding-block-start: --spacing(9);
     }
+
+    /* Into the corner itself, square enough to sit against the card edge. */
+    .result-card__badges {
+      inset-block-start: 0;
+      inset-inline-end: 0;
+    }
+
+    .result-card__badges .result-badge {
+      border-start-end-radius: var(--radius-md);
+      border-start-start-radius: var(--radius-2xs);
+      border-end-end-radius: var(--radius-2xs);
+      border-end-start-radius: var(--radius-2xs);
+    }
+
+    /* The chip and the airline beside it read as one line, not two columns. */
+    .result-card__slice-head { gap: --spacing(2); }
+
+    .result-card__aside .btn { min-height: var(--control-height-xs); }
 
     .result-card__slice-carrier { font-size: var(--text-xs); }
 
@@ -4418,26 +4512,6 @@
     color: var(--color-primary);
   }
 
-  /* --- Trust strip ------------------------------------------------------ */
-
-  .trust-strip {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: --spacing(3) --spacing(8);
-    margin: 0;
-    padding: 0 var(--container-padding) --spacing(10);
-    list-style: none;
-  }
-
-  .trust-strip__item {
-    display: inline-flex;
-    align-items: center;
-    gap: --spacing(2);
-    font-size: var(--text-sm);
-    color: var(--color-fg-muted);
-  }
 }
 
 /* ==========================================================================
@@ -5227,6 +5301,12 @@
       position: sticky;
       inset-block-start: calc(var(--header-height-lg) + --spacing(4));
     }
+  }
+
+  /* Below that the same links are in the header's account menu, one tap away
+     under the avatar, so the panel is only a second copy of them. */
+  @media (width < 64rem) {
+    .account-nav { display: none; }
   }
 
   .account-nav__link {
