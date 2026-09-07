@@ -10,6 +10,10 @@
  * The badge follows the sort: every card in the list is part of the set the
  * chosen tab describes, so they all carry that tab's badge. Nothing is priced
  * or recalculated here.
+ *
+ * Below the sidebar breakpoint the tabs live inside a menu, so this also keeps
+ * that menu's open state in step with the width — the way the filter drawer
+ * does — and closes it once a choice is made.
  */
 
 import { qs, qsa, on } from '../core/dom.js';
@@ -23,11 +27,27 @@ const TABS = {
   'sort-fastest': { badge: 'fastest', label: 'Fastest', round: 'sortDuration', one: 'sortDurationOne' },
 };
 
+/* The width at which the tabs stop being a menu, matching the stylesheet. */
+const STRIP = '(width >= 64rem)';
+
 export function initSortTabs(scope = document) {
   const tabs = qsa('[data-sort-tab]', scope);
   const list = qs('#results-list', scope);
 
   if (tabs.length === 0 || !list) return;
+
+  const menu = qs('[data-sort-menu]', scope);
+  const current = qs('[data-sort-current]', scope);
+  const strip = window.matchMedia(STRIP);
+
+  /* Open at the strip width, closed as a menu: the markup ships open so the
+     choices are present with no JavaScript at all. */
+  function fit() {
+    if (menu) menu.open = strip.matches;
+  }
+
+  fit();
+  on(strip, 'change', fit);
 
   /* The order the server sent, kept so "Recommended" can be restored. */
   const ranked = [...list.children];
@@ -62,6 +82,10 @@ export function initSortTabs(scope = document) {
       badge.dataset.kind = tab.badge;
       badge.hidden = false;
     });
+
+    /* The button says what it did, and gets out of the way. */
+    if (current) current.textContent = tab.label;
+    if (menu && !strip.matches) menu.open = false;
   }
 
   tabs.forEach((tab, index) => {

@@ -77,8 +77,8 @@ export function initAddOns(scope = document) {
 
       rows.push([`${out.dataset.label} × 2`, total > 0 ? money(currency, total) : out.dataset.priceLabel]);
     } else {
-      if (out) rows.push([`${out.dataset.label} · Departure`, out.dataset.priceLabel]);
-      if (ret) rows.push([`${ret.dataset.label} · Return`, ret.dataset.priceLabel]);
+      if (out) rows.push([`${out.dataset.label} · Outbound`, out.dataset.priceLabel]);
+      if (ret) rows.push([`${ret.dataset.label} · Inbound`, ret.dataset.priceLabel]);
     }
 
     ['meal', 'insurance'].forEach((kind) => {

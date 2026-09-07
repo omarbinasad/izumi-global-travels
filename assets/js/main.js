@@ -25,6 +25,12 @@ const pageModules = {
   passengers: () => import('./pages/passengers.js'),
   'add-ons': () => import('./pages/add-ons.js'),
   blog: () => import('./pages/blog.js'),
+  auth: () => import('./pages/auth.js'),
+  /* Every account page wires up the same set. */
+  'account-profile': () => import('./pages/account.js'),
+  'account-bookings': () => import('./pages/account.js'),
+  'account-booking': () => import('./pages/account.js'),
+  'account-saved': () => import('./pages/account.js'),
   contact: () => import('./pages/contact.js'),
   feedback: () => import('./pages/feedback.js'),
 };

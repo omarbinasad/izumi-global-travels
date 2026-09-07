@@ -244,7 +244,7 @@
           landing page uses, pre-filled and editable. Native details, so it
           opens and submits with no JavaScript.
         -->
-        <details class="summary-edit" data-summary-edit>
+        <details class="summary-edit" id="search-summary" data-summary-edit>
           <summary class="summary-bar">
             <span class="summary-bar__route">
               <span class="summary-bar__field">
@@ -599,6 +599,13 @@
            Filters. Counts come from the backend facet response; nothing here
            filters client-side.
            ================================================================== -->
+      <!-- BLADE BOUNDARY: results bar -> <x-flights.results-bar /> -->
+      <!-- One box on a phone: the three controls in a row with the heading
+           under them, held at the top of the results while they scroll. From
+           the sidebar breakpoint up it is display:contents and each part goes
+           back to its own place in the layout. -->
+      <div class="results-bar">
+
       <!-- BLADE BOUNDARY: filters -> <x-flights.filter-panel /> -->
       <!--
         One markup for both layouts. At the sidebar breakpoint this is the
@@ -609,8 +616,7 @@
       <details class="filter-drawer" data-filter-drawer open>
         <summary class="filter-drawer__trigger" data-filter-trigger>
           <svg class="icon filter-drawer__trigger-icon" aria-hidden="true"><use href="#i-sliders"></use></svg>
-          Filter flights
-          <svg class="icon size-4 filter-drawer__trigger-chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+          Filters
         </summary>
 
         <div class="filter-drawer__sheet">
@@ -758,14 +764,19 @@
            Results. Prices, durations and availability are exactly what the
            backend returned; nothing is recalculated here.
            ================================================================== -->
-      <section class="results" aria-labelledby="results-title">
-        <h1 class="results__title" id="results-title">Flights from Dhaka to Tokyo</h1>
-        <p class="results__count">
-          <span data-trip-only="round">42 flights found &middot; Round trip</span>
-          <span data-trip-only="one">61 flights found &middot; One way</span>
-        </p>
+      <!-- BLADE BOUNDARY: sort tabs -> <x-flights.sort-tabs /> -->
+      <!--
+        A menu on a phone, where it shares a row with the filter button, and the
+        strip it has always been from the sidebar breakpoint up. Open in the
+        HTML, so with no JavaScript the three choices are simply present.
+      -->
+      <details class="sort-menu" data-sort-menu open>
+        <summary class="sort-menu__trigger" data-sort-trigger>
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-swap"></use></svg>
+          Sort
+          <span class="sr-only">, currently <span data-sort-current>Recommended</span></span>
+        </summary>
 
-        <!-- BLADE BOUNDARY: sort tabs -> <x-flights.sort-tabs /> -->
         <div class="sort-tabs" role="tablist" aria-label="Sort results">
           <button class="sort-tab" type="button" role="tab" id="sort-recommended"
                   aria-controls="results-list" aria-selected="true" data-sort-tab>Recommended</button>
@@ -774,7 +785,30 @@
           <button class="sort-tab" type="button" role="tab" id="sort-fastest"
                   aria-controls="results-list" aria-selected="false" data-sort-tab>Fastest</button>
         </div>
-        <!-- END BLADE BOUNDARY: sort tabs -->
+      </details>
+      <!-- END BLADE BOUNDARY: sort tabs -->
+
+      <!-- BLADE BOUNDARY: modify search -> <x-flights.modify-link /> -->
+      <a class="results-bar__button" href="#search-summary">
+        <svg class="icon size-4" aria-hidden="true"><use href="#i-sliders"></use></svg>
+        Modify search
+      </a>
+      <!-- END BLADE BOUNDARY: modify search -->
+
+      <!-- The heading names the section below it, which is why the id stays
+           with the heading and the section points at it. -->
+      <div class="results__head">
+        <h1 class="results__title" id="results-title">Flights from Dhaka to Tokyo</h1>
+        <p class="results__count">
+          <span data-trip-only="round">42 flights found &middot; Round trip</span>
+          <span data-trip-only="one">61 flights found &middot; One way</span>
+        </p>
+      </div>
+
+      </div>
+      <!-- END BLADE BOUNDARY: results bar -->
+
+      <section class="results" aria-labelledby="results-title">
 
         <!-- BLADE BOUNDARY: result card -> <x-flights.result-card /> -->
         <div class="results__list" id="results-list" role="tabpanel" aria-labelledby="sort-recommended">
@@ -786,7 +820,7 @@
                 <div class="result-card__slice" data-slice-id="slc_out">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
+                      <span class="result-card__slice-kind">Outbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -829,7 +863,7 @@
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
+                      <span class="result-card__slice-kind">Inbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -876,10 +910,11 @@
                 </p>
               </div>
 
+              <span class="result-card__badges">
+                <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+              </span>
+
               <div class="result-card__aside">
-                <span class="result-card__badges">
-                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
-                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -899,7 +934,7 @@
                 <div class="result-card__slice" data-slice-id="slc_out">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
+                      <span class="result-card__slice-kind">Outbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -949,7 +984,7 @@
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
+                      <span class="result-card__slice-kind">Inbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -1003,10 +1038,11 @@
                 </p>
               </div>
 
+              <span class="result-card__badges">
+                <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+              </span>
+
               <div class="result-card__aside">
-                <span class="result-card__badges">
-                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
-                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -1026,7 +1062,7 @@
                 <div class="result-card__slice" data-slice-id="slc_out">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
+                      <span class="result-card__slice-kind">Outbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -1076,7 +1112,7 @@
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
+                      <span class="result-card__slice-kind">Inbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -1130,10 +1166,11 @@
                 </p>
               </div>
 
+              <span class="result-card__badges">
+                <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+              </span>
+
               <div class="result-card__aside">
-                <span class="result-card__badges">
-                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
-                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
@@ -1153,7 +1190,7 @@
                 <div class="result-card__slice" data-slice-id="slc_out">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
+                      <span class="result-card__slice-kind">Outbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -1203,7 +1240,7 @@
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
                   <div class="result-card__slice-head">
                     <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
+                      <span class="result-card__slice-kind">Inbound</span>
                     </p>
 
                     <p class="result-card__slice-carrier">
@@ -1257,10 +1294,11 @@
                 </p>
               </div>
 
+              <span class="result-card__badges">
+                <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+              </span>
+
               <div class="result-card__aside">
-                <span class="result-card__badges">
-                  <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
-                </span>
                 <span class="result-card__trip">
                   <span data-trip-only="round">Round-trip total</span>
                   <span data-trip-only="one">One-way total</span>
