@@ -3451,7 +3451,7 @@
       background-image:
         linear-gradient(to bottom,
           rgb(255 255 255 / 52%) 0%,
-          rgb(255 255 255 / 28%) 32%,
+          rgb(255 255 255 / 10%) 32%,
           rgb(255 255 255 / 0%) 54%),
         url("../images/mobilebanner.webp");
       background-size: 100% 100%, cover;
