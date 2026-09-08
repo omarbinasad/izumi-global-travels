@@ -26,6 +26,7 @@ const pageModules = {
   passengers: () => import('./pages/passengers.js'),
   'add-ons': () => import('./pages/add-ons.js'),
   blog: () => import('./pages/blog.js'),
+  hotels: () => import('./pages/hotels.js'),
   auth: () => import('./pages/auth.js'),
   /* Every account page wires up the same set. */
   'account-profile': () => import('./pages/account.js'),

@@ -5,8 +5,10 @@
 
 import { initFlightSearch } from '../components/flight-search.js';
 import { initRail } from '../components/rail.js';
+import { initSaveToggles } from '../components/save-toggle.js';
 
 export function init() {
   initFlightSearch();
   initRail();
+  initSaveToggles();
 }

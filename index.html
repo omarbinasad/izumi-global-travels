@@ -60,6 +60,7 @@
     <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2zM18 18v1a3 3 0 0 1-3 3h-3"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1zM10 6v2M10 11v2M10 16v2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5 4.7 13.2a4.9 4.9 0 0 1 0-6.9 4.9 4.9 0 0 1 6.9 0l.4.4.4-.4a4.9 4.9 0 0 1 6.9 0 4.9 4.9 0 0 1 0 6.9z"/></symbol>
     <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
     <symbol id="i-compare" viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 8h6M9 12h6M9 16h3"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
@@ -358,16 +359,16 @@
                   Flights
                 </button>
                 <button class="search-tab" type="button" role="tab"
+                        id="tab-hotels" aria-controls="panel-hotels" aria-selected="false"
+                        data-search-tab>
+                  <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-home"></use></svg>
+                  Hotels
+                </button>
+                <button class="search-tab" type="button" role="tab"
                         id="tab-esim" aria-controls="panel-esim" aria-selected="false"
                         data-search-tab>
                   <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-ticket"></use></svg>
                   eSIM
-                </button>
-                <button class="search-tab" type="button" role="tab"
-                        id="tab-status" aria-controls="panel-status" aria-selected="false"
-                        data-search-tab>
-                  <svg class="icon size-4 flex-none" aria-hidden="true"><use href="#i-clock"></use></svg>
-                  Flight status
                 </button>
               </div>
 
@@ -396,6 +397,11 @@
                           <input type="checkbox" name="direct_only" value="1">
                           Direct flights
                         </label>
+
+                        <a class="search-option-link" href="pages/flights/flight-status.html">
+                          <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+                          Flight status
+                        </a>
                       </div>
                     </div>
 
@@ -673,6 +679,80 @@
                   </form>
                 </div>
 
+                <!-- Hotels -------------------------------------------------- -->
+                <!--
+                  The field names are the ones the hotels route reads, so Blade
+                  swaps this action for that route and nothing else moves.
+                -->
+                <div id="panel-hotels" role="tabpanel" aria-labelledby="tab-hotels" hidden>
+                  <form class="flex flex-col gap-2 lg:gap-3" action="pages/hotels/search-results.html" method="get">
+                    <p class="m-0 px-1 pt-2 pb-3 text-sm text-glass-muted">
+                      Tell us where and when, and we come back with rooms and prices.
+                    </p>
+
+                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+
+                      <div class="search-field">
+                        <label class="search-field__label" for="hotel-place">Where to</label>
+                        <input class="search-field__control search-field__control--lg" type="text"
+                               id="hotel-place" name="destination"
+                               placeholder="City, area or hotel" autocomplete="off">
+                      </div>
+
+                      <div class="search-field">
+                        <label class="search-field__label" for="hotel-check-in">Check in</label>
+                        <span class="search-field__value">
+                          <input class="search-field__control search-field__control--lg" type="date"
+                                 id="hotel-check-in" name="check_in" value="2026-09-18" data-date-input>
+                          <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
+                        </span>
+                      </div>
+
+                      <div class="search-field">
+                        <label class="search-field__label" for="hotel-check-out">Check out</label>
+                        <span class="search-field__value">
+                          <input class="search-field__control search-field__control--lg" type="date"
+                                 id="hotel-check-out" name="check_out" value="2026-09-27" data-date-input>
+                          <span class="search-field__display" data-date-display aria-hidden="true">27 Sep</span>
+                        </span>
+                      </div>
+
+                      <div class="search-field">
+                        <label class="search-field__label" for="hotel-guests">Guests</label>
+                        <span class="search-field__select">
+                          <select class="search-field__control search-field__control--lg" id="hotel-guests" name="guests">
+                            <option value="1">1 guest</option>
+                            <option value="2" selected>2 guests</option>
+                            <option value="3">3 guests</option>
+                            <option value="4">4 guests</option>
+                            <option value="5">5 guests</option>
+                            <option value="6">6 guests</option>
+                          </select>
+                          <svg class="icon size-4 search-field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                        </span>
+                      </div>
+
+                      <div class="search-field">
+                        <label class="search-field__label" for="hotel-rooms">Rooms</label>
+                        <span class="search-field__select">
+                          <select class="search-field__control search-field__control--lg" id="hotel-rooms" name="rooms">
+                            <option value="1">1 room</option>
+                            <option value="2">2 rooms</option>
+                            <option value="3">3 rooms</option>
+                            <option value="4">4 rooms</option>
+                          </select>
+                          <svg class="icon size-4 search-field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+                        </span>
+                      </div>
+
+                      <button class="btn btn--primary min-h-(--search-field-height) px-6 max-lg:col-span-full" type="submit">
+                        Find hotels
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+
                 <!-- eSIM ---------------------------------------------------- -->
                 <div id="panel-esim" role="tabpanel" aria-labelledby="tab-esim" hidden>
                   <div class="flex flex-col gap-2 lg:gap-3">
@@ -681,35 +761,6 @@
                       <a href="pages/support/help-centre.html">Ask our team</a> about data for your destination.
                     </p>
                   </div>
-                </div>
-
-                <!-- Flight status ------------------------------------------- -->
-                <div id="panel-status" role="tabpanel" aria-labelledby="tab-status" hidden>
-                  <form class="flex flex-col gap-2 lg:gap-3" action="pages/flight-status.html" method="get">
-                    <p class="m-0 px-1 pt-2 pb-3 text-sm text-glass-muted">
-                      Track a flight by its number — for example <b>BG 147</b> or <b>EK 585</b>.
-                    </p>
-                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1.25fr)_auto] lg:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_auto]">
-                      <div class="search-field">
-                        <label class="search-field__label" for="status-flight">Flight number</label>
-                        <input class="search-field__control search-field__control--lg search-field__control--code"
-                               type="text" id="status-flight" name="flight_number"
-                               placeholder="BG 147" autocomplete="off" maxlength="8">
-                      </div>
-                      <div class="search-field">
-                        <label class="search-field__label" for="status-date">Date</label>
-                        <span class="search-field__value">
-                          <input class="search-field__control search-field__control--lg" type="date"
-                                 id="status-date" name="departure_date" value="2026-09-18" data-date-input>
-                          <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
-                        </span>
-                      </div>
-                      <button class="btn btn--primary min-h-(--search-field-height) px-6 max-lg:col-span-full" type="submit">
-                        Check status
-                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-                      </button>
-                    </div>
-                  </form>
                 </div>
 
               </div>
@@ -968,6 +1019,230 @@
 
         </div>
       </div>
+    </section>
+
+    <!-- ====================================================================
+         Popular hotels
+         Rates are per night and illustrative. The team confirms the room and
+         the price with the hotel before anything is held.
+         ==================================================================== -->
+    <section class="page-container py-8 lg:py-10" aria-labelledby="hotels-title" data-rail-scope>
+      <div class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 mb-5" data-reveal>
+        <h2 class="m-0 text-xl font-semibold text-primary" id="hotels-title">Popular Hotels</h2>
+
+        <div class="flex items-center gap-4">
+          <a class="section-link" href="pages/hotels/search-results.html">
+            See all hotels
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+
+          <!-- Shipped hidden: the track already scrolls by touch, wheel and
+               keyboard, so the arrows only appear once there is a script to
+               work them. -->
+          <div class="rail-nav" data-rail-nav hidden>
+            <button class="rail-nav__button" type="button" data-rail-prev aria-label="Previous hotels">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+            </button>
+            <button class="rail-nav__button" type="button" data-rail-next aria-label="Next hotels">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- BLADE BOUNDARY: hotel list -> <x-hotels.card-list :hotels="$hotels" /> -->
+      <!-- @brand-pending: the photographs stand in for hotel photography, so
+           they carry no alt text — the name and the place below them are what
+           say which hotel this is. -->
+      <div class="card-rail" role="group" aria-labelledby="hotels-title" tabindex="0" data-rail data-reveal-group>
+        <article class="hotel-card" data-reveal>
+          <div class="hotel-card__frame">
+            <img class="hotel-card__media" src="assets/images/blog1.webp" alt=""
+                 width="1200" height="900" loading="lazy" decoding="async">
+            <span class="hotel-card__badge" data-kind="best">Best seller</span>
+            <button class="hotel-card__save" type="button" aria-pressed="false" data-save-toggle>
+              <svg class="icon size-5" aria-hidden="true"><use href="#i-heart"></use></svg>
+              <span class="sr-only">Save Mitsui Garden Hotel Ginza</span>
+            </button>
+          </div>
+        
+          <div class="hotel-card__body">
+            <h3 class="hotel-card__name">Mitsui Garden Hotel Ginza</h3>
+        
+            <p class="hotel-card__place">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Ginza, Tokyo
+            </p>
+        
+            <p class="hotel-card__rating">
+              <span class="hotel-card__score">9.1<span class="sr-only"> out of 10</span></span>
+              <span class="hotel-card__stars" role="img" aria-label="5 star hotel">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+              </span>
+            </p>
+        
+            <div class="hotel-card__foot">
+              <p class="hotel-card__price">
+                <span class="hotel-card__from">From</span>
+                <span class="hotel-card__amount">BDT 14,800</span>
+                <span class="hotel-card__unit">/ night</span>
+              </p>
+        
+              <a class="btn btn--outline hotel-card__action" href="pages/hotels/search-results.html">
+                View hotel
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="hotel-card" data-reveal>
+          <div class="hotel-card__frame">
+            <img class="hotel-card__media" src="assets/images/blog2.webp" alt=""
+                 width="1200" height="900" loading="lazy" decoding="async">
+            <span class="hotel-card__badge" data-kind="free">Free cancellation</span>
+            <button class="hotel-card__save" type="button" aria-pressed="false" data-save-toggle>
+              <svg class="icon size-5" aria-hidden="true"><use href="#i-heart"></use></svg>
+              <span class="sr-only">Save Shinjuku Granbell Hotel</span>
+            </button>
+          </div>
+        
+          <div class="hotel-card__body">
+            <h3 class="hotel-card__name">Shinjuku Granbell Hotel</h3>
+        
+            <p class="hotel-card__place">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Shinjuku, Tokyo
+            </p>
+        
+            <p class="hotel-card__rating">
+              <span class="hotel-card__score">8.7<span class="sr-only"> out of 10</span></span>
+              <span class="hotel-card__stars" role="img" aria-label="5 star hotel">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+              </span>
+            </p>
+        
+            <div class="hotel-card__foot">
+              <p class="hotel-card__price">
+                <span class="hotel-card__from">From</span>
+                <span class="hotel-card__amount">BDT 11,400</span>
+                <span class="hotel-card__unit">/ night</span>
+              </p>
+        
+              <a class="btn btn--outline hotel-card__action" href="pages/hotels/search-results.html">
+                View hotel
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="hotel-card" data-reveal>
+          <div class="hotel-card__frame">
+            <img class="hotel-card__media" src="assets/images/blog3.webp" alt=""
+                 width="1200" height="900" loading="lazy" decoding="async">
+            <button class="hotel-card__save" type="button" aria-pressed="false" data-save-toggle>
+              <svg class="icon size-5" aria-hidden="true"><use href="#i-heart"></use></svg>
+              <span class="sr-only">Save Hotel Monterey Grasmere</span>
+            </button>
+          </div>
+        
+          <div class="hotel-card__body">
+            <h3 class="hotel-card__name">Hotel Monterey Grasmere</h3>
+        
+            <p class="hotel-card__place">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Namba, Osaka
+            </p>
+        
+            <p class="hotel-card__rating">
+              <span class="hotel-card__score">8.9<span class="sr-only"> out of 10</span></span>
+              <span class="hotel-card__stars" role="img" aria-label="5 star hotel">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+              </span>
+            </p>
+        
+            <div class="hotel-card__foot">
+              <p class="hotel-card__price">
+                <span class="hotel-card__from">From</span>
+                <span class="hotel-card__amount">BDT 10,900</span>
+                <span class="hotel-card__unit">/ night</span>
+              </p>
+        
+              <a class="btn btn--outline hotel-card__action" href="pages/hotels/search-results.html">
+                View hotel
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <article class="hotel-card" data-reveal>
+          <div class="hotel-card__frame">
+            <img class="hotel-card__media" src="assets/images/blog4.webp" alt=""
+                 width="1200" height="900" loading="lazy" decoding="async">
+            <span class="hotel-card__badge" data-kind="popular">Popular</span>
+            <button class="hotel-card__save" type="button" aria-pressed="false" data-save-toggle>
+              <svg class="icon size-5" aria-hidden="true"><use href="#i-heart"></use></svg>
+              <span class="sr-only">Save Avani+ Riverside Bangkok</span>
+            </button>
+          </div>
+        
+          <div class="hotel-card__body">
+            <h3 class="hotel-card__name">Avani+ Riverside Bangkok</h3>
+        
+            <p class="hotel-card__place">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Bangkok, Thailand
+            </p>
+        
+            <p class="hotel-card__rating">
+              <span class="hotel-card__score">9.0<span class="sr-only"> out of 10</span></span>
+              <span class="hotel-card__stars" role="img" aria-label="5 star hotel">
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+              </span>
+            </p>
+        
+            <div class="hotel-card__foot">
+              <p class="hotel-card__price">
+                <span class="hotel-card__from">From</span>
+                <span class="hotel-card__amount">BDT 12,600</span>
+                <span class="hotel-card__unit">/ night</span>
+              </p>
+        
+              <a class="btn btn--outline hotel-card__action" href="pages/hotels/search-results.html">
+                View hotel
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <!-- END BLADE BOUNDARY: hotel list -->
+
+      <ul class="hotel-trust" role="list" data-reveal>
+        <li class="hotel-trust__item">
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-shield"></use></svg>Verified properties
+        </li>
+        <li class="hotel-trust__item">
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-tag"></use></svg>Transparent pricing
+        </li>
+        <li class="hotel-trust__item">
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>Flexible options
+        </li>
+      </ul>
     </section>
 
     <!-- ====================================================================

@@ -91,6 +91,9 @@
   --color-success-700: #16713c;
   --color-warning-100: #fdf0d2;
   --color-warning-700: #935f03;
+
+  /* Only the Popular badge wears it: the other two would be read as a state. */
+  --color-violet-700:  #5b3cc4;
   --color-error-100:   #fbe0e0;
   --color-error-700:   #9a2323;
   --color-info-100:    #dbe9fb;
@@ -1552,6 +1555,47 @@
     text-overflow: ellipsis;
   }
 
+  /*
+   * A select on the glass panel. The control already drops the platform arrow
+   * with appearance:none, so the chevron is drawn beside the value the way the
+   * other pop-outs on this panel draw theirs.
+   */
+  .search-field__select {
+    position: relative;
+    display: block;
+  }
+
+  .search-field__select .search-field__control { padding-inline-end: --spacing(5); }
+
+  .search-field__chevron {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 0;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: var(--color-glass-muted);
+  }
+
+  /* A way off the panel rather than another thing to set on it, so it reads
+     as a link and not as a third trip option. */
+  .search-option-link {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-glass-accent);
+  }
+
+  .search-option-link:hover { text-decoration: underline; }
+
+  .search-option-link:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 3px;
+    border-radius: var(--radius-xs);
+  }
+
   /* --- Date fields ---------------------------------------------------------
      A native date input always paints the locale format of the browser. The
      design asks for "18 Sep", so the formatted label sits over the input and
@@ -1981,6 +2025,26 @@
     inset-block-end: calc(100% + --spacing(2));
   }
 
+  /*
+   * On a phone the two boxes are half a row each, which is far too narrow for
+   * an airport name — the list came out about 145px wide and every name was
+   * cut to a word. So it stops taking the width of the box it belongs to and
+   * takes what it needs, up to the width of the screen.
+   */
+  @media (width < 40rem) {
+    .airport-list {
+      inline-size: max(100%, 17rem);
+      max-inline-size: calc(100vw - --spacing(8));
+    }
+
+    /* The To box is the right half of the row, so its list opens leftwards
+       rather than off the side of the screen. */
+    .search-field:has([data-airport="destination"]) .airport-list {
+      inset-inline: auto 0;
+    }
+
+  }
+
   /* Shown only when a search matches nothing; a live region, so it is
      announced rather than silently swapping the list out. */
   .airport-list__empty {
@@ -2038,6 +2102,16 @@
     white-space: nowrap;
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
+  }
+
+  /* On a phone the list is wide enough to read but not wide enough for the
+     longest airport names, so they wrap instead of being cut. After the rule
+     above, which is what it has to beat. */
+  @media (width < 40rem) {
+    .airport-option__name {
+      overflow: visible;
+      white-space: normal;
+    }
   }
 
   .pax__cabins {
@@ -2525,6 +2599,306 @@
       box-shadow: inset 0 3px 3px -1px var(--color-notch-shade);
     }
   }
+
+  /* --- Hotel card ---------------------------------------------------------
+     A photograph with the facts on a pane of glass laid over the foot of it.
+     Rates, scores and rooms are the backend's; nothing here works one out.
+     ---------------------------------------------------------------------- */
+
+  .hotel-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: --spacing(5);
+  }
+
+  @media (width >= 48rem) {
+    .hotel-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  /* Three across and no further: the page container caps at about 1216px, so
+     a fourth column would leave each card too narrow to keep the price and the
+     button on one line. */
+  @media (width >= 64rem) {
+    .hotel-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+
+
+  .hotel-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    transition: box-shadow var(--transition-fast), translate var(--transition-base);
+  }
+
+  .hotel-card:hover {
+    box-shadow: var(--shadow-lg);
+    translate: 0 -2px;
+  }
+
+  /* The picture is the card: it sets the height, and the pane is laid over the
+     foot of it. */
+  .hotel-card__frame { position: static; }
+
+  .hotel-card__media {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+  }
+
+  /* --- Over the picture --- */
+
+  .hotel-card__badge {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: --spacing(3);
+    inset-inline-start: --spacing(3);
+    padding: --spacing(1.5) --spacing(3);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    color: var(--color-neutral-0);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hotel-card__badge[data-kind="best"] { background-color: var(--color-cta-from); }
+
+  .hotel-card__badge[data-kind="free"] { background-color: var(--color-success-700); }
+
+  .hotel-card__badge[data-kind="popular"] { background-color: var(--color-violet-700); }
+
+  /* Saving a hotel needs an account, so this only records the intent; the
+     backend is what remembers it. */
+  .hotel-card__save {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: --spacing(3);
+    inset-inline-end: --spacing(3);
+    display: grid;
+    place-items: center;
+    inline-size: --spacing(9);
+    block-size: --spacing(9);
+    border: 0;
+    border-radius: 50%;
+    background-color: var(--color-neutral-0);
+    color: var(--color-fg-heading);
+    box-shadow: var(--shadow-sm);
+    cursor: pointer;
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .hotel-card__save:hover { color: var(--color-primary); }
+
+  .hotel-card__save:focus-visible {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  /* Saved: the outline fills in. */
+  .hotel-card__save[aria-pressed="true"] {
+    background-color: var(--color-cta-from);
+    color: var(--color-on-cta);
+  }
+
+  .hotel-card__save[aria-pressed="true"] svg { fill: currentcolor; }
+
+  /* --- The pane --- */
+
+  .hotel-card__body {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    display: flex;
+    flex-direction: column;
+    gap: --spacing(2);
+    padding: --spacing(4) --spacing(5) --spacing(5);
+    border-start-start-radius: var(--radius-lg);
+    border-start-end-radius: var(--radius-lg);
+    background-color: var(--color-glass-raised);
+    /* The picture reads through the pane; the blur is what keeps the text on
+       it legible. */
+    -webkit-backdrop-filter: var(--glass-blur);
+    backdrop-filter: var(--glass-blur);
+  }
+
+  .hotel-card__name {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-glass-fg);
+  }
+
+  .hotel-card__place {
+    display: flex;
+    align-items: center;
+    gap: --spacing(1);
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-glass-muted);
+  }
+
+  .hotel-card__place svg { flex: none; }
+
+  .hotel-card__rating {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-glass-muted);
+  }
+
+  .hotel-card__score {
+    padding: --spacing(1) --spacing(2);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-cta-from);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: var(--color-on-cta);
+  }
+
+  .hotel-card__stars {
+    display: inline-flex;
+    align-items: center;
+    gap: 1px;
+    color: var(--color-star);
+  }
+
+  .hotel-card__stars svg { fill: currentcolor; }
+
+  /* On the floor of the pane, so price and button line up across a row of
+     cards however far the names above them run. */
+  .hotel-card__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(2) --spacing(3);
+    padding-block-start: --spacing(2);
+  }
+
+  .hotel-card__price {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    font-size: var(--text-2xs);
+    color: var(--color-glass-muted);
+  }
+
+  .hotel-card__amount {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-glass-fg);
+  }
+
+  .hotel-card__unit {
+    font-size: var(--text-xs);
+    font-weight: 500;
+  }
+
+  /* The amount and the unit share a line under the label. */
+  .hotel-card__amount,
+  .hotel-card__unit {
+    grid-row: 2;
+    align-self: baseline;
+  }
+
+  .hotel-card__amount { grid-column: 1; }
+
+  .hotel-card__unit { grid-column: 2; }
+
+  .hotel-card__from { grid-area: 1 / 1 / 2 / -1; }
+
+  .hotel-card__action {
+    min-height: var(--control-height-sm);
+    padding-inline: --spacing(4);
+    font-size: var(--text-sm);
+  }
+
+  /* What the list is worth, under the list. */
+  .hotel-trust {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: --spacing(3) --spacing(6);
+    margin: --spacing(8) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .hotel-trust__item {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .hotel-trust__item svg { color: var(--color-primary); }
+
+  /* A rule between them rather than around them, so the row reads as one line
+     of three rather than three boxes. Trailing, not leading: a divider on the
+     front of an item starts the next line on its own when the row wraps. */
+  .hotel-trust__item:not(:last-child)::after {
+    content: "";
+    inline-size: var(--border-width);
+    block-size: --spacing(4);
+    margin-inline-start: --spacing(4);
+    background-color: var(--color-line-strong);
+  }
+
+  /* --- Hotel results page -------------------------------------------------
+     What was asked for, then the list. The fields themselves live on the
+     search panel, so changing the query means going back to it.
+     ---------------------------------------------------------------------- */
+
+  .hotel-summary {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+    margin-block-start: --spacing(6);
+    padding: --spacing(4) --spacing(5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .hotel-summary__query {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(2) --spacing(4);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .hotel-summary__place {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .hotel-summary__line {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .hotel-summary__line svg {
+    flex: none;
+    color: var(--color-fg-muted);
+  }
+
+  .hotel-results { padding-block: --spacing(6) --spacing(10); }
+
+  .hotel-results .results__head { margin-block-end: --spacing(5); }
 
   /* --- Airline logo marquee ---------------------------------------------
          A moving ribbon rather than a static grid. The track carries the same
@@ -3483,7 +3857,7 @@
      * that search bar has scrolled away. assets/js/components/sticky-bar.js is
      * what marks the bar as stuck — CSS cannot tell.
      */
-    .results__title { display: none; }
+    .results-bar .results__title { display: none; }
 
     .results-bar[data-stuck="true"] .results__title {
       display: block;
@@ -3907,9 +4281,10 @@
   /* Landing on the search bar should not put it under the sticky header. */
   .summary-edit { scroll-margin-block-start: calc(var(--header-height-lg) + --spacing(4)); }
 
-  /* From the sidebar breakpoint up the form is in view already. */
+  /* From the sidebar breakpoint up the flights form is in view already. The
+     hotel summary has no form beside it, so its copy stays. */
   @media (width >= 64rem) {
-    .results-bar__button { display: none; }
+    .results-bar .results-bar__button { display: none; }
   }
 
   .sort-menu { position: relative; }
@@ -8033,6 +8408,7 @@
 
   .cover-card {
     display: flex;
+    flex-wrap: wrap;
     align-items: flex-start;
     gap: --spacing(3);
     padding: --spacing(4);
@@ -8063,12 +8439,7 @@
     color: var(--color-primary);
   }
 
-  .cover-card__body {
-    min-width: 0;
-    align-self: stretch;
-    display: flex;
-    flex-direction: column;
-  }
+  .cover-card__body { min-width: 0; }
 
   .cover-card__name {
     display: block;
@@ -8088,28 +8459,27 @@
   .cover-card__points {
     display: grid;
     gap: --spacing(1);
-    margin: --spacing(2) 0 --spacing(3);
+    margin-block-start: --spacing(2);
   }
 
-  /* What choosing nothing costs. Its own quiet surface, so it reads as a
-     consequence rather than another feature of the option. */
+  /* What choosing nothing costs. A row of its own across the card, in the
+     colour the site uses when it is telling you something rather than warning
+     you off it. */
   .cover-card__note {
+    flex-basis: 100%;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     gap: --spacing(2);
-    margin-block-start: auto;
     padding: --spacing(2) --spacing(3);
     border-radius: var(--radius-sm);
-    background-color: var(--color-surface-muted);
+    background-color: var(--color-info-surface);
     font-size: var(--text-2xs);
-    line-height: var(--leading-relaxed);
-    color: var(--color-fg-muted);
+    line-height: var(--leading-snug);
+    text-wrap: balance;
+    color: var(--color-info);
   }
 
-  .cover-card__note svg {
-    flex: none;
-    margin-block-start: 1px;
-  }
+  .cover-card__note svg { flex: none; }
 
   .cover-card__point {
     display: flex;
@@ -8278,10 +8648,244 @@
     color: var(--color-success);
   }
 
+  .status-pill--ontime {
+    background-color: var(--color-success-surface);
+    color: var(--color-success);
+  }
+
+  .status-pill--delayed {
+    background-color: var(--color-warning-surface);
+    color: var(--color-warning);
+  }
+
+  .status-pill--landed {
+    background-color: var(--color-info-surface);
+    color: var(--color-info);
+  }
+
   .status-pill--cancelled {
     background-color: var(--color-error-surface);
     color: var(--color-error);
   }
+
+  /* --- Flight status ------------------------------------------------------
+     One flight, as the airline has it. Every time, gate and belt below comes
+     from them through the backend; nothing here is worked out.
+     ---------------------------------------------------------------------- */
+
+  .status-hero__title {
+    margin: 0;
+    font-size: var(--text-3xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-glass-fg);
+  }
+
+  .status-hero__lead {
+    margin: --spacing(2) 0 0;
+    font-size: var(--text-sm);
+    color: var(--color-glass-muted);
+  }
+
+  .status-layout {
+    display: grid;
+    gap: --spacing(5);
+    padding-block: --spacing(6) --spacing(10);
+  }
+
+  .status-card {
+    display: grid;
+    gap: --spacing(4);
+  }
+
+  .status-card__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3);
+  }
+
+  .status-card__flight {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+  }
+
+  .status-card__logo {
+    inline-size: --spacing(10);
+    block-size: --spacing(10);
+    flex: none;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .status-card__names {
+    display: grid;
+    gap: 2px;
+  }
+
+  .status-card__carrier {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .status-card__number {
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .status-card__note,
+  .status-card__updated {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-sm);
+  }
+
+  .status-card__note {
+    padding: --spacing(3) --spacing(4);
+    border-radius: var(--radius-md);
+    background-color: var(--color-warning-surface);
+    color: var(--color-warning);
+  }
+
+  .status-card__updated {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .status-card__note svg,
+  .status-card__updated svg { flex: none; }
+
+  /* Where it leaves, where it lands, and the flight between them. */
+  .status-track {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: center;
+    gap: --spacing(4);
+    padding-block: --spacing(2);
+    border-block: var(--border-width) solid var(--color-line);
+  }
+
+  @media (width < 48rem) {
+    .status-track {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .status-track__path { grid-area: 2 / 1 / auto / -1; }
+  }
+
+  .status-stop { display: grid; gap: 2px; }
+
+  .status-stop--arrive { text-align: end; }
+
+  .status-stop__label,
+  .status-stop__place {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .status-stop__code {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  .status-stop__times {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: --spacing(2);
+    margin: --spacing(1) 0 0;
+  }
+
+  .status-stop--arrive .status-stop__times { justify-content: flex-end; }
+
+  /* The published time, kept beside the new one rather than replaced by it. */
+  .status-stop__was {
+    font-size: var(--text-sm);
+    text-decoration: line-through;
+    color: var(--color-fg-muted);
+  }
+
+  .status-stop__now {
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-warning);
+  }
+
+  .status-track__path {
+    display: grid;
+    justify-items: center;
+    gap: --spacing(1);
+    margin: 0;
+  }
+
+  .status-track__path .itinerary__line { inline-size: 100%; }
+
+  .status-track__time {
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .status-track__note {
+    font-size: var(--text-2xs);
+    text-align: center;
+    color: var(--color-fg-muted);
+  }
+
+  .status-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: --spacing(4);
+    margin: 0;
+  }
+
+  @media (width >= 48rem) {
+    .status-facts { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .status-facts dt {
+    font-size: var(--text-2xs);
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-caps);
+    color: var(--color-fg-muted);
+  }
+
+  .status-facts dd {
+    margin: 2px 0 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .status-key {
+    display: grid;
+    gap: --spacing(3);
+    margin: --spacing(4) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .status-key__item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: --spacing(2) --spacing(3);
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .status-key__item .status-pill { flex: none; }
 
   /* --- Request summary ----------------------------------------------------- */
 
