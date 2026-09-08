@@ -104,17 +104,99 @@
           </ul>
         </nav>
 
-        <!-- The colour switch travels with the menu on a phone: the bar itself
-             has room for the account button and nothing else. -->
-        <div class="theme-toggle self-start mt-4 lg:hidden" role="group" aria-label="Colour theme">
-          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
-            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
-            <span class="sr-only">Light theme</span>
-          </button>
-          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
-            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
-            <span class="sr-only">Dark theme</span>
-          </button>
+        <div class="nav-extras lg:hidden">
+          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch scope="nav" />
+               The bar has no room for this on a phone, so the menu carries it,
+               the way it carries the colour switch. Its own radio group, kept in
+               step with the copy in the bar by locale.js. -->
+          <details class="locale" data-locale data-locale-scope="nav">
+            <summary class="locale__trigger">
+              <span data-locale-label>EN/BDT</span>
+              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+              <span class="sr-only">Change language and currency</span>
+            </summary>
+
+            <div class="locale__panel">
+              <!-- Radios, not buttons: the two lists swap with no JavaScript,
+                   and the chosen values are real form values. -->
+              <input class="locale__tab-input sr-only" type="radio" name="nav-locale-tab" id="nav-locale-tab-currency" checked>
+              <input class="locale__tab-input sr-only" type="radio" name="nav-locale-tab" id="nav-locale-tab-language">
+
+              <div class="locale__tabs">
+                <label class="locale__tab" for="nav-locale-tab-currency">Currency</label>
+                <label class="locale__tab" for="nav-locale-tab-language">Language</label>
+              </div>
+
+              <ul class="locale__list locale__list--currency" role="list">
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-bdt" value="BDT" checked data-locale-currency>
+              <label class="locale__option" for="nav-currency-bdt">
+                <span class="locale__code">BDT</span>
+                <span class="locale__name">Bangladeshi Taka</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-usd" value="USD" data-locale-currency>
+              <label class="locale__option" for="nav-currency-usd">
+                <span class="locale__code">USD</span>
+                <span class="locale__name">US Dollar</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-aed" value="AED" data-locale-currency>
+              <label class="locale__option" for="nav-currency-aed">
+                <span class="locale__code">AED</span>
+                <span class="locale__name">UAE Dirham</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-jpy" value="JPY" data-locale-currency>
+              <label class="locale__option" for="nav-currency-jpy">
+                <span class="locale__code">JPY</span>
+                <span class="locale__name">Japanese Yen</span>
+              </label>
+            </li>
+              </ul>
+
+              <ul class="locale__list locale__list--language" role="list">
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-en" value="EN" checked data-locale-language>
+              <label class="locale__option" for="nav-language-en">
+                <span class="locale__code">EN</span>
+                <span class="locale__name">English</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-bn" value="BN" data-locale-language>
+              <label class="locale__option" for="nav-language-bn">
+                <span class="locale__code">BN</span>
+                <span class="locale__name">বাংলা</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-ja" value="JA" data-locale-language>
+              <label class="locale__option" for="nav-language-ja">
+                <span class="locale__code">JA</span>
+                <span class="locale__name">日本語</span>
+              </label>
+            </li>
+              </ul>
+            </div>
+          </details>
+          <!-- END BLADE BOUNDARY: locale switch -->
+
+          <!-- The colour switch travels with the menu on a phone: the bar itself
+               has room for the account button and nothing else. -->
+          <div class="theme-toggle" role="group" aria-label="Colour theme">
+            <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+              <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+              <span class="sr-only">Light theme</span>
+            </button>
+            <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+              <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+              <span class="sr-only">Dark theme</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -832,7 +914,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">02:20</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
@@ -854,7 +936,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">10:05</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
@@ -875,7 +957,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">11:00</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
@@ -897,7 +979,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">15:15</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
@@ -946,7 +1028,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">02:00</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
@@ -975,7 +1057,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">15:45</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
@@ -996,7 +1078,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">18:30</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
@@ -1025,7 +1107,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Sun, 28 Sep</span>
                     </span>
                   </div>
@@ -1074,7 +1156,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">23:55</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
@@ -1103,7 +1185,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
@@ -1124,7 +1206,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">11:20</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
@@ -1153,7 +1235,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">22:15</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
@@ -1202,7 +1284,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">12:15</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
 
@@ -1231,7 +1313,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">07:40<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
@@ -1252,7 +1334,7 @@
                   <div class="result-card__leg">
                     <span class="result-card__time">
                       <span class="result-card__clock">09:30</span>
-                      <span class="result-card__iata">NRT</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
 
@@ -1281,7 +1363,7 @@
 
                     <span class="result-card__time result-card__time--arrive">
                       <span class="result-card__clock">22:20</span>
-                      <span class="result-card__iata">DAC</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>

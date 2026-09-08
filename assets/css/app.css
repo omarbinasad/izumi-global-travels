@@ -851,6 +851,28 @@
     box-shadow: var(--shadow-lg);
   }
 
+  /* The menu's own settings row: the locale switch takes the width, so its
+     panel has room to open in, and the colour toggle sits at the end of it. */
+  .nav-extras {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+    gap: --spacing(3);
+    margin-block-start: --spacing(4);
+  }
+
+  /*
+   * In the menu there is nothing to pop out over: the menu is already a column
+   * and it scrolls, which would clip a panel hanging outside it. So the panel
+   * simply opens in place, and the menu grows by its height.
+   */
+  .locale[data-locale-scope="nav"] .locale__panel {
+    position: static;
+    inline-size: auto;
+    margin-block-start: --spacing(2);
+    box-shadow: none;
+  }
+
   .locale__tabs {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -2446,6 +2468,35 @@
   .route-card__pax svg {
     width: 12px;
     height: 12px;
+  }
+
+  /* On a phone the stub is a full-width strip, so the price takes the left of
+     it and the button the right rather than the four parts running down. */
+  @media (width < 30rem) {
+    .route-card__aside {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: --spacing(4);
+      row-gap: 0;
+    }
+
+    .route-card__from { grid-area: 1 / 1; }
+
+    .route-card__price { grid-area: 2 / 1; }
+
+    /* Column two mirrors column one: the button beside the label, the count
+       beside the price. */
+    .route-card__aside .btn {
+      grid-area: 1 / 2;
+      justify-self: end;
+    }
+
+    .route-card__pax {
+      grid-area: 2 / 2;
+      justify-self: end;
+      margin-block-start: 0;
+    }
   }
 
   @media (width >= 30rem) {
@@ -4163,6 +4214,19 @@
     .result-card__iata { font-size: var(--text-code); }
   }
 
+  /* The place the code stands for, beside it and quieter than it. The
+     separator is decoration, which is why it is drawn rather than written. */
+  .result-card__city {
+    margin-inline-start: --spacing(1);
+    font-size: var(--text-2xs);
+    color: var(--color-fg-muted);
+  }
+
+  .result-card__city::before {
+    content: "\B7";
+    margin-inline-end: --spacing(1);
+  }
+
   /* The calendar day the clock above belongs to — a return leg can land on a
      different date from the one that was searched. */
   .result-card__date {
@@ -4749,6 +4813,15 @@
 
   .itinerary__point--arrive { text-align: end; }
 
+  /* The calendar day the clock belongs to: a leg can land on a different date
+     from the one it left on, which the +1 says and this spells out. */
+  .itinerary__point-date {
+    display: block;
+    margin-block-start: --spacing(1);
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
   /* Too narrow for three columns once a leg has stops in it: both ends take
      the top row and the route runs the full width underneath. The gaps come in
      too: on a phone the card is read whole, and every step of air between its
@@ -4926,13 +4999,25 @@
 
   /* The airport in words, under the time spent in it. Wraps inside the label
      box rather than spilling sideways over the next stop. */
-  .route__place {
+  .route__place,
+  .route__airport {
     display: block;
     font-size: var(--text-xs);
     text-align: center;
     text-wrap: balance;
     white-space: normal;
     color: var(--color-fg-muted);
+  }
+
+  /* The city is what fits under a stop on a phone; from the sidebar breakpoint
+     up there is room for the airport, which is the thing being named. Only one
+     is ever drawn, so only one is read out. */
+  .route__airport { display: none; }
+
+  @media (width >= 64rem) {
+    .route__place { display: none; }
+
+    .route__airport { display: block; }
   }
 
   /* --- Per-segment detail --------------------------------------------------
@@ -5683,6 +5768,42 @@
      ---------------------------------------------------------------------- */
 
   .booking-tabs-wrap { margin-block-start: --spacing(5); }
+
+  /* A tab with nothing in it yet. The panel says so and points at the person
+     who can help, rather than showing an empty box. */
+  .panel-empty {
+    display: grid;
+    justify-items: center;
+    gap: --spacing(3);
+    padding-block: --spacing(10);
+    text-align: center;
+  }
+
+  .panel-empty__icon {
+    display: grid;
+    place-items: center;
+    inline-size: --spacing(14);
+    block-size: --spacing(14);
+    border-radius: 50%;
+    background-color: var(--color-surface-muted);
+    color: var(--color-primary);
+  }
+
+  .panel-empty__title {
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .panel-empty__text {
+    margin: 0;
+    max-inline-size: 46ch;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    text-wrap: balance;
+    color: var(--color-fg-muted);
+  }
 
   .booking-tabs {
     display: flex;
@@ -7900,7 +8021,12 @@
     color: var(--color-primary);
   }
 
-  .cover-card__body { min-width: 0; }
+  .cover-card__body {
+    min-width: 0;
+    align-self: stretch;
+    display: flex;
+    flex-direction: column;
+  }
 
   .cover-card__name {
     display: block;
@@ -7920,7 +8046,27 @@
   .cover-card__points {
     display: grid;
     gap: --spacing(1);
-    margin-block-start: --spacing(2);
+    margin: --spacing(2) 0 --spacing(3);
+  }
+
+  /* What choosing nothing costs. Its own quiet surface, so it reads as a
+     consequence rather than another feature of the option. */
+  .cover-card__note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin-block-start: auto;
+    padding: --spacing(2) --spacing(3);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-muted);
+    font-size: var(--text-2xs);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .cover-card__note svg {
+    flex: none;
+    margin-block-start: 1px;
   }
 
   .cover-card__point {

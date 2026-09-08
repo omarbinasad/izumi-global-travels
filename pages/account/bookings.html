@@ -100,17 +100,99 @@
           </ul>
         </nav>
 
-        <!-- The colour switch travels with the menu on a phone: the bar itself
-             has room for the account button and nothing else. -->
-        <div class="theme-toggle self-start mt-4 lg:hidden" role="group" aria-label="Colour theme">
-          <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
-            <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
-            <span class="sr-only">Light theme</span>
-          </button>
-          <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
-            <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
-            <span class="sr-only">Dark theme</span>
-          </button>
+        <div class="nav-extras lg:hidden">
+          <!-- BLADE BOUNDARY: locale switch -> <x-ui.locale-switch scope="nav" />
+               The bar has no room for this on a phone, so the menu carries it,
+               the way it carries the colour switch. Its own radio group, kept in
+               step with the copy in the bar by locale.js. -->
+          <details class="locale" data-locale data-locale-scope="nav">
+            <summary class="locale__trigger">
+              <span data-locale-label>EN/BDT</span>
+              <svg class="icon size-4 locale__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+              <span class="sr-only">Change language and currency</span>
+            </summary>
+
+            <div class="locale__panel">
+              <!-- Radios, not buttons: the two lists swap with no JavaScript,
+                   and the chosen values are real form values. -->
+              <input class="locale__tab-input sr-only" type="radio" name="nav-locale-tab" id="nav-locale-tab-currency" checked>
+              <input class="locale__tab-input sr-only" type="radio" name="nav-locale-tab" id="nav-locale-tab-language">
+
+              <div class="locale__tabs">
+                <label class="locale__tab" for="nav-locale-tab-currency">Currency</label>
+                <label class="locale__tab" for="nav-locale-tab-language">Language</label>
+              </div>
+
+              <ul class="locale__list locale__list--currency" role="list">
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-bdt" value="BDT" checked data-locale-currency>
+              <label class="locale__option" for="nav-currency-bdt">
+                <span class="locale__code">BDT</span>
+                <span class="locale__name">Bangladeshi Taka</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-usd" value="USD" data-locale-currency>
+              <label class="locale__option" for="nav-currency-usd">
+                <span class="locale__code">USD</span>
+                <span class="locale__name">US Dollar</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-aed" value="AED" data-locale-currency>
+              <label class="locale__option" for="nav-currency-aed">
+                <span class="locale__code">AED</span>
+                <span class="locale__name">UAE Dirham</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-currency" id="nav-currency-jpy" value="JPY" data-locale-currency>
+              <label class="locale__option" for="nav-currency-jpy">
+                <span class="locale__code">JPY</span>
+                <span class="locale__name">Japanese Yen</span>
+              </label>
+            </li>
+              </ul>
+
+              <ul class="locale__list locale__list--language" role="list">
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-en" value="EN" checked data-locale-language>
+              <label class="locale__option" for="nav-language-en">
+                <span class="locale__code">EN</span>
+                <span class="locale__name">English</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-bn" value="BN" data-locale-language>
+              <label class="locale__option" for="nav-language-bn">
+                <span class="locale__code">BN</span>
+                <span class="locale__name">বাংলা</span>
+              </label>
+            </li>
+            <li>
+              <input class="locale__choice sr-only" type="radio" name="nav-language" id="nav-language-ja" value="JA" data-locale-language>
+              <label class="locale__option" for="nav-language-ja">
+                <span class="locale__code">JA</span>
+                <span class="locale__name">日本語</span>
+              </label>
+            </li>
+              </ul>
+            </div>
+          </details>
+          <!-- END BLADE BOUNDARY: locale switch -->
+
+          <!-- The colour switch travels with the menu on a phone: the bar itself
+               has room for the account button and nothing else. -->
+          <div class="theme-toggle" role="group" aria-label="Colour theme">
+            <button type="button" class="theme-toggle__option" data-theme-option="light" aria-pressed="false" title="Light theme">
+              <svg class="icon" aria-hidden="true"><use href="#i-sun"></use></svg>
+              <span class="sr-only">Light theme</span>
+            </button>
+            <button type="button" class="theme-toggle__option" data-theme-option="dark" aria-pressed="false" title="Dark theme">
+              <svg class="icon" aria-hidden="true"><use href="#i-moon"></use></svg>
+              <span class="sr-only">Dark theme</span>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -286,332 +368,381 @@
         <h1 class="account-title">Bookings</h1>
         <p class="account-lead">Every request you have sent us, and what happened to it.</p>
 
-        <!-- BLADE BOUNDARY: booking list -> <x-account.booking-list :bookings="$bookings" /> -->
-        <div class="booking-list">
-          <article class="result-card" data-booking-id="IGT-BR-240918">
-            <div class="result-card__main">
-              <!-- The airline heads each leg below, so the card head carries what
-                   only a booking has: its reference and where it stands. -->
-              <p class="booking-ticket__head">
-                <span class="booking-ticket__who">
-                  <span class="booking-card__airline">IGT-BR-240918</span>
-                  <span class="booking-card__code">Round trip &middot; requested 5 Sep 2026</span>
-                </span>
-                <span class="status-pill status-pill--confirmed">Confirmed</span>
-              </p>
+        <!-- BLADE BOUNDARY: bookings tabs -> <x-account.bookings-tabs /> -->
+        <!-- Radios, not buttons: the three lists swap with no JavaScript, and
+             the chosen tab is a real form value the backend can render back. -->
+        <div class="booking-tabs-wrap">
+          <input class="booking-tab__input sr-only" type="radio" name="bookings-tab" id="bookings-tab-flights" checked>
+          <input class="booking-tab__input sr-only" type="radio" name="bookings-tab" id="bookings-tab-hotels">
+          <input class="booking-tab__input sr-only" type="radio" name="bookings-tab" id="bookings-tab-esim">
 
-                <div class="result-card__slice">
-                  <div class="result-card__slice-head">
-                    <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
-                    </p>
+          <div class="booking-tabs">
+            <label class="booking-tab" for="bookings-tab-flights">Flights</label>
+            <label class="booking-tab" for="bookings-tab-hotels">Hotels</label>
+            <label class="booking-tab" for="bookings-tab-esim">eSIM</label>
+          </div>
 
-                    <p class="result-card__slice-carrier">
-                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-                      Biman Bangladesh Airlines
-                    </p>
-                  </div>
+          <div class="booking-panels">
 
-                  <div class="result-card__leg">
-                    <span class="result-card__time">
-                      <span class="result-card__clock">02:20</span>
-                      <span class="result-card__iata">DAC</span>
-                      <span class="result-card__date">Thu, 18 Sep</span>
+            <div class="booking-panel">
+              <!-- BLADE BOUNDARY: booking list -> <x-account.booking-list :bookings="$bookings" /> -->
+            <div class="booking-list">
+              <article class="result-card" data-booking-id="IGT-BR-240918">
+                <div class="result-card__main">
+                  <!-- The airline heads each leg below, so the card head carries what
+                       only a booking has: its reference and where it stands. -->
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-BR-240918</span>
+                      <span class="booking-card__code">Round trip &middot; requested 5 Sep 2026</span>
                     </span>
+                    <span class="status-pill status-pill--confirmed">Confirmed</span>
+                  </p>
 
-                    <span class="result-card__path">
-                      <span class="result-card__duration">6h 45m &middot; Direct</span>
+                    <div class="result-card__slice">
+                      <div class="result-card__slice-head">
+                        <p class="result-card__slice-label">
+                          <span class="result-card__slice-kind">Outbound</span>
+                        </p>
 
-                      <span class="journey">
-                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+                        <p class="result-card__slice-carrier">
+                          <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                          Biman Bangladesh Airlines
+                        </p>
+                      </div>
 
-                        <span class="journey__track">
-                          <span class="journey__leg" style="--segment-minutes: 405" role="img" tabindex="0" aria-label="Flight DAC to NRT, 6h 45m">
-                            <span class="journey__tip" aria-hidden="true">DAC – NRT<br>Flight time 6h 45m</span>
+                      <div class="result-card__leg">
+                        <span class="result-card__time">
+                          <span class="result-card__clock">02:20</span>
+                          <span class="result-card__iata">DAC</span>
+                          <span class="result-card__date">Thu, 18 Sep</span>
+                        </span>
+
+                        <span class="result-card__path">
+                          <span class="result-card__duration">6h 45m &middot; Direct</span>
+
+                          <span class="journey">
+                            <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+
+                            <span class="journey__track">
+                              <span class="journey__leg" style="--segment-minutes: 405" role="img" tabindex="0" aria-label="Flight DAC to NRT, 6h 45m">
+                                <span class="journey__tip" aria-hidden="true">DAC – NRT<br>Flight time 6h 45m</span>
+                              </span>
+                            </span>
+
+                            <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                           </span>
                         </span>
 
-                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
-                      </span>
-                    </span>
+                        <span class="result-card__time result-card__time--arrive">
+                          <span class="result-card__clock">10:05</span>
+                          <span class="result-card__iata">NRT</span>
+                          <span class="result-card__date">Thu, 18 Sep</span>
+                        </span>
+                      </div>
+                    </div>
 
-                    <span class="result-card__time result-card__time--arrive">
-                      <span class="result-card__clock">10:05</span>
-                      <span class="result-card__iata">NRT</span>
-                      <span class="result-card__date">Thu, 18 Sep</span>
-                    </span>
-                  </div>
-                </div>
+                    <div class="result-card__slice">
+                      <div class="result-card__slice-head">
+                        <p class="result-card__slice-label">
+                          <span class="result-card__slice-kind">Inbound</span>
+                        </p>
 
-                <div class="result-card__slice">
-                  <div class="result-card__slice-head">
-                    <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
-                    </p>
+                        <p class="result-card__slice-carrier">
+                          <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+                          Biman Bangladesh Airlines
+                        </p>
+                      </div>
 
-                    <p class="result-card__slice-carrier">
-                      <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
-                      Biman Bangladesh Airlines
-                    </p>
-                  </div>
+                      <div class="result-card__leg">
+                        <span class="result-card__time">
+                          <span class="result-card__clock">11:00</span>
+                          <span class="result-card__iata">NRT</span>
+                          <span class="result-card__date">Sat, 27 Sep</span>
+                        </span>
 
-                  <div class="result-card__leg">
-                    <span class="result-card__time">
-                      <span class="result-card__clock">11:00</span>
-                      <span class="result-card__iata">NRT</span>
-                      <span class="result-card__date">Sat, 27 Sep</span>
-                    </span>
+                        <span class="result-card__path">
+                          <span class="result-card__duration">7h 15m &middot; Direct</span>
 
-                    <span class="result-card__path">
-                      <span class="result-card__duration">7h 15m &middot; Direct</span>
+                          <span class="journey">
+                            <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
-                      <span class="journey">
-                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+                            <span class="journey__track">
+                              <span class="journey__leg" style="--segment-minutes: 435" role="img" tabindex="0" aria-label="Flight NRT to DAC, 7h 15m">
+                                <span class="journey__tip" aria-hidden="true">NRT – DAC<br>Flight time 7h 15m</span>
+                              </span>
+                            </span>
 
-                        <span class="journey__track">
-                          <span class="journey__leg" style="--segment-minutes: 435" role="img" tabindex="0" aria-label="Flight NRT to DAC, 7h 15m">
-                            <span class="journey__tip" aria-hidden="true">NRT – DAC<br>Flight time 7h 15m</span>
+                            <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                           </span>
                         </span>
 
-                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
-                      </span>
-                    </span>
+                        <span class="result-card__time result-card__time--arrive">
+                          <span class="result-card__clock">15:15</span>
+                          <span class="result-card__iata">DAC</span>
+                          <span class="result-card__date">Sat, 27 Sep</span>
+                        </span>
+                      </div>
+                    </div>
 
-                    <span class="result-card__time result-card__time--arrive">
-                      <span class="result-card__clock">15:15</span>
-                      <span class="result-card__iata">DAC</span>
-                      <span class="result-card__date">Sat, 27 Sep</span>
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
                     </span>
-                  </div>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>2 Adults &middot; 1 Child
+                    </span>
+                  </p>
                 </div>
 
-              <p class="result-card__meta">
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
-                </span>
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>2 Adults &middot; 1 Child
-                </span>
-              </p>
-            </div>
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Total paid</span>
+                  <span class="result-card__price">BDT 200,060</span>
+                  <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
+                </div>
+              </article>
 
-            <div class="result-card__aside">
-              <span class="result-card__trip">Total paid</span>
-              <span class="result-card__price">BDT 200,060</span>
-              <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
-            </div>
-          </article>
-
-          <article class="result-card" data-booking-id="IGT-BR-240902">
-            <div class="result-card__main">
-              <!-- The airline heads each leg below, so the card head carries what
-                   only a booking has: its reference and where it stands. -->
-              <p class="booking-ticket__head">
-                <span class="booking-ticket__who">
-                  <span class="booking-card__airline">IGT-BR-240902</span>
-                  <span class="booking-card__code">Round trip &middot; requested 20 Aug 2026</span>
-                </span>
-                <span class="status-pill status-pill--pending">Pending review</span>
-              </p>
-
-                <div class="result-card__slice">
-                  <div class="result-card__slice-head">
-                    <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
-                    </p>
-
-                    <p class="result-card__slice-carrier">
-                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                      Cathay Pacific
-                    </p>
-                  </div>
-
-                  <div class="result-card__leg">
-                    <span class="result-card__time">
-                      <span class="result-card__clock">02:00</span>
-                      <span class="result-card__iata">DAC</span>
-                      <span class="result-card__date">Fri, 02 Oct</span>
+              <article class="result-card" data-booking-id="IGT-BR-240902">
+                <div class="result-card__main">
+                  <!-- The airline heads each leg below, so the card head carries what
+                       only a booking has: its reference and where it stands. -->
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-BR-240902</span>
+                      <span class="booking-card__code">Round trip &middot; requested 20 Aug 2026</span>
                     </span>
+                    <span class="status-pill status-pill--pending">Pending review</span>
+                  </p>
 
-                    <span class="result-card__path">
-                      <span class="result-card__duration">10h 45m &middot; 1 stop in HKG</span>
+                    <div class="result-card__slice">
+                      <div class="result-card__slice-head">
+                        <p class="result-card__slice-label">
+                          <span class="result-card__slice-kind">Outbound</span>
+                        </p>
 
-                      <span class="journey">
-                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+                        <p class="result-card__slice-carrier">
+                          <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                          Cathay Pacific
+                        </p>
+                      </div>
 
-                        <span class="journey__track">
-                          <span class="journey__leg" style="--segment-minutes: 165" role="img" tabindex="0" aria-label="Flight DAC to HKG, 2h 45m">
-                            <span class="journey__tip" aria-hidden="true">DAC – HKG<br>Flight time 2h 45m</span>
-                          </span>
-                          <span class="journey__layover" style="--segment-minutes: 155" role="img" tabindex="0" aria-label="Layover at Hong Kong International Airport, 2h 35m">
-                            <span class="journey__code" aria-hidden="true">HKG</span>
-                            <span class="journey__tip" aria-hidden="true">Layover in HKG<br>2h 35m on the ground</span>
-                          </span>
-                          <span class="journey__leg" style="--segment-minutes: 325" role="img" tabindex="0" aria-label="Flight HKG to NRT, 5h 25m">
-                            <span class="journey__tip" aria-hidden="true">HKG – NRT<br>Flight time 5h 25m</span>
+                      <div class="result-card__leg">
+                        <span class="result-card__time">
+                          <span class="result-card__clock">02:00</span>
+                          <span class="result-card__iata">DAC</span>
+                          <span class="result-card__date">Fri, 02 Oct</span>
+                        </span>
+
+                        <span class="result-card__path">
+                          <span class="result-card__duration">10h 45m &middot; 1 stop in HKG</span>
+
+                          <span class="journey">
+                            <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+
+                            <span class="journey__track">
+                              <span class="journey__leg" style="--segment-minutes: 165" role="img" tabindex="0" aria-label="Flight DAC to HKG, 2h 45m">
+                                <span class="journey__tip" aria-hidden="true">DAC – HKG<br>Flight time 2h 45m</span>
+                              </span>
+                              <span class="journey__layover" style="--segment-minutes: 155" role="img" tabindex="0" aria-label="Layover at Hong Kong International Airport, 2h 35m">
+                                <span class="journey__code" aria-hidden="true">HKG</span>
+                                <span class="journey__tip" aria-hidden="true">Layover in HKG<br>2h 35m on the ground</span>
+                              </span>
+                              <span class="journey__leg" style="--segment-minutes: 325" role="img" tabindex="0" aria-label="Flight HKG to NRT, 5h 25m">
+                                <span class="journey__tip" aria-hidden="true">HKG – NRT<br>Flight time 5h 25m</span>
+                              </span>
+                            </span>
+
+                            <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                           </span>
                         </span>
 
-                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
-                      </span>
-                    </span>
+                        <span class="result-card__time result-card__time--arrive">
+                          <span class="result-card__clock">15:45</span>
+                          <span class="result-card__iata">NRT</span>
+                          <span class="result-card__date">Fri, 02 Oct</span>
+                        </span>
+                      </div>
+                    </div>
 
-                    <span class="result-card__time result-card__time--arrive">
-                      <span class="result-card__clock">15:45</span>
-                      <span class="result-card__iata">NRT</span>
-                      <span class="result-card__date">Fri, 02 Oct</span>
-                    </span>
-                  </div>
-                </div>
+                    <div class="result-card__slice">
+                      <div class="result-card__slice-head">
+                        <p class="result-card__slice-label">
+                          <span class="result-card__slice-kind">Inbound</span>
+                        </p>
 
-                <div class="result-card__slice">
-                  <div class="result-card__slice-head">
-                    <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Inbound</span>
-                    </p>
+                        <p class="result-card__slice-carrier">
+                          <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                          Cathay Pacific
+                        </p>
+                      </div>
 
-                    <p class="result-card__slice-carrier">
-                      <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                      Cathay Pacific
-                    </p>
-                  </div>
+                      <div class="result-card__leg">
+                        <span class="result-card__time">
+                          <span class="result-card__clock">18:30</span>
+                          <span class="result-card__iata">NRT</span>
+                          <span class="result-card__date">Mon, 12 Oct</span>
+                        </span>
 
-                  <div class="result-card__leg">
-                    <span class="result-card__time">
-                      <span class="result-card__clock">18:30</span>
-                      <span class="result-card__iata">NRT</span>
-                      <span class="result-card__date">Mon, 12 Oct</span>
-                    </span>
+                        <span class="result-card__path">
+                          <span class="result-card__duration">9h 45m &middot; 1 stop in HKG</span>
 
-                    <span class="result-card__path">
-                      <span class="result-card__duration">9h 45m &middot; 1 stop in HKG</span>
+                          <span class="journey">
+                            <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
 
-                      <span class="journey">
-                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+                            <span class="journey__track">
+                              <span class="journey__leg" style="--segment-minutes: 270" role="img" tabindex="0" aria-label="Flight NRT to HKG, 4h 30m">
+                                <span class="journey__tip" aria-hidden="true">NRT – HKG<br>Flight time 4h 30m</span>
+                              </span>
+                              <span class="journey__layover" style="--segment-minutes: 95" role="img" tabindex="0" aria-label="Layover at Hong Kong International Airport, 1h 35m">
+                                <span class="journey__code" aria-hidden="true">HKG</span>
+                                <span class="journey__tip" aria-hidden="true">Layover in HKG<br>1h 35m on the ground</span>
+                              </span>
+                              <span class="journey__leg" style="--segment-minutes: 220" role="img" tabindex="0" aria-label="Flight HKG to DAC, 3h 40m">
+                                <span class="journey__tip" aria-hidden="true">HKG – DAC<br>Flight time 3h 40m</span>
+                              </span>
+                            </span>
 
-                        <span class="journey__track">
-                          <span class="journey__leg" style="--segment-minutes: 270" role="img" tabindex="0" aria-label="Flight NRT to HKG, 4h 30m">
-                            <span class="journey__tip" aria-hidden="true">NRT – HKG<br>Flight time 4h 30m</span>
-                          </span>
-                          <span class="journey__layover" style="--segment-minutes: 95" role="img" tabindex="0" aria-label="Layover at Hong Kong International Airport, 1h 35m">
-                            <span class="journey__code" aria-hidden="true">HKG</span>
-                            <span class="journey__tip" aria-hidden="true">Layover in HKG<br>1h 35m on the ground</span>
-                          </span>
-                          <span class="journey__leg" style="--segment-minutes: 220" role="img" tabindex="0" aria-label="Flight HKG to DAC, 3h 40m">
-                            <span class="journey__tip" aria-hidden="true">HKG – DAC<br>Flight time 3h 40m</span>
+                            <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                           </span>
                         </span>
 
-                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
-                      </span>
-                    </span>
+                        <span class="result-card__time result-card__time--arrive">
+                          <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
+                          <span class="result-card__iata">DAC</span>
+                          <span class="result-card__date">Tue, 13 Oct</span>
+                        </span>
+                      </div>
+                    </div>
 
-                    <span class="result-card__time result-card__time--arrive">
-                      <span class="result-card__clock">01:15<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                      <span class="result-card__iata">DAC</span>
-                      <span class="result-card__date">Tue, 13 Oct</span>
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
                     </span>
-                  </div>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1 Adult
+                    </span>
+                  </p>
                 </div>
 
-              <p class="result-card__meta">
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
-                </span>
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1 Adult
-                </span>
-              </p>
-            </div>
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Estimated total</span>
+                  <span class="result-card__price">BDT 72,900</span>
+                  <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
+                </div>
+              </article>
 
-            <div class="result-card__aside">
-              <span class="result-card__trip">Estimated total</span>
-              <span class="result-card__price">BDT 72,900</span>
-              <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
-            </div>
-          </article>
-
-          <article class="result-card" data-booking-id="IGT-BR-240715">
-            <div class="result-card__main">
-              <!-- The airline heads each leg below, so the card head carries what
-                   only a booking has: its reference and where it stands. -->
-              <p class="booking-ticket__head">
-                <span class="booking-ticket__who">
-                  <span class="booking-card__airline">IGT-BR-240715</span>
-                  <span class="booking-card__code">One way &middot; requested 12 Jun 2026</span>
-                </span>
-                <span class="status-pill status-pill--cancelled">Cancelled</span>
-              </p>
-
-                <div class="result-card__slice">
-                  <div class="result-card__slice-head">
-                    <p class="result-card__slice-label">
-                      <span class="result-card__slice-kind">Outbound</span>
-                    </p>
-
-                    <p class="result-card__slice-carrier">
-                      <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
-                      SriLankan Airlines
-                    </p>
-                  </div>
-
-                  <div class="result-card__leg">
-                    <span class="result-card__time">
-                      <span class="result-card__clock">23:55</span>
-                      <span class="result-card__iata">DAC</span>
-                      <span class="result-card__date">Wed, 15 Jul</span>
+              <article class="result-card" data-booking-id="IGT-BR-240715">
+                <div class="result-card__main">
+                  <!-- The airline heads each leg below, so the card head carries what
+                       only a booking has: its reference and where it stands. -->
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-BR-240715</span>
+                      <span class="booking-card__code">One way &middot; requested 12 Jun 2026</span>
                     </span>
+                    <span class="status-pill status-pill--cancelled">Cancelled</span>
+                  </p>
 
-                    <span class="result-card__path">
-                      <span class="result-card__duration">14h 35m &middot; 1 stop in CMB</span>
+                    <div class="result-card__slice">
+                      <div class="result-card__slice-head">
+                        <p class="result-card__slice-label">
+                          <span class="result-card__slice-kind">Outbound</span>
+                        </p>
 
-                      <span class="journey">
-                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+                        <p class="result-card__slice-carrier">
+                          <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
+                          SriLankan Airlines
+                        </p>
+                      </div>
 
-                        <span class="journey__track">
-                          <span class="journey__leg" style="--segment-minutes: 260" role="img" tabindex="0" aria-label="Flight DAC to CMB, 4h 20m">
-                            <span class="journey__tip" aria-hidden="true">DAC – CMB<br>Flight time 4h 20m</span>
-                          </span>
-                          <span class="journey__layover" style="--segment-minutes: 205" role="img" tabindex="0" aria-label="Layover at Bandaranaike International Airport, Colombo, 3h 25m">
-                            <span class="journey__code" aria-hidden="true">CMB</span>
-                            <span class="journey__tip" aria-hidden="true">Layover in CMB<br>3h 25m on the ground</span>
-                          </span>
-                          <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CMB to NRT, 6h 50m">
-                            <span class="journey__tip" aria-hidden="true">CMB – NRT<br>Flight time 6h 50m</span>
+                      <div class="result-card__leg">
+                        <span class="result-card__time">
+                          <span class="result-card__clock">23:55</span>
+                          <span class="result-card__iata">DAC</span>
+                          <span class="result-card__date">Wed, 15 Jul</span>
+                        </span>
+
+                        <span class="result-card__path">
+                          <span class="result-card__duration">14h 35m &middot; 1 stop in CMB</span>
+
+                          <span class="journey">
+                            <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+
+                            <span class="journey__track">
+                              <span class="journey__leg" style="--segment-minutes: 260" role="img" tabindex="0" aria-label="Flight DAC to CMB, 4h 20m">
+                                <span class="journey__tip" aria-hidden="true">DAC – CMB<br>Flight time 4h 20m</span>
+                              </span>
+                              <span class="journey__layover" style="--segment-minutes: 205" role="img" tabindex="0" aria-label="Layover at Bandaranaike International Airport, Colombo, 3h 25m">
+                                <span class="journey__code" aria-hidden="true">CMB</span>
+                                <span class="journey__tip" aria-hidden="true">Layover in CMB<br>3h 25m on the ground</span>
+                              </span>
+                              <span class="journey__leg" style="--segment-minutes: 410" role="img" tabindex="0" aria-label="Flight CMB to NRT, 6h 50m">
+                                <span class="journey__tip" aria-hidden="true">CMB – NRT<br>Flight time 6h 50m</span>
+                              </span>
+                            </span>
+
+                            <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
                           </span>
                         </span>
 
-                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
-                      </span>
-                    </span>
+                        <span class="result-card__time result-card__time--arrive">
+                          <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
+                          <span class="result-card__iata">NRT</span>
+                          <span class="result-card__date">Thu, 16 Jul</span>
+                        </span>
+                      </div>
+                    </div>
 
-                    <span class="result-card__time result-card__time--arrive">
-                      <span class="result-card__clock">17:30<sup class="result-card__day">+1<span class="sr-only"> day later</span></sup></span>
-                      <span class="result-card__iata">NRT</span>
-                      <span class="result-card__date">Thu, 16 Jul</span>
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 25 kg baggage
                     </span>
-                  </div>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1 Adult
+                    </span>
+                  </p>
                 </div>
 
-              <p class="result-card__meta">
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 25 kg baggage
-                </span>
-                <span class="result-card__meta-item">
-                  <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>1 Adult
-                </span>
-              </p>
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Refunded</span>
+                  <span class="result-card__price">BDT 45,800</span>
+                  <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
+                </div>
+              </article>
+            </div>
+              <!-- END BLADE BOUNDARY: booking list -->
             </div>
 
-            <div class="result-card__aside">
-              <span class="result-card__trip">Refunded</span>
-              <span class="result-card__price">BDT 45,800</span>
-              <a class="btn btn--primary md:w-full md:mt-3" href="booking.html">View details</a>
+            <div class="booking-panel">
+            <section class="review-panel panel-empty">
+              <span class="panel-empty__icon" aria-hidden="true">
+                <svg class="icon size-6"><use href="#i-home"></use></svg>
+              </span>
+              <h2 class="panel-empty__title">No hotel bookings yet</h2>
+              <p class="panel-empty__text">Hotels are not something we sell online yet. Tell our team where and when, and they will arrange it for you.</p>
+              <a class="btn btn--outline" href="../contact.html">
+                Ask about a hotel
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </section>
             </div>
-          </article>
+
+            <div class="booking-panel">
+            <section class="review-panel panel-empty">
+              <span class="panel-empty__icon" aria-hidden="true">
+                <svg class="icon size-6"><use href="#i-bell"></use></svg>
+              </span>
+              <h2 class="panel-empty__title">No eSIM orders yet</h2>
+              <p class="panel-empty__text">Travel eSIM plans are coming soon. Ask our team about data for your destination in the meantime.</p>
+              <a class="btn btn--outline" href="../contact.html">
+                Ask about data
+                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+              </a>
+            </section>
+            </div>
+          </div>
         </div>
-        <!-- END BLADE BOUNDARY: booking list -->
+        <!-- END BLADE BOUNDARY: bookings tabs -->
       </div>
 
     </div>
