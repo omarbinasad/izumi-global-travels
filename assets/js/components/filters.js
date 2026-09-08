@@ -36,9 +36,12 @@ export function initFilters(scope = document) {
     trigger?.focus();
   }
 
-  /* Open is the sidebar's resting state; the sheet's is closed. */
+  /* Open is the sidebar's resting state; the sheet's is closed. The mark says
+     the state is settled: until it is there the stylesheet keeps the sheet
+     down, so it is never drawn open and then taken away. */
   function applyBreakpoint() {
     drawer.open = sidebar.matches;
+    drawer.dataset.filterReady = 'true';
   }
 
   on(sidebar, 'change', applyBreakpoint);

@@ -2354,6 +2354,23 @@
     color: var(--color-fg-muted);
   }
 
+  /* The flight time and the line it measures, one over the other. */
+  .route-card__path {
+    display: grid;
+    justify-items: center;
+    gap: --spacing(1);
+    min-inline-size: 0;
+  }
+
+  .route-card__duration {
+    font-size: var(--text-2xs);
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--color-fg-muted);
+  }
+
+  .route-card__path > .route-card__line { inline-size: 100%; }
+
   .route-card__line {
     /*
      * The rule is a gradient with a transparent window in the middle rather
@@ -2385,10 +2402,12 @@
     color: var(--color-route-line);
   }
 
+  /* One run of facts. The gap is tight because they all have to make a line
+     of the card, not two. */
   .route-card__meta {
     display: flex;
     flex-wrap: wrap;
-    gap: --spacing(1) --spacing(3);
+    gap: --spacing(1) --spacing(2);
     font-size: var(--text-2xs);
     line-height: var(--leading-snug);
     color: var(--color-fg-muted);
@@ -2456,19 +2475,6 @@
     color: var(--color-fg-heading);
   }
 
-  .route-card__pax {
-    display: inline-flex;
-    align-items: center;
-    gap: --spacing(1);
-    margin-block-start: --spacing(1);
-    font-size: var(--text-2xs);
-    color: var(--color-fg-muted);
-  }
-
-  .route-card__pax svg {
-    width: 12px;
-    height: 12px;
-  }
 
   /* On a phone the stub is a full-width strip, so the price takes the left of
      it and the button the right rather than the four parts running down. */
@@ -2485,17 +2491,11 @@
 
     .route-card__price { grid-area: 2 / 1; }
 
-    /* Column two mirrors column one: the button beside the label, the count
-       beside the price. */
+    /* Column two holds the button, level with the label above the price. */
     .route-card__aside .btn {
-      grid-area: 1 / 2;
+      grid-area: 1 / 2 / span 2 / 3;
+      align-self: center;
       justify-self: end;
-    }
-
-    .route-card__pax {
-      grid-area: 2 / 2;
-      justify-self: end;
-      margin-block-start: 0;
     }
   }
 
@@ -3639,6 +3639,22 @@
     .filter-panel__mark {
       display: none;
     }
+  }
+
+  /*
+   * The markup ships open, so with no script at all the filters are simply
+   * present. filters.js then closes it for this width — but a module runs
+   * after the first paint, so the sheet is drawn open and then taken away,
+   * which is the flash on the way in from another page.
+   *
+   * Where a script is going to run, the sheet waits for it: filters.js marks
+   * the drawer once the state is settled. Where there is none, the query does
+   * not apply and nothing is hidden.
+   */
+  @media (width < 64rem) and (scripting: enabled) {
+    .filter-drawer:not([data-filter-ready]) .filter-drawer__sheet { display: none; }
+
+    .filter-drawer:not([data-filter-ready])::before { content: none; }
   }
 
   @media (width >= 64rem) {
@@ -7608,6 +7624,32 @@
   }
 
   .trip-summary__end--arrive { text-align: end; }
+
+  /* The middle column is only as wide as the path in it, and the path is a
+     line with nothing to give it width. */
+  .trip-summary__route > .itinerary__path { inline-size: --spacing(24); }
+
+  /*
+   * Below the itinerary's own breakpoint that path drops to its own row, and
+   * the arrival end slides into the middle column behind it, which is what
+   * leaves a column of nothing on the right. So the box is placed for itself
+   * here: an end at each edge, and the path across the row beneath them.
+   */
+  @media (width < 48rem) {
+    .trip-summary__route {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: --spacing(4) --spacing(3);
+    }
+
+    .trip-summary__route > .trip-summary__end { grid-area: 1 / 1; }
+
+    .trip-summary__route > .trip-summary__end--arrive { grid-area: 1 / 2; }
+
+    .trip-summary__route > .itinerary__path {
+      grid-area: 2 / 1 / auto / -1;
+      inline-size: auto;
+    }
+  }
 
   .trip-summary__clock {
     display: block;
