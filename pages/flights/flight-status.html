@@ -334,11 +334,15 @@
                        value="BG 147" placeholder="BG 147" autocomplete="off" maxlength="8">
               </div>
 
-              <div class="search-field">
+              <!-- The same panel the flight search opens, asking for one day
+                   rather than two. The native input stays: it is the value,
+                   and it is what works with no JavaScript. -->
+              <div class="search-field" data-date-range>
                 <label class="search-field__label" for="status-date">Date</label>
                 <span class="search-field__value">
                   <input class="search-field__control search-field__control--lg" type="date"
-                         id="status-date" name="departure_date" value="2026-09-18" data-date-input>
+                         id="status-date" name="departure_date" value="2026-09-18"
+                         data-date-input="depart">
                   <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
                 </span>
               </div>

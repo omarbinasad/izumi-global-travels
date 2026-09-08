@@ -321,10 +321,10 @@
         <div class="hero-panel">
           <!-- The page container: the hero copy lines up with every other
                section, while the photograph behind it runs wider. -->
-          <div class="page-container flex flex-1 flex-col justify-end gap-8 md:gap-15">
+          <div class="page-container flex flex-1 flex-col justify-end gap-24 md:gap-15">
 
             <div class="max-w-[42rem]">
-              <h1 class="animate-rise-in m-0 text-4xl md:text-5xl lg:text-6xl font-bold leading-heading text-brand-900" id="hero-title"><span class="hero-title__line">Find the right flight.</span><span class="hero-title__accent">Travel your way.</span></h1>
+              <h1 class="hero-title animate-rise-in m-0 text-hero md:text-5xl lg:text-6xl font-bold text-brand-900" id="hero-title"><span class="hero-title__line">Find the right flight.</span><span class="hero-title__accent">Travel your way.</span></h1>
               <!-- The cue and the standfirst share a row: two short stacked
                    blocks left the hero copy taller than it needed to be. -->
               <div class="animate-rise-in [animation-delay:90ms] mt-3 md:mt-4 flex items-center gap-4">
@@ -378,7 +378,7 @@
                 <div id="panel-flights" role="tabpanel" aria-labelledby="tab-flights">
                   <form class="flex flex-col gap-2 lg:gap-3" action="pages/flights/search-results.html" method="get">
 
-                    <div class="flex flex-wrap items-center justify-between gap-x-5 gap-y-3 px-1 pb-2">
+                    <div class="search-head">
                       <!-- Radios, not buttons: the trip type still submits with
                            JavaScript off. The underline is a styled ::after. -->
                       <div class="trip-toggle" role="radiogroup" aria-label="Trip type">
@@ -392,7 +392,7 @@
                         </label>
                       </div>
 
-                      <div class="flex flex-wrap items-center gap-4">
+                      <div class="search-options flex flex-wrap items-center gap-4">
                         <label class="search-option">
                           <input type="checkbox" name="direct_only" value="1">
                           Direct flights
@@ -1231,18 +1231,6 @@
         </article>
       </div>
       <!-- END BLADE BOUNDARY: hotel list -->
-
-      <ul class="hotel-trust" role="list" data-reveal>
-        <li class="hotel-trust__item">
-          <svg class="icon size-5" aria-hidden="true"><use href="#i-shield"></use></svg>Verified properties
-        </li>
-        <li class="hotel-trust__item">
-          <svg class="icon size-5" aria-hidden="true"><use href="#i-tag"></use></svg>Transparent pricing
-        </li>
-        <li class="hotel-trust__item">
-          <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>Flexible options
-        </li>
-      </ul>
     </section>
 
     <!-- ====================================================================

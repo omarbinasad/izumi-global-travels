@@ -210,10 +210,13 @@
   --text-2xs: 0.6875rem;
   --text-2xs--line-height: 1.4;
   /* Between sm and base: the size the airport code takes on a wide ticket. */
+  --text-hero: 1.75rem;
   --text-code: 0.9375rem;
   --text-code--line-height: 1.4;
 
   --leading-heading: 1.25;
+  /* The hero heading only: at 36px two lines set at 1.25 drift apart. */
+  --leading-display: 1.1;
   --leading-snug: 1.4;
   --leading-base: 1.6;
   --leading-relaxed: 1.75;
@@ -1578,22 +1581,54 @@
 
   /* A way off the panel rather than another thing to set on it, so it reads
      as a link and not as a third trip option. */
+  /* On its own surface: plain accent text was lost against the photograph
+     showing through the panel behind it. */
   .search-option-link {
     display: inline-flex;
     align-items: center;
     gap: --spacing(2);
+    padding: --spacing(1) --spacing(3);
+    border: var(--border-width) solid var(--color-glass-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-glass-raised);
     font-size: var(--text-sm);
     font-weight: 600;
     text-decoration: none;
     color: var(--color-glass-accent);
+    transition: background-color var(--transition-fast);
   }
 
-  .search-option-link:hover { text-decoration: underline; }
+  .search-option-link:hover { background-color: var(--color-glass-hover); }
 
   .search-option-link:focus-visible {
     outline: var(--border-width-strong) solid var(--color-ring);
     outline-offset: 3px;
     border-radius: var(--radius-xs);
+  }
+
+  /* The trip type and the two options above the fields. */
+  .search-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(3) --spacing(5);
+    padding-inline: --spacing(1);
+    padding-block-end: --spacing(2);
+  }
+
+  @media (width < 48rem) {
+    /* Out of the way, so its two children become children of the form and can
+       be ordered: the trip type stays at the top and the options drop to the
+       foot. */
+    .search-head { display: contents; }
+
+    .search-options {
+      order: 1;
+      justify-content: space-between;
+      padding-inline: --spacing(1);
+      padding-block-start: --spacing(1);
+    }
   }
 
   /* --- Date fields ---------------------------------------------------------
@@ -2432,7 +2467,8 @@
   .route-card__path {
     display: grid;
     justify-items: center;
-    gap: --spacing(1);
+    /* Enough for the plane, which overhangs the rule it sits on. */
+    gap: --spacing(3);
     min-inline-size: 0;
   }
 
@@ -2624,9 +2660,13 @@
 
 
   .hotel-card {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     overflow: hidden;
     border-radius: var(--radius-lg);
+    /* Behind the lower half of the pane, which is translucent: without it the
+       page would show through the glass instead of the card. */
+    background-color: var(--color-surface);
     box-shadow: var(--shadow-md);
     transition: box-shadow var(--transition-fast), translate var(--transition-base);
   }
@@ -2636,15 +2676,24 @@
     translate: 0 -2px;
   }
 
-  /* The picture is the card: it sets the height, and the pane is laid over the
-     foot of it. */
-  .hotel-card__frame { position: static; }
+  /* The picture and the pane are two blocks, one after the other; the pane is
+     pulled up over the foot of the picture. */
+  .hotel-card__frame { position: relative; }
 
+  /*
+   * The pane overlaps the picture by a fixed 80px, so the picture carries the
+   * height the card shows: shallower here than the finished card, because the
+   * pane adds its own height below the overlap.
+   */
   .hotel-card__media {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 3 / 4;
+    aspect-ratio: 1 / 1;
     object-fit: cover;
+  }
+
+  @media (width >= 48rem) {
+    .hotel-card__media { aspect-ratio: 7 / 6; }
   }
 
   /* --- Over the picture --- */
@@ -2706,13 +2755,15 @@
   /* --- The pane --- */
 
   .hotel-card__body {
-    position: absolute;
-    inset-inline: 0;
-    inset-block-end: 0;
+    position: relative;
+    /* Up over the foot of the picture, which is what there is to see the glass
+       against. In the flow, so the card ends where the pane ends. */
+    margin-block-start: calc(-1 * --spacing(20));
     display: flex;
     flex-direction: column;
     gap: --spacing(2);
     padding: --spacing(4) --spacing(5) --spacing(5);
+    border: var(--border-width) solid var(--color-glass-line);
     border-start-start-radius: var(--radius-lg);
     border-start-end-radius: var(--radius-lg);
     background-color: var(--color-glass-raised);
@@ -2814,41 +2865,8 @@
 
   .hotel-card__action {
     min-height: var(--control-height-sm);
-    padding-inline: --spacing(4);
+    padding-inline: --spacing(3);
     font-size: var(--text-sm);
-  }
-
-  /* What the list is worth, under the list. */
-  .hotel-trust {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    gap: --spacing(3) --spacing(6);
-    margin: --spacing(8) 0 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .hotel-trust__item {
-    display: inline-flex;
-    align-items: center;
-    gap: --spacing(2);
-    font-size: var(--text-sm);
-    color: var(--color-fg-muted);
-  }
-
-  .hotel-trust__item svg { color: var(--color-primary); }
-
-  /* A rule between them rather than around them, so the row reads as one line
-     of three rather than three boxes. Trailing, not leading: a divider on the
-     front of an item starts the next line on its own when the row wraps. */
-  .hotel-trust__item:not(:last-child)::after {
-    content: "";
-    inline-size: var(--border-width);
-    block-size: --spacing(4);
-    margin-inline-start: --spacing(4);
-    background-color: var(--color-line-strong);
   }
 
   /* --- Hotel results page -------------------------------------------------
@@ -2910,8 +2928,8 @@
          longer be the same width, which is what a seamless -50% depends on.
          ---------------------------------------------------------------- */
   .logo-marquee {
-    --marquee-gap: --spacing(12);
-    --marquee-logo-width: 148px;
+    --marquee-gap: --spacing(6);
+    --marquee-logo-width: 100px;
 
     position: relative;
     overflow: hidden;
@@ -2919,6 +2937,13 @@
        -webkit- prefix for Safari, which still needs it for mask-image. */
     -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
     mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  }
+
+  @media (width >= 48rem) {
+    .logo-marquee {
+      --marquee-gap: --spacing(12);
+      --marquee-logo-width: 148px;
+    }
   }
 
   .logo-marquee__track {
@@ -3276,6 +3301,12 @@
     display: block;
   }
 
+  @media (width < 48rem) {
+    .hero-title { line-height: var(--leading-display); }
+
+    .scroll-hint { display: none; }
+  }
+
   .hero-title__accent {
     display: block;
     /* Space above the second line, so the pair reads as two statements
@@ -3405,6 +3436,29 @@
        clipping was cutting the date and traveller panels off at the foot of
        the band. */
     animation: var(--animate-fade-in);
+  }
+
+  /*
+   * A phone gets a photograph shot for the shape of a phone. It is drawn wider
+   * than the band on purpose: at plain cover the aircraft lands behind the
+   * lead line, and the extra width pushes it below the copy instead. Anchored
+   * to the top, so where the aircraft sits does not move with the height of
+   * the band. The wash runs downward here rather than across, because on a
+   * phone the copy is along the top rather than down the left.
+   */
+  @media (width < 48rem) {
+    .hero-panel {
+      background-image:
+        linear-gradient(to bottom,
+          rgb(255 255 255 / 52%) 0%,
+          rgb(255 255 255 / 28%) 32%,
+          rgb(255 255 255 / 0%) 54%),
+        url("../images/mobilebanner.webp");
+      background-size: 100% 100%, cover;
+      /* Down the frame rather than at the top of it: this is where the
+         aircraft falls into the gap the copy leaves above the panel. */
+      background-position: 0 0, 50% 38%;
+    }
   }
 
   @media (width >= 48rem) {

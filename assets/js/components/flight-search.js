@@ -208,7 +208,7 @@ function initPax(root) {
  */
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-function initDateDisplays(root) {
+export function initDateDisplays(root = document) {
   const inputs = qsa('[data-date-input]', root);
 
   if (inputs.length === 0) return;

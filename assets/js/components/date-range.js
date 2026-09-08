@@ -1,7 +1,7 @@
 /**
- * Date range picker.
+ * Date picker for the search panels.
  *
- * The two native <input type="date"> fields stay exactly where they are and
+ * The native <input type="date"> fields stay exactly where they are and
  * remain the only value store: this module never holds a date of its own, it
  * reads and writes those inputs and fires `change` so everything already
  * listening (the formatted display, the trip-type toggle) keeps working.
@@ -59,11 +59,16 @@ export function initDateRange(root = document) {
   if (!scope) return;
 
   const startInput = qs('[data-date-input="depart"]', scope);
-  const endInput = qs('[data-date-input="return"]', scope);
   const startField = startInput?.closest('.search-field');
-  const endField = endInput?.closest('.search-field');
 
-  if (!startInput || !endInput || !startField || !endField) return;
+  if (!startInput || !startField) return;
+
+  /* A second date is optional. The flight search has one and turns it off for
+     a one-way trip; a form that asks for a single day — checking a flight, say
+     — simply does not render it, and the panel is the same control either
+     way. */
+  const endInput = qs('[data-date-input="return"]', scope);
+  const endField = endInput?.closest('.search-field') ?? null;
 
   /* Tells the stylesheet to drop the invisible native picker overlay: from
      here on the field opens this panel instead. */
@@ -112,10 +117,13 @@ export function initDateRange(root = document) {
 
   /* ---- state ---------------------------------------------------------- */
 
-  const roundTrip = () => !endInput.disabled;
+  const roundTrip = () => Boolean(endInput) && !endInput.disabled;
 
   function commit(which, iso) {
     const input = which === 'start' ? startInput : endInput;
+
+    if (!input) return;
+
     input.value = iso;
     /* Both, because the formatted display listens for either. */
     input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -124,7 +132,7 @@ export function initDateRange(root = document) {
 
   function inRange(iso) {
     const { value: start } = startInput;
-    const end = endInput.value || (mode === 'end' ? hoverISO : null);
+    const end = endInput?.value || (mode === 'end' ? hoverISO : null);
     if (!start || !end) return false;
     return iso > start && iso < end;
   }
@@ -161,7 +169,7 @@ export function initDateRange(root = document) {
         const iso = toISO(date);
         const disabled = iso < minISO;
         const isStart = iso === startInput.value;
-        const isEnd = iso === endInput.value;
+        const isEnd = Boolean(endInput) && iso === endInput.value;
         const state = [];
 
         if (isStart) state.push('start');
@@ -194,9 +202,11 @@ export function initDateRange(root = document) {
     /* Its own element, because the second month is hidden on a narrow screen
        and the label has to drop with it. */
     titleB.textContent = ` – ${MONTHS[next.getMonth()]} ${next.getFullYear()}`;
-    hint.textContent = mode === 'start'
-      ? 'Choose your departure date'
-      : 'Choose your return date';
+    /* A form with no return field is asking for one day, not the first of
+       two — the flight search still says 'departure' on a one-way trip. */
+    hint.textContent = !endInput ? 'Choose a date'
+      : mode === 'end' ? 'Choose your return date'
+      : 'Choose your departure date';
     qs('[data-date-prev]', panel).disabled = toISO(view) <= toISO(startOfMonth(today));
   }
 
@@ -205,7 +215,7 @@ export function initDateRange(root = document) {
   function open(which, trigger) {
     mode = roundTrip() ? which : 'start';
     lastTrigger = trigger;
-    focusISO = (which === 'end' ? endInput.value : startInput.value) || minISO;
+    focusISO = (which === 'end' ? endInput?.value : startInput.value) || minISO;
     view = startOfMonth(fromISO(focusISO) ?? today);
     panel.hidden = false;
     scope.dataset.datePanel = 'open';
@@ -240,7 +250,7 @@ export function initDateRange(root = document) {
     if (mode === 'start' || !roundTrip()) {
       commit('start', iso);
       /* A return before the new departure is no longer a range. */
-      if (endInput.value && endInput.value < iso) commit('end', '');
+      if (endInput?.value && endInput.value < iso) commit('end', '');
       if (!roundTrip()) return close();
       mode = 'end';
       hoverISO = null;
@@ -267,6 +277,8 @@ export function initDateRange(root = document) {
   /* ---- wiring --------------------------------------------------------- */
 
   [[startField, 'start'], [endField, 'end']].forEach(([field, which]) => {
+    if (!field) return;
+
     on(field, 'pointerdown', (event) => {
       if (which === 'end' && !roundTrip()) return;
       event.preventDefault();
@@ -298,7 +310,7 @@ export function initDateRange(root = document) {
      as one control rather than two dates. */
   on(panel, 'pointerover', (event) => {
     const day = event.target.closest('[data-date-day]');
-    if (!day || mode !== 'end' || !startInput.value || endInput.value) return;
+    if (!day || mode !== 'end' || !startInput.value || endInput?.value) return;
     if (day.dataset.dateDay === hoverISO) return;
     hoverISO = day.dataset.dateDay;
     render();
@@ -344,11 +356,11 @@ export function initDateRange(root = document) {
   on(document, 'pointerdown', (event) => {
     if (panel.hidden) return;
     if (panel.contains(event.target) || startField.contains(event.target) ||
-        endField.contains(event.target)) return;
+        endField?.contains(event.target)) return;
     close({ restoreFocus: false });
   });
 
   /* Switching to one way while the panel is open leaves it asking for a
      return that no longer exists. */
-  on(endInput, 'change', () => { if (!panel.hidden) render(); });
+  if (endInput) on(endInput, 'change', () => { if (!panel.hidden) render(); });
 }

@@ -27,6 +27,7 @@ const pageModules = {
   'add-ons': () => import('./pages/add-ons.js'),
   blog: () => import('./pages/blog.js'),
   hotels: () => import('./pages/hotels.js'),
+  'flight-status': () => import('./pages/flight-status.js'),
   auth: () => import('./pages/auth.js'),
   /* Every account page wires up the same set. */
   'account-profile': () => import('./pages/account.js'),
