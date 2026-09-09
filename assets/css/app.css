@@ -113,6 +113,7 @@
   --color-accent:         light-dark(var(--color-accent-600), var(--color-accent-300));
   --color-on-accent:      light-dark(var(--color-neutral-0), var(--color-accent-900));
   --color-link:           light-dark(var(--color-brand-700), var(--color-brand-300));
+  --color-fare:           light-dark(#0146a4, var(--color-brand-300));
 
   --color-page:           light-dark(var(--color-neutral-0), var(--color-neutral-950));
   --color-surface:        light-dark(var(--color-neutral-0), var(--color-neutral-900));
@@ -2242,8 +2243,19 @@
     font-weight: 600;
   }
 
-  .preference-card__badge--halal {
-    background-color: #1f7a44;
+  /*
+   * The certification mark itself, in the corner the label used to sit in. The
+   * artwork carries its own surround, so it needs no plate — and it opts out
+   * of the placeholder tint every image gets, which would show through it.
+   */
+  .preference-card__stamp {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: --spacing(3);
+    inset-inline-start: --spacing(3);
+    inline-size: --spacing(18);
+    block-size: auto;
+    background-color: transparent;
   }
 
   .preference-card__tag {
@@ -5903,7 +5915,7 @@
     inset-inline-start: 0;
     padding: --spacing(1.5) --spacing(3);
     border-start-start-radius: var(--radius-lg);
-    border-end-end-radius: var(--radius-sm);
+    border-end-end-radius: var(--radius-md);
     background-color: var(--color-cta-from);
     font-size: var(--text-2xs);
     font-weight: 600;
@@ -5921,7 +5933,7 @@
   .fare-card__price {
     font-size: var(--text-base);
     font-weight: 700;
-    color: var(--color-primary);
+    color: var(--color-fare);
   }
 
   .fare-card__per {
@@ -5932,16 +5944,42 @@
 
   .fare-card__points {
     display: grid;
-    gap: --spacing(3);
+    gap: --spacing(2);
     margin-block-start: --spacing(1);
   }
 
-  .fare-card__point {
+  /* Its own surface even on the chosen card, which is tinted: the facts read
+     as a set of chips rather than as text on the card. */
+  .fare-fact {
     display: flex;
     align-items: center;
     gap: --spacing(3);
+    padding: --spacing(2) --spacing(3);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+  }
+
+  .fare-fact__icon {
+    flex: none;
+    color: var(--color-primary);
+  }
+
+  .fare-fact__text { min-inline-size: 0; }
+
+  .fare-fact__label {
+    display: block;
+    font-size: var(--text-2xs);
+    line-height: 1.3;
+    color: var(--color-fg-muted);
+  }
+
+  .fare-fact__value {
+    display: block;
     font-size: var(--text-sm);
-    color: var(--color-fg);
+    font-weight: 600;
+    line-height: 1.35;
+    color: var(--color-fg-heading);
   }
 
   /* --- Baggage and fare rules -------------------------------------------- */
@@ -5965,12 +6003,6 @@
   .rule-icon--change {
     background-color: var(--color-success-surface);
     color: var(--color-success);
-  }
-
-  /* A condition the fare does not allow. */
-  .rule-icon--stop {
-    background-color: var(--color-error-surface);
-    color: var(--color-error);
   }
 
   .rule-icon--brand {
