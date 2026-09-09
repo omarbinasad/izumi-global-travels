@@ -757,67 +757,119 @@
           </details>
         </section>
 
-        <div class="grid gap-5 md:grid-cols-2">
+        <!-- BLADE BOUNDARY: fare family -> <x-booking.fare-family :fares="$fares" /> -->
+        <!--
+          Radios, so the choice is part of the form and needs nothing running to
+          be made. The prices are the difference per traveller as the backend
+          worked it out; picking one re-prices the booking server-side.
+        -->
+        <section class="review-panel fare-family" aria-labelledby="fare-family-title">
+          <div class="fare-family__head">
+            <div>
+              <h2 class="fare-family__title" id="fare-family-title">Choose your Economy fare</h2>
+              <p class="fare-family__lead">Select one fare type for all passengers on this itinerary.</p>
+            </div>
 
-          <!-- BLADE BOUNDARY: baggage allowance -> <x-booking.baggage /> -->
-          <section class="review-panel">
-            <h2 class="m-0 text-base font-semibold text-fg-heading">Baggage included</h2>
-            <ul class="grid grid-cols-2 gap-4 mt-4 m-0 p-0 list-none">
-              <li class="flex items-center gap-3">
-                <svg class="icon size-8 text-primary" aria-hidden="true"><use href="#i-bag"></use></svg>
-                <span>
-                  <span class="block text-xs text-fg-muted">Cabin baggage</span>
-                  <span class="block text-base font-semibold text-fg-heading">7 kg</span>
-                  <span class="block text-xs text-fg-muted">One adult</span>
-                </span>
-              </li>
-              <li class="flex items-center gap-3">
-                <svg class="icon size-8 text-primary" aria-hidden="true"><use href="#i-bag"></use></svg>
-                <span>
-                  <span class="block text-xs text-fg-muted">Checked baggage</span>
-                  <span class="block text-base font-semibold text-fg-heading">23 kg</span>
-                  <span class="block text-xs text-fg-muted">One adult</span>
-                </span>
-              </li>
-            </ul>
-          </section>
-          <!-- END BLADE BOUNDARY: baggage allowance -->
+            <p class="fare-family__cabin">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-seat"></use></svg>Economy cabin
+            </p>
+          </div>
 
-          <!-- BLADE BOUNDARY: fare rules -> <x-booking.fare-rules /> -->
-          <section class="review-panel" data-fare-id="far_saver">
-            <h2 class="m-0 text-base font-semibold text-fg-heading">Fare rules</h2>
-            <ul class="grid gap-3 mt-4 m-0 p-0 list-none">
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon rule-icon--change" aria-hidden="true">
-                  <svg class="icon"><use href="#i-refresh"></use></svg>
-                </span>
-                Changes allowed with fee
-              </li>
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon" aria-hidden="true">
-                  <svg class="icon"><use href="#i-target"></use></svg>
-                </span>
-                Refundable with fee
-              </li>
-              <li class="flex items-center gap-3 text-sm text-fg">
-                <span class="rule-icon rule-icon--brand" aria-hidden="true">
-                  <svg class="icon"><use href="#i-shield"></use></svg>
-                </span>
-                Economy Saver
-              </li>
-            </ul>
+          <div class="fare-grid" role="radiogroup" aria-labelledby="fare-family-title">
+            <label class="fare-card">
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_saver" checked>
+              <span class="fare-card__badge">Recommended</span>
+              <span class="fare-card__name">Economy Saver</span>
+              <span class="fare-card__price">Included</span>
 
-            <a class="inline-flex items-center gap-2 mt-4 text-sm font-semibold text-link no-underline hover:underline" href="#full-fare-rules">
-              View full fare rules
-              <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-            </a>
-          </section>
-          <!-- END BLADE BOUNDARY: fare rules -->
-        </div>
+              <span class="fare-card__points">
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-bag"></use></svg>
+                  </span>Checked baggage 23 kg
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--change" aria-hidden="true">
+                    <svg class="icon"><use href="#i-refresh"></use></svg>
+                  </span>Changes with fee
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--stop" aria-hidden="true">
+                    <svg class="icon"><use href="#i-close"></use></svg>
+                  </span>Non-refundable
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-seat"></use></svg>
+                  </span>Seat selection for a fee
+                </span>
+              </span>
+            </label>
 
-        <!-- The conditions the "View full fare rules" link points at. They are
-             the carrier rules the backend returned; the amounts are quoted
-             again before any change or refund is taken. -->
+            <label class="fare-card">
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_standard">
+              <span class="fare-card__name">Economy Standard</span>
+              <span class="fare-card__price">+ BDT 3,500<span class="fare-card__per"> / traveller</span></span>
+
+              <span class="fare-card__points">
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-bag"></use></svg>
+                  </span>Checked baggage 30 kg
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--change" aria-hidden="true">
+                    <svg class="icon"><use href="#i-refresh"></use></svg>
+                  </span>Lower change fee
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--change" aria-hidden="true">
+                    <svg class="icon"><use href="#i-check"></use></svg>
+                  </span>Refundable with fee
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-seat"></use></svg>
+                  </span>Standard seat included
+                </span>
+              </span>
+            </label>
+
+            <label class="fare-card">
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_flex">
+              <span class="fare-card__name">Economy Flex</span>
+              <span class="fare-card__price">+ BDT 7,900<span class="fare-card__per"> / traveller</span></span>
+
+              <span class="fare-card__points">
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-bag"></use></svg>
+                  </span>Checked baggage 35 kg
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--change" aria-hidden="true">
+                    <svg class="icon"><use href="#i-refresh"></use></svg>
+                  </span>Free changes
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon rule-icon--change" aria-hidden="true">
+                    <svg class="icon"><use href="#i-check"></use></svg>
+                  </span>Refundable
+                </span>
+                <span class="fare-card__point">
+                  <span class="rule-icon" aria-hidden="true">
+                    <svg class="icon"><use href="#i-seat"></use></svg>
+                  </span>Preferred seat included
+                </span>
+              </span>
+            </label>
+          </div>
+        </section>
+        <!-- END BLADE BOUNDARY: fare family -->
+
+        <!-- The conditions behind the summary above. They are the carrier rules
+             the backend returned; the amounts are quoted again before any
+             change or refund is taken. -->
         <section class="review-panel" id="full-fare-rules">
           <h2 class="m-0 text-base font-semibold text-fg-heading">Full fare rules</h2>
           <dl class="grid gap-4 sm:grid-cols-2 mt-4 m-0">
