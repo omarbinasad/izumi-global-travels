@@ -53,11 +53,13 @@ function weekdayIndex(date) {
   return (date.getDay() + 6) % 7;
 }
 
+/* A page can hold more than one search form — the landing page has flights
+   and hotels side by side — and each gets its own panel and its own state. */
 export function initDateRange(root = document) {
-  const scope = qs('[data-date-range]', root);
+  qsa('[data-date-range]', root).forEach(setupRange);
+}
 
-  if (!scope) return;
-
+function setupRange(scope) {
   const startInput = qs('[data-date-input="depart"]', scope);
   const startField = startInput?.closest('.search-field');
 
@@ -68,6 +70,14 @@ export function initDateRange(root = document) {
      — simply does not render it, and the panel is the same control either
      way. */
   const endInput = qs('[data-date-input="return"]', scope);
+
+  /* What the two ends are called here. A stay checks in and out; a trip
+     departs and returns. The markup says which, and says nothing when it is
+     the ordinary case. */
+  const words = {
+    start: scope.dataset.dateStart ?? 'departure',
+    end: scope.dataset.dateEnd ?? 'return',
+  };
   const endField = endInput?.closest('.search-field') ?? null;
 
   /* Tells the stylesheet to drop the invisible native picker overlay: from
@@ -205,8 +215,8 @@ export function initDateRange(root = document) {
     /* A form with no return field is asking for one day, not the first of
        two — the flight search still says 'departure' on a one-way trip. */
     hint.textContent = !endInput ? 'Choose a date'
-      : mode === 'end' ? 'Choose your return date'
-      : 'Choose your departure date';
+      : mode === 'end' ? `Choose your ${words.end} date`
+      : `Choose your ${words.start} date`;
     qs('[data-date-prev]', panel).disabled = toISO(view) <= toISO(startOfMonth(today));
   }
 

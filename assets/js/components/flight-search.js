@@ -9,6 +9,7 @@
 import { qs, qsa, on } from '../core/dom.js';
 import { initDateRange } from './date-range.js';
 import { initSteppers } from './stepper.js';
+import { initPopout } from './popout.js';
 import { initAirportFields } from './airport-field.js';
 
 /** Product tabs: Flights / eSIM / Flight status. */
@@ -174,31 +175,9 @@ function initPax(root) {
 
   update();
 
-  /*
-   * The search panel sits at the foot of the hero, so a pop-out dropped below
-   * it runs off the screen. Presentation only: with no JavaScript the panel
-   * still opens, downwards.
-   */
-  const panel = qs('[data-pax-panel]', pax);
-
-  on(pax, 'toggle', () => {
-    if (!pax.open || !panel) return;
-    const field = pax.getBoundingClientRect();
-    const height = panel.getBoundingClientRect().height;
-    const below = window.innerHeight - field.bottom;
-    /* Above only when it will not fit below and there is more room up there. */
-    panel.dataset.drop = (height + 16 > below && field.top > below) ? 'up' : 'down';
-  });
-
-  on(document, 'click', (event) => {
-    if (pax.open && !pax.contains(event.target)) pax.open = false;
-  });
-
-  on(pax, 'keydown', (event) => {
-    if (event.key !== 'Escape' || !pax.open) return;
-    pax.open = false;
-    qs('summary', pax)?.focus();
-  });
+  /* Dropping the panel the right way up, closing it on an outside click or
+     Escape: the same behaviour the hotel guests panel needs, so it is shared. */
+  initPopout(pax, qs('[data-pax-panel]', pax));
 }
 
 /**

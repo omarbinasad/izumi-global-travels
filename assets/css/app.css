@@ -2882,50 +2882,6 @@
     font-size: var(--text-sm);
   }
 
-  /* --- Hotel results page -------------------------------------------------
-     What was asked for, then the list. The fields themselves live on the
-     search panel, so changing the query means going back to it.
-     ---------------------------------------------------------------------- */
-
-  .hotel-summary {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: --spacing(3);
-    margin-block-start: --spacing(6);
-    padding: --spacing(4) --spacing(5);
-    border-radius: var(--radius-lg);
-    background-color: var(--color-surface);
-    box-shadow: var(--shadow-sm);
-  }
-
-  .hotel-summary__query {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: --spacing(2) --spacing(4);
-    margin: 0;
-    font-size: var(--text-sm);
-    color: var(--color-fg-muted);
-  }
-
-  .hotel-summary__place {
-    font-size: var(--text-base);
-    font-weight: 600;
-    color: var(--color-fg-heading);
-  }
-
-  .hotel-summary__line {
-    display: inline-flex;
-    align-items: center;
-    gap: --spacing(2);
-  }
-
-  .hotel-summary__line svg {
-    flex: none;
-    color: var(--color-fg-muted);
-  }
 
   .hotel-results { padding-block: --spacing(6) --spacing(10); }
 
@@ -10597,6 +10553,13 @@
    */
   .order-card__more {
     display: contents;
+  }
+
+  /* A row whose detail lives elsewhere links out instead of opening a
+     panel, and sits where that panel's trigger would have. */
+  .order-card__action {
+    grid-area: more;
+    justify-content: center;
   }
 
   .order-card__more-trigger {

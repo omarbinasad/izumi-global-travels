@@ -695,7 +695,7 @@
                       Tell us where and when, and we come back with rooms and prices.
                     </p>
 
-                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)_auto]">
+                    <div class="grid gap-2 items-stretch sm:grid-cols-2 lg:grid-cols-[minmax(0,1.4fr)_minmax(0,2.2fr)_minmax(0,1.2fr)_auto]">
 
                       <div class="search-field">
                         <label class="search-field__label" for="hotel-place">Where to</label>
@@ -704,51 +704,73 @@
                                placeholder="City, area or hotel" autocomplete="off">
                       </div>
 
-                      <div class="search-field">
-                        <label class="search-field__label" for="hotel-check-in">Check in</label>
-                        <span class="search-field__value">
-                          <input class="search-field__control search-field__control--lg" type="date"
-                                 id="hotel-check-in" name="check_in" value="2026-09-18" data-date-input>
-                          <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
-                        </span>
+                      <!-- The pair is one scope, so the picker opens as a range: choosing a
+                           check-in moves it straight on to the check-out. -->
+                      <div class="relative grid grid-cols-2 gap-2 items-stretch sm:col-span-2 lg:col-span-1" data-date-range data-date-start="check-in" data-date-end="check-out">
+                        <div class="search-field">
+                          <label class="search-field__label" for="hotel-check-in">Check in</label>
+                          <span class="search-field__value">
+                            <input class="search-field__control search-field__control--lg" type="date"
+                                   id="hotel-check-in" name="check_in" value="2026-09-18" required data-date-input="depart">
+                            <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
+                          </span>
+                        </div>
+
+                        <div class="search-field">
+                          <label class="search-field__label" for="hotel-check-out">Check out</label>
+                          <span class="search-field__value">
+                            <input class="search-field__control search-field__control--lg" type="date"
+                                   id="hotel-check-out" name="check_out" value="2026-09-27" required data-date-input="return">
+                            <span class="search-field__display" data-date-display aria-hidden="true">27 Sep</span>
+                          </span>
+                        </div>
                       </div>
 
-                      <div class="search-field">
-                        <label class="search-field__label" for="hotel-check-out">Check out</label>
-                        <span class="search-field__value">
-                          <input class="search-field__control search-field__control--lg" type="date"
-                                 id="hotel-check-out" name="check_out" value="2026-09-27" data-date-input>
-                          <span class="search-field__display" data-date-display aria-hidden="true">27 Sep</span>
-                        </span>
-                      </div>
+                      <!-- <details> so the panel opens without JavaScript, and the counts are
+                           real number inputs for the same reason. -->
+                      <details class="search-field relative max-lg:col-span-full" data-guests>
+                        <summary class="pax__summary">
+                          <span class="search-field__label">Guests</span>
+                          <span class="search-field__control--lg" data-guests-summary>2 guests</span>
+                          <span class="search-field__sub" data-guests-rooms>1 room</span>
+                        </summary>
 
-                      <div class="search-field">
-                        <label class="search-field__label" for="hotel-guests">Guests</label>
-                        <span class="search-field__select">
-                          <select class="search-field__control search-field__control--lg" id="hotel-guests" name="guests">
-                            <option value="1">1 guest</option>
-                            <option value="2" selected>2 guests</option>
-                            <option value="3">3 guests</option>
-                            <option value="4">4 guests</option>
-                            <option value="5">5 guests</option>
-                            <option value="6">6 guests</option>
-                          </select>
-                          <svg class="icon size-4 search-field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                        </span>
-                      </div>
+                        <div class="pax__panel" data-guests-panel>
+                          <div class="pax__row">
+                            <span class="pax__name">
+                              Guests
+                              <span class="pax__hint">Adults and children</span>
+                            </span>
+                            <span class="stepper" data-stepper>
+                              <button class="stepper__button" type="button" data-stepper-down aria-label="One fewer guest">
+                                <svg class="icon size-4" aria-hidden="true"><use href="#i-minus"></use></svg>
+                              </button>
+                              <input class="stepper__value" type="number" id="hotel-guests" name="guests"
+                                     value="2" min="1" max="12" aria-label="Guests" data-guests-count>
+                              <button class="stepper__button" type="button" data-stepper-up aria-label="One more guest">
+                                <svg class="icon size-4" aria-hidden="true"><use href="#i-plus"></use></svg>
+                              </button>
+                            </span>
+                          </div>
 
-                      <div class="search-field">
-                        <label class="search-field__label" for="hotel-rooms">Rooms</label>
-                        <span class="search-field__select">
-                          <select class="search-field__control search-field__control--lg" id="hotel-rooms" name="rooms">
-                            <option value="1">1 room</option>
-                            <option value="2">2 rooms</option>
-                            <option value="3">3 rooms</option>
-                            <option value="4">4 rooms</option>
-                          </select>
-                          <svg class="icon size-4 search-field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
-                        </span>
-                      </div>
+                          <div class="pax__row">
+                            <span class="pax__name">
+                              Rooms
+                              <span class="pax__hint">We ask the hotel to keep them together</span>
+                            </span>
+                            <span class="stepper" data-stepper>
+                              <button class="stepper__button" type="button" data-stepper-down aria-label="One fewer room">
+                                <svg class="icon size-4" aria-hidden="true"><use href="#i-minus"></use></svg>
+                              </button>
+                              <input class="stepper__value" type="number" id="hotel-rooms" name="rooms"
+                                     value="1" min="1" max="6" aria-label="Rooms" data-rooms-count>
+                              <button class="stepper__button" type="button" data-stepper-up aria-label="One more room">
+                                <svg class="icon size-4" aria-hidden="true"><use href="#i-plus"></use></svg>
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </details>
 
                       <button class="btn btn--primary min-h-(--search-field-height) px-6 max-lg:col-span-full" type="submit">
                         Find hotels
