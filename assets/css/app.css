@@ -2704,13 +2704,10 @@
   .hotel-card__media {
     display: block;
     inline-size: 100%;
-    aspect-ratio: 1 / 1;
+    aspect-ratio: 7 / 5;
     object-fit: cover;
   }
 
-  @media (width >= 48rem) {
-    .hotel-card__media { aspect-ratio: 7 / 6; }
-  }
 
   /* --- Over the picture --- */
 
@@ -6904,6 +6901,14 @@
     object-fit: cover;
   }
 
+  /* A hotel is not an airline: its picture is a square with a soft corner
+     rather than a round mark, and a little larger for it to read at all. */
+  .booking-card__logo--stay {
+    inline-size: --spacing(11);
+    block-size: --spacing(11);
+    border-radius: var(--radius-md);
+  }
+
   .booking-card__airline {
     display: block;
     font-size: var(--text-sm);
@@ -10198,4 +10203,819 @@
   }
 
   .toast__action { justify-content: center; }
+
+  /* --- Payment method ------------------------------------------------------
+     Two ways to pay, and the card fields that belong to one of them. Which
+     fields show follows the checked radio in CSS, so the choice needs nothing
+     running and survives a page the backend renders with one already picked.
+
+     The card box is a mount point for Stripe's iframe, never an input of ours:
+     it is styled to look like the field the traveller will type into, and the
+     real one replaces it. See the comment in pages/flights/payment.html.
+     -------------------------------------------------------------------- */
+
+  .pay-title {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .pay-title__icon { color: var(--color-primary); }
+
+  .pay-methods {
+    display: grid;
+    gap: --spacing(3);
+    margin-block-start: --spacing(4);
+  }
+
+  @media (width >= 40rem) {
+    .pay-methods { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .pay-method {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    cursor: pointer;
+    transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .pay-method:hover { border-color: var(--color-primary); }
+
+  .pay-method:has(:checked) {
+    border-color: var(--color-primary);
+    box-shadow: inset 0 0 0 1px var(--color-primary);
+    background-color: color-mix(in srgb, var(--color-primary) 5%, transparent);
+  }
+
+  /* The radio is the control; the label around it shows the focus. */
+  .pay-method:has(:focus-visible) {
+    outline: var(--border-width-strong) solid var(--color-ring);
+    outline-offset: 2px;
+  }
+
+  .pay-method__input { flex: none; }
+
+  .pay-method__mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: --spacing(9);
+    block-size: --spacing(9);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-muted);
+    color: var(--color-primary);
+  }
+
+  .pay-method__name {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .pay-methods__note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin-block: --spacing(3) 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .pay-methods__note .icon { flex: none; margin-block-start: 2px; }
+
+  /* Each block belongs to one method: only the checked one's shows. Written
+     as a pair so that with no stylesheet at all both are simply present. */
+  .review-panel:has([data-pay-method="card"]:checked) .pay-methods__note { display: none; }
+
+  .review-panel:has([data-pay-method="redirect"]:checked) .pay-card { display: none; }
+
+  .pay-card {
+    display: grid;
+    gap: --spacing(2);
+    margin-block-start: --spacing(4);
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-muted);
+  }
+
+  .pay-card__title {
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  /*
+   * Stripe replaces the inside of this box with its own iframe, so it carries
+   * the field's look — the border, the height, the padding — and nothing else.
+   */
+  .pay-card__mount {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--control-height);
+    padding-inline: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface);
+  }
+
+  .pay-card__placeholder {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    gap: --spacing(3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    /* Muted on purpose: this is the shape of a field, not a field. */
+    color: var(--color-fg-muted);
+  }
+
+  .pay-card__placeholder-icon { color: var(--color-fg-muted); }
+
+  .pay-card__meta {
+    margin-inline-start: auto;
+    white-space: nowrap;
+  }
+
+  .pay-card__hint {
+    margin: 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .pay-terms {
+    display: grid;
+    gap: --spacing(2);
+  }
+
+  .pay-terms__line {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  .pay-terms__line .icon { flex: none; margin-block-start: 3px; color: var(--color-success); }
+
+  .pay-terms__line--muted {
+    /* Not flex: this line is a sentence, and flex would space every word and
+       link in it as though they were separate items. */
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .pay-terms__line--muted a { color: var(--color-primary); }
+
+  /* --- Order card ----------------------------------------------------------
+     One row per thing bought — an eSIM, a stay — in the same shape: the
+     picture, what it is, the four facts that decide what happens next, and
+     where it stands. The rest sits in a disclosure rather than on a page of
+     its own, because neither product has a page and what someone opens the
+     row for is short.
+     -------------------------------------------------------------------- */
+
+  .order-list {
+    display: grid;
+    gap: --spacing(4);
+  }
+
+  .order-card {
+    display: grid;
+    /* Fixed tracks, not auto: the disclosure panel spans every column, and an
+       auto track would take its width from that and swell. */
+    grid-template-columns: 5rem minmax(0, 1fr);
+    grid-template-areas:
+      "media   id"
+      "detail  detail"
+      "actions more";
+    align-items: start;
+    gap: --spacing(4);
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+  }
+
+  @media (width >= 64rem) {
+    .order-card {
+      grid-template-columns: 7rem minmax(0, 15rem) minmax(0, 1fr) minmax(0, 11rem);
+      /* The status sits over the button in a column of its own, and the
+         disclosure panel takes the row under all four. */
+      grid-template-areas:
+        "media id detail actions"
+        "media id detail more";
+      align-content: start;
+      gap: --spacing(5);
+      padding: --spacing(5);
+    }
+  }
+
+  /* --- The artwork --- */
+
+  /* The artwork carries its own country wordmark, so nothing is drawn over
+     it here. */
+  .order-card__media {
+    align-self: start;
+    grid-area: media;
+    display: block;
+    inline-size: 100%;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .order-card__art {
+    display: block;
+    inline-size: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+  }
+
+  /* --- What it is --- */
+
+  .order-card__id {
+    grid-area: id;
+    display: grid;
+    gap: --spacing(1);
+    /* Name at the top, reference at the foot, so the column ends level with
+       the facts beside it rather than stopping halfway down. */
+    align-content: space-between;
+  }
+
+  .order-card__name {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .order-card__where {
+    margin: 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .order-card__ref {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+  }
+
+  .order-card__ref-label {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .order-card__ref-row {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+  }
+
+  .order-card__ref-code {
+    font-size: var(--text-base);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    color: var(--color-fg-heading);
+  }
+
+  .order-card__copy {
+    display: inline-flex;
+    padding: --spacing(1);
+    border-radius: var(--radius-sm);
+    color: var(--color-primary);
+    transition: background-color var(--transition-fast), color var(--transition-fast);
+  }
+
+  .order-card__copy:hover { background-color: var(--color-surface-muted); }
+
+  /* Said once, briefly, where the button is — no toast for a two-word event. */
+  .order-card__copy[data-copied]::after {
+    content: "Copied";
+    margin-inline-start: --spacing(1);
+    font-size: var(--text-2xs);
+    font-weight: 600;
+    color: var(--color-success);
+  }
+
+  /* --- The four facts --- */
+
+  .order-card__detail {
+    grid-area: detail;
+    display: grid;
+    gap: --spacing(3);
+    align-content: start;
+  }
+
+  .order-facts {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: --spacing(3) --spacing(5);
+    margin: 0;
+  }
+
+  .order-fact {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .order-fact__label {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .order-fact__value {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .order-fact__value .icon { flex: none; color: var(--color-fg-muted); }
+
+  /* Activation is the one fact that changes what the traveller can do next, so
+     it is the one that carries a colour. */
+  .order-fact__value--ok,
+  .order-fact__value--ok .icon { color: var(--color-success); }
+
+  .order-fact__value--wait,
+  .order-fact__value--wait .icon { color: var(--color-primary); }
+
+  .order-fact__value--off,
+  .order-fact__value--off .icon { color: var(--color-error); }
+
+  .order-card__traits {
+    display: flex;
+    flex-wrap: wrap;
+    gap: --spacing(2) --spacing(4);
+    margin: 0;
+    padding-block-start: --spacing(3);
+    border-block-start: var(--border-width) solid var(--color-line);
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .order-card__trait {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1.5);
+  }
+
+  /* --- Status and the disclosure --- */
+
+  .order-card__actions {
+    grid-area: actions;
+    display: flex;
+    align-items: center;
+  }
+
+  @media (width >= 64rem) {
+    .order-card__actions { justify-content: flex-end; }
+  }
+
+  /*
+   * display: contents so one <details> can put its summary in the actions
+   * column and its panel on a row of its own. The element itself draws
+   * nothing, which is exactly what is wanted here.
+   */
+  .order-card__more {
+    display: contents;
+  }
+
+  .order-card__more-trigger {
+    grid-area: more;
+    /* A summary is display: list-item by default, which would ignore the
+       button layout it is wearing. */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    /* The marker is the chevron inside it. */
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .order-card__more-trigger::-webkit-details-marker { display: none; }
+
+  .order-card__more[open] .order-card__more-trigger .icon { rotate: 180deg; }
+
+  /*
+   * Newer Chrome wraps a details' content in a ::details-content box, and that
+   * box — not the panel — is the grid item. Both are given the full row, so
+   * the panel spans whichever of the two the browser actually places.
+   */
+  .order-card__more::details-content { grid-column: 1 / -1; }
+
+  /*
+   * A closed ::details-content is hidden but still a grid item, so it takes a
+   * row and the gap above it — a strip of nothing under every closed card.
+   * Taking it out of the grid is what removes that.
+   */
+  .order-card__more:not([open])::details-content { display: none; }
+
+  .order-card__panel {
+    grid-column: 1 / -1;
+    display: grid;
+    gap: --spacing(3);
+    padding: --spacing(4);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-muted);
+  }
+
+  .order-panel__rows {
+    display: grid;
+    gap: --spacing(3);
+    margin: 0;
+  }
+
+  @media (width >= 48rem) {
+    .order-panel__rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .order-panel__row {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .order-panel__row dt {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* A hotel's address is prose; an activation code is not. */
+  .order-panel__text {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-heading);
+  }
+
+  .order-panel__code {
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: var(--text-sm);
+    color: var(--color-fg-heading);
+    word-break: break-all;
+  }
+
+  .order-panel__note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .order-panel__note .icon { flex: none; margin-block-start: 3px; }
+
+  .order-panel__note a { color: var(--color-primary); }
+
+  /* --- One hotel -----------------------------------------------------------
+     The gallery, then the property, its rooms and its rules beside a box that
+     adds nothing up: every figure in it is the backend's, and asking for a
+     stay is a request, which is what the note under the button says.
+     -------------------------------------------------------------------- */
+
+  .hotel-gallery {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: --spacing(2);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  /* One wide picture on a phone, with the rest as a strip beneath it; on a
+     larger screen the lead takes half and the other three tile the rest. */
+  .hotel-gallery__lead {
+    grid-column: 1 / -1;
+    inline-size: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+  }
+
+  .hotel-gallery__tile {
+    inline-size: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+
+  .hotel-gallery__tile--last { display: none; }
+
+  /*
+   * Four pictures, four cells: the lead takes the left half over both rows,
+   * two stack in the middle, and the fourth takes the right column over both
+   * rows. Nothing is left over, so there is no empty square in the corner.
+   */
+  @media (width >= 48rem) {
+    .hotel-gallery {
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: repeat(2, minmax(--spacing(28), 1fr));
+    }
+
+    .hotel-gallery__lead {
+      grid-column: 1;
+      grid-row: 1 / -1;
+      aspect-ratio: auto;
+      block-size: 100%;
+    }
+
+    .hotel-gallery__tile {
+      aspect-ratio: auto;
+      block-size: 100%;
+    }
+
+    .hotel-gallery__tile--last {
+      display: block;
+      grid-column: 3;
+      grid-row: 1 / -1;
+    }
+  }
+
+  .hotel-gallery__save {
+    position: absolute;
+    inset-block-start: --spacing(3);
+    inset-inline-end: --spacing(3);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: --spacing(10);
+    block-size: --spacing(10);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-md);
+    color: var(--color-fg-muted);
+    transition: color var(--transition-fast);
+  }
+
+  .hotel-gallery__save[aria-pressed="true"] { color: var(--color-error); }
+
+  .hotel-gallery__save[aria-pressed="true"] .icon { fill: currentColor; }
+
+  /* --- The property --- */
+
+  .hotel-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: --spacing(4);
+  }
+
+  .hotel-head__name {
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    line-height: var(--leading-heading);
+    color: var(--color-fg-heading);
+  }
+
+  .hotel-head__place {
+    display: flex;
+    align-items: center;
+    gap: --spacing(2);
+    margin-block: --spacing(2) 0;
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .hotel-head__place .icon { flex: none; }
+
+  .hotel-head__rating {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+  }
+
+  .hotel-head__score {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-inline-size: --spacing(11);
+    padding: --spacing(2);
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary);
+    font-size: var(--text-base);
+    font-weight: 700;
+    color: var(--color-on-cta);
+  }
+
+  .hotel-head__verdict {
+    display: grid;
+    gap: 2px;
+  }
+
+  .hotel-head__word {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .hotel-head__count {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .hotel-head__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: --spacing(2);
+    margin-block: --spacing(4) 0;
+  }
+
+  .hotel-head__lead {
+    margin-block: --spacing(4) 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg);
+  }
+
+  /* --- What it offers --- */
+
+  .amenity-grid {
+    display: grid;
+    gap: --spacing(3);
+    margin-block: --spacing(4) 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (width >= 40rem) {
+    .amenity-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .amenity {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+  }
+
+  .amenity__mark {
+    display: inline-flex;
+    flex: none;
+    align-items: center;
+    justify-content: center;
+    inline-size: --spacing(8);
+    block-size: --spacing(8);
+    border-radius: var(--radius-md);
+    background-color: var(--color-surface-muted);
+    color: var(--color-primary);
+  }
+
+  /* --- Rooms --- */
+
+  .room-list {
+    display: grid;
+    gap: --spacing(3);
+    margin-block-start: --spacing(4);
+  }
+
+  .room {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(4);
+    padding: --spacing(4);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+  }
+
+  .room__main { min-inline-size: 0; }
+
+  .room__name {
+    margin: 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .room__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: --spacing(2) --spacing(4);
+    margin-block: --spacing(2) 0;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .room__fact,
+  .room__perk {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(1.5);
+  }
+
+  .room__perks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: --spacing(2) --spacing(4);
+    margin-block: --spacing(3) 0;
+    font-size: var(--text-xs);
+    color: var(--color-success);
+  }
+
+  .room__aside {
+    display: grid;
+    gap: --spacing(2);
+    justify-items: end;
+    text-align: end;
+  }
+
+  .room__price { margin: 0; }
+
+  .room__amount {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .room__unit {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* --- House rules --- */
+
+  .rule-rows {
+    display: grid;
+    gap: --spacing(3);
+    margin-block: --spacing(4) 0;
+  }
+
+  @media (width >= 48rem) {
+    .rule-rows { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  .rule-row {
+    display: grid;
+    gap: 2px;
+    min-inline-size: 0;
+  }
+
+  .rule-row dt {
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  .rule-row dd {
+    margin: 0;
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg);
+  }
+
+  /* --- The box beside it --- */
+
+  .book-box__rate {
+    display: flex;
+    align-items: baseline;
+    gap: --spacing(2);
+    margin-block: --spacing(3) 0;
+  }
+
+  .book-box__amount {
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  .book-box__unit {
+    font-size: var(--text-sm);
+    color: var(--color-fg-muted);
+  }
+
+  .book-box__note {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(2);
+    margin-block: --spacing(3) 0;
+    font-size: var(--text-xs);
+    line-height: var(--leading-relaxed);
+    color: var(--color-fg-muted);
+  }
+
+  .book-box__note .icon { flex: none; margin-block-start: 2px; }
 }

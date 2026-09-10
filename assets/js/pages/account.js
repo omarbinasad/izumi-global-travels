@@ -9,6 +9,7 @@ import { initDateFields } from '../components/date-field.js';
 import { initDigitsOnly } from '../components/digits.js';
 import { initConfirmFields } from '../components/confirm-field.js';
 import { initValidation } from '../components/validate.js';
+import { initCopyText } from '../components/copy-text.js';
 
 export function init() {
   initPhoneFields();
@@ -17,4 +18,5 @@ export function init() {
   initDigitsOnly();
   initConfirmFields();
   initValidation();
+  initCopyText();
 }

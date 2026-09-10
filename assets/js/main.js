@@ -26,6 +26,7 @@ const pageModules = {
   'flight-details': () => import('./pages/flight-details.js'),
   passengers: () => import('./pages/passengers.js'),
   'add-ons': () => import('./pages/add-ons.js'),
+  payment: () => import('./pages/payment.js'),
   blog: () => import('./pages/blog.js'),
   hotels: () => import('./pages/hotels.js'),
   'flight-status': () => import('./pages/flight-status.js'),

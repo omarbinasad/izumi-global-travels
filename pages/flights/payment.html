@@ -6,21 +6,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Izumi Global Travels is a Dhaka-based travel agency booking flights across Asia, the Gulf and beyond.">
+  <meta name="description" content="Pay for your Izumi Global Travels booking by card or through SSLCommerz.">
+  <!-- Step of a booking in progress. Nothing here belongs in an index. -->
+  <meta name="robots" content="noindex">
 
-  <title>About us — Izumi Global Travels</title>
+  <title>Payment — Izumi Global Travels</title>
 
   <!--
     Runs before paint so the dark theme never flashes light.
     Must stay synchronous and must not be type="module".
     Blade: resources/views/layouts/app.blade.php
   -->
-  <script src="../assets/js/core/theme-boot.js"></script>
+  <script src="../../assets/js/core/theme-boot.js"></script>
 
-  <link rel="stylesheet" href="../assets/css/build.css">
+  <link rel="stylesheet" href="../../assets/css/build.css">
 </head>
 
-<body class="results-page" data-page="about">
+<body class="results-page" data-page="payment">
 
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
@@ -79,11 +81,11 @@
   </svg>
 
   <!-- BLADE BOUNDARY: site header -> <x-layout.header /> -->
-  <header class="sticky top-0 z-(--z-header) bg-surface" data-site-header>
+  <header class="sticky top-0 z-(--z-header) bg-surface border-b border-line" data-site-header>
     <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:grid lg:grid-cols-[1fr_auto_1fr] lg:min-h-(--header-height-lg) lg:gap-8">
 
       <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
-      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../index.html" aria-label="Izumi Global Travels — home">
+      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../../index.html" aria-label="Izumi Global Travels — home">
         <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
           <circle cx="20" cy="20" r="20" fill="#1668e0"/>
           <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -98,10 +100,10 @@
       <div class="site-nav" id="site-nav" data-nav-panel>
         <nav class="lg:justify-self-center" aria-label="Primary">
           <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="../index.html">Flights</a></li>
-            <li><a class="nav-link" href="about.html">About</a></li>
-            <li><a class="nav-link" href="contact.html">Contact</a></li>
-            <li><a class="nav-link" href="faq.html">FAQ</a></li>
+            <li><a class="nav-link" href="../../index.html">Flights</a></li>
+            <li><a class="nav-link" href="../../pages/about.html">About</a></li>
+            <li><a class="nav-link" href="../../pages/contact.html">Contact</a></li>
+            <li><a class="nav-link" href="../../pages/faq.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -295,7 +297,7 @@
         </div>
         <!-- END BLADE BOUNDARY: theme toggle -->
 
-        <a class="btn btn--primary btn--sm" href="auth/login.html">Login/Register</a>
+        <a class="btn btn--primary btn--sm" href="../../pages/auth/login.html">Login/Register</a>
       </div>
 
       <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
@@ -314,102 +316,263 @@
   <!-- BLADE BOUNDARY: main content -> @yield('content') -->
   <main id="main-content">
 
-    <!-- BLADE BOUNDARY: page head -> <x-ui.page-head /> -->
-    <div class="page-container page-head">
-      <p class="page-head__eyebrow">About us</p>
-      <h1 class="page-head__title">Travel booked by people who answer the phone</h1>
-      <p class="page-head__text">
-        Izumi Global Travels is a Dhaka-based travel agency. We book flights across Asia, the Gulf and beyond,
-        and we stay with a booking after it is paid for.
-      </p>
+    <!-- ====================================================================
+         Step four. NOTHING IS CHARGED IN THE BROWSER. The method chosen here
+         is submitted as an id; the backend creates the payment with the
+         gateway, and the card number never reaches this document — Stripe's
+         own field is an iframe served by Stripe, and what comes back to us is
+         a token. No key, secret or amount is trusted from this page.
+         ==================================================================== -->
+    <div class="page-container pt-6" data-offer-id="off_1">
+
+      <a class="review-back" href="add-ons.html">
+        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
+        Back to add-ons
+      </a>
+
+      <!-- BLADE BOUNDARY: booking steps -> <x-booking.steps current="4" /> -->
+      <nav aria-label="Booking progress">
+        <ol class="booking-steps">
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Flight Details<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Passenger<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="done">
+            <span class="booking-steps__dot" aria-hidden="true">
+              <svg class="icon"><use href="#i-check"></use></svg>
+            </span>
+            <span class="booking-steps__label">Add-ons<span class="sr-only"> — completed</span></span>
+          </li>
+          <li class="booking-steps__item" data-state="current" aria-current="step">
+            <span class="booking-steps__dot" aria-hidden="true">4</span>
+            <span class="booking-steps__label">Payment</span>
+          </li>
+          <li class="booking-steps__item">
+            <span class="booking-steps__dot" aria-hidden="true">5</span>
+            <span class="booking-steps__label">Confirm</span>
+          </li>
+        </ol>
+      </nav>
+      <!-- END BLADE BOUNDARY: booking steps -->
     </div>
-    <!-- END BLADE BOUNDARY: page head -->
 
-    <div class="page-container grid gap-5 pb-10">
+    <div class="page-container review-layout">
 
-      <section class="review-panel">
-        <h2 class="m-0 text-lg font-semibold text-fg-heading">Our story</h2>
-        <div class="prose-cols mt-4">
-          <p class="m-0 text-sm leading-relaxed text-fg">
-            We started as a counter that sold tickets to families flying between Bangladesh and Japan. The routes
-            grew, the aggregators arrived, and booking a flight became something you did alone at midnight with
-            twelve tabs open.
+      <!--
+        method="post": paying is not navigation. In this static build
+        assets/js/pages/payment.js only moves to the next page so the flow can
+        be walked; it takes no payment and never could.
+      -->
+      <form class="grid gap-5" method="post" action="confirm.html" data-payment-form>
+
+        <!-- BLADE BOUNDARY: payment method -> <x-booking.payment-method :methods="$methods" /> -->
+        <section class="review-panel" aria-labelledby="payment-method-title">
+          <h2 class="pay-title" id="payment-method-title">
+            <svg class="icon size-5 pay-title__icon" aria-hidden="true"><use href="#i-card"></use></svg>
+            Payment Method
+          </h2>
+
+          <!-- Radios: the chosen method is a real form value, and the card
+               fields below appear from the CSS that follows the checked one. -->
+          <div class="pay-methods" role="radiogroup" aria-labelledby="payment-method-title">
+            <label class="pay-method">
+              <input class="pay-method__input" type="radio" name="payment_method" value="pay_sslcommerz" data-pay-method="redirect" checked>
+              <span class="pay-method__mark" aria-hidden="true">
+                <svg class="icon size-5"><use href="#i-shield"></use></svg>
+              </span>
+              <span class="pay-method__name">SSLCommerz</span>
+            </label>
+
+            <label class="pay-method">
+              <input class="pay-method__input" type="radio" name="payment_method" value="pay_stripe" data-pay-method="card">
+              <span class="pay-method__mark" aria-hidden="true">
+                <svg class="icon size-5"><use href="#i-card"></use></svg>
+              </span>
+              <span class="pay-method__name">Stripe (Card)</span>
+            </label>
+          </div>
+
+          <p class="pay-methods__note" data-pay-note>
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-external"></use></svg>
+            SSLCommerz opens its own secure page for cards, bKash, Nagad and bank transfer.
           </p>
-          <p class="m-0 text-sm leading-relaxed text-fg">
-            We kept the counter. The search on this site does what a good aggregator does, and behind it is the
-            same team that has been reading fare rules for a living since 2014 — so when a fare looks too good, or
-            a connection is too tight, someone tells you before you pay.
+
+          <!--
+            THE CARD NUMBER NEVER TOUCHES THIS PAGE.
+
+            The box below is a mount point, not a field. Stripe's card input is
+            an iframe served by Stripe: the number, expiry and CVC are typed
+            into their document, we are handed a token, and the card data never
+            enters ours. That is what keeps this out of PCI scope, so nothing
+            here may ever be replaced with a real <input> for a card number.
+
+            The publishable key that mounts it is rendered by the backend into
+            the page it serves. It is not written into this file, and the
+            secret key never leaves the server.
+          -->
+          <div class="pay-card">
+            <h3 class="pay-card__title">Card Details</h3>
+
+            <div class="pay-card__mount" data-stripe-card>
+              <span class="pay-card__placeholder">
+                <svg class="icon size-5 pay-card__placeholder-icon" aria-hidden="true"><use href="#i-card"></use></svg>
+                Card number
+                <span class="pay-card__meta">MM / YY<span aria-hidden="true"> &nbsp; </span>CVC</span>
+              </span>
+            </div>
+
+            <p class="pay-card__hint">Stripe's secure card field loads here. Your card details go straight to Stripe.</p>
+          </div>
+        </section>
+        <!-- END BLADE BOUNDARY: payment method -->
+
+        <!-- BLADE BOUNDARY: pay actions -> <x-booking.pay-actions :total="$total" /> -->
+        <section class="review-panel pay-terms">
+          <p class="pay-terms__line">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-lock"></use></svg>
+            Payments are encrypted end to end. We never see or store your card number.
           </p>
+          <p class="pay-terms__line pay-terms__line--muted">
+            By paying you accept our
+            <a href="../legal/booking-conditions.html">booking conditions</a> and
+            <a href="../legal/refund-policy.html">refund policy</a>.
+          </p>
+        </section>
+
+        <div class="step-actions">
+          <a class="btn btn--outline" href="add-ons.html">Back</a>
+          <button class="btn btn--primary step-actions__next" type="submit">
+            Pay BDT 139,010
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </button>
         </div>
+        <!-- END BLADE BOUNDARY: pay actions -->
+      </form>
 
-        <!-- @content-pending: illustrative figures. Replace with the real
-             numbers before launch; they are the kind of claim a visitor will
-             hold us to. -->
-        <dl class="about-stats mt-6">
-          <div class="about-stat">
-            <dt class="about-stat__label">Travellers booked</dt>
-            <dd class="about-stat__value">18,000+</dd>
-          </div>
-          <div class="about-stat">
-            <dt class="about-stat__label">Airline partners</dt>
-            <dd class="about-stat__value">40+</dd>
-          </div>
-          <div class="about-stat">
-            <dt class="about-stat__label">Destinations</dt>
-            <dd class="about-stat__value">120+</dd>
-          </div>
-          <div class="about-stat">
-            <dt class="about-stat__label">Years in travel</dt>
-            <dd class="about-stat__value">12</dd>
-          </div>
-        </dl>
-      </section>
+      <!-- BLADE BOUNDARY: trip summary -> <x-booking.trip-summary /> -->
+      <aside class="review-aside grid gap-5">
+        <section class="review-panel">
+          <h2 class="m-0 text-lg font-semibold text-fg-heading">Trip Summary</h2>
 
-      <section aria-labelledby="values-title">
-        <h2 class="m-0 mb-4 text-lg font-semibold text-fg-heading" id="values-title">What we stand for</h2>
+          <p class="itinerary__airline mt-4" data-segment-id="seg_out_1">
+            <img class="itinerary__logo size-7" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
+            <span class="min-w-0 flex-1">
+              <span class="itinerary__carrier text-xs">Biman Bangladesh Airlines</span>
+              <span class="itinerary__flight text-2xs">BG 376</span>
+            </span>
+            <span class="tag-pill">Non-stop</span>
+          </p>
 
-        <div class="grid gap-5 md:grid-cols-2">
-          <article class="review-panel">
-            <span class="rule-icon rule-icon--brand size-11" aria-hidden="true">
-              <svg class="icon size-5"><use href="#i-target"></use></svg>
+          <div class="trip-summary__route mt-5">
+            <span class="trip-summary__end">
+              <span class="trip-summary__clock">02:20</span>
+              <span class="trip-summary__iata">DAC</span>
+              <span class="trip-summary__city">Dhaka (DAC)</span>
+              <span class="trip-summary__date">18 Sep 2026</span>
             </span>
-            <h3 class="mt-4 mb-0 text-base font-semibold text-fg-heading">Fares you can check</h3>
-            <p class="mt-2 mb-0 text-sm leading-relaxed text-fg-muted">The price you see is the price the airline quoted, taxes and fees included. No figure on this site is worked out in your browser.</p>
-          </article>
-          <article class="review-panel">
-            <span class="rule-icon rule-icon--brand size-11" aria-hidden="true">
-              <svg class="icon size-5"><use href="#i-headset"></use></svg>
-            </span>
-            <h3 class="mt-4 mb-0 text-base font-semibold text-fg-heading">People, not scripts</h3>
-            <p class="mt-2 mb-0 text-sm leading-relaxed text-fg-muted">A named agent handles your booking from the request through to the ticket, and answers when something changes.</p>
-          </article>
-          <article class="review-panel">
-            <span class="rule-icon rule-icon--brand size-11" aria-hidden="true">
-              <svg class="icon size-5"><use href="#i-plane"></use></svg>
-            </span>
-            <h3 class="mt-4 mb-0 text-base font-semibold text-fg-heading">Routes we actually fly</h3>
-            <p class="mt-2 mb-0 text-sm leading-relaxed text-fg-muted">We book the carriers our travellers use most out of Dhaka, and we know which connections are worth the wait.</p>
-          </article>
-          <article class="review-panel">
-            <span class="rule-icon rule-icon--brand size-11" aria-hidden="true">
-              <svg class="icon size-5"><use href="#i-refresh"></use></svg>
-            </span>
-            <h3 class="mt-4 mb-0 text-base font-semibold text-fg-heading">Changes without drama</h3>
-            <p class="mt-2 mb-0 text-sm leading-relaxed text-fg-muted">Dates move. We quote the airline fee and the fare difference up front, then make the change for you.</p>
-          </article>
-        </div>
-      </section>
 
-      <section class="review-panel flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="m-0 text-base font-semibold text-fg-heading">Planning something complicated?</h2>
-          <p class="mt-1 mb-0 text-sm text-fg-muted">Multi-city, groups, or a fare you cannot make sense of — ask us.</p>
-        </div>
-        <a class="btn btn--primary" href="contact.html">
-          Contact the team
-          <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-        </a>
-      </section>
+            <span class="itinerary__path">
+              <span class="itinerary__duration">6h 45m</span>
+              <span class="itinerary__line" aria-hidden="true">
+                <svg class="icon--solid"><use href="#i-plane"></use></svg>
+              </span>
+            </span>
+
+            <span class="trip-summary__end trip-summary__end--arrive">
+              <span class="trip-summary__clock">10:05</span>
+              <span class="trip-summary__iata">NRT</span>
+              <span class="trip-summary__city">Tokyo (NRT)</span>
+              <span class="trip-summary__date">27 Sep 2026</span>
+            </span>
+          </div>
+
+          <hr class="trip-summary__rule mt-5">
+
+          <p class="flex items-center gap-2 mt-4 mb-0 text-sm text-fg">
+            <svg class="icon size-4 text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+            1 Adult, 1 Child, 1 Infant &middot; Economy
+          </p>
+
+
+          <hr class="trip-summary__rule mt-4">
+
+          <!-- BLADE BOUNDARY: add-ons summary -> <x-booking.add-ons-summary :selection="$selection" /> -->
+          <!-- Settled by now: this is the selection as it was left on the
+               previous step, rendered by the backend. -->
+          <div class="addon-summary">
+            <h3 class="addon-summary__title">Selected add-ons</h3>
+
+            <div class="addon-summary__body">
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 1 &middot; Adult</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>Window seat &times; 2</dt><dd class="price-row__value m-0">BDT 2,400</dd></div>
+                  <div class="price-row"><dt>Halal meal</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>Standard cover</dt><dd class="price-row__value m-0">BDT 1,250</dd></div>
+                </dl>
+              </div>
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 2 &middot; Child</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>Aisle seat &times; 2</dt><dd class="price-row__value m-0">BDT 2,400</dd></div>
+                  <div class="price-row"><dt>Regular meal</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>Premium cover</dt><dd class="price-row__value m-0">BDT 2,450</dd></div>
+                </dl>
+              </div>
+              <div class="addon-summary__group">
+                <p class="addon-summary__who">Passenger 3 &middot; Infant</p>
+                <dl class="addon-summary__list">
+                  <div class="price-row"><dt>No seat preference &times; 2</dt><dd class="price-row__value m-0">Free</dd></div>
+                  <div class="price-row"><dt>Vegetarian</dt><dd class="price-row__value m-0">Included</dd></div>
+                  <div class="price-row"><dt>No insurance</dt><dd class="price-row__value m-0">BDT 0</dd></div>
+                </dl>
+              </div>
+            </div>
+          </div>
+          <!-- END BLADE BOUNDARY: add-ons summary -->
+          <hr class="trip-summary__rule mt-4">
+
+          <dl class="grid gap-3 mt-4 m-0">
+            <div class="price-row">
+              <dt>Adult &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 61,900</dd>
+            </div>
+            <div class="price-row">
+              <dt>Child &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 49,600</dd>
+            </div>
+            <div class="price-row">
+              <dt>Infant &times; 1</dt>
+              <dd class="m-0 price-row__value">BDT 6,200</dd>
+            </div>
+            <div class="price-row">
+              <dt>Taxes &amp; Fees</dt>
+              <dd class="m-0 price-row__value">BDT 12,810</dd>
+            </div>
+            <div class="price-row">
+              <dt>Add-ons</dt>
+              <dd class="m-0 price-row__value">BDT 8,500</dd>
+            </div>
+            <div class="price-row price-row--total">
+              <dt>Total</dt>
+              <dd class="m-0 price-row__value">BDT 139,010</dd>
+            </div>
+          </dl>
+
+          <!-- Every figure is the backend's. The amount actually charged is
+               the one it sends to the gateway, not the one printed here. -->
+          <p class="mt-2 mb-0 text-xs text-fg-muted">This is the amount that will be charged.</p>
+        </section>
+      </aside>
+      <!-- END BLADE BOUNDARY: trip summary -->
     </div>
   </main>
   <!-- END BLADE BOUNDARY: main content -->
@@ -421,7 +584,7 @@
       <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
         <div class="flex items-center gap-4 col-span-2 mid:flex-col mid:items-start mid:col-span-1">
-          <a class="footer-logo" href="../index.html" aria-label="Izumi Global Travels — home">
+          <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
             <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
               <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -438,28 +601,28 @@
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="../pages/account/bookings.html">Manage Booking</a></li>
-            <li><a class="footer-nav__link" href="faq.html">FAQs</a></li>
-            <li><a class="footer-nav__link" href="support/feedback.html">Feedback</a></li>
+            <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/account/bookings.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
+            <li><a class="footer-nav__link" href="../../pages/support/feedback.html">Feedback</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="legal/terms.html">Terms &amp; Conditions</a></li>
-            <li><a class="footer-nav__link" href="legal/privacy-policy.html">Privacy Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/refund-policy.html">Refund Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/booking-conditions.html">Booking Conditions</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/terms.html">Terms &amp; Conditions</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/privacy-policy.html">Privacy Policy</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/refund-policy.html">Refund Policy</a></li>
+            <li><a class="footer-nav__link" href="../../pages/legal/booking-conditions.html">Booking Conditions</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-company">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="blog.html">Blog</a></li>
+            <li><a class="footer-nav__link" href="../../pages/about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/blog.html">Blog</a></li>
           </ul>
         </nav>
 
@@ -467,10 +630,10 @@
 
           <div class="flex flex-wrap gap-3">
             <span class="store-badge">
-              <img class="store-badge__art" src="../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
+              <img class="store-badge__art" src="../../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
             </span>
             <span class="store-badge">
-              <img class="store-badge__art" src="../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
+              <img class="store-badge__art" src="../../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
             </span>
           </div>
         </div>
@@ -479,9 +642,9 @@
 
       <div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-panel-line">
         <ul class="flex items-center gap-2 m-0 p-0 list-none" role="list">
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a class="social-link" href="../../pages/contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
         </ul>
 
         <!-- @brand-pending: text marks stand in for the licensed payment
@@ -511,6 +674,6 @@
   </a>
   <!-- END BLADE BOUNDARY: back to top -->
 
-  <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../../assets/js/main.js"></script>
 </body>
 </html>

@@ -56,6 +56,11 @@
     <symbol id="i-target" viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM12 7a5 5 0 1 0 0 10 5 5 0 0 0 0-10zM12 11.25a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5z"/></symbol>
     <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10zM9 12l2 2 4-4"/></symbol>
     <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/></symbol>
+    <symbol id="i-card" viewBox="0 0 24 24"><path d="M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2zM3 10h18M7 15h3"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><path d="M9 9h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2v-9a2 2 0 0 1 2-2zM5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+    <symbol id="i-qr" viewBox="0 0 24 24"><path d="M4 4h5v5H4zM15 4h5v5h-5zM4 15h5v5H4zM15 15h2v2h-2zM19 15h1M15 19v1M19 19h1"/></symbol>
+    <symbol id="i-signal" viewBox="0 0 24 24"><path d="M4 20v-4M9.5 20v-8M15 20v-12M20.5 20V4"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM10.5 18.5h3"/></symbol>
     <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2zM18 18v1a3 3 0 0 1-3 3h-3"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1zM10 6v2M10 11v2M10 16v2"/></symbol>
@@ -366,73 +371,161 @@
 
       <div class="account-main">
         <h1 class="account-title">Saved</h1>
-        <p class="account-lead">Fares you kept for later. Prices move, so we check them again when you search.</p>
+        <p class="account-lead">Flights and hotels you kept for later. Prices move, so we check them again when you search.</p>
 
-        <!-- BLADE BOUNDARY: saved list -> <x-account.saved-list :saved="$saved" /> -->
-        <div class="booking-list">
-          <article class="booking-card">
-            <div class="booking-card__head">
-              <p class="booking-card__ref">
-                <img class="booking-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                <span>
-                  <span class="booking-card__airline">Cathay Pacific</span>
-                  <span class="booking-card__code">Dhaka to Tokyo &middot; Round trip</span>
-                </span>
-              </p>
-              <span class="booking-card__saved">Saved 3 Sep 2026</span>
+        <!-- BLADE BOUNDARY: saved tabs -> <x-account.saved-tabs :saved="$saved" /> -->
+        <!-- Radios, not buttons: the two lists swap with no JavaScript, and the
+             chosen tab is a real form value the backend can render back. The
+             same markup as the bookings tabs, so it is one Blade component. -->
+        <div class="booking-tabs-wrap">
+          <input class="booking-tab__input sr-only" type="radio" name="saved-tab" id="saved-tab-flights" checked>
+          <input class="booking-tab__input sr-only" type="radio" name="saved-tab" id="saved-tab-hotels">
+
+          <div class="booking-tabs">
+            <label class="booking-tab" for="saved-tab-flights">Flights</label>
+            <label class="booking-tab" for="saved-tab-hotels">Hotels</label>
+          </div>
+
+          <div class="booking-panels">
+
+            <div class="booking-panel">
+              <!-- BLADE BOUNDARY: saved flights -> <x-account.saved-flights :saved="$savedFlights" /> -->
+          <div class="booking-list">
+            <article class="booking-card">
+              <div class="booking-card__head">
+                <p class="booking-card__ref">
+                  <img class="booking-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                  <span>
+                    <span class="booking-card__airline">Cathay Pacific</span>
+                    <span class="booking-card__code">Dhaka to Tokyo &middot; Round trip</span>
+                  </span>
+                </p>
+                <span class="booking-card__saved">Saved 3 Sep 2026</span>
+              </div>
+
+              <div class="booking-card__legs">
+                <p class="booking-card__detail">18 Sep – 27 Sep 2026 · 1 stop in HKG</p>
+              </div>
+
+              <div class="booking-card__foot">
+                <p class="booking-card__total"><span>Saved at</span>BDT 72,900</p>
+
+                <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
+                  Search this route
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+
+                <!-- Removing something changes state, so it is a POST, not a link. -->
+                <form method="post" action="saved.html">
+                  <button class="btn btn--outline" type="submit">Remove</button>
+                </form>
+              </div>
+            </article>
+
+            <article class="booking-card">
+              <div class="booking-card__head">
+                <p class="booking-card__ref">
+                  <img class="booking-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                  <span>
+                    <span class="booking-card__airline">China Eastern</span>
+                    <span class="booking-card__code">Dhaka to Osaka &middot; Round trip</span>
+                  </span>
+                </p>
+                <span class="booking-card__saved">Saved 28 Aug 2026</span>
+              </div>
+
+              <div class="booking-card__legs">
+                <p class="booking-card__detail">02 Nov – 14 Nov 2026 · 1 stop in PVG</p>
+              </div>
+
+              <div class="booking-card__foot">
+                <p class="booking-card__total"><span>Saved at</span>BDT 68,300</p>
+
+                <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
+                  Search this route
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+
+                <!-- Removing something changes state, so it is a POST, not a link. -->
+                <form method="post" action="saved.html">
+                  <button class="btn btn--outline" type="submit">Remove</button>
+                </form>
+              </div>
+            </article>
+          </div>
+              <!-- END BLADE BOUNDARY: saved flights -->
             </div>
 
-            <div class="booking-card__legs">
-              <p class="booking-card__detail">18 Sep – 27 Sep 2026 · 1 stop in HKG</p>
+            <div class="booking-panel">
+              <!-- BLADE BOUNDARY: saved hotels -> <x-account.saved-hotels :saved="$savedHotels" /> -->
+            <div class="booking-list">
+              <article class="booking-card">
+                <div class="booking-card__head">
+                  <p class="booking-card__ref">
+                    <img class="booking-card__logo booking-card__logo--stay" src="../../assets/images/hotel1.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
+                    <span>
+                      <span class="booking-card__airline">Mitsui Garden Hotel Ginza</span>
+                      <span class="booking-card__code">Ginza, Tokyo · 5 star hotel</span>
+                    </span>
+                  </p>
+                  <span class="booking-card__saved">Saved 4 Sep 2026</span>
+                </div>
+
+                <div class="booking-card__legs">
+                  <p class="booking-card__detail">Free cancellation · 2 min to Ginza Station · Breakfast available</p>
+                </div>
+
+                <div class="booking-card__foot">
+                  <p class="booking-card__total"><span>Saved at</span>BDT 14,800 / night</p>
+
+                  <a class="btn btn--primary booking-card__action" href="../hotels/hotel.html">
+                    View hotel
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                  </a>
+
+                  <!-- Removing something changes state, so it is a POST, not a link. -->
+                  <form method="post" action="saved.html">
+                    <button class="btn btn--outline" type="submit">Remove</button>
+                  </form>
+                </div>
+              </article>
+
+              <article class="booking-card">
+                <div class="booking-card__head">
+                  <p class="booking-card__ref">
+                    <img class="booking-card__logo booking-card__logo--stay" src="../../assets/images/hotel3.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
+                    <span>
+                      <span class="booking-card__airline">Hotel Monterey Grasmere</span>
+                      <span class="booking-card__code">Namba, Osaka · 4 star hotel</span>
+                    </span>
+                  </p>
+                  <span class="booking-card__saved">Saved 21 Aug 2026</span>
+                </div>
+
+                <div class="booking-card__legs">
+                  <p class="booking-card__detail">Free cancellation · Airport shuttle on request</p>
+                </div>
+
+                <div class="booking-card__foot">
+                  <p class="booking-card__total"><span>Saved at</span>BDT 10,900 / night</p>
+
+                  <a class="btn btn--primary booking-card__action" href="../hotels/hotel.html">
+                    View hotel
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                  </a>
+
+                  <!-- Removing something changes state, so it is a POST, not a link. -->
+                  <form method="post" action="saved.html">
+                    <button class="btn btn--outline" type="submit">Remove</button>
+                  </form>
+                </div>
+              </article>
             </div>
-
-            <div class="booking-card__foot">
-              <p class="booking-card__total"><span>Saved at</span>BDT 72,900</p>
-
-              <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
-                Search this route
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </a>
-
-              <!-- Removing something changes state, so it is a POST, not a link. -->
-              <form method="post" action="saved.html">
-                <button class="btn btn--outline" type="submit">Remove</button>
-              </form>
+              <!-- END BLADE BOUNDARY: saved hotels -->
             </div>
-          </article>
-
-          <article class="booking-card">
-            <div class="booking-card__head">
-              <p class="booking-card__ref">
-                <img class="booking-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
-                <span>
-                  <span class="booking-card__airline">China Eastern</span>
-                  <span class="booking-card__code">Dhaka to Osaka &middot; Round trip</span>
-                </span>
-              </p>
-              <span class="booking-card__saved">Saved 28 Aug 2026</span>
-            </div>
-
-            <div class="booking-card__legs">
-              <p class="booking-card__detail">02 Nov – 14 Nov 2026 · 1 stop in PVG</p>
-            </div>
-
-            <div class="booking-card__foot">
-              <p class="booking-card__total"><span>Saved at</span>BDT 68,300</p>
-
-              <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
-                Search this route
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </a>
-
-              <!-- Removing something changes state, so it is a POST, not a link. -->
-              <form method="post" action="saved.html">
-                <button class="btn btn--outline" type="submit">Remove</button>
-              </form>
-            </div>
-          </article>
+          </div>
         </div>
-        <!-- END BLADE BOUNDARY: saved list -->
+        <!-- END BLADE BOUNDARY: saved tabs -->
       </div>
 
     </div>
