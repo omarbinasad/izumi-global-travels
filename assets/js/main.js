@@ -23,6 +23,7 @@ import { initToTop } from './components/to-top.js';
 const pageModules = {
   home: () => import('./pages/home.js'),
   'search-results': () => import('./pages/search-results.js'),
+  'flight-details': () => import('./pages/flight-details.js'),
   passengers: () => import('./pages/passengers.js'),
   'add-ons': () => import('./pages/add-ons.js'),
   blog: () => import('./pages/blog.js'),

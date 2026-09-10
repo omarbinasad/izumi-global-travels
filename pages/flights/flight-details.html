@@ -325,7 +325,7 @@
       </a>
 
       <h1 class="mt-4 mb-0 text-3xl font-bold tracking-tight text-fg-heading">Review your flight</h1>
-      <p class="mt-2 mb-0 text-sm text-fg-muted">Round trip &middot; 1 traveller &middot; Economy</p>
+      <p class="mt-2 mb-0 text-sm text-fg-muted">Round trip &middot; 3 travellers &middot; Economy</p>
 
       <!-- BLADE BOUNDARY: booking steps -> <x-booking.steps current="1" /> -->
       <nav class="mt-6" aria-label="Booking progress">
@@ -760,8 +760,11 @@
         <!-- BLADE BOUNDARY: fare family -> <x-booking.fare-family :fares="$fares" /> -->
         <!--
           Radios, so the choice is part of the form and needs nothing running to
-          be made. The prices are the difference per traveller as the backend
-          worked it out; picking one re-prices the booking server-side.
+          be made. Every figure here is the backend's: each card carries the
+          trip total at that fare, and each radio the difference per traveller
+          it was worked out from. Picking one moves the summary beside it, but
+          that is a readback of those figures — the booking is re-priced
+          server-side when the step is submitted.
         -->
         <section class="review-panel fare-family" aria-labelledby="fare-family-title">
           <div class="fare-family__head">
@@ -777,10 +780,11 @@
 
           <div class="fare-grid" role="radiogroup" aria-labelledby="fare-family-title">
             <label class="fare-card">
-              <input class="fare-card__input" type="radio" name="fare_id" value="far_saver" checked>
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_saver" checked
+                     data-fare-delta="0" data-fare-name="Economy Saver">
               <span class="fare-card__badge">Recommended</span>
               <span class="fare-card__name">Economy Saver</span>
-              <span class="fare-card__price">Included</span>
+              <span class="fare-card__price">BDT 130,510<span class="fare-card__per">Lowest fare &middot; included</span></span>
 
               <span class="fare-card__points">
                 <span class="fare-fact">
@@ -818,9 +822,10 @@
             </label>
 
             <label class="fare-card">
-              <input class="fare-card__input" type="radio" name="fare_id" value="far_standard">
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_standard"
+                     data-fare-delta="3500" data-fare-name="Economy Standard">
               <span class="fare-card__name">Economy Standard</span>
-              <span class="fare-card__price">+ BDT 3,500<span class="fare-card__per"> / traveller</span></span>
+              <span class="fare-card__price">BDT 141,010<span class="fare-card__per">+ BDT 3,500 per traveller</span></span>
 
               <span class="fare-card__points">
                 <span class="fare-fact">
@@ -858,9 +863,10 @@
             </label>
 
             <label class="fare-card">
-              <input class="fare-card__input" type="radio" name="fare_id" value="far_flex">
+              <input class="fare-card__input" type="radio" name="fare_id" value="far_flex"
+                     data-fare-delta="7900" data-fare-name="Economy Flex">
               <span class="fare-card__name">Economy Flex</span>
-              <span class="fare-card__price">+ BDT 7,900<span class="fare-card__per"> / traveller</span></span>
+              <span class="fare-card__price">BDT 154,210<span class="fare-card__per">+ BDT 7,900 per traveller</span></span>
 
               <span class="fare-card__points">
                 <span class="fare-fact">
@@ -946,26 +952,38 @@
         <section class="review-panel">
           <h2 class="m-0 text-lg font-semibold text-fg-heading">Price summary</h2>
 
-          <dl class="grid gap-3 mt-4 m-0">
+          <!--
+            data-amount is the figure the backend priced, in minor-free whole
+            currency; the total is those added to whatever fare was chosen. The
+            markup already shows the total for the fare that is selected, so
+            with no JavaScript the summary is still right.
+          -->
+          <dl class="grid gap-3 mt-4 m-0" data-price-summary data-currency="BDT" data-travellers="3">
             <div class="price-row">
               <dt>Adult &times; 1</dt>
-              <dd class="m-0 price-row__value">BDT 61,900</dd>
+              <dd class="m-0 price-row__value" data-amount="61900">BDT 61,900</dd>
             </div>
             <div class="price-row">
               <dt>Child &times; 1</dt>
-              <dd class="m-0 price-row__value">BDT 49,600</dd>
+              <dd class="m-0 price-row__value" data-amount="49600">BDT 49,600</dd>
             </div>
             <div class="price-row">
               <dt>Infant &times; 1</dt>
-              <dd class="m-0 price-row__value">BDT 6,200</dd>
+              <dd class="m-0 price-row__value" data-amount="6200">BDT 6,200</dd>
+            </div>
+            <!-- Blade renders this row only when the chosen fare costs more
+                 than the lowest one. -->
+            <div class="price-row" data-fare-upgrade-row hidden>
+              <dt data-fare-upgrade-label>Fare upgrade</dt>
+              <dd class="m-0 price-row__value" data-fare-upgrade>BDT 0</dd>
             </div>
             <div class="price-row">
               <dt>Taxes &amp; fees</dt>
-              <dd class="m-0 price-row__value">BDT 12,810</dd>
+              <dd class="m-0 price-row__value" data-amount="12810">BDT 12,810</dd>
             </div>
             <div class="price-row price-row--total">
               <dt>Total</dt>
-              <dd class="m-0 price-row__value">BDT 130,510</dd>
+              <dd class="m-0 price-row__value" data-grand-total>BDT 130,510</dd>
             </div>
           </dl>
 
@@ -1027,7 +1045,7 @@
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../../pages/account/bookings.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
             <li><a class="footer-nav__link" href="../../pages/support/feedback.html">Feedback</a></li>
           </ul>
@@ -1098,6 +1116,45 @@
     <span class="sr-only">Back to top</span>
   </a>
   <!-- END BLADE BOUNDARY: back to top -->
+
+  <!-- BLADE BOUNDARY: price notice -> <x-booking.price-toast :hold="$offer->hold_seconds" /> -->
+  <!--
+    The fare was held for a while, and this is what happens when that runs out.
+
+    A <dialog> opened with showModal(): the dim and the blur behind it are the
+    browser's ::backdrop, the focus stays inside it, and Escape closes it — none
+    of which has to be written or trapped by hand. It has no `open` attribute,
+    so it starts closed; Blade renders it open when it already knows the price
+    moved.
+
+    The refresh is a link because it asks for this offer again:
+    route('flights.details', $offer). The new price comes from the backend,
+    and no figure in this box is worked out here.
+  -->
+  <dialog class="toast" aria-labelledby="price-toast-title"
+          data-price-toast data-price-toast-delay="30000">
+    <p class="toast__head">
+      <span class="toast__icon" aria-hidden="true">
+        <svg class="icon size-5"><use href="#i-info"></use></svg>
+      </span>
+
+      <span class="toast__text">
+        <span class="toast__title" id="price-toast-title">The price for this flight has changed</span>
+        <span class="toast__note">Airlines re-price while you decide. Refresh to see what this fare costs now.</span>
+      </span>
+
+      <button class="toast__close" type="button" data-toast-close>
+        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>
+        <span class="sr-only">Dismiss</span>
+      </button>
+    </p>
+
+    <a class="btn btn--primary toast__action" href="flight-details.html">
+      Refresh price
+      <svg class="icon size-4" aria-hidden="true"><use href="#i-refresh"></use></svg>
+    </a>
+  </dialog>
+  <!-- END BLADE BOUNDARY: price notice -->
 
   <script type="module" src="../../assets/js/main.js"></script>
 </body>

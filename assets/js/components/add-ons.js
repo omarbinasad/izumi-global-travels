@@ -14,6 +14,7 @@
  */
 
 import { qs, qsa, on } from '../core/dom.js';
+import { money } from '../core/format.js';
 
 /* Short forms for the tab line, keyed by the add-on id the option submits. */
 const SHORT = {
@@ -35,10 +36,6 @@ function chosen(panel, kind) {
 
 function price(input) {
   return input ? Number(input.dataset.price ?? 0) : 0;
-}
-
-function money(currency, value) {
-  return `${currency} ${value.toLocaleString('en-US')}`;
 }
 
 export function initAddOns(scope = document) {

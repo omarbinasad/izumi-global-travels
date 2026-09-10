@@ -1432,7 +1432,7 @@
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../../pages/contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="../../pages/manage-booking/find-booking.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../../pages/account/bookings.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../../pages/faq.html">FAQs</a></li>
             <li><a class="footer-nav__link" href="../../pages/support/feedback.html">Feedback</a></li>
           </ul>
@@ -1503,6 +1503,45 @@
     <span class="sr-only">Back to top</span>
   </a>
   <!-- END BLADE BOUNDARY: back to top -->
+
+  <!-- BLADE BOUNDARY: price notice -> <x-booking.price-toast :hold="$offer->hold_seconds" /> -->
+  <!--
+    The fare was held for a while, and this is what happens when that runs out.
+
+    A <dialog> opened with showModal(): the dim and the blur behind it are the
+    browser's ::backdrop, the focus stays inside it, and Escape closes it — none
+    of which has to be written or trapped by hand. It has no `open` attribute,
+    so it starts closed; Blade renders it open when it already knows the price
+    moved.
+
+    The refresh is a link because it runs the same search again:
+    route('flights.search', request()->query()). Every price on the page
+    comes back from the backend with it.
+  -->
+  <dialog class="toast" aria-labelledby="price-toast-title"
+          data-price-toast data-price-toast-delay="30000">
+    <p class="toast__head">
+      <span class="toast__icon" aria-hidden="true">
+        <svg class="icon size-5"><use href="#i-info"></use></svg>
+      </span>
+
+      <span class="toast__text">
+        <span class="toast__title" id="price-toast-title">These prices may have changed</span>
+        <span class="toast__note">Airlines re-price while you browse. Refresh to search again and see what these fares cost now.</span>
+      </span>
+
+      <button class="toast__close" type="button" data-toast-close>
+        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>
+        <span class="sr-only">Dismiss</span>
+      </button>
+    </p>
+
+    <a class="btn btn--primary toast__action" href="search-results.html">
+      Refresh results
+      <svg class="icon size-4" aria-hidden="true"><use href="#i-refresh"></use></svg>
+    </a>
+  </dialog>
+  <!-- END BLADE BOUNDARY: price notice -->
 
   <script type="module" src="../../assets/js/main.js"></script>
 </body>

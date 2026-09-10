@@ -1,0 +1,317 @@
+<!doctype html>
+<!--
+  NEW BOOKING REQUEST — INTERNAL
+  Blade: resources/views/emails/booking-request-internal.blade.php
+  Goes to the ops inbox, not the traveller. The customer's copy is
+  components/emails/booking-request.html; the two must not be confused, which
+  is why this one wears a dark band with an INTERNAL badge, and carries no
+  marketing footer and no unsubscribe.
+
+  Suggested subject: [IGT-BR-240918] New request · DAC–NRT · 18 Sep · 3 pax
+
+  What Blade injects:
+    $booking->reference, $booking->requested_at
+    $contact->email, $contact->phone        the traveller's own, click to reach
+    $party                                  adults, children, infants, cabin
+    $slices[]                               kind, date, times, iata, city
+    $passengers[]                           name, type, dob, nationality,
+                                            document_last4
+    $addOns[]                               per passenger
+    $fare->lines[], $fare->taxes, $fare->add_ons, $fare->total
+    route('admin.bookings.show', $booking)  the button target
+
+  PASSPORT NUMBERS ARE NOT IN THIS EMAIL, only the last four digits. Mail sits
+  in inboxes, on phones and in backups outside our control, and a passport
+  number is worth more to an attacker than anything else in a booking. The team
+  opens the record to see it. If ops decides it needs the full number here, that
+  is a data-protection decision to take deliberately, not a formatting one.
+
+  Read components/emails/README.md before editing — email markup breaks the
+  house style on purpose.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>New booking request IGT-BR-240918</title>
+
+  <style>
+    :root { color-scheme: light; supported-color-schemes: light; }
+
+    @media (max-width: 620px) {
+      .sm-full { width: 100% !important; }
+      .sm-pad { padding-left: 16px !important; padding-right: 16px !important; }
+      .sm-stack { display: block !important; width: 100% !important; text-align: left !important; }
+      .sm-stack-gap { padding-top: 10px !important; }
+    }
+  </style>
+</head>
+
+<!-- --color-page in @theme, light value -->
+<body style="margin:0; padding:0; width:100%; background-color:#f7f8fa;">
+
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+    DAC–NRT 18 Sep, 3 passengers, estimated BDT 139,010. Fare and seats need checking.
+    &#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:#f7f8fa;">
+    <tr>
+      <td align="center" style="padding:20px 12px;">
+
+        <table role="presentation" class="sm-full" width="640" cellpadding="0" cellspacing="0" border="0"
+               style="width:640px; max-width:640px;">
+
+          <!-- Card ----------------------------------------------------- -->
+          <tr>
+            <td style="background-color:#ffffff; border:1px solid #dfe3ea; border-radius:12px;">
+
+              <!-- Head: what it is, and what to do about it ------------- -->
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <!-- --color-brand-900. A solid band, so an internal message
+                       is never mistaken for the traveller's copy. -->
+                  <td class="sm-pad" style="padding:18px 24px; background-color:#2b2f63; border-radius:12px 12px 0 0; font-family:Arial,Helvetica,sans-serif;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-family:Arial,Helvetica,sans-serif;">
+                          <img src="https://izumiglobaltravels.example/assets/images/logo-mark.png"
+                               width="34" height="34" alt="Izumi Global Travels"
+                               style="display:inline-block; vertical-align:middle; border:0;">
+                          <span style="display:inline-block; vertical-align:middle; padding-left:8px;">
+                            <span style="display:block; font-size:17px; font-weight:bold; line-height:1.15; color:#ffffff;">Izumi</span>
+                            <span style="display:block; font-size:9px; font-weight:bold; letter-spacing:0.09em; text-transform:uppercase; line-height:1.4; color:#c5d3e9;">Global Travels</span>
+                          </span>
+                        </td>
+                        <td align="right">
+                          <span style="display:inline-block; padding:3px 8px; border-radius:4px; background-color:#ffffff; font-size:10px; font-weight:bold; letter-spacing:0.08em; color:#2b2f63;">INTERNAL</span>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <div style="margin-top:14px; font-size:18px; font-weight:bold; color:#ffffff;">New booking request</div>
+                    <div style="margin-top:2px; font-size:13px; color:#c5d3e9;">IGT-BR-240918 &middot; received 5 Sep 2026, 14:12</div>
+                  </td>
+                </tr>
+
+                <!-- The line ops acts on ----------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:20px 24px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="background-color:#fdf0d2; border-radius:8px;">
+                      <tr>
+                        <!-- --color-warning-700 -->
+                        <td style="padding:12px 14px; font-size:13px; line-height:1.6; color:#935f03;">
+                          <strong>Not ticketed.</strong> Re-check the fare and the
+                          seats with the airline, then quote the traveller the
+                          price we can hold.
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Who and where ------------------------------------ -->
+                <tr>
+                  <td class="sm-pad" style="padding:20px 24px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="font-size:14px; color:#3f4757;">
+                      <tr>
+                        <td width="35%" style="padding:7px 0; color:#565f70;">Booked by</td>
+                        <td style="padding:7px 0; font-weight:bold; color:#0f1219;">Tanvir Ahmed</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:7px 0; color:#565f70;">Contact</td>
+                        <td style="padding:7px 0;">
+                          <!-- Reachable from the email itself: ops should not
+                               have to retype either of these. -->
+                          <a href="mailto:tanvir.ahmed@example.com" style="color:#34508a;">tanvir.ahmed@example.com</a><br>
+                          <a href="tel:+8801712345678" style="color:#34508a;">+880 1712 345678</a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td style="padding:7px 0; color:#565f70;">Route</td>
+                        <td style="padding:7px 0; font-weight:bold; color:#0f1219;">DAC &rarr; NRT &middot; round trip</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:7px 0; color:#565f70;">Dates</td>
+                        <td style="padding:7px 0;">Out Thu 18 Sep 2026, 02:00 &rarr; 15:45 &middot; 1 stop<br>
+                            Back Sat 27 Sep 2026, 11:00 &rarr; 08:20 +1 &middot; 2 stops</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:7px 0; color:#565f70;">Party</td>
+                        <td style="padding:7px 0;">1 Adult, 1 Child, 1 Infant &middot; Economy</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:7px 0; color:#565f70;">Estimated</td>
+                        <td style="padding:7px 0; font-weight:bold; color:#0f1219;">BDT 139,010</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Button ------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:20px 24px 0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <!-- --color-cta-from -->
+                        <td align="center" style="border-radius:8px; background-color:#1149a3; mso-padding-alt:12px 24px;">
+                          <a href="https://izumiglobaltravels.example/admin/bookings/IGT-BR-240918"
+                             style="display:inline-block; padding:12px 24px; font-family:Arial,Helvetica,sans-serif; font-size:14px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:8px;">
+                            Open the request
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Passengers --------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 24px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <h2 style="margin:0 0 10px; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Passengers</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="border:1px solid #dfe3ea; border-radius:8px; font-size:13px; color:#3f4757;">
+                      <tr>
+                        <!-- --color-neutral-50 -->
+                        <td style="padding:9px 12px; background-color:#f7f8fa; border-bottom:1px solid #dfe3ea; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#565f70; border-radius:8px 0 0 0;">Name as on passport</td>
+                        <td style="padding:9px 12px; background-color:#f7f8fa; border-bottom:1px solid #dfe3ea; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#565f70;">Type</td>
+                        <td style="padding:9px 12px; background-color:#f7f8fa; border-bottom:1px solid #dfe3ea; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#565f70;">Born</td>
+                        <td style="padding:9px 12px; background-color:#f7f8fa; border-bottom:1px solid #dfe3ea; font-size:11px; letter-spacing:0.05em; text-transform:uppercase; color:#565f70; border-radius:0 8px 0 0;">Document</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4; font-weight:bold; color:#0f1219;">TANVIR AHMED</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">Adult</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">12 Aug 1985</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">BD &middot; &bull;&bull;&bull;&bull;5678</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4; font-weight:bold; color:#0f1219;">SARA AHMED</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">Child</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">04 Mar 2017</td>
+                        <td style="padding:10px 12px; border-bottom:1px solid #eef0f4;">BD &middot; &bull;&bull;&bull;&bull;2214</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:10px 12px; font-weight:bold; color:#0f1219;">ARIAN AHMED</td>
+                        <td style="padding:10px 12px;">Infant</td>
+                        <td style="padding:10px 12px;">19 Jan 2025</td>
+                        <td style="padding:10px 12px;">BD &middot; &bull;&bull;&bull;&bull;9031</td>
+                      </tr>
+                    </table>
+
+                    <p style="margin:8px 0 0; font-size:12px; color:#565f70;">
+                      Last four digits only. Open the request for the full document
+                      details.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Add-ons ------------------------------------------ -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 24px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <h2 style="margin:0 0 10px; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Add-ons requested</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="font-size:13px; color:#3f4757;">
+                      <tr>
+                        <td style="padding:5px 0; color:#0f1219; font-weight:bold;" colspan="2">Passenger 1 &middot; Adult</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Window seat &times; 2</td>
+                        <td align="right" style="padding:4px 0;">BDT 2,400</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Halal meal</td>
+                        <td align="right" style="padding:4px 0;">Included</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Standard cover</td>
+                        <td align="right" style="padding:4px 0;">BDT 1,250</td>
+                      </tr>
+
+                      <tr>
+                        <td style="padding:12px 0 5px; color:#0f1219; font-weight:bold;" colspan="2">Passenger 2 &middot; Child</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Window seat &times; 2</td>
+                        <td align="right" style="padding:4px 0;">BDT 2,400</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Regular meal</td>
+                        <td align="right" style="padding:4px 0;">Included</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Premium cover</td>
+                        <td align="right" style="padding:4px 0;">BDT 2,450</td>
+                      </tr>
+
+                      <tr>
+                        <td style="padding:12px 0 5px; color:#0f1219; font-weight:bold;" colspan="2">Passenger 3 &middot; Infant</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">No seat preference &times; 2</td>
+                        <td align="right" style="padding:4px 0;">Free</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">Vegetarian</td>
+                        <td align="right" style="padding:4px 0;">Included</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:4px 0 4px 12px;">No insurance</td>
+                        <td align="right" style="padding:4px 0;">BDT 0</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Fare --------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 24px 28px; font-family:Arial,Helvetica,sans-serif;">
+                    <h2 style="margin:0 0 10px; font-size:12px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Quoted fare</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="font-size:13px; color:#3f4757;">
+                      <tr><td style="padding:5px 0;">Adult &times; 1</td><td align="right" style="padding:5px 0;">BDT 61,900</td></tr>
+                      <tr><td style="padding:5px 0;">Child &times; 1</td><td align="right" style="padding:5px 0;">BDT 49,600</td></tr>
+                      <tr><td style="padding:5px 0;">Infant &times; 1</td><td align="right" style="padding:5px 0;">BDT 6,200</td></tr>
+                      <tr><td style="padding:5px 0;">Taxes &amp; fees</td><td align="right" style="padding:5px 0;">BDT 12,810</td></tr>
+                      <tr><td style="padding:5px 0;">Add-ons</td><td align="right" style="padding:5px 0;">BDT 8,500</td></tr>
+                      <tr>
+                        <td style="padding:12px 0 0; border-top:1px solid #dfe3ea; font-size:15px; font-weight:bold; color:#0f1219;">Quoted total</td>
+                        <td align="right" style="padding:12px 0 0; border-top:1px solid #dfe3ea; font-size:16px; font-weight:bold; color:#0f1219;">BDT 139,010</td>
+                      </tr>
+                    </table>
+
+                    <p style="margin:10px 0 0; font-size:12px; line-height:1.6; color:#565f70;">
+                      The figure the traveller was shown at the time of the request.
+                      Whatever the airline quotes now is what stands.
+                    </p>
+                  </td>
+                </tr>
+              </table>
+
+            </td>
+          </tr>
+
+          <!-- Footer --------------------------------------------------- -->
+          <tr>
+            <td class="sm-pad" style="padding:16px 24px 8px; font-family:Arial,Helvetica,sans-serif; font-size:11px; line-height:1.7; color:#565f70;">
+              Automatic notification from the Izumi Global Travels booking system.
+              It contains a traveller's personal details — keep it inside the team.
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>

@@ -714,31 +714,220 @@
             </div>
 
             <div class="booking-panel">
-            <section class="review-panel panel-empty">
-              <span class="panel-empty__icon" aria-hidden="true">
-                <svg class="icon size-6"><use href="#i-home"></use></svg>
-              </span>
-              <h2 class="panel-empty__title">No hotel bookings yet</h2>
-              <p class="panel-empty__text">Nothing booked yet. Tell us where and when on the hotel search, and we come back with rooms and prices.</p>
-              <a class="btn btn--outline" href="../../index.html#hotels-title">
-                Search for a hotel
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </a>
-            </section>
+              <!-- BLADE BOUNDARY: hotel booking list -> <x-account.hotel-list :bookings="$hotelBookings" /> -->
+            <div class="booking-list">
+              <article class="result-card" data-booking-id="IGT-HT-240921">
+                <div class="result-card__main">
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-HT-240921</span>
+                      <span class="booking-card__code">Shinjuku, Tokyo &middot; requested 6 Sep 2026</span>
+                    </span>
+                    <span class="status-pill status-pill--confirmed">Confirmed</span>
+                  </p>
+
+                  <div class="result-card__slice">
+                    <div class="result-card__slice-head">
+                      <p class="result-card__slice-label">
+                        <span class="result-card__slice-kind">Stay</span>
+                      </p>
+
+                      <p class="result-card__slice-carrier">
+                        Hotel Gracery Shinjuku
+                      </p>
+                    </div>
+                  </div>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>Thu, 18 Sep &rarr; Sat, 27 Sep &middot; 9 nights
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>2 Adults &middot; 1 Child
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-home"></use></svg>Deluxe twin &middot; breakfast included
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Total paid</span>
+                  <span class="result-card__price">BDT 186,400</span>
+                  <a class="btn btn--outline md:w-full md:mt-3" href="../contact.html">Ask about this stay</a>
+                </div>
+              </article>
+
+              <article class="result-card" data-booking-id="IGT-HT-240808">
+                <div class="result-card__main">
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-HT-240808</span>
+                      <span class="booking-card__code">Asakusa, Tokyo &middot; requested 20 Aug 2026</span>
+                    </span>
+                    <span class="status-pill status-pill--pending">Pending review</span>
+                  </p>
+
+                  <div class="result-card__slice">
+                    <div class="result-card__slice-head">
+                      <p class="result-card__slice-label">
+                        <span class="result-card__slice-kind">Stay</span>
+                      </p>
+
+                      <p class="result-card__slice-carrier">
+                        Sakura Ryokan Asakusa
+                      </p>
+                    </div>
+                  </div>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-calendar"></use></svg>Fri, 02 Oct &rarr; Mon, 05 Oct &middot; 3 nights
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg>2 Adults
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>We are confirming the room with the hotel
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__aside">
+                  <!-- Not "paid": nothing is held until the hotel comes back. -->
+                  <span class="result-card__trip">Estimated</span>
+                  <span class="result-card__price">BDT 41,200</span>
+                  <a class="btn btn--outline md:w-full md:mt-3" href="../contact.html">Ask about this stay</a>
+                </div>
+              </article>
+            </div>
+              <!-- END BLADE BOUNDARY: hotel booking list -->
             </div>
 
             <div class="booking-panel">
-            <section class="review-panel panel-empty">
-              <span class="panel-empty__icon" aria-hidden="true">
-                <svg class="icon size-6"><use href="#i-bell"></use></svg>
-              </span>
-              <h2 class="panel-empty__title">No eSIM orders yet</h2>
-              <p class="panel-empty__text">Travel eSIM plans are coming soon. Ask our team about data for your destination in the meantime.</p>
-              <a class="btn btn--outline" href="../contact.html">
-                Ask about data
-                <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-              </a>
-            </section>
+              <!-- BLADE BOUNDARY: esim order list -> <x-account.esim-list :orders="$esimOrders" /> -->
+            <!--
+              The confirmed order shows its SM-DP+ address and activation code
+              here, behind login, because that pair is what installs the
+              profile. The order email says the same details live on this page,
+              and neither place may offer a link that reissues a profile.
+            -->
+            <div class="booking-list">
+              <article class="result-card" data-booking-id="IGT-ES-240918">
+                <div class="result-card__main">
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-ES-240918</span>
+                      <span class="booking-card__code">Japan Travel 10 GB &middot; ordered 5 Sep 2026</span>
+                    </span>
+                    <span class="status-pill status-pill--confirmed">Confirmed</span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>10 GB data
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>15 days from activation
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>Japan
+                    </span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-lock"></use></svg>SM-DP+ smdp.izumiglobaltravels.example
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-ticket"></use></svg>Activation code K2-9QF4-7TDX-1MB0
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>Installs once &middot; add it over Wi-Fi before you fly
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Total paid</span>
+                  <span class="result-card__price">BDT 2,450</span>
+                  <a class="btn btn--outline md:w-full md:mt-3" href="../contact.html">Installation help</a>
+                </div>
+              </article>
+
+              <article class="result-card" data-booking-id="IGT-ES-240925">
+                <div class="result-card__main">
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-ES-240925</span>
+                      <span class="booking-card__code">Korea Travel 5 GB &middot; ordered 8 Sep 2026</span>
+                    </span>
+                    <span class="status-pill status-pill--pending">Processing</span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>5 GB data
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>10 days from activation
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>South Korea
+                    </span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>We are setting up your profile. The install code lands here and in your email, usually within an hour.
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Total paid</span>
+                  <span class="result-card__price">BDT 1,180</span>
+                  <a class="btn btn--outline md:w-full md:mt-3" href="../contact.html">Ask about data</a>
+                </div>
+              </article>
+
+              <article class="result-card" data-booking-id="IGT-ES-240712">
+                <div class="result-card__main">
+                  <p class="booking-ticket__head">
+                    <span class="booking-ticket__who">
+                      <span class="booking-card__airline">IGT-ES-240712</span>
+                      <span class="booking-card__code">Thailand Travel 3 GB &middot; ordered 12 Jul 2026</span>
+                    </span>
+                    <span class="status-pill status-pill--cancelled">Cancelled</span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-download"></use></svg>3 GB data
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-clock"></use></svg>7 days from activation
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-pin"></use></svg>Thailand
+                    </span>
+                  </p>
+
+                  <p class="result-card__meta">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-info"></use></svg>Cancelled 13 Jul 2026 at your request. The profile was never installed, so it was refunded in full.
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__aside">
+                  <span class="result-card__trip">Refunded</span>
+                  <span class="result-card__price">BDT 940</span>
+                  <a class="btn btn--outline md:w-full md:mt-3" href="../contact.html">Order again</a>
+                </div>
+              </article>
+            </div>
+              <!-- END BLADE BOUNDARY: esim order list -->
             </div>
           </div>
         </div>
@@ -775,7 +964,7 @@
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
             <li><a class="footer-nav__link" href="../contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="../manage-booking/find-booking.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../../pages/account/bookings.html">Manage Booking</a></li>
             <li><a class="footer-nav__link" href="../faq.html">FAQs</a></li>
             <li><a class="footer-nav__link" href="../support/feedback.html">Feedback</a></li>
           </ul>

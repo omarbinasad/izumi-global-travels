@@ -1,0 +1,292 @@
+<!doctype html>
+<!--
+  ESIM ORDER CONFIRMED
+  Blade: resources/views/emails/esim-order.blade.php
+
+  What Blade injects — everything else on this page is fixed copy:
+    $user->given_name            Tanvir
+    $order->reference            IGT-ES-240918
+    $order->ordered_at           5 Sep 2026
+    $plan->name                  Japan Travel 10 GB
+    $plan->data                  10 GB
+    $plan->validity              15 days from activation
+    $plan->coverage              Japan
+    $plan->total                 BDT 2,450
+    $esim->qr_url                absolute, publicly reachable PNG of the QR
+    $esim->smdp                  SM-DP+ address, for manual install
+    $esim->activation_code       the code that goes with it
+    route('account.bookings')    the button target, eSIM tab selected
+
+  Unlike the flight emails, this one confirms something that is already
+  delivered: the plan exists the moment this is sent, so the wording may say
+  so plainly.
+
+  THE QR AND THE ACTIVATION CODE ARE THE CREDENTIAL. Whoever installs the
+  profile first gets the data, and most profiles install exactly once — which
+  is why the email says not to forward it, and why the same details also sit
+  behind login on the bookings page. Never regenerate or reissue a profile
+  from a link in an email; that belongs behind an authenticated session.
+
+  The manual SM-DP+ pair is not a nicety: mail clients block remote images by
+  default, so an email carrying only the QR is unusable for many people.
+
+  Read components/emails/README.md before editing — email markup breaks the
+  house style on purpose.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light">
+  <meta name="supported-color-schemes" content="light">
+  <title>Your eSIM is ready</title>
+
+  <style>
+    :root { color-scheme: light; supported-color-schemes: light; }
+
+    @media (max-width: 620px) {
+      .sm-full { width: 100% !important; }
+      .sm-pad { padding-left: 20px !important; padding-right: 20px !important; }
+    }
+  </style>
+</head>
+
+<!-- --color-page in @theme, light value -->
+<body style="margin:0; padding:0; width:100%; background-color:#f7f8fa;">
+
+  <div style="display:none; max-height:0; overflow:hidden; mso-hide:all;">
+    Japan Travel 10 GB &middot; install it before you fly. Reference IGT-ES-240918.
+    &#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;&#8203;&nbsp;
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+         style="background-color:#f7f8fa;">
+    <tr>
+      <td align="center" style="padding:24px 12px;">
+
+        <table role="presentation" class="sm-full" width="600" cellpadding="0" cellspacing="0" border="0"
+               style="width:600px; max-width:600px;">
+
+          <!-- Card ----------------------------------------------------- -->
+          <tr>
+            <td style="background-color:#ffffff; border:1px solid #dfe3ea; border-radius:14px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+
+                <!-- Brand and status on one line, inside the card -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 32px 0;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-family:Arial,Helvetica,sans-serif;">
+                          <img src="https://izumiglobaltravels.example/assets/images/logo-mark.png"
+                               width="34" height="34" alt="Izumi Global Travels"
+                               style="display:inline-block; vertical-align:middle; border:0;">
+                          <span style="display:inline-block; vertical-align:middle; padding-left:8px;">
+                            <span style="display:block; font-size:17px; font-weight:bold; line-height:1.15; color:#2b2f63;">Izumi</span>
+                            <span style="display:block; font-size:9px; font-weight:bold; letter-spacing:0.09em; text-transform:uppercase; line-height:1.4; color:#565f70;">Global Travels</span>
+                          </span>
+                        </td>
+                        <td align="right" style="font-family:Arial,Helvetica,sans-serif;">
+                          <!-- --color-success-100 / --color-success-700 -->
+                          <span style="display:inline-block; padding:5px 12px; border-radius:6px; background-color:#dcf5e4; font-size:12px; font-weight:bold; color:#16713c; white-space:nowrap;">
+                            Confirmed
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="sm-pad" style="padding:20px 32px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <h1 style="margin:0; font-size:24px; line-height:1.25; font-weight:bold; color:#0f1219;">
+                      Your eSIM is ready, Tanvir
+                    </h1>
+
+                    <p style="margin:12px 0 0; font-size:15px; line-height:1.6; color:#3f4757;">
+                      Your data plan is booked and the profile below is yours to
+                      install. Do it at home over Wi-Fi, before you fly — the
+                      plan only starts counting when you connect on arrival.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Reference ------------------------------------------ -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 32px 0;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="background-color:#f1f4fa; border-radius:10px;">
+                      <tr>
+                        <td style="padding:14px 16px; font-family:Arial,Helvetica,sans-serif;">
+                          <span style="display:block; font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Your reference</span>
+                          <span style="display:block; margin-top:2px; font-size:18px; font-weight:bold; color:#0f1219;">IGT-ES-240918</span>
+                        </td>
+                        <td align="right" style="padding:14px 16px; font-family:Arial,Helvetica,sans-serif; font-size:13px; color:#565f70;">
+                          Ordered<br>5 Sep 2026
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- Plan ----------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:28px 32px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <h2 style="margin:0 0 12px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Your plan</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="font-size:14px; line-height:1.6;">
+                      <tr>
+                        <td style="padding:6px 0; color:#565f70;">Plan</td>
+                        <td align="right" style="padding:6px 0; font-weight:bold; color:#0f1219;">Japan Travel 10 GB</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:6px 0; color:#565f70;">Data</td>
+                        <td align="right" style="padding:6px 0; color:#0f1219;">10 GB</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:6px 0; color:#565f70;">Valid for</td>
+                        <td align="right" style="padding:6px 0; color:#0f1219;">15 days from activation</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:6px 0; color:#565f70;">Coverage</td>
+                        <td align="right" style="padding:6px 0; color:#0f1219;">Japan</td>
+                      </tr>
+                      <tr>
+                        <td style="padding:14px 0 0; border-top:1px solid #dfe3ea; font-size:16px; font-weight:bold; color:#0f1219;">Paid</td>
+                        <td align="right" style="padding:14px 0 0; border-top:1px solid #dfe3ea; font-size:18px; font-weight:bold; color:#0f1219;">BDT 2,450</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+
+                <!-- QR ------------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" align="center" style="padding:28px 32px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="border:1px solid #dfe3ea; border-radius:12px;">
+                      <tr>
+                        <td align="center" style="padding:20px 16px;">
+                          <!-- Alt text carries its own instruction, because a
+                               blocked image is the normal case in email. -->
+                          <img src="https://izumiglobaltravels.example/esim/qr/IGT-ES-240918.png"
+                               width="170" height="170"
+                               alt="Installation QR code — if you cannot see it, use the details below"
+                               style="display:block; border:0;">
+
+                          <p style="margin:14px 0 0; font-size:13px; line-height:1.6; color:#565f70;">
+                            Scan this from another screen, or use the details below
+                            to add it by hand.
+                          </p>
+
+                          <table role="presentation" cellpadding="0" cellspacing="0" border="0"
+                                 style="margin:12px auto 0; background-color:#f1f4fa; border-radius:8px;">
+                            <tr>
+                              <td style="padding:12px 16px; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.7; color:#565f70;">
+                                SM-DP+ address<br>
+                                <span style="font-family:Consolas,'Courier New',monospace; font-size:13px; color:#0f1219; word-break:break-all;">smdp.izumiglobaltravels.example</span>
+                                <br><br>
+                                Activation code<br>
+                                <span style="font-family:Consolas,'Courier New',monospace; font-size:13px; color:#0f1219; word-break:break-all;">K2-9QF4-7TDX-1MB0</span>
+                              </td>
+                            </tr>
+                          </table>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <!-- The one warning that matters on this email. -->
+                    <p style="margin:12px 0 0; font-size:12px; line-height:1.6; color:#935f03;">
+                      This profile installs once. Anyone who scans it gets the
+                      data, so please do not forward this email.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- How to install ------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:28px 32px 0; font-family:Arial,Helvetica,sans-serif;">
+                    <h2 style="margin:0 0 12px; font-size:13px; letter-spacing:0.06em; text-transform:uppercase; color:#565f70;">Installing it</h2>
+
+                    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0"
+                           style="font-size:14px; line-height:1.6; color:#3f4757;">
+                      <tr>
+                        <td width="24" valign="top" style="padding:4px 0; font-weight:bold; color:#1149a3;">1</td>
+                        <td style="padding:4px 0;">On Wi-Fi at home, open <b>Settings &rsaquo; Mobile data &rsaquo; Add eSIM</b>.</td>
+                      </tr>
+                      <tr>
+                        <td width="24" valign="top" style="padding:4px 0; font-weight:bold; color:#1149a3;">2</td>
+                        <td style="padding:4px 0;">Scan the code above, or enter the SM-DP+ address and activation code by hand.</td>
+                      </tr>
+                      <tr>
+                        <td width="24" valign="top" style="padding:4px 0; font-weight:bold; color:#1149a3;">3</td>
+                        <td style="padding:4px 0;">Leave it switched off until you land. Then turn the eSIM on and allow data roaming for it.</td>
+                      </tr>
+                    </table>
+
+                    <p style="margin:14px 0 0; font-size:13px; line-height:1.6; color:#565f70;">
+                      Your phone needs to support eSIM and be carrier-unlocked.
+                      Keep your usual SIM in place for calls and texts.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Button --------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" align="center" style="padding:28px 32px 0;">
+                    <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td align="center" style="border-radius:8px; background-color:#1149a3; mso-padding-alt:14px 28px;">
+                          <a href="https://izumiglobaltravels.example/pages/account/bookings.html?tab=esim"
+                             style="display:inline-block; padding:14px 28px; font-family:Arial,Helvetica,sans-serif; font-size:15px; font-weight:bold; color:#ffffff; text-decoration:none; border-radius:8px;">
+                            View your eSIM
+                          </a>
+                        </td>
+                      </tr>
+                    </table>
+
+                    <p style="margin:12px 0 0; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.6; color:#565f70;">
+                      The same code lives there, behind your login.
+                    </p>
+                  </td>
+                </tr>
+
+                <!-- Help ----------------------------------------------- -->
+                <tr>
+                  <td class="sm-pad" style="padding:24px 32px 32px; font-family:Arial,Helvetica,sans-serif;">
+                    <p style="margin:0; font-size:14px; line-height:1.7; color:#3f4757;">
+                      <strong style="color:#0f1219;">Trouble installing?</strong><br>
+                      Reply to this email with your reference, or
+                      <a href="https://izumiglobaltravels.example/pages/contact.html" style="color:#34508a;">talk to our team</a>.
+                      Please tell us before you travel — it is far easier to fix
+                      from here than from an airport.
+                    </p>
+                  </td>
+                </tr>
+
+              </table>
+            </td>
+          </tr>
+
+          <!-- Footer --------------------------------------------------- -->
+          <tr>
+            <td class="sm-pad" style="padding:20px 32px 8px; font-family:Arial,Helvetica,sans-serif; font-size:12px; line-height:1.7; color:#565f70;">
+              Izumi Global Travels &middot;
+              <a href="https://izumiglobaltravels.example/pages/contact.html" style="color:#34508a;">Contact</a> &middot;
+              <a href="https://izumiglobaltravels.example/pages/legal/privacy-policy.html" style="color:#34508a;">Privacy</a>
+              <br><br>
+              <!-- Transactional: sent because an eSIM was ordered, so there is
+                   no list to leave. -->
+              You are receiving this because an eSIM was ordered on this account.
+            </td>
+          </tr>
+
+        </table>
+
+      </td>
+    </tr>
+  </table>
+
+</body>
+</html>
