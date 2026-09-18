@@ -401,6 +401,7 @@
           <input class="booking-tab__input sr-only" type="radio" name="booking-tab" id="booking-tab-fare">
           <input class="booking-tab__input sr-only" type="radio" name="booking-tab" id="booking-tab-payment">
           <input class="booking-tab__input sr-only" type="radio" name="booking-tab" id="booking-tab-baggage">
+          <input class="booking-tab__input sr-only" type="radio" name="booking-tab" id="booking-tab-date-change">
           <input class="booking-tab__input sr-only" type="radio" name="booking-tab" id="booking-tab-cancellation">
 
           <div class="booking-tabs">
@@ -409,6 +410,7 @@
             <label class="booking-tab" for="booking-tab-fare">Fare Breakdown</label>
             <label class="booking-tab" for="booking-tab-payment">Payment Details</label>
             <label class="booking-tab" for="booking-tab-baggage">Baggage</label>
+            <label class="booking-tab" for="booking-tab-date-change">Date Change Policy</label>
             <label class="booking-tab" for="booking-tab-cancellation">Cancellation Policy</label>
           </div>
 
@@ -1236,6 +1238,112 @@
             <!-- END BLADE BOUNDARY: booking baggage -->
             </div>
 
+            <div class="booking-panel booking-panel--date-change">
+            <!-- BLADE BOUNDARY: booking date change -> <x-account.booking-date-change :booking="$booking" />
+                 @content-pending: the tiers, fees and wording are the fare's own
+                 change rules, which the backend returns with the booking. Any fare
+                 difference is quoted by the backend against the new date. -->
+            <section class="review-panel">
+              <h2 class="panel-head">
+                <svg class="icon size-5" aria-hidden="true"><use href="#i-calendar"></use></svg>Date change policy
+              </h2>
+              <p class="account-lead">What a new date costs depends on how far ahead of departure the request reaches us.</p>
+
+              <div class="tier-grid">
+                <div class="tier tier--ok">
+                  <p class="tier__head">
+                    <svg class="icon size-5 tier__icon" aria-hidden="true"><use href="#i-check"></use></svg>
+                    <span>
+                      <span class="tier__name">14+ days before</span>
+                      <span class="tier__note">More than two weeks to go</span>
+                    </span>
+                  </p>
+                  <p class="tier__figure">BDT 2,500<span class="tier__label">Change fee per traveller</span></p>
+                </div>
+
+                <div class="tier tier--warn">
+                  <p class="tier__head">
+                    <svg class="icon size-5 tier__icon" aria-hidden="true"><use href="#i-info"></use></svg>
+                    <span>
+                      <span class="tier__name">3 – 13 days before</span>
+                      <span class="tier__note">Under two weeks to go</span>
+                    </span>
+                  </p>
+                  <p class="tier__figure">BDT 5,000<span class="tier__label">Change fee per traveller</span></p>
+                </div>
+
+                <div class="tier tier--stop">
+                  <p class="tier__head">
+                    <svg class="icon size-5 tier__icon" aria-hidden="true"><use href="#i-close"></use></svg>
+                    <span>
+                      <span class="tier__name">Less than 3 days</span>
+                      <span class="tier__note">Within 72 hours of departure</span>
+                    </span>
+                  </p>
+                  <p class="tier__figure">No change<span class="tier__label">Date cannot be changed</span></p>
+                </div>
+              </div>
+
+              <h3 class="panel-head mt-8">
+                <svg class="icon size-5" aria-hidden="true"><use href="#i-clock"></use></svg>How a date change runs
+              </h3>
+
+              <div class="process-grid">
+                <div class="process-card">
+                  <svg class="icon size-5 process-card__icon" aria-hidden="true"><use href="#i-tag"></use></svg>
+                  <span>
+                    <span class="process-card__name">Fare difference</span>
+                    <span class="process-card__text">If the new date is dearer, the difference is added to the change fee. A cheaper date is not refunded.</span>
+                  </span>
+                </div>
+
+                <div class="process-card">
+                  <svg class="icon size-5 process-card__icon" aria-hidden="true"><use href="#i-seat"></use></svg>
+                  <span>
+                    <span class="process-card__name">Same route and cabin</span>
+                    <span class="process-card__text">Only the date moves. A new route, airline or cabin is a new booking.</span>
+                  </span>
+                </div>
+
+                <div class="process-card">
+                  <svg class="icon size-5 process-card__icon" aria-hidden="true"><use href="#i-refresh"></use></svg>
+                  <span>
+                    <span class="process-card__name">One change per ticket</span>
+                    <span class="process-card__text">This fare allows one date change. After that, the ticket follows the cancellation policy.</span>
+                  </span>
+                </div>
+
+                <div class="process-card">
+                  <svg class="icon size-5 process-card__icon" aria-hidden="true"><use href="#i-ticket"></use></svg>
+                  <span>
+                    <span class="process-card__name">New ticket</span>
+                    <span class="process-card__text">We reissue the ticket once the change is paid, and email it to you within 24 hours.</span>
+                  </span>
+                </div>
+              </div>
+
+              <p class="callout">
+                <svg class="icon size-5" aria-hidden="true"><use href="#i-info"></use></svg>
+                <span>
+                  <span class="callout__name">Need a different date?</span>
+                  Ask our team to check it. We confirm seats on the new flight and the total to pay
+                  before anything is changed.
+                </span>
+              </p>
+
+              <div class="flex flex-wrap gap-3 mt-6">
+                <!-- Changing a date changes a booking, so it is a POST that the team
+                     acts on; nothing is changed by pressing this in a browser. -->
+                <form method="post" action="../contact.html">
+                  <button class="btn btn--primary" type="submit">
+                    <svg class="icon size-4" aria-hidden="true"><use href="#i-headset"></use></svg>Request date change
+                  </button>
+                </form>
+              </div>
+            </section>
+            <!-- END BLADE BOUNDARY: booking date change -->
+            </div>
+
             <div class="booking-panel booking-panel--cancellation">
             <!-- BLADE BOUNDARY: booking cancellation -> <x-account.booking-cancellation :booking="$booking" />
                  @content-pending: the tiers and the wording are the fare's own rules,
@@ -1336,10 +1444,6 @@
                     <svg class="icon size-4" aria-hidden="true"><use href="#i-headset"></use></svg>Request cancellation
                   </button>
                 </form>
-
-                <a class="btn btn--outline" href="../legal/refund-policy.html">
-                  <svg class="icon size-4" aria-hidden="true"><use href="#i-external"></use></svg>Read the full terms
-                </a>
               </div>
             </section>
             <!-- END BLADE BOUNDARY: booking cancellation -->

@@ -6,26 +6,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#ffffff">
-  <meta name="description" content="Comparing the Dhaka to Tokyo non-stop against one-stop routings on price, total time and how much of your first day you lose.">
+  <meta name="description" content="Meet &amp; Greet: an airport host meets you on arrival and walks you through check-in, bag drop and security.">
 
-  <title>Dhaka to Tokyo: which connection is actually worth it — Izumi Global Travels</title>
+  <title>Meet &amp; Greet — Izumi Global Travels</title>
 
   <!--
     Runs before paint so the dark theme never flashes light.
     Must stay synchronous and must not be type="module".
     Blade: resources/views/layouts/app.blade.php
   -->
-  <script src="../assets/js/core/theme-boot.js"></script>
+  <script src="../../assets/js/core/theme-boot.js"></script>
 
-  <link rel="stylesheet" href="../assets/css/build.css">
+  <link rel="stylesheet" href="../../assets/css/build.css">
 </head>
 
-<body class="results-page" data-page="blog-post">
+<body class="results-page" data-page="service">
 
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
-       One request-free sprite for every icon on the page. Reference an icon
+       One request-free sprite for every icon on the page.
        Reference one with a use element pointing at its symbol id. -->
   <svg xmlns="http://www.w3.org/2000/svg" hidden aria-hidden="true">
     <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="m12 3 1.9 4.6L18.5 9.5l-4.6 1.9L12 16l-1.9-4.6L5.5 9.5l4.6-1.9zM18.5 14.5l.8 1.9 1.9.8-1.9.8-.8 1.9-.8-1.9-1.9-.8 1.9-.8z"/></symbol>
@@ -83,7 +83,7 @@
     <div class="page-container flex items-center gap-4 min-h-(--header-height) lg:grid lg:grid-cols-[1fr_auto_1fr] lg:min-h-(--header-height-lg) lg:gap-8">
 
       <!-- @brand-pending: placeholder mark. Swap for the supplied logo file. -->
-      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../index.html" aria-label="Izumi Global Travels — home">
+      <a class="inline-flex items-center gap-2 flex-none mr-auto no-underline text-fg-heading" href="../../index.html" aria-label="Izumi Global Travels — home">
         <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
           <circle cx="20" cy="20" r="20" fill="#1668e0"/>
           <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -98,10 +98,10 @@
       <div class="site-nav" id="site-nav" data-nav-panel>
         <nav class="lg:justify-self-center" aria-label="Primary">
           <ul class="flex flex-col items-stretch gap-0 m-0 p-0 list-none lg:flex-row lg:items-center lg:gap-6">
-            <li><a class="nav-link" href="../index.html">Flights</a></li>
-            <li><a class="nav-link" href="about.html">About</a></li>
-            <li><a class="nav-link" href="contact.html">Contact</a></li>
-            <li><a class="nav-link" href="faq.html">FAQ</a></li>
+            <li><a class="nav-link" href="../../index.html">Flights</a></li>
+            <li><a class="nav-link" href="../about.html">About</a></li>
+            <li><a class="nav-link" href="../contact.html">Contact</a></li>
+            <li><a class="nav-link" href="../faq.html">FAQ</a></li>
           </ul>
         </nav>
 
@@ -295,7 +295,7 @@
         </div>
         <!-- END BLADE BOUNDARY: theme toggle -->
 
-        <a class="btn btn--primary btn--sm" href="auth/login.html">Login/Register</a>
+        <a class="btn btn--primary btn--sm" href="../auth/login.html">Login/Register</a>
       </div>
 
       <button class="inline-flex items-center justify-center size-(--control-height) flex-none rounded-sm text-fg-heading hover:bg-surface-muted lg:hidden" type="button"
@@ -314,67 +314,188 @@
   <!-- BLADE BOUNDARY: main content -> @yield('content') -->
   <main id="main-content">
 
-    <!-- BLADE BOUNDARY: post -> <x-blog.post :post="$post" /> -->
-    <!-- @content-pending: the template one post is rendered into. The backend
-         gives each post its own page; this stands in for all of them. -->
-    <article class="page-container post">
-      <a class="review-back" href="blog.html">
-        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-left"></use></svg>
-        Back to the blog
-      </a>
+    <!-- BLADE BOUNDARY: service banner -> <x-services.hero :service="$service" /> -->
+    <div class="page-container pt-6 pb-5">
+      <section class="service-hero" aria-labelledby="service-title">
+        <img class="service-hero__media" src="../../assets/images/meet-geet.png"
+             alt="An airport host welcoming a traveller at the terminal" width="2294" height="1090" decoding="async">
 
-      <div class="post__card">
-      <p class="post__meta">
-        <span class="post-card__tag">Routes</span>
-        <span>12 August 2026</span>
-        <span aria-hidden="true">&middot;</span>
-        <span>6 min read</span>
-      </p>
+        <div class="service-hero__body">
+          <nav class="service-hero__crumbs" aria-label="Breadcrumb">
+            <ol class="flex flex-wrap items-center gap-2 m-0 p-0 list-none text-xs" role="list">
+              <li><a href="../../index.html">Home</a></li>
+              <li class="text-on-panel-muted" aria-hidden="true">/</li>
+              <li><span class="text-on-panel-muted">Our services</span></li>
+              <li class="text-on-panel-muted" aria-hidden="true">/</li>
+              <li><span class="font-semibold text-on-panel" aria-current="page">Meet &amp; Greet</span></li>
+            </ol>
+          </nav>
 
-      <h1 class="post__title">Dhaka to Tokyo: which connection is actually worth it</h1>
+          <p class="service-hero__chip m-0">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-sparkles"></use></svg>Meet &amp; Greet
+          </p>
 
-      <img class="post__media" src="../assets/images/hero%20section.webp"
-           alt="An aircraft climbing away through cloud" width="1600" height="900" decoding="async">
+          <h1 id="service-title" class="m-0 text-3xl font-bold leading-tight tracking-tight text-on-panel md:text-4xl lg:text-5xl">A friendly face from arrival to check-in</h1>
+          <p class="m-0 text-base leading-relaxed text-on-panel-muted md:text-lg">An airport host meets you at the terminal, stays with you through check-in, bag drop and security, and sees you to your gate — or meets you off the aircraft when you land.</p>
 
-      <div class="post__body">
-        <p>
-          There is one non-stop between Dhaka and Tokyo, and a dozen ways to do it with a change. The
-          non-stop is not always the right answer, and the cheapest one-stop is almost never the one you
-          want. Here is how we weigh them up when someone asks.
-        </p>
+          <ul class="flex flex-wrap gap-2 m-0 p-0 list-none" role="list">
+            <li class="service-hero__chip">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-user"></use></svg>Met by name
+            </li>
+            <li class="service-hero__chip">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-ticket"></use></svg>Check-in to the gate
+            </li>
+            <li class="service-hero__chip">
+              <svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Selected airports
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+    <!-- END BLADE BOUNDARY: service banner -->
 
-        <h2>Total time is not flight time</h2>
-        <p>
-          A six-hour flight with a two-hour connection is not eight hours of travel. Add the walk between
-          terminals, the second security queue, and the hour you spend not daring to leave the gate area.
-          A connection under ninety minutes at an unfamiliar airport is a gamble; over five hours and you
-          have lost a day.
-        </p>
+    <!-- BLADE BOUNDARY: service -> <x-services.detail :service="$service" />
+         @content-pending: the wording, the conditions and the airports that
+         offer each service come from the backend. Prices are never shown
+         here: the backend quotes them for a booking. -->
+    <div class="page-container grid gap-5 pb-10">
 
-        <h2>Where the change happens matters</h2>
-        <p>
-          Hong Kong and Bangkok are easy: one terminal, clear signage, and enough flights that a missed
-          connection is rebooked the same day. Guangzhou is cheaper and slower. If the two legs are on one
-          ticket the airline owns the problem when the first runs late — on separate tickets, you do.
-        </p>
+      <section class="review-panel" aria-labelledby="included-title">
+        <h2 class="m-0 text-lg font-semibold text-fg-heading" id="included-title">What you get</h2>
+        <ul class="grid gap-5 mt-5 mb-0 p-0 list-none md:grid-cols-2" role="list">
+            <li class="flex gap-3">
+              <span class="rule-icon rule-icon--brand size-9 flex-none" aria-hidden="true">
+                <svg class="icon size-4"><use href="#i-check"></use></svg>
+              </span>
+              <span>
+                <span class="block text-sm font-semibold text-fg-heading">Met by name</span>
+                <span class="block mt-1 text-sm leading-relaxed text-fg-muted">Your host waits at an agreed meeting point with a name board.</span>
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="rule-icon rule-icon--brand size-9 flex-none" aria-hidden="true">
+                <svg class="icon size-4"><use href="#i-check"></use></svg>
+              </span>
+              <span>
+                <span class="block text-sm font-semibold text-fg-heading">Help through the airport</span>
+                <span class="block mt-1 text-sm leading-relaxed text-fg-muted">Check-in, bag drop, immigration and security, with someone who knows the way.</span>
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="rule-icon rule-icon--brand size-9 flex-none" aria-hidden="true">
+                <svg class="icon size-4"><use href="#i-check"></use></svg>
+              </span>
+              <span>
+                <span class="block text-sm font-semibold text-fg-heading">Right to the gate</span>
+                <span class="block mt-1 text-sm leading-relaxed text-fg-muted">On departure your host walks you to the gate; on arrival, out to the exit.</span>
+              </span>
+            </li>
+            <li class="flex gap-3">
+              <span class="rule-icon rule-icon--brand size-9 flex-none" aria-hidden="true">
+                <svg class="icon size-4"><use href="#i-check"></use></svg>
+              </span>
+              <span>
+                <span class="block text-sm font-semibold text-fg-heading">One number to call</span>
+                <span class="block mt-1 text-sm leading-relaxed text-fg-muted">You get your host’s contact details the day before you fly.</span>
+              </span>
+            </li>
+        </ul>
+      </section>
 
-        <h2>What it costs to arrive tired</h2>
-        <p>
-          The overnight one-stop that saves BDT 8,000 lands you in Narita at breakfast with no sleep, and
-          you spend the saving on a hotel you check into at noon. Worth it on a two-week trip; not worth it
-          on a three-day one.
-        </p>
+      <section aria-labelledby="how-title">
+        <h2 class="m-0 mb-4 text-lg font-semibold text-fg-heading" id="how-title">How it works</h2>
+        <ol class="grid gap-4 m-0 p-0 list-none md:grid-cols-3" role="list">
 
-        <h2>What we would book</h2>
-        <p>
-          For a short trip, the non-stop, every time. For a longer one, the Hong Kong routing: it is
-          reliably cheaper, the transit is short enough to stay airside, and the arrival still gives you an
-          afternoon. Ask us and we will price both against your dates before you decide.
-        </p>
-      </div>
-      </div>
-    </article>
-    <!-- END BLADE BOUNDARY: post -->
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">1</span>
+            <span class="flex-auto">
+              <span class="step-card__title">Request it</span>
+              <span class="step-card__text">Add Meet &amp; Greet to your booking, or ask our team, at least 48 hours before you fly.</span>
+            </span>
+            <span class="step-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-check"></use></svg></span>
+          </li>
+
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">2</span>
+            <span class="flex-auto">
+              <span class="step-card__title">We confirm it</span>
+              <span class="step-card__text">We confirm the host, the meeting point and the time, and send them to you.</span>
+            </span>
+            <span class="step-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-mail"></use></svg></span>
+          </li>
+
+          <li class="step-card">
+            <span class="step-card__number" aria-hidden="true">3</span>
+            <span class="flex-auto">
+              <span class="step-card__title">Meet your host</span>
+              <span class="step-card__text">Your host is waiting when you arrive and stays until you are at the gate.</span>
+            </span>
+            <span class="step-card__icon"><svg class="icon" aria-hidden="true"><use href="#i-user"></use></svg></span>
+          </li>
+        </ol>
+      </section>
+
+      <section class="review-panel" aria-labelledby="notes-title">
+        <h2 class="m-0 text-lg font-semibold text-fg-heading" id="notes-title">Good to know</h2>
+        <ul class="grid gap-3 mt-4 mb-0 p-0 list-none" role="list">
+          <li class="flex gap-3 text-sm leading-relaxed text-fg">
+            <svg class="icon size-5 flex-none text-primary" aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>Available at selected airports. We confirm availability for your airport before the service is booked.</span>
+          </li>
+          <li class="flex gap-3 text-sm leading-relaxed text-fg">
+            <svg class="icon size-5 flex-none text-primary" aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>The price depends on the airport and the size of your group, and we quote it before anything is charged.</span>
+          </li>
+          <li class="flex gap-3 text-sm leading-relaxed text-fg">
+            <svg class="icon size-5 flex-none text-primary" aria-hidden="true"><use href="#i-info"></use></svg>
+            <span>Wheelchair and mobility assistance is a separate airline service, free of charge. Ask us and we request it for you.</span>
+          </li>
+        </ul>
+      </section>
+
+      <section aria-labelledby="more-title">
+        <h2 class="m-0 mb-4 text-lg font-semibold text-fg-heading" id="more-title">More ways to travel your way</h2>
+        <div class="grid gap-4 md:grid-cols-2">
+
+          <article class="preference-card">
+            <img class="preference-card__media" src="../../assets/images/halal%20meal.png"
+                 alt="" width="1774" height="887" loading="lazy" decoding="async">
+            <a class="absolute inset-0 z-2 rounded-lg" href="halal-meal.html" aria-labelledby="other-halal-meal"></a>
+            <div class="preference-card__body">
+              <h3 class="preference-card__title" id="other-halal-meal">Halal Meal</h3>
+              <svg class="icon size-5 text-neutral-0" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </div>
+          </article>
+
+          <article class="preference-card">
+            <img class="preference-card__media" src="../../assets/images/window.webp"
+                 alt="" width="1448" height="1086" loading="lazy" decoding="async">
+            <a class="absolute inset-0 z-2 rounded-lg" href="window-seat.html" aria-labelledby="other-window-seat"></a>
+            <div class="preference-card__body">
+              <h3 class="preference-card__title" id="other-window-seat">Window Seat</h3>
+              <svg class="icon size-5 text-neutral-0" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="review-panel flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="m-0 text-base font-semibold text-fg-heading">Travelling soon?</h2>
+          <p class="mt-1 mb-0 text-sm text-fg-muted">Add Meet &amp; Greet to a booking you already have, or ask our team.</p>
+        </div>
+        <div class="flex flex-wrap gap-3">
+          <a class="btn btn--outline" href="../contact.html">
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-headset"></use></svg>Ask our team
+          </a>
+          <a class="btn btn--primary" href="../account/bookings.html">
+            Request Meet &amp; Greet
+            <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+          </a>
+        </div>
+      </section>
+    </div>
+    <!-- END BLADE BOUNDARY: service -->
   </main>
   <!-- END BLADE BOUNDARY: main content -->
 
@@ -385,7 +506,7 @@
       <div class="grid grid-cols-2 gap-x-6 gap-y-8 mid:grid-cols-3 lg:grid-cols-[1.4fr_repeat(3,1fr)_auto] lg:gap-6">
 
         <div class="flex items-center gap-4 col-span-2 mid:flex-col mid:items-start mid:col-span-1">
-          <a class="footer-logo" href="../index.html" aria-label="Izumi Global Travels — home">
+          <a class="footer-logo" href="../../index.html" aria-label="Izumi Global Travels — home">
             <svg class="size-[34px] flex-none icon--solid" viewBox="0 0 40 40" aria-hidden="true">
               <circle cx="20" cy="20" r="20" fill="#1668e0"/>
               <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
@@ -402,28 +523,28 @@
         <nav class="" aria-labelledby="footer-support">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-support">Support</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="contact.html">Contact Us</a></li>
-            <li><a class="footer-nav__link" href="../pages/account/bookings.html">Manage Booking</a></li>
-            <li><a class="footer-nav__link" href="faq.html">FAQs</a></li>
-            <li><a class="footer-nav__link" href="support/feedback.html">Feedback</a></li>
+            <li><a class="footer-nav__link" href="../contact.html">Contact Us</a></li>
+            <li><a class="footer-nav__link" href="../../pages/account/bookings.html">Manage Booking</a></li>
+            <li><a class="footer-nav__link" href="../faq.html">FAQs</a></li>
+            <li><a class="footer-nav__link" href="../support/feedback.html">Feedback</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-legal">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-legal">Legal</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="legal/terms.html">Terms &amp; Conditions</a></li>
-            <li><a class="footer-nav__link" href="legal/privacy-policy.html">Privacy Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/refund-policy.html">Refund Policy</a></li>
-            <li><a class="footer-nav__link" href="legal/booking-conditions.html">Booking Conditions</a></li>
+            <li><a class="footer-nav__link" href="../legal/terms.html">Terms &amp; Conditions</a></li>
+            <li><a class="footer-nav__link" href="../legal/privacy-policy.html">Privacy Policy</a></li>
+            <li><a class="footer-nav__link" href="../legal/refund-policy.html">Refund Policy</a></li>
+            <li><a class="footer-nav__link" href="../legal/booking-conditions.html">Booking Conditions</a></li>
           </ul>
         </nav>
 
         <nav class="" aria-labelledby="footer-company">
           <h2 class="mb-3 text-sm font-semibold text-on-panel" id="footer-company">Company</h2>
           <ul class="grid gap-2 m-0 p-0 list-none">
-            <li><a class="footer-nav__link" href="about.html">About Us</a></li>
-            <li><a class="footer-nav__link" href="blog.html">Blog</a></li>
+            <li><a class="footer-nav__link" href="../about.html">About Us</a></li>
+            <li><a class="footer-nav__link" href="../blog.html">Blog</a></li>
           </ul>
         </nav>
 
@@ -431,10 +552,10 @@
 
           <div class="flex flex-wrap gap-3">
             <span class="store-badge">
-              <img class="store-badge__art" src="../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
+              <img class="store-badge__art" src="../../assets/images/appstore.png" alt="Download on the App Store" width="957" height="337" loading="lazy" decoding="async">
             </span>
             <span class="store-badge">
-              <img class="store-badge__art" src="../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
+              <img class="store-badge__art" src="../../assets/images/playstore.png" alt="Get it on Google Play" width="957" height="334" loading="lazy" decoding="async">
             </span>
           </div>
         </div>
@@ -443,9 +564,9 @@
 
       <div class="flex flex-wrap items-center justify-between gap-4 mt-8 pt-6 border-t border-panel-line">
         <ul class="flex items-center gap-2 m-0 p-0 list-none" role="list">
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
-          <li><a class="social-link" href="contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on Facebook"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-facebook"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on Instagram"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-instagram"></use></svg></a></li>
+          <li><a class="social-link" href="../contact.html" aria-label="Izumi Global Travels on LinkedIn"><svg class="icon icon--solid" aria-hidden="true"><use href="#i-linkedin"></use></svg></a></li>
         </ul>
 
         <!-- @brand-pending: text marks stand in for the licensed payment
@@ -475,6 +596,6 @@
   </a>
   <!-- END BLADE BOUNDARY: back to top -->
 
-  <script type="module" src="../assets/js/main.js"></script>
+  <script type="module" src="../../assets/js/main.js"></script>
 </body>
 </html>

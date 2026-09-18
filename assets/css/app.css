@@ -2230,6 +2230,12 @@
      crop is nudged to bring it into the middle of the card. */
   .preference-card__media--window { object-position: 57% 50%; }
 
+  /* A card that links to its service page leans in on hover or focus, so the
+     whole tile reads as the link it is. */
+  .preference-card__media { transition: scale var(--transition-base); }
+
+  .preference-card:has(> a[href]:is(:hover, :focus-visible)) .preference-card__media { scale: 1.04; }
+
   .preference-card__badge {
     position: absolute;
     z-index: 1;
@@ -6350,7 +6356,7 @@
   }
 
   /* --- A booking, tab by tab -----------------------------------------------
-     Six panels, one on show. Radios again: the tabs work with no JavaScript,
+     Seven panels, one on show. Radios again: the tabs work with no JavaScript,
      and which one is open is a real form value the backend can render back.
      ---------------------------------------------------------------------- */
 
@@ -6395,7 +6401,7 @@
   .booking-tabs {
     display: flex;
     gap: --spacing(1);
-    /* Six labels do not fit a phone; the row scrolls rather than wrapping into
+    /* Seven labels do not fit a phone; the row scrolls rather than wrapping into
        a block that pushes the panel off the screen. */
     overflow-x: auto;
     scrollbar-width: none;
@@ -6433,93 +6439,38 @@
     gap: --spacing(5);
   }
 
-  .booking-tab__input:nth-of-type(1):checked ~ .booking-tabs .booking-tab:nth-child(1) {
+  /* One radio per tab, matched by position: the nth radio lights the nth tab
+     and shows the nth panel. Adding a tab means adding its index here. */
+  .booking-tab__input:nth-of-type(1):checked ~ .booking-tabs .booking-tab:nth-child(1),
+  .booking-tab__input:nth-of-type(2):checked ~ .booking-tabs .booking-tab:nth-child(2),
+  .booking-tab__input:nth-of-type(3):checked ~ .booking-tabs .booking-tab:nth-child(3),
+  .booking-tab__input:nth-of-type(4):checked ~ .booking-tabs .booking-tab:nth-child(4),
+  .booking-tab__input:nth-of-type(5):checked ~ .booking-tabs .booking-tab:nth-child(5),
+  .booking-tab__input:nth-of-type(6):checked ~ .booking-tabs .booking-tab:nth-child(6),
+  .booking-tab__input:nth-of-type(7):checked ~ .booking-tabs .booking-tab:nth-child(7) {
     background-color: var(--color-cta-from);
     background-image: var(--gradient-primary);
     color: var(--color-on-cta);
   }
 
-  .booking-tab__input:nth-of-type(1):focus-visible ~ .booking-tabs .booking-tab:nth-child(1) {
+  .booking-tab__input:nth-of-type(1):focus-visible ~ .booking-tabs .booking-tab:nth-child(1),
+  .booking-tab__input:nth-of-type(2):focus-visible ~ .booking-tabs .booking-tab:nth-child(2),
+  .booking-tab__input:nth-of-type(3):focus-visible ~ .booking-tabs .booking-tab:nth-child(3),
+  .booking-tab__input:nth-of-type(4):focus-visible ~ .booking-tabs .booking-tab:nth-child(4),
+  .booking-tab__input:nth-of-type(5):focus-visible ~ .booking-tabs .booking-tab:nth-child(5),
+  .booking-tab__input:nth-of-type(6):focus-visible ~ .booking-tabs .booking-tab:nth-child(6),
+  .booking-tab__input:nth-of-type(7):focus-visible ~ .booking-tabs .booking-tab:nth-child(7) {
     outline: var(--border-width-strong) solid var(--color-ring);
     outline-offset: 2px;
   }
 
-  .booking-tab__input:nth-of-type(1):checked ~ .booking-panels .booking-panel:nth-child(1) {
-    display: grid;
-  }
-
-  .booking-tab__input:nth-of-type(2):checked ~ .booking-tabs .booking-tab:nth-child(2) {
-    background-color: var(--color-cta-from);
-    background-image: var(--gradient-primary);
-    color: var(--color-on-cta);
-  }
-
-  .booking-tab__input:nth-of-type(2):focus-visible ~ .booking-tabs .booking-tab:nth-child(2) {
-    outline: var(--border-width-strong) solid var(--color-ring);
-    outline-offset: 2px;
-  }
-
-  .booking-tab__input:nth-of-type(2):checked ~ .booking-panels .booking-panel:nth-child(2) {
-    display: grid;
-  }
-
-  .booking-tab__input:nth-of-type(3):checked ~ .booking-tabs .booking-tab:nth-child(3) {
-    background-color: var(--color-cta-from);
-    background-image: var(--gradient-primary);
-    color: var(--color-on-cta);
-  }
-
-  .booking-tab__input:nth-of-type(3):focus-visible ~ .booking-tabs .booking-tab:nth-child(3) {
-    outline: var(--border-width-strong) solid var(--color-ring);
-    outline-offset: 2px;
-  }
-
-  .booking-tab__input:nth-of-type(3):checked ~ .booking-panels .booking-panel:nth-child(3) {
-    display: grid;
-  }
-
-  .booking-tab__input:nth-of-type(4):checked ~ .booking-tabs .booking-tab:nth-child(4) {
-    background-color: var(--color-cta-from);
-    background-image: var(--gradient-primary);
-    color: var(--color-on-cta);
-  }
-
-  .booking-tab__input:nth-of-type(4):focus-visible ~ .booking-tabs .booking-tab:nth-child(4) {
-    outline: var(--border-width-strong) solid var(--color-ring);
-    outline-offset: 2px;
-  }
-
-  .booking-tab__input:nth-of-type(4):checked ~ .booking-panels .booking-panel:nth-child(4) {
-    display: grid;
-  }
-
-  .booking-tab__input:nth-of-type(5):checked ~ .booking-tabs .booking-tab:nth-child(5) {
-    background-color: var(--color-cta-from);
-    background-image: var(--gradient-primary);
-    color: var(--color-on-cta);
-  }
-
-  .booking-tab__input:nth-of-type(5):focus-visible ~ .booking-tabs .booking-tab:nth-child(5) {
-    outline: var(--border-width-strong) solid var(--color-ring);
-    outline-offset: 2px;
-  }
-
-  .booking-tab__input:nth-of-type(5):checked ~ .booking-panels .booking-panel:nth-child(5) {
-    display: grid;
-  }
-
-  .booking-tab__input:nth-of-type(6):checked ~ .booking-tabs .booking-tab:nth-child(6) {
-    background-color: var(--color-cta-from);
-    background-image: var(--gradient-primary);
-    color: var(--color-on-cta);
-  }
-
-  .booking-tab__input:nth-of-type(6):focus-visible ~ .booking-tabs .booking-tab:nth-child(6) {
-    outline: var(--border-width-strong) solid var(--color-ring);
-    outline-offset: 2px;
-  }
-
-  .booking-tab__input:nth-of-type(6):checked ~ .booking-panels .booking-panel:nth-child(6) {
+  .booking-tab__input:nth-of-type(1):checked ~ .booking-panels .booking-panel:nth-child(1),
+  .booking-tab__input:nth-of-type(2):checked ~ .booking-panels .booking-panel:nth-child(2),
+  .booking-tab__input:nth-of-type(3):checked ~ .booking-panels .booking-panel:nth-child(3),
+  .booking-tab__input:nth-of-type(4):checked ~ .booking-panels .booking-panel:nth-child(4),
+  .booking-tab__input:nth-of-type(5):checked ~ .booking-panels .booking-panel:nth-child(5),
+  .booking-tab__input:nth-of-type(6):checked ~ .booking-panels .booking-panel:nth-child(6),
+  .booking-tab__input:nth-of-type(7):checked ~ .booking-panels .booking-panel:nth-child(7) {
     display: grid;
   }
 
@@ -9893,9 +9844,26 @@
 
   /* --- One post ------------------------------------------------------------ */
 
+  /* Full page width, so the post lines up with the header above it. */
   .post {
-    max-inline-size: var(--container-narrow);
     padding-block: --spacing(6) --spacing(10);
+  }
+
+  /* The post itself — meta, title, picture and text — on one white sheet. */
+  .post__card {
+    margin-block-start: --spacing(6);
+    padding: --spacing(5);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  @media (width >= 48rem) {
+    .post__card { padding: --spacing(8); }
+  }
+
+  @media (width >= 64rem) {
+    .post__card { padding: --spacing(10); }
   }
 
   .post__meta {
@@ -9903,7 +9871,7 @@
     flex-wrap: wrap;
     align-items: center;
     gap: --spacing(2);
-    margin: --spacing(6) 0 0;
+    margin: 0;
     font-size: var(--text-xs);
     color: var(--color-fg-muted);
   }
@@ -9928,8 +9896,8 @@
     object-fit: cover;
   }
 
+  /* Spans the whole card, the same width as the picture above it. */
   .post__body {
-    max-inline-size: var(--container-prose);
     margin-block-start: --spacing(6);
   }
 
@@ -9959,8 +9927,6 @@
   }
 
   .post__body li + li { margin-block-start: --spacing(2); }
-
-  .post__foot { margin: --spacing(8) 0 0; }
 
   /* --- Legal documents -----------------------------------------------------
      The same article body as a blog post, with the two lines a legal page
@@ -10981,4 +10947,103 @@
   }
 
   .book-box__note .icon { flex: none; margin-block-start: 2px; }
+}
+
+/* ==========================================================================
+   SERVICE PAGES — the photograph banner at the top of each service
+   ========================================================================== */
+
+@layer components {
+
+  /*
+   * The service's own photograph behind its title. The picture is an <img> in
+   * the markup, not a background here, because every service page shows a
+   * different one. A navy scrim runs up from the foot on a phone and in from
+   * the left on a wider screen — the side the copy sits on — so the white
+   * text holds its contrast whatever the photograph does.
+   */
+  .service-hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    align-items: flex-end;
+    min-block-size: --spacing(100);
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-panel);
+    color: var(--color-on-panel);
+  }
+
+  .service-hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: -2;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+  }
+
+  .service-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: linear-gradient(to top,
+      color-mix(in srgb, var(--color-panel) 96%, transparent) 0%,
+      color-mix(in srgb, var(--color-panel) 78%, transparent) 55%,
+      color-mix(in srgb, var(--color-panel) 30%, transparent) 100%);
+  }
+
+  .service-hero__body {
+    display: grid;
+    justify-items: start;
+    gap: --spacing(4);
+    max-inline-size: var(--container-prose);
+    padding: --spacing(6) --spacing(5);
+  }
+
+  @media (width >= 48rem) {
+    .service-hero { align-items: center; min-block-size: --spacing(110); }
+
+    .service-hero::before {
+      background-image: linear-gradient(to right,
+        color-mix(in srgb, var(--color-panel) 96%, transparent) 0%,
+        color-mix(in srgb, var(--color-panel) 80%, transparent) 45%,
+        color-mix(in srgb, var(--color-panel) 0%, transparent) 85%);
+    }
+
+    .service-hero__body { padding: --spacing(10); }
+  }
+
+  @media (width >= 64rem) {
+    .service-hero__body { padding: --spacing(12) --spacing(14); }
+  }
+
+  /* The pill above the title and the highlight chips below it: the same
+     frosted glass the landing-page cards use over their photographs. */
+  .service-hero__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: --spacing(2);
+    padding: --spacing(1.5) --spacing(3);
+    border: var(--border-width) solid var(--color-photo-glass-line);
+    border-radius: var(--radius-pill);
+    background-color: var(--color-photo-glass);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--color-on-panel);
+  }
+
+  @supports not (backdrop-filter: blur(1px)) {
+    .service-hero__chip { background-color: var(--color-photo-glass-solid); }
+  }
+
+  .service-hero__crumbs a {
+    color: var(--color-on-panel-muted);
+    text-decoration: none;
+  }
+
+  .service-hero__crumbs a:hover { color: var(--color-on-panel); }
 }
