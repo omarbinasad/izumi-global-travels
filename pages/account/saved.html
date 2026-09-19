@@ -88,6 +88,7 @@
     <symbol id="i-headset" viewBox="0 0 24 24"><path d="M4 14v-2a8 8 0 0 1 16 0v2M4 14a2 2 0 0 1 2-2h1v6H6a2 2 0 0 1-2-2zM20 14a2 2 0 0 0-2-2h-1v6h1a2 2 0 0 0 2-2zM18 18v1a3 3 0 0 1-3 3h-3"/></symbol>
     <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></symbol>
     <symbol id="i-ticket" viewBox="0 0 24 24"><path d="M4 6h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V7a1 1 0 0 1 1-1zM10 6v2M10 11v2M10 16v2"/></symbol>
+    <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20.5 4.7 13.2a4.9 4.9 0 0 1 0-6.9 4.9 4.9 0 0 1 6.9 0l.4.4.4-.4a4.9 4.9 0 0 1 6.9 0 4.9 4.9 0 0 1 0 6.9z"/></symbol>
     <symbol id="i-bookmark" viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></symbol>
     <symbol id="i-compare" viewBox="0 0 24 24"><path d="M6 3h12a1 1 0 0 1 1 1v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1zM9 8h6M9 12h6M9 16h3"/></symbol>
     <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 2 3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
@@ -400,154 +401,330 @@
         <!-- BLADE BOUNDARY: saved tabs -> <x-account.saved-tabs :saved="$saved" /> -->
         <!-- Radios, not buttons: the two lists swap with no JavaScript, and the
              chosen tab is a real form value the backend can render back. The
-             same markup as the bookings tabs, so it is one Blade component. -->
+             same markup as the bookings tabs, so it is one Blade component.
+             The counts are the backend's; saved-list.js keeps them in step
+             when something is removed on the static page. -->
         <div class="booking-tabs-wrap">
           <input class="booking-tab__input sr-only" type="radio" name="saved-tab" id="saved-tab-flights" checked>
           <input class="booking-tab__input sr-only" type="radio" name="saved-tab" id="saved-tab-hotels">
 
           <div class="booking-tabs">
-            <label class="booking-tab" for="saved-tab-flights">Flights</label>
-            <label class="booking-tab" for="saved-tab-hotels">Hotels</label>
+            <label class="booking-tab" for="saved-tab-flights">Flights<span class="saved-count" data-saved-count="flights">2</span></label>
+            <label class="booking-tab" for="saved-tab-hotels">Hotels<span class="saved-count" data-saved-count="hotels">3</span></label>
           </div>
 
           <div class="booking-panels">
 
             <div class="booking-panel">
-              <!-- BLADE BOUNDARY: saved flights -> <x-account.saved-flights :saved="$savedFlights" /> -->
-          <div class="booking-list">
-            <article class="booking-card">
-              <div class="booking-card__head">
-                <p class="booking-card__ref">
-                  <img class="booking-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
-                  <span>
-                    <span class="booking-card__airline">Cathay Pacific</span>
-                    <span class="booking-card__code">Dhaka to Tokyo &middot; Round trip</span>
-                  </span>
-                </p>
-                <span class="booking-card__saved">Saved 3 Sep 2026</span>
+              <!-- BLADE BOUNDARY: saved flights -> <x-account.saved-flights :saved="$savedFlights" />
+                   @content-pending: the saved price is what the backend
+                   recorded; it is never presented as the current fare. -->
+              <div class="saved-list" data-saved-list="flights">
+                <article class="saved-card" data-saved-item data-saved-name="Cathay Pacific, DAC to NRT">
+                  <div class="saved-card__body">
+                    <div class="saved-card__top">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <img class="saved-card__logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
+                        <div class="min-w-0">
+                          <h2 class="saved-card__title">Cathay Pacific</h2>
+                          <p class="saved-card__sub">CX 750 &bull; CX 520</p>
+                        </div>
+                      </div>
+                      <span class="saved-card__when"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-bookmark"></use></svg>Saved 3 Sep</span>
+                    </div>
+
+                    <p class="saved-route">
+                      <span class="saved-route__end">
+                        <span class="saved-route__code">DAC</span>
+                        <span class="saved-route__city">Dhaka</span>
+                      </span>
+                      <span class="saved-route__path">
+                        <span class="saved-route__line"><svg class="icon icon--solid size-4" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                        <span>10h 45m &middot; 1 stop in HKG</span>
+                      </span>
+                      <span class="saved-route__end saved-route__end--arrive">
+                        <span class="saved-route__code">NRT</span>
+                        <span class="saved-route__city">Tokyo</span>
+                      </span>
+                    </p>
+
+                    <ul class="saved-card__chips" role="list">
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-calendar"></use></svg>18 Sep – 27 Sep 2026</li>
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-refresh"></use></svg>Round trip</li>
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-user"></use></svg>Economy &middot; 1 adult</li>
+                    </ul>
+                  </div>
+
+                  <div class="saved-card__aside">
+                    <div>
+                      <p class="saved-card__label">Saved at</p>
+                      <p class="saved-card__price">BDT 72,900</p>
+                      <p class="saved-card__label mt-1">Total &middot; checked again when you search</p>
+                    </div>
+                    <div class="saved-card__actions">
+                      <a class="btn btn--primary" href="../flights/search-results.html">
+                        Search this route
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </a>
+                    <!-- Removing something changes state, so it is a POST, not a link. -->
+                    <form method="post" action="saved.html" data-saved-remove>
+                      <input type="hidden" name="saved_id" value="sav_fl_1">
+                      <button class="saved-card__remove" type="submit">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>Remove<span class="sr-only"> Cathay Pacific, DAC to NRT from saved</span>
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="saved-card" data-saved-item data-saved-name="China Eastern, DAC to KIX">
+                  <div class="saved-card__body">
+                    <div class="saved-card__top">
+                      <div class="flex items-center gap-3 min-w-0">
+                        <img class="saved-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
+                        <div class="min-w-0">
+                          <h2 class="saved-card__title">China Eastern</h2>
+                          <p class="saved-card__sub">MU 272 &bull; MU 747</p>
+                        </div>
+                      </div>
+                      <span class="saved-card__when"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-bookmark"></use></svg>Saved 28 Aug</span>
+                    </div>
+
+                    <p class="saved-route">
+                      <span class="saved-route__end">
+                        <span class="saved-route__code">DAC</span>
+                        <span class="saved-route__city">Dhaka</span>
+                      </span>
+                      <span class="saved-route__path">
+                        <span class="saved-route__line"><svg class="icon icon--solid size-4" aria-hidden="true"><use href="#i-plane"></use></svg></span>
+                        <span>11h 20m &middot; 1 stop in PVG</span>
+                      </span>
+                      <span class="saved-route__end saved-route__end--arrive">
+                        <span class="saved-route__code">KIX</span>
+                        <span class="saved-route__city">Osaka</span>
+                      </span>
+                    </p>
+
+                    <ul class="saved-card__chips" role="list">
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-calendar"></use></svg>02 Nov – 14 Nov 2026</li>
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-refresh"></use></svg>Round trip</li>
+                      <li class="saved-chip"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-user"></use></svg>Economy &middot; 2 adults</li>
+                    </ul>
+                  </div>
+
+                  <div class="saved-card__aside">
+                    <div>
+                      <p class="saved-card__label">Saved at</p>
+                      <p class="saved-card__price">BDT 68,300</p>
+                      <p class="saved-card__label mt-1">Total &middot; checked again when you search</p>
+                    </div>
+                    <div class="saved-card__actions">
+                      <a class="btn btn--primary" href="../flights/search-results.html">
+                        Search this route
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </a>
+                    <!-- Removing something changes state, so it is a POST, not a link. -->
+                    <form method="post" action="saved.html" data-saved-remove>
+                      <input type="hidden" name="saved_id" value="sav_fl_2">
+                      <button class="saved-card__remove" type="submit">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>Remove<span class="sr-only"> China Eastern, DAC to KIX from saved</span>
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </article>
               </div>
 
-              <div class="booking-card__legs">
-                <p class="booking-card__detail">18 Sep – 27 Sep 2026 · 1 stop in HKG</p>
-              </div>
-
-              <div class="booking-card__foot">
-                <p class="booking-card__total"><span>Saved at</span>BDT 72,900</p>
-
-                <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
-                  Search this route
+              <div class="review-panel panel-empty" data-saved-empty="flights" hidden>
+                <span class="panel-empty__icon" aria-hidden="true"><svg class="icon size-6" aria-hidden="true"><use href="#i-heart"></use></svg></span>
+                <p class="panel-empty__title">No saved flights</p>
+                <p class="panel-empty__text">Save a flight from your search results and it will wait here, with the price it was when you saved it.</p>
+                <a class="btn btn--primary" href="../../index.html">
+                  Search flights
                   <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
                 </a>
-
-                <!-- Removing something changes state, so it is a POST, not a link. -->
-                <form method="post" action="saved.html">
-                  <button class="btn btn--outline" type="submit">Remove</button>
-                </form>
               </div>
-            </article>
-
-            <article class="booking-card">
-              <div class="booking-card__head">
-                <p class="booking-card__ref">
-                  <img class="booking-card__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
-                  <span>
-                    <span class="booking-card__airline">China Eastern</span>
-                    <span class="booking-card__code">Dhaka to Osaka &middot; Round trip</span>
-                  </span>
-                </p>
-                <span class="booking-card__saved">Saved 28 Aug 2026</span>
-              </div>
-
-              <div class="booking-card__legs">
-                <p class="booking-card__detail">02 Nov – 14 Nov 2026 · 1 stop in PVG</p>
-              </div>
-
-              <div class="booking-card__foot">
-                <p class="booking-card__total"><span>Saved at</span>BDT 68,300</p>
-
-                <a class="btn btn--primary booking-card__action" href="../flights/search-results.html">
-                  Search this route
-                  <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-                </a>
-
-                <!-- Removing something changes state, so it is a POST, not a link. -->
-                <form method="post" action="saved.html">
-                  <button class="btn btn--outline" type="submit">Remove</button>
-                </form>
-              </div>
-            </article>
-          </div>
               <!-- END BLADE BOUNDARY: saved flights -->
             </div>
 
             <div class="booking-panel">
               <!-- BLADE BOUNDARY: saved hotels -> <x-account.saved-hotels :saved="$savedHotels" /> -->
-            <div class="booking-list">
-              <article class="booking-card">
-                <div class="booking-card__head">
-                  <p class="booking-card__ref">
-                    <img class="booking-card__logo booking-card__logo--stay" src="../../assets/images/hotel1.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
-                    <span>
-                      <span class="booking-card__airline">Mitsui Garden Hotel Ginza</span>
-                      <span class="booking-card__code">Ginza, Tokyo · 5 star hotel</span>
-                    </span>
-                  </p>
-                  <span class="booking-card__saved">Saved 4 Sep 2026</span>
-                </div>
+              <div class="saved-list" data-saved-list="hotels">
+                <article class="saved-card saved-card--stay" data-saved-item data-saved-name="Mitsui Garden Hotel Ginza">
+                  <img class="saved-card__media" src="../../assets/images/hotel1.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
 
-                <div class="booking-card__legs">
-                  <p class="booking-card__detail">Free cancellation · 2 min to Ginza Station · Breakfast available</p>
-                </div>
+                  <div class="saved-card__body">
+                    <div class="saved-card__top">
+                      <div class="min-w-0">
+                        <h2 class="saved-card__title">Mitsui Garden Hotel Ginza</h2>
+                        <p class="saved-card__sub"><svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Ginza, Tokyo</p>
+                      </div>
+                      <span class="saved-card__when"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-bookmark"></use></svg>Saved 4 Sep</span>
+                    </div>
 
-                <div class="booking-card__foot">
-                  <p class="booking-card__total"><span>Saved at</span>BDT 14,800 / night</p>
+                    <p class="saved-card__rating">
+                      <span class="saved-card__stars" role="img" aria-label="5 star hotel">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                      </span>
+                      <span class="saved-card__score">9.1<span class="sr-only"> out of 10</span></span>
+                      <span class="font-semibold text-fg-heading">Exceptional</span>
+                    </p>
 
-                  <a class="btn btn--primary booking-card__action" href="../hotels/hotel.html">
-                    View hotel
-                    <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-                  </a>
+                    <ul class="saved-card__chips" role="list">
+                      <li class="saved-chip saved-chip--good"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-check"></use></svg>Free cancellation</li>
+                      <li class="saved-chip">2 min to Ginza Station</li>
+                      <li class="saved-chip">Breakfast available</li>
+                    </ul>
+                  </div>
 
-                  <!-- Removing something changes state, so it is a POST, not a link. -->
-                  <form method="post" action="saved.html">
-                    <button class="btn btn--outline" type="submit">Remove</button>
-                  </form>
-                </div>
-              </article>
+                  <div class="saved-card__aside">
+                    <div>
+                      <p class="saved-card__label">Saved at</p>
+                      <p class="saved-card__price">BDT 14,800 <span class="saved-card__unit">/ night</span></p>
+                      <p class="saved-card__label mt-1">Checked again when you search</p>
+                    </div>
+                    <div class="saved-card__actions">
+                      <a class="btn btn--primary" href="../hotels/hotel.html">
+                        View hotel
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </a>
+                    <!-- Removing something changes state, so it is a POST, not a link. -->
+                    <form method="post" action="saved.html" data-saved-remove>
+                      <input type="hidden" name="saved_id" value="sav_ht_1">
+                      <button class="saved-card__remove" type="submit">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>Remove<span class="sr-only"> Mitsui Garden Hotel Ginza from saved</span>
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </article>
 
-              <article class="booking-card">
-                <div class="booking-card__head">
-                  <p class="booking-card__ref">
-                    <img class="booking-card__logo booking-card__logo--stay" src="../../assets/images/hotel3.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
-                    <span>
-                      <span class="booking-card__airline">Hotel Monterey Grasmere</span>
-                      <span class="booking-card__code">Namba, Osaka · 4 star hotel</span>
-                    </span>
-                  </p>
-                  <span class="booking-card__saved">Saved 21 Aug 2026</span>
-                </div>
+                <article class="saved-card saved-card--stay" data-saved-item data-saved-name="Shinjuku Granbell Hotel">
+                  <img class="saved-card__media" src="../../assets/images/hotel2.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
 
-                <div class="booking-card__legs">
-                  <p class="booking-card__detail">Free cancellation · Airport shuttle on request</p>
-                </div>
+                  <div class="saved-card__body">
+                    <div class="saved-card__top">
+                      <div class="min-w-0">
+                        <h2 class="saved-card__title">Shinjuku Granbell Hotel</h2>
+                        <p class="saved-card__sub"><svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Shinjuku, Tokyo</p>
+                      </div>
+                      <span class="saved-card__when"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-bookmark"></use></svg>Saved 30 Aug</span>
+                    </div>
 
-                <div class="booking-card__foot">
-                  <p class="booking-card__total"><span>Saved at</span>BDT 10,900 / night</p>
+                    <p class="saved-card__rating">
+                      <span class="saved-card__stars" role="img" aria-label="4 star hotel">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                      </span>
+                      <span class="saved-card__score">8.8<span class="sr-only"> out of 10</span></span>
+                      <span class="font-semibold text-fg-heading">Excellent</span>
+                    </p>
 
-                  <a class="btn btn--primary booking-card__action" href="../hotels/hotel.html">
-                    View hotel
-                    <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
-                  </a>
+                    <ul class="saved-card__chips" role="list">
+                      <li class="saved-chip saved-chip--good"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-check"></use></svg>Free cancellation</li>
+                      <li class="saved-chip">5 min to Shinjuku Station</li>
+                      <li class="saved-chip">Rooftop bar</li>
+                    </ul>
+                  </div>
 
-                  <!-- Removing something changes state, so it is a POST, not a link. -->
-                  <form method="post" action="saved.html">
-                    <button class="btn btn--outline" type="submit">Remove</button>
-                  </form>
-                </div>
-              </article>
-            </div>
+                  <div class="saved-card__aside">
+                    <div>
+                      <p class="saved-card__label">Saved at</p>
+                      <p class="saved-card__price">BDT 12,400 <span class="saved-card__unit">/ night</span></p>
+                      <p class="saved-card__label mt-1">Checked again when you search</p>
+                    </div>
+                    <div class="saved-card__actions">
+                      <a class="btn btn--primary" href="../hotels/hotel.html">
+                        View hotel
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </a>
+                    <!-- Removing something changes state, so it is a POST, not a link. -->
+                    <form method="post" action="saved.html" data-saved-remove>
+                      <input type="hidden" name="saved_id" value="sav_ht_2">
+                      <button class="saved-card__remove" type="submit">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>Remove<span class="sr-only"> Shinjuku Granbell Hotel from saved</span>
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </article>
+
+                <article class="saved-card saved-card--stay" data-saved-item data-saved-name="Hotel Monterey Grasmere">
+                  <img class="saved-card__media" src="../../assets/images/hotel3.webp" alt="" width="1200" height="900" loading="lazy" decoding="async">
+
+                  <div class="saved-card__body">
+                    <div class="saved-card__top">
+                      <div class="min-w-0">
+                        <h2 class="saved-card__title">Hotel Monterey Grasmere</h2>
+                        <p class="saved-card__sub"><svg class="icon size-4" aria-hidden="true"><use href="#i-pin"></use></svg>Namba, Osaka</p>
+                      </div>
+                      <span class="saved-card__when"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-bookmark"></use></svg>Saved 21 Aug</span>
+                    </div>
+
+                    <p class="saved-card__rating">
+                      <span class="saved-card__stars" role="img" aria-label="4 star hotel">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-star"></use></svg>
+                      </span>
+                      <span class="saved-card__score">8.6<span class="sr-only"> out of 10</span></span>
+                      <span class="font-semibold text-fg-heading">Excellent</span>
+                    </p>
+
+                    <ul class="saved-card__chips" role="list">
+                      <li class="saved-chip saved-chip--good"><svg class="icon size-3.5" aria-hidden="true"><use href="#i-check"></use></svg>Free cancellation</li>
+                      <li class="saved-chip">Airport shuttle on request</li>
+                    </ul>
+                  </div>
+
+                  <div class="saved-card__aside">
+                    <div>
+                      <p class="saved-card__label">Saved at</p>
+                      <p class="saved-card__price">BDT 10,900 <span class="saved-card__unit">/ night</span></p>
+                      <p class="saved-card__label mt-1">Checked again when you search</p>
+                    </div>
+                    <div class="saved-card__actions">
+                      <a class="btn btn--primary" href="../hotels/hotel.html">
+                        View hotel
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                      </a>
+                    <!-- Removing something changes state, so it is a POST, not a link. -->
+                    <form method="post" action="saved.html" data-saved-remove>
+                      <input type="hidden" name="saved_id" value="sav_ht_3">
+                      <button class="saved-card__remove" type="submit">
+                        <svg class="icon size-4" aria-hidden="true"><use href="#i-close"></use></svg>Remove<span class="sr-only"> Hotel Monterey Grasmere from saved</span>
+                      </button>
+                    </form>
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <div class="review-panel panel-empty" data-saved-empty="hotels" hidden>
+                <span class="panel-empty__icon" aria-hidden="true"><svg class="icon size-6" aria-hidden="true"><use href="#i-heart"></use></svg></span>
+                <p class="panel-empty__title">No saved hotels</p>
+                <p class="panel-empty__text">Tap the heart on any hotel to keep it here for later.</p>
+                <a class="btn btn--primary" href="../hotels/search-results.html">
+                  Find hotels
+                  <svg class="icon size-4" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+                </a>
+              </div>
               <!-- END BLADE BOUNDARY: saved hotels -->
             </div>
           </div>
+        </div>
+
+        <!-- The undo notice for a remove made on this page. -->
+        <div class="saved-notice" role="status" data-saved-notice hidden>
+          <span data-saved-notice-text></span>
+          <button class="saved-notice__undo" type="button" data-saved-undo>Undo</button>
         </div>
         <!-- END BLADE BOUNDARY: saved tabs -->
       </div>

@@ -11,6 +11,7 @@ import { initConfirmFields } from '../components/confirm-field.js';
 import { initValidation } from '../components/validate.js';
 import { initCopyText } from '../components/copy-text.js';
 import { initDialogs } from '../components/dialog.js';
+import { initSavedList } from '../components/saved-list.js';
 import { initDateRange } from '../components/date-range.js';
 /* The formatted label over a search date field, the same one the search
    panels put over their own. */
@@ -26,6 +27,7 @@ export function init() {
   initValidation();
   initCopyText();
   initDialogs();
+  initSavedList();
   /* The new dates in the date-change dialog use the themed calendar the
      search forms open, not the platform's own. */
   initDateDisplays();
