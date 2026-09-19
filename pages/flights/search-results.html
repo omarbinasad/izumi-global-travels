@@ -26,6 +26,30 @@
      page drives it end to end. Round trip is the default with no JavaScript. -->
 <body class="results-page" data-page="search-results" data-trip-view="round_trip">
 
+  <!-- BLADE BOUNDARY: preloader -> <x-layout.preloader />
+       Decorative, and never in the way for long: it fades out on its own
+       after a moment even with no JavaScript (see .preloader in app.css). -->
+  <div class="preloader" aria-hidden="true" data-preloader>
+    <div class="preloader__mark">
+      <span class="preloader__track"></span>
+      <span class="preloader__orbit">
+        <svg class="icon icon--solid preloader__plane"><use href="#i-plane"></use></svg>
+      </span>
+      <!-- @brand-pending: the same placeholder mark as the header. -->
+      <svg class="preloader__logo" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="20" fill="#1668e0"/>
+        <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
+        <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
+      </svg>
+    </div>
+    <p class="preloader__brand">
+      <span class="site-logo__name">Izumi</span>
+      <span class="site-logo__tagline">Global Travels</span>
+    </p>
+    <span class="preloader__bar"></span>
+  </div>
+  <!-- END BLADE BOUNDARY: preloader -->
+
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
@@ -734,7 +758,7 @@
                 <span class="filter-option__count">22</span>
               </label>
               <label class="filter-option" for="stops-more">
-                <input type="checkbox" id="stops-more" name="stops[]" value="2">
+                <input type="checkbox" id="stops-more" name="stops[]" value="2" checked>
                 <span class="filter-option__label">2+ stops</span>
                 <span class="filter-option__count">8</span>
               </label>
@@ -793,14 +817,21 @@
                   <input type="checkbox" id="airline-china-southern" name="airlines[]" value="china-southern" checked>
                   <img class="filter-option__logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
                   <span class="filter-option__label">China Southern</span>
-                  <span class="filter-option__count">8</span>
+                  <span class="filter-option__count">6</span>
                 </label>
 
                 <label class="filter-option" for="airline-china-eastern">
                   <input type="checkbox" id="airline-china-eastern" name="airlines[]" value="china-eastern" checked>
                   <img class="filter-option__logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
                   <span class="filter-option__label">China Eastern</span>
-                  <span class="filter-option__count">6</span>
+                  <span class="filter-option__count">4</span>
+                </label>
+
+                <label class="filter-option" for="airline-air-china">
+                  <input type="checkbox" id="airline-air-china" name="airlines[]" value="air-china" checked>
+                  <img class="filter-option__logo" src="../../assets/images/CA.avif" alt="" width="120" height="120" decoding="async">
+                  <span class="filter-option__label">Air China</span>
+                  <span class="filter-option__count">4</span>
                 </label>
             </div>
           </details>
@@ -913,6 +944,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
                       Biman Bangladesh Airlines
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">BG 378</span>
                     </p>
                   </div>
 
@@ -945,6 +977,14 @@
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
@@ -956,6 +996,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/BG.avif" alt="" width="120" height="120" decoding="async">
                       Biman Bangladesh Airlines
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">BG 379</span>
                     </p>
                   </div>
 
@@ -988,13 +1029,15 @@
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
                 </div>
-
-                <p class="result-card__meta">
-                  <span class="result-card__meta-item">
-                    <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
-                  </span>
-                </p>
               </div>
 
               <span class="result-card__badges">
@@ -1027,6 +1070,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
                       Cathay Pacific
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">CX 750 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CX 520</span>
                     </p>
                   </div>
 
@@ -1066,6 +1110,14 @@
                       <span class="result-card__date">Thu, 18 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
@@ -1077,6 +1129,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/CX.avif" alt="" width="120" height="120" decoding="async">
                       Cathay Pacific
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">CX 521 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CX 751</span>
                     </p>
                   </div>
 
@@ -1116,13 +1169,15 @@
                       <span class="result-card__date">Sun, 28 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
                 </div>
-
-                <p class="result-card__meta">
-                  <span class="result-card__meta-item">
-                    <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 23 kg baggage
-                  </span>
-                </p>
               </div>
 
               <span class="result-card__badges">
@@ -1155,6 +1210,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
                       SriLankan Airlines
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">UL 190 <span class="text-fg-heading" aria-hidden="true">&bull;</span> UL 454</span>
                     </p>
                   </div>
 
@@ -1194,6 +1250,14 @@
                       <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>25 kg baggage
+                    </span>
+                  </p>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
@@ -1205,6 +1269,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/UL.avif" alt="" width="120" height="120" decoding="async">
                       SriLankan Airlines
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">UL 455 <span class="text-fg-heading" aria-hidden="true">&bull;</span> UL 189</span>
                     </p>
                   </div>
 
@@ -1244,13 +1309,15 @@
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>25 kg baggage
+                    </span>
+                  </p>
                 </div>
-
-                <p class="result-card__meta">
-                  <span class="result-card__meta-item">
-                    <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 25 kg baggage
-                  </span>
-                </p>
               </div>
 
               <span class="result-card__badges">
@@ -1283,6 +1350,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/CZ.avif" alt="" width="120" height="120" decoding="async">
                       China Southern
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">CZ 392 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CZ 3085</span>
                     </p>
                   </div>
 
@@ -1322,6 +1390,14 @@
                       <span class="result-card__date">Fri, 19 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>20 kg baggage
+                    </span>
+                  </p>
                 </div>
 
                 <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
@@ -1333,6 +1409,7 @@
                     <p class="result-card__slice-carrier">
                       <img class="result-card__slice-logo" src="../../assets/images/MU.avif" alt="" width="120" height="120" decoding="async">
                       China Eastern
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">MU 272 <span class="text-fg-heading" aria-hidden="true">&bull;</span> MU 2931</span>
                     </p>
                   </div>
 
@@ -1372,13 +1449,15 @@
                       <span class="result-card__date">Sat, 27 Sep</span>
                     </span>
                   </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>20 kg baggage
+                    </span>
+                  </p>
                 </div>
-
-                <p class="result-card__meta">
-                  <span class="result-card__meta-item">
-                    <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy &middot; 20 kg baggage
-                  </span>
-                </p>
               </div>
 
               <span class="result-card__badges">
@@ -1393,6 +1472,162 @@
                 <span class="result-card__price">
                   <span data-trip-only="round">BDT 74,650</span>
                   <span data-trip-only="one">BDT 43,200</span>
+                </span>
+                <a class="btn btn--primary md:w-full md:mt-3" href="flight-details.html">Select</a>
+              </div>
+            </article>
+
+            <!-- Two stops each way: the track holds a layover per connection,
+                 each sized by its minutes like the flights either side. -->
+            <article class="result-card" data-offer-id="off_5"
+                     data-sort-price="64900" data-sort-duration="1730"
+                     data-sort-price-one="36500" data-sort-duration-one="835">
+              <div class="result-card__main">
+                <div class="result-card__slice" data-slice-id="slc_out">
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Outbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CA.avif" alt="" width="120" height="120" decoding="async">
+                      Air China
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">CA 432 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CA 1432 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CA 925</span>
+                    </p>
+                  </div>
+
+                  <div class="result-card__leg">
+                    <span class="result-card__time">
+                      <span class="result-card__clock">01:30</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
+                    </span>
+
+                    <span class="result-card__path">
+                      <span class="result-card__duration">13h 55m &middot; 2 stops in KMG, PEK</span>
+
+                      <span class="journey">
+                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+
+                        <span class="journey__track">
+                          <span class="journey__leg" style="--segment-minutes: 160" role="img" tabindex="0" aria-label="Flight DAC to KMG, 2h 40m">
+                            <span class="journey__tip" aria-hidden="true">DAC – KMG<br>Flight time 2h 40m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 130" role="img" tabindex="0" aria-label="Layover at Kunming Changshui International, 2h 10m">
+                            <span class="journey__code" aria-hidden="true">KMG</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in KMG<br>2h 10m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 195" role="img" tabindex="0" aria-label="Flight KMG to PEK, 3h 15m">
+                            <span class="journey__tip" aria-hidden="true">KMG – PEK<br>Flight time 3h 15m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 125" role="img" tabindex="0" aria-label="Layover at Beijing Capital International, 2h 05m">
+                            <span class="journey__code" aria-hidden="true">PEK</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in PEK<br>2h 05m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 225" role="img" tabindex="0" aria-label="Flight PEK to NRT, 3h 45m">
+                            <span class="journey__tip" aria-hidden="true">PEK – NRT<br>Flight time 3h 45m</span>
+                          </span>
+                        </span>
+
+                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
+                      </span>
+                    </span>
+
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">18:25</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
+                      <span class="result-card__date">Thu, 18 Sep</span>
+                    </span>
+                  </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
+                </div>
+
+                <div class="result-card__slice" data-slice-id="slc_ret" data-trip-only="round">
+                  <div class="result-card__slice-head">
+                    <p class="result-card__slice-label">
+                      <span class="result-card__slice-kind">Inbound</span>
+                    </p>
+
+                    <p class="result-card__slice-carrier">
+                      <img class="result-card__slice-logo" src="../../assets/images/CA.avif" alt="" width="120" height="120" decoding="async">
+                      Air China
+                      <span class="text-xs font-normal text-fg-muted whitespace-nowrap">CA 926 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CA 1431 <span class="text-fg-heading" aria-hidden="true">&bull;</span> CA 431</span>
+                    </p>
+                  </div>
+
+                  <div class="result-card__leg">
+                    <span class="result-card__time">
+                      <span class="result-card__clock">09:15</span>
+                      <span class="result-card__iata">NRT<span class="result-card__city">Tokyo</span></span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
+                    </span>
+
+                    <span class="result-card__path">
+                      <span class="result-card__duration">14h 55m &middot; 2 stops in PEK, KMG</span>
+
+                      <span class="journey">
+                        <svg class="icon--solid journey__mark" aria-hidden="true"><use href="#i-plane"></use></svg>
+
+                        <span class="journey__track">
+                          <span class="journey__leg" style="--segment-minutes: 245" role="img" tabindex="0" aria-label="Flight NRT to PEK, 4h 05m">
+                            <span class="journey__tip" aria-hidden="true">NRT – PEK<br>Flight time 4h 05m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 110" role="img" tabindex="0" aria-label="Layover at Beijing Capital International, 1h 50m">
+                            <span class="journey__code" aria-hidden="true">PEK</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in PEK<br>1h 50m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 210" role="img" tabindex="0" aria-label="Flight PEK to KMG, 3h 30m">
+                            <span class="journey__tip" aria-hidden="true">PEK – KMG<br>Flight time 3h 30m</span>
+                          </span>
+                          <span class="journey__layover" style="--segment-minutes: 160" role="img" tabindex="0" aria-label="Layover at Kunming Changshui International, 2h 40m">
+                            <span class="journey__code" aria-hidden="true">KMG</span>
+                            <span class="journey__tip" aria-hidden="true">Layover in KMG<br>2h 40m on the ground</span>
+                          </span>
+                          <span class="journey__leg" style="--segment-minutes: 170" role="img" tabindex="0" aria-label="Flight KMG to DAC, 2h 50m">
+                            <span class="journey__tip" aria-hidden="true">KMG – DAC<br>Flight time 2h 50m</span>
+                          </span>
+                        </span>
+
+                        <svg class="icon--solid journey__mark journey__mark--arrive" aria-hidden="true"><use href="#i-plane"></use></svg>
+                      </span>
+                    </span>
+
+                    <span class="result-card__time result-card__time--arrive">
+                      <span class="result-card__clock">21:10</span>
+                      <span class="result-card__iata">DAC<span class="result-card__city">Dhaka</span></span>
+                      <span class="result-card__date">Sat, 27 Sep</span>
+                    </span>
+                  </div>
+                  <p class="result-card__meta mt-3">
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-seat"></use></svg>Economy
+                    </span>
+                    <span class="result-card__meta-item">
+                      <svg class="icon" aria-hidden="true"><use href="#i-bag"></use></svg>23 kg baggage
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <span class="result-card__badges">
+                <span class="result-badge" data-kind="recommended" data-result-badge>Recommended</span>
+              </span>
+
+              <div class="result-card__aside">
+                <span class="result-card__trip">
+                  <span data-trip-only="round">Round-trip total</span>
+                  <span data-trip-only="one">One-way total</span>
+                </span>
+                <span class="result-card__price">
+                  <span data-trip-only="round">BDT 64,900</span>
+                  <span data-trip-only="one">BDT 36,500</span>
                 </span>
                 <a class="btn btn--primary md:w-full md:mt-3" href="flight-details.html">Select</a>
               </div>

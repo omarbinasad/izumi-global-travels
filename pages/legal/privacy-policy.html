@@ -22,6 +22,30 @@
 
 <body class="results-page" data-page="legal">
 
+  <!-- BLADE BOUNDARY: preloader -> <x-layout.preloader />
+       Decorative, and never in the way for long: it fades out on its own
+       after a moment even with no JavaScript (see .preloader in app.css). -->
+  <div class="preloader" aria-hidden="true" data-preloader>
+    <div class="preloader__mark">
+      <span class="preloader__track"></span>
+      <span class="preloader__orbit">
+        <svg class="icon icon--solid preloader__plane"><use href="#i-plane"></use></svg>
+      </span>
+      <!-- @brand-pending: the same placeholder mark as the header. -->
+      <svg class="preloader__logo" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="20" fill="#1668e0"/>
+        <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
+        <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
+      </svg>
+    </div>
+    <p class="preloader__brand">
+      <span class="site-logo__name">Izumi</span>
+      <span class="site-logo__tagline">Global Travels</span>
+    </p>
+    <span class="preloader__bar"></span>
+  </div>
+  <!-- END BLADE BOUNDARY: preloader -->
+
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />

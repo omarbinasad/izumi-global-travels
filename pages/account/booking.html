@@ -22,6 +22,30 @@
 
 <body class="results-page" data-page="account-booking">
 
+  <!-- BLADE BOUNDARY: preloader -> <x-layout.preloader />
+       Decorative, and never in the way for long: it fades out on its own
+       after a moment even with no JavaScript (see .preloader in app.css). -->
+  <div class="preloader" aria-hidden="true" data-preloader>
+    <div class="preloader__mark">
+      <span class="preloader__track"></span>
+      <span class="preloader__orbit">
+        <svg class="icon icon--solid preloader__plane"><use href="#i-plane"></use></svg>
+      </span>
+      <!-- @brand-pending: the same placeholder mark as the header. -->
+      <svg class="preloader__logo" viewBox="0 0 40 40">
+        <circle cx="20" cy="20" r="20" fill="#1668e0"/>
+        <path d="M9 25c6-1 11-4 15-8 1.5-1.5 3-3.4 4-5.6-.6 4.6-2.6 8.4-5.6 11.1-3.3 3-8 4.4-13.4 2.5z" fill="#fff"/>
+        <path d="M13 30c8 1 15-2 19-8-1 6.5-6 11-13 11-2.2 0-4.3-1-6-3z" fill="#bfd7fe"/>
+      </svg>
+    </div>
+    <p class="preloader__brand">
+      <span class="site-logo__name">Izumi</span>
+      <span class="site-logo__tagline">Global Travels</span>
+    </p>
+    <span class="preloader__bar"></span>
+  </div>
+  <!-- END BLADE BOUNDARY: preloader -->
+
   <a class="sr-only skip-link" href="#main-content">Skip to main content</a>
 
   <!-- BLADE BOUNDARY: icon sprite -> <x-ui.icon-sprite />
@@ -1335,7 +1359,7 @@
                 <!-- Changing a date changes a booking, so it is a POST that the team
                      acts on; nothing is changed by pressing this in a browser. -->
                 <form method="post" action="../contact.html">
-                  <button class="btn btn--primary" type="submit">
+                  <button class="btn btn--primary" type="submit" data-dialog-open="change-dialog">
                     <svg class="icon size-4" aria-hidden="true"><use href="#i-headset"></use></svg>Request date change
                   </button>
                 </form>
@@ -1440,7 +1464,7 @@
                 <!-- Cancelling changes a booking, so it is a POST that the team
                      acts on; nothing is cancelled by pressing this in a browser. -->
                 <form method="post" action="../contact.html">
-                  <button class="btn btn--primary" type="submit">
+                  <button class="btn btn--primary" type="submit" data-dialog-open="cancel-dialog">
                     <svg class="icon size-4" aria-hidden="true"><use href="#i-headset"></use></svg>Request cancellation
                   </button>
                 </form>
@@ -1454,6 +1478,426 @@
       </div>
 
     </div>
+
+  <!-- BLADE BOUNDARY: date change dialog -> <x-account.request-dialog type="date_change" :booking="$booking" />
+       Opened by the "Request date change" button through data-dialog-open. Without
+       JavaScript that button posts the plain request instead.
+       @content-pending: the travellers, flights and every figure are the
+       backend's quote for this booking; nothing in here is worked out in the
+       browser, and the request is re-priced when the team picks it up. -->
+  <dialog class="request-dialog" id="change-dialog" aria-labelledby="change-title" data-dialog>
+    <form class="request-dialog__body" method="post" action="../contact.html" novalidate
+          data-validate data-request-form data-sent-panel="change-sent">
+      <input type="hidden" name="booking_reference" value="IGT-BR-240918">
+      <input type="hidden" name="request_type" value="date_change">
+
+      <div class="request-dialog__head">
+        <span class="request-dialog__icon request-dialog__icon--brand" aria-hidden="true">
+          <svg class="icon size-6"><use href="#i-calendar"></use></svg>
+        </span>
+        <div>
+          <h2 class="request-dialog__title" id="change-title">Request a date change</h2>
+          <p class="m-0 mt-1 text-sm text-fg-muted md:text-base">Choose your new dates and review the estimated cost before submitting.</p>
+        </div>
+        <button class="request-dialog__close" type="button" aria-label="Close" data-dialog-close>
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+
+      <div class="request-dialog__summary">
+        <p class="m-0 grid gap-1 text-sm text-fg">
+          <span>Booking ID: <strong class="text-fg-heading">IGT-BR-240918</strong></span>
+          <span>Dhaka to Tokyo &middot; Round trip</span>
+          <span class="text-fg-muted">Thu, 18 Sep 2026 &ndash; Sat, 27 Sep 2026</span>
+        </p>
+        <div class="grid justify-items-center gap-1">
+          <p class="request-dialog__route">
+            DAC
+            <svg class="icon size-5 text-primary" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            NRT
+          </p>
+          <span class="text-xs text-fg-muted">Dhaka to Tokyo</span>
+        </div>
+        <span class="status-pill status-pill--confirmed justify-self-start md:justify-self-end">Confirmed</span>
+      </div>
+
+      <p class="m-0 flex items-start gap-3 rounded-lg bg-warning-surface p-4 text-sm leading-relaxed text-fg">
+        <svg class="icon size-5 flex-none text-warning" aria-hidden="true"><use href="#i-info"></use></svg>
+        <span>Submitting this request will not change your flight immediately. Our team will confirm seat availability and the total to pay before anything is changed.</span>
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <fieldset class="request-dialog__box">
+          <legend class="request-dialog__box-title float-left w-full">What do you want to change?</legend>
+          <div class="clear-left grid">
+                <p class="m-0 mt-1 text-xs font-semibold uppercase tracking-caps text-fg-muted">Travellers</p>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_1" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Tanvir Ahmed</span>
+                  <span class="request-dialog__option-note">Adult</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_2" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Samia Ahmed</span>
+                  <span class="request-dialog__option-note">Adult</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_3" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Rafi Ahmed</span>
+                  <span class="request-dialog__option-note">Child</span>
+                </label>
+                <p class="m-0 mt-1 text-xs font-semibold uppercase tracking-caps text-fg-muted">Flights</p>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="slice_ids[]" value="slc_out" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <span>Outbound &middot; DAC → NRT</span>
+                  <span class="request-dialog__option-note">Thu, 18 Sep</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="slice_ids[]" value="slc_ret" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <span>Inbound &middot; NRT → DAC</span>
+                  <span class="request-dialog__option-note">Sat, 27 Sep</span>
+                </label>
+          </div>
+        </fieldset>
+
+        <section class="request-dialog__box request-dialog__box--tint" aria-labelledby="change-estimate-title">
+          <h3 class="request-dialog__box-title" id="change-estimate-title">
+            <span class="rule-icon rule-icon--brand size-9" aria-hidden="true">
+              <svg class="icon size-4"><use href="#i-card"></use></svg>
+            </span>
+            Estimated cost
+          </h3>
+          <dl class="grid gap-3 m-0">
+                  <div class="price-row"><dt>Change fee &times; 3 travellers</dt><dd class="m-0 price-row__value">BDT 7,500</dd></div>
+                  <div class="price-row"><dt>Service fee</dt><dd class="m-0 price-row__value">BDT 1,000</dd></div>
+                  <div class="price-row"><dt>Fare difference</dt><dd class="m-0 price-row__value">Quoted on review</dd></div>
+            <div class="price-row price-row--total"><dt>Estimated to pay</dt><dd class="m-0 price-row__value text-primary">BDT 8,500</dd></div>
+          </dl>
+          <p class="m-0 mt-3 text-xs leading-relaxed text-fg-muted">Plus any fare difference for the new dates. The final amount may change after airline review.</p>
+        </section>
+      </div>
+
+      <fieldset class="request-dialog__box">
+        <legend class="request-dialog__box-title float-left w-full">Your new dates</legend>
+        <!-- The same calendar panel the search forms open (date-range.js). The
+             native inputs stay: they are the values, and they are what works
+             with no JavaScript. -->
+        <div class="clear-left relative grid gap-3 md:grid-cols-2"
+             data-date-range data-date-start="new outbound" data-date-end="new return">
+          <div class="search-field search-field--solid">
+            <label class="search-field__label" for="change-date-out">New outbound date</label>
+            <span class="search-field__value">
+              <input class="search-field__control search-field__control--lg" type="date"
+                     id="change-date-out" name="new_departure_date" value="2026-09-18" data-date-input="depart">
+              <span class="search-field__display" data-date-display aria-hidden="true">18 Sep</span>
+            </span>
+          </div>
+
+          <div class="search-field search-field--solid">
+            <label class="search-field__label" for="change-date-ret">New return date</label>
+            <span class="search-field__value">
+              <input class="search-field__control search-field__control--lg" type="date"
+                     id="change-date-ret" name="new_return_date" value="2026-09-27" data-date-input="return">
+              <span class="search-field__display" data-date-display aria-hidden="true">27 Sep</span>
+            </span>
+          </div>
+        </div>
+      </fieldset>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="field">
+          <label class="field__label" for="change-reason">Reason for the change</label>
+          <span class="field__select" data-select>
+            <select class="field__control" id="change-reason" name="reason" required
+                    data-required="Choose a reason so the team knows how to help.">
+              <option value="">Select a reason</option>
+              <option value="change_of_plans">Change of plans</option>
+              <option value="work">Work commitment</option>
+              <option value="medical">Medical reason</option>
+              <option value="visa">Visa or documents</option>
+              <option value="other">Other</option>
+            </select>
+            <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+          </span>
+          <span class="field__error" data-field-error hidden></span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="change-details">Additional details (optional)</label>
+          <textarea class="field__control field__control--area" id="change-details" name="details" rows="3"
+                    maxlength="500" aria-describedby="change-details-hint"
+                    placeholder="Tell us more (e.g. flexible dates, preferred times)"></textarea>
+          <span class="field__hint" id="change-details-hint">Up to 500 characters.</span>
+          <span class="field__error" data-field-error hidden></span>
+        </div>
+      </div>
+
+      <details class="request-dialog__policy">
+        <summary>
+          <svg class="icon size-5 text-primary" aria-hidden="true"><use href="#i-ticket"></use></svg>
+          View date change policy
+          <svg class="icon size-4 request-dialog__policy-chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+        </summary>
+        <ul class="grid gap-2 m-0 px-5 pb-5 pl-10 list-disc text-sm leading-relaxed text-fg">
+          <li>More than 14 days before departure: BDT 2,500 per traveller, plus any fare difference.</li>
+          <li>3 to 13 days before departure: BDT 5,000 per traveller, plus any fare difference.</li>
+          <li>Less than 3 days before departure: the date cannot be changed.</li>
+          <li>Only the date moves. A new route, airline or cabin is a new booking. One change is allowed per ticket.</li>
+        </ul>
+      </details>
+
+      <div class="field">
+        <label class="flex items-start gap-3 text-sm text-fg">
+          <input type="checkbox" name="terms_accepted" value="1" required
+                 data-required="Tick the box to confirm you have read this.">
+          I understand that a date change is subject to seat availability, airline approval and applicable charges.
+        </label>
+        <span class="field__error" data-field-error hidden></span>
+      </div>
+
+      <div class="request-dialog__foot">
+        <p class="m-0 flex items-center gap-2 text-xs text-fg-muted">
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+          Typical review time: within 24 hours
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button class="btn btn--outline" type="button" data-dialog-close>Keep current dates</button>
+          <button class="btn btn--primary request-dialog__submit" type="submit">Submit change request</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- What the backend returns once the request is stored. The static page
+         shows it on a valid submit; see assets/js/pages/account.js. -->
+    <div class="request-dialog__body" id="change-sent" tabindex="-1" hidden>
+      <div class="request-dialog__head">
+        <span class="request-dialog__icon request-dialog__icon--done" aria-hidden="true">
+          <svg class="icon size-6"><use href="#i-check"></use></svg>
+        </span>
+        <div>
+          <h2 class="request-dialog__title">Date change request sent</h2>
+          <p class="m-0 mt-1 text-sm leading-relaxed text-fg-muted md:text-base">Our team will check seats on your new dates and email you the total to pay, usually within 24 hours. Nothing changes until you approve it.</p>
+        </div>
+        <button class="request-dialog__close" type="button" aria-label="Close" data-dialog-close>
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+
+      <div class="request-dialog__summary">
+        <p class="m-0 grid gap-1 text-sm text-fg">
+          <span>Request reference: <strong class="text-fg-heading">DCR-240918-01</strong></span>
+          <span class="text-fg-muted">Booking IGT-BR-240918 &middot; DAC &ndash; NRT &ndash; DAC</span>
+        </p>
+      </div>
+
+      <div class="flex justify-end">
+        <button class="btn btn--primary" type="button" data-dialog-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+  <!-- END BLADE BOUNDARY: date change dialog -->
+
+  <!-- BLADE BOUNDARY: cancellation dialog -> <x-account.request-dialog type="cancellation" :booking="$booking" />
+       Opened by the "Request cancellation" button through data-dialog-open. Without
+       JavaScript that button posts the plain request instead.
+       @content-pending: the travellers, flights and every figure are the
+       backend's quote for this booking; nothing in here is worked out in the
+       browser, and the request is re-priced when the team picks it up. -->
+  <dialog class="request-dialog" id="cancel-dialog" aria-labelledby="cancel-title" data-dialog>
+    <form class="request-dialog__body" method="post" action="../contact.html" novalidate
+          data-validate data-request-form data-sent-panel="cancel-sent">
+      <input type="hidden" name="booking_reference" value="IGT-BR-240918">
+      <input type="hidden" name="request_type" value="cancellation">
+
+      <div class="request-dialog__head">
+        <span class="request-dialog__icon" aria-hidden="true">
+          <svg class="icon size-6"><use href="#i-info"></use></svg>
+        </span>
+        <div>
+          <h2 class="request-dialog__title" id="cancel-title">Request flight cancellation</h2>
+          <p class="m-0 mt-1 text-sm text-fg-muted md:text-base">Review the policy and estimated refund before submitting.</p>
+        </div>
+        <button class="request-dialog__close" type="button" aria-label="Close" data-dialog-close>
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+
+      <div class="request-dialog__summary">
+        <p class="m-0 grid gap-1 text-sm text-fg">
+          <span>Booking ID: <strong class="text-fg-heading">IGT-BR-240918</strong></span>
+          <span>Dhaka to Tokyo &middot; Round trip</span>
+          <span class="text-fg-muted">Thu, 18 Sep 2026 &ndash; Sat, 27 Sep 2026</span>
+        </p>
+        <div class="grid justify-items-center gap-1">
+          <p class="request-dialog__route">
+            DAC
+            <svg class="icon size-5 text-primary" aria-hidden="true"><use href="#i-arrow-right"></use></svg>
+            NRT
+          </p>
+          <span class="text-xs text-fg-muted">Dhaka to Tokyo</span>
+        </div>
+        <span class="status-pill status-pill--confirmed justify-self-start md:justify-self-end">Confirmed</span>
+      </div>
+
+      <p class="m-0 flex items-start gap-3 rounded-lg bg-warning-surface p-4 text-sm leading-relaxed text-fg">
+        <svg class="icon size-5 flex-none text-warning" aria-hidden="true"><use href="#i-info"></use></svg>
+        <span>Submitting this request will not cancel your flight immediately. Our team will confirm the applicable airline charges before cancellation.</span>
+      </p>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <fieldset class="request-dialog__box">
+          <legend class="request-dialog__box-title float-left w-full">Who do you want to cancel?</legend>
+          <div class="clear-left grid">
+                <p class="m-0 mt-1 text-xs font-semibold uppercase tracking-caps text-fg-muted">Travellers</p>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_1" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Tanvir Ahmed</span>
+                  <span class="request-dialog__option-note">Adult</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_2" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Samia Ahmed</span>
+                  <span class="request-dialog__option-note">Adult</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="passenger_ids[]" value="pax_3" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-user"></use></svg>
+                  <span>Rafi Ahmed</span>
+                  <span class="request-dialog__option-note">Child</span>
+                </label>
+                <p class="m-0 mt-1 text-xs font-semibold uppercase tracking-caps text-fg-muted">Flights</p>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="slice_ids[]" value="slc_out" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <span>Outbound &middot; DAC → NRT</span>
+                  <span class="request-dialog__option-note">Thu, 18 Sep</span>
+                </label>
+                <label class="request-dialog__option">
+                  <input type="checkbox" name="slice_ids[]" value="slc_ret" checked>
+                  <svg class="icon size-5 flex-none text-fg-muted" aria-hidden="true"><use href="#i-plane"></use></svg>
+                  <span>Inbound &middot; NRT → DAC</span>
+                  <span class="request-dialog__option-note">Sat, 27 Sep</span>
+                </label>
+          </div>
+        </fieldset>
+
+        <section class="request-dialog__box request-dialog__box--tint" aria-labelledby="cancel-estimate-title">
+          <h3 class="request-dialog__box-title" id="cancel-estimate-title">
+            <span class="rule-icon rule-icon--brand size-9" aria-hidden="true">
+              <svg class="icon size-4"><use href="#i-card"></use></svg>
+            </span>
+            Estimated refund
+          </h3>
+          <dl class="grid gap-3 m-0">
+                  <div class="price-row"><dt>Ticket amount</dt><dd class="m-0 price-row__value">BDT 191,560</dd></div>
+                  <div class="price-row"><dt>Estimated airline fee</dt><dd class="m-0 price-row__value">&minus; BDT 25,500</dd></div>
+                  <div class="price-row"><dt>Service fee</dt><dd class="m-0 price-row__value">&minus; BDT 3,000</dd></div>
+            <div class="price-row price-row--total"><dt>Estimated refund</dt><dd class="m-0 price-row__value text-primary">BDT 163,060</dd></div>
+          </dl>
+          <p class="m-0 mt-3 text-xs leading-relaxed text-fg-muted">Add-ons are not refundable. The final refund may change after airline review.</p>
+        </section>
+      </div>
+
+      <div class="grid gap-4 md:grid-cols-2">
+        <div class="field">
+          <label class="field__label" for="cancel-reason">Reason for cancellation</label>
+          <span class="field__select" data-select>
+            <select class="field__control" id="cancel-reason" name="reason" required
+                    data-required="Choose a reason so the team knows how to help.">
+              <option value="">Select a reason</option>
+              <option value="change_of_plans">Change of plans</option>
+              <option value="medical">Medical reason</option>
+              <option value="visa">Visa refused or delayed</option>
+              <option value="schedule_change">Airline changed the schedule</option>
+              <option value="duplicate">Duplicate booking</option>
+              <option value="other">Other</option>
+            </select>
+            <svg class="icon size-4 field__chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+          </span>
+          <span class="field__error" data-field-error hidden></span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="cancel-details">Additional details (optional)</label>
+          <textarea class="field__control field__control--area" id="cancel-details" name="details" rows="3"
+                    maxlength="500" aria-describedby="cancel-details-hint"
+                    placeholder="Tell us more (e.g. change in plans, medical reason, etc.)"></textarea>
+          <span class="field__hint" id="cancel-details-hint">Up to 500 characters.</span>
+          <span class="field__error" data-field-error hidden></span>
+        </div>
+      </div>
+
+      <details class="request-dialog__policy">
+        <summary>
+          <svg class="icon size-5 text-primary" aria-hidden="true"><use href="#i-ticket"></use></svg>
+          View cancellation and no-show policy
+          <svg class="icon size-4 request-dialog__policy-chevron" aria-hidden="true"><use href="#i-chevron-down"></use></svg>
+        </summary>
+        <ul class="grid gap-2 m-0 px-5 pb-5 pl-10 list-disc text-sm leading-relaxed text-fg">
+          <li>More than 30 days before departure: full refund of the ticket amount.</li>
+          <li>7 to 29 days before departure: 50% of the ticket amount is refunded.</li>
+          <li>Less than 7 days before departure, or a no-show: the ticket is non-refundable.</li>
+          <li>Service fees, taxes and convenience charges are not refunded. Refunds reach the original card within 7 to 10 working days.</li>
+        </ul>
+      </details>
+
+      <div class="field">
+        <label class="flex items-start gap-3 text-sm text-fg">
+          <input type="checkbox" name="terms_accepted" value="1" required
+                 data-required="Tick the box to confirm you have read this.">
+          I understand that cancellation is subject to airline approval and applicable charges.
+        </label>
+        <span class="field__error" data-field-error hidden></span>
+      </div>
+
+      <div class="request-dialog__foot">
+        <p class="m-0 flex items-center gap-2 text-xs text-fg-muted">
+          <svg class="icon size-4" aria-hidden="true"><use href="#i-clock"></use></svg>
+          Typical review time: within 24 hours
+        </p>
+        <div class="flex flex-wrap gap-3">
+          <button class="btn btn--outline" type="button" data-dialog-close>Keep booking</button>
+          <button class="btn btn--primary request-dialog__submit" type="submit">Submit cancellation request</button>
+        </div>
+      </div>
+    </form>
+
+    <!-- What the backend returns once the request is stored. The static page
+         shows it on a valid submit; see assets/js/pages/account.js. -->
+    <div class="request-dialog__body" id="cancel-sent" tabindex="-1" hidden>
+      <div class="request-dialog__head">
+        <span class="request-dialog__icon request-dialog__icon--done" aria-hidden="true">
+          <svg class="icon size-6"><use href="#i-check"></use></svg>
+        </span>
+        <div>
+          <h2 class="request-dialog__title">Cancellation request sent</h2>
+          <p class="m-0 mt-1 text-sm leading-relaxed text-fg-muted md:text-base">Our team will confirm the airline charges and your refund by email, usually within 24 hours. Your booking stays active until you approve it.</p>
+        </div>
+        <button class="request-dialog__close" type="button" aria-label="Close" data-dialog-close>
+          <svg class="icon size-5" aria-hidden="true"><use href="#i-close"></use></svg>
+        </button>
+      </div>
+
+      <div class="request-dialog__summary">
+        <p class="m-0 grid gap-1 text-sm text-fg">
+          <span>Request reference: <strong class="text-fg-heading">CXR-240918-01</strong></span>
+          <span class="text-fg-muted">Booking IGT-BR-240918 &middot; DAC &ndash; NRT &ndash; DAC</span>
+        </p>
+      </div>
+
+      <div class="flex justify-end">
+        <button class="btn btn--primary" type="button" data-dialog-close>Done</button>
+      </div>
+    </div>
+  </dialog>
+  <!-- END BLADE BOUNDARY: cancellation dialog -->
 
   </main>
   <!-- END BLADE BOUNDARY: main content -->

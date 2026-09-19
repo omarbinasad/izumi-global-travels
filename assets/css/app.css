@@ -265,6 +265,13 @@
   --animate-marquee: marquee 60s linear infinite;
   --animate-sheet-in: sheet-in 220ms var(--ease-entrance);
   --animate-toast-in: toast-in 220ms var(--ease-entrance);
+  /* Preloader. It leaves on its own after a short wait, so a failed script
+     can never keep the page covered; the script only makes it leave sooner. */
+  --animate-preloader-spin: preloader-spin 2.4s linear infinite;
+  --animate-preloader-pulse: preloader-pulse 1.6s ease-in-out infinite;
+  --animate-preloader-bar: preloader-bar 1.3s ease-in-out infinite;
+  --animate-preloader-out: preloader-out 420ms var(--ease-entrance) 2.5s forwards;
+  --animate-preloader-leave: preloader-leave 420ms var(--ease-entrance) forwards;
 
   @keyframes rise-in {
     from { opacity: 0; translate: 0 16px; }
@@ -298,6 +305,24 @@
   }
   @keyframes toast-in {
     from { opacity: 0; scale: 0.96; }
+  }
+  @keyframes preloader-spin {
+    to { rotate: 360deg; }
+  }
+  @keyframes preloader-pulse {
+    50% { scale: 0.92; }
+  }
+  @keyframes preloader-bar {
+    from { translate: -100% 0; }
+    to   { translate: 250% 0; }
+  }
+  /* Two names for one exit: the timed fallback and the early one the script
+     triggers. A new name restarts the animation without its delay. */
+  @keyframes preloader-out {
+    to { opacity: 0; visibility: hidden; }
+  }
+  @keyframes preloader-leave {
+    to { opacity: 0; visibility: hidden; }
   }
 
   /* The tick lands after the disc it sits on, so the two read as one event
@@ -376,6 +401,7 @@
   --z-modal: 500;
   --z-toast: 600;
   --z-skip-link: 700;
+  --z-preloader: 800;
 
   /* Flight UI */
   --flight-card-padding: --spacing(4);
@@ -1486,6 +1512,31 @@
     border-color: var(--color-glass-accent);
     background-color: var(--color-glass-hover);
     box-shadow: var(--shadow-focus);
+  }
+
+  /* On a plain surface rather than the hero glass — a form in a panel or a
+     dialog. The glass border is white and vanishes on white, so this takes
+     the ordinary field colours, matching .field__control beside it. */
+  .search-field--solid {
+    border-color: var(--color-line);
+    background-color: var(--color-surface);
+  }
+
+  .search-field--solid:hover {
+    border-color: var(--color-line-strong);
+    background-color: var(--color-surface);
+  }
+
+  .search-field--solid:focus-within {
+    border-color: var(--color-ring);
+    background-color: var(--color-surface);
+  }
+
+  .search-field--solid .search-field__label { color: var(--color-fg-muted); }
+
+  .search-field--solid .search-field__display,
+  .search-field--solid:focus-within .search-field__control[type="date"] {
+    color: var(--color-fg-heading);
   }
 
   .search-field[data-disabled="true"] {
@@ -4566,8 +4617,9 @@
 
   /* --- One slice of the itinerary: out, then back ------------------------- */
 
+  /* The column's own gap already spaces the two slices; adding a margin
+     on top doubled the space above the divider. */
   .result-card__slice + .result-card__slice {
-    margin-block-start: --spacing(4);
     padding-block-start: --spacing(4);
     border-block-start: var(--border-width) solid var(--color-line);
   }
@@ -4825,6 +4877,7 @@
     width: 14px;
     height: 14px;
     flex: none;
+    color: var(--color-primary);
   }
 
   .result-card__divider {
@@ -10061,7 +10114,8 @@
     animation: var(--animate-toast-in);
   }
 
-  .toast::backdrop {
+  .toast::backdrop,
+  .request-dialog::backdrop {
     /*
      * A ::backdrop inherits from its dialog in current browsers and from
      * nothing in older ones, where the custom property drops out and the
@@ -11046,4 +11100,321 @@
   }
 
   .service-hero__crumbs a:hover { color: var(--color-on-panel); }
+}
+
+/* ==========================================================================
+   BOOKING REQUEST DIALOG — ask to cancel a booking or change its dates
+   ========================================================================== */
+
+@layer components {
+
+  /*
+   * A <dialog> opened with showModal(), like the price notice: the dim behind
+   * it, the focus kept inside and Escape closing it are the browser's. It
+   * shares the notice's ::backdrop rule above.
+   *
+   * The figures inside are the backend's quote for this booking. Nothing in
+   * the dialog works out a refund or a fee.
+   */
+  .request-dialog {
+    inline-size: min(56rem, calc(100vw - --spacing(8)));
+    max-inline-size: none;
+    max-block-size: calc(100dvh - --spacing(8));
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-xl);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-lg);
+    color: var(--color-fg);
+  }
+
+  .request-dialog[open] {
+    display: block;
+    /* The reset zeroes the UA sheet's auto margins, which centre a modal. */
+    margin: auto;
+    animation: var(--animate-toast-in);
+  }
+
+  .request-dialog__body {
+    display: grid;
+    gap: --spacing(5);
+    padding: --spacing(5);
+  }
+
+  @media (width >= 48rem) {
+    .request-dialog__body { padding: --spacing(7); }
+  }
+
+  .request-dialog__head {
+    display: flex;
+    align-items: flex-start;
+    gap: --spacing(4);
+  }
+
+  .request-dialog__icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: --spacing(12);
+    block-size: --spacing(12);
+    border: var(--border-width-strong) solid currentColor;
+    border-radius: 50%;
+    color: var(--color-error);
+  }
+
+  .request-dialog__icon--brand { color: var(--color-primary); }
+
+  .request-dialog__icon--done {
+    border-color: transparent;
+    background-color: var(--color-success-surface);
+    color: var(--color-success);
+  }
+
+  .request-dialog__title {
+    margin: 0;
+    font-size: var(--text-xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-fg-heading);
+  }
+
+  @media (width >= 48rem) {
+    .request-dialog__title { font-size: var(--text-2xl); }
+  }
+
+  .request-dialog__close {
+    flex: none;
+    margin-inline-start: auto;
+    padding: --spacing(2);
+    border-radius: var(--radius-sm);
+    color: var(--color-fg-muted);
+    transition: color var(--transition-fast), background-color var(--transition-fast);
+  }
+
+  .request-dialog__close:hover {
+    background-color: var(--color-surface-muted);
+    color: var(--color-fg);
+  }
+
+  /* Booking, route and status in one band across the top. */
+  .request-dialog__summary {
+    display: grid;
+    gap: --spacing(4);
+    padding: --spacing(4) --spacing(5);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-tint);
+  }
+
+  @media (width >= 48rem) {
+    .request-dialog__summary {
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: --spacing(8);
+    }
+  }
+
+  .request-dialog__route {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0;
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    color: var(--color-fg-heading);
+  }
+
+  /* A panel of choices or figures, side by side from the tablet up. */
+  .request-dialog__box {
+    min-inline-size: 0;
+    margin: 0;
+    padding: --spacing(4) --spacing(5);
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+  }
+
+  .request-dialog__box--tint { background-color: var(--color-surface-tint); }
+
+  .request-dialog__box-title {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    margin: 0 0 --spacing(3);
+    padding: 0;
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+  }
+
+  .request-dialog__option {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    padding-block: --spacing(3);
+    font-size: var(--text-sm);
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+
+  .request-dialog__option + .request-dialog__option {
+    border-block-start: var(--border-width) solid var(--color-line);
+  }
+
+  .request-dialog__option-note {
+    margin-inline-start: auto;
+    font-size: var(--text-xs);
+    color: var(--color-fg-muted);
+  }
+
+  /* The policy, folded away until it is asked for. */
+  .request-dialog__policy {
+    border: var(--border-width) solid var(--color-line);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface-tint);
+  }
+
+  .request-dialog__policy > summary {
+    display: flex;
+    align-items: center;
+    gap: --spacing(3);
+    padding: --spacing(4) --spacing(5);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--color-fg-heading);
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .request-dialog__policy > summary::-webkit-details-marker { display: none; }
+
+  .request-dialog__policy-chevron {
+    margin-inline-start: auto;
+    transition: rotate var(--transition-base);
+  }
+
+  .request-dialog__policy[open] .request-dialog__policy-chevron { rotate: 180deg; }
+
+  .request-dialog__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: --spacing(4);
+  }
+
+  /* Reads as unavailable until the declaration is ticked. It stays a live
+     button, so pressing it early explains what is missing instead of doing
+     nothing. */
+  .request-dialog__body:has(input[required][type="checkbox"]:not(:checked)) .request-dialog__submit {
+    opacity: 0.55;
+  }
+}
+
+/* ==========================================================================
+   PRELOADER — the brand mark over the page while it loads
+   ========================================================================== */
+
+@layer components {
+
+  /*
+   * Covers the page for the moment it takes to load, then fades away. The
+   * content underneath is complete and rendered the whole time; this only
+   * sits over it.
+   *
+   * It always leaves: the exit is a CSS animation with a delay, so with no
+   * JavaScript, a failed script or a stalled image it still goes after a
+   * couple of seconds. assets/js/components/preloader.js only brings the exit
+   * forward to the moment the page has loaded. Under reduced motion the
+   * global rule flattens that delay, so the preloader is never seen at all.
+   */
+  .preloader {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-preloader);
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: --spacing(5);
+    background-color: var(--color-page);
+    color: var(--color-fg-heading);
+    animation: var(--animate-preloader-out);
+  }
+
+  .preloader[data-state="done"] {
+    pointer-events: none;
+    animation: var(--animate-preloader-leave);
+  }
+
+  .preloader__mark {
+    position: relative;
+    display: grid;
+    place-items: center;
+    inline-size: --spacing(28);
+    block-size: --spacing(28);
+  }
+
+  /* The dashed route the plane flies, the same line the landing page draws
+     between its steps. */
+  .preloader__track {
+    position: absolute;
+    inset: 0;
+    border: var(--border-width-strong) dashed color-mix(in srgb, var(--color-primary) 35%, transparent);
+    border-radius: 50%;
+  }
+
+  .preloader__orbit {
+    position: absolute;
+    inset: 0;
+    animation: var(--animate-preloader-spin);
+  }
+
+  /* At the top of the circle, nose pointing the way it travels: the icon
+     faces up and to the right, so a quarter-turn short of clockwise. Its own
+     disc of page colour cuts the dashed line beneath it. */
+  .preloader__plane {
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline-start: 50%;
+    inline-size: --spacing(7);
+    block-size: --spacing(7);
+    padding: --spacing(1);
+    border-radius: 50%;
+    background-color: var(--color-page);
+    color: var(--color-primary);
+    translate: -50% -50%;
+    rotate: 45deg;
+  }
+
+  .preloader__logo {
+    inline-size: --spacing(16);
+    block-size: --spacing(16);
+    animation: var(--animate-preloader-pulse);
+  }
+
+  .preloader__brand {
+    margin: 0;
+    text-align: center;
+  }
+
+  .preloader__bar {
+    position: relative;
+    inline-size: --spacing(40);
+    block-size: --spacing(1);
+    overflow: hidden;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-surface-muted);
+  }
+
+  .preloader__bar::after {
+    content: "";
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: 40%;
+    border-radius: inherit;
+    background-image: var(--gradient-primary);
+    animation: var(--animate-preloader-bar);
+  }
 }

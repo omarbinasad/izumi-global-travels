@@ -15,6 +15,7 @@ import { initHeaderShadow } from './components/header.js';
 import { initReveal } from './components/reveal.js';
 import { initLocale } from './components/locale.js';
 import { initToTop } from './components/to-top.js';
+import { initPreloader } from './components/preloader.js';
 
 /**
  * Page modules, added as pages are built. Each value is a dynamic import so
@@ -50,6 +51,7 @@ async function startPageModule() {
   module.init?.();
 }
 
+initPreloader();
 initTheme();
 initNavigation();
 initHeaderShadow();
