@@ -1,113 +1,149 @@
-# Izumi Global Travels — frontend
+# Izumi Global Travels — Next.js frontend (v2)
 
-Static frontend for a flight-search and air-ticket-booking website. It is built
-to be converted into Laravel Blade and connected to flight-search, fare,
-booking, payment and authentication APIs by the backend developer.
+The static flight-booking frontend from the parent folder, converted to
+**Next.js 16 (App Router) + React 19 + TypeScript**, still styled with
+**Tailwind CSS v4**. It looks and behaves the same as the static build: every
+page renders the same DOM, every screen is pixel-identical in light and dark
+at desktop and mobile widths, and every interactive behaviour is kept.
 
-**Status: landing page built from the approved UI reference.** The colour
-palette is taken from that reference. Still marked `@brand-pending` in
-`assets/css/1-settings/tokens.css`: the typeface. Placeholder marks stand in for
-the logo, airline logos, app-store badges, payment marks and customer photos —
-see the list at the end of this file.
-
-## Technology
-
-Semantic HTML5, **Tailwind CSS v4** compiled with the Tailwind CLI, and vanilla
-JavaScript ES modules. No framework, no UI library, and no dependencies beyond
-Tailwind and its CLI. Static JSON is used for mock data only.
-
-## Run locally
-
-Build the stylesheet once, then serve the folder. ES modules need a real HTTP
-origin — opening the file with `file://` will not work.
+## Run
 
 ```bash
 npm install
-npm run build          # or: npm run dev, to rebuild on every save
-python -m http.server 5173
+npm run dev        # http://localhost:3000
+npm run build      # static prerender of every route
+npm run start      # serve the production build
+npm run typecheck
 ```
 
-Then open <http://127.0.0.1:5173/>. `index.html` is the landing page.
+All 31 routes are prerendered as static HTML (`○ Static` in the build output).
 
-`assets/css/build.css` is generated and gitignored, so a fresh clone needs
-`npm install && npm run build` before the page is styled.
-
-## Folders
+## How it is put together
 
 ```
-pages/       one HTML file per screen, grouped by workflow
-components/  reference markup for reusable blocks (not loaded at runtime)
-assets/css/  app.css (source) + build.css (generated) — see assets/css/README.md
-assets/js/   core, components, pages, services
-assets/data/ static JSON mock data
-docs/        structure, design system, components, forms, data contract, handoff
+app/                    one route per static page (page.tsx), plus layout.tsx
+components/
+  layout/               SiteHeader, SiteFooter, Preloader, IconSprite, ToTop
+  account/AccountNav    side nav of the account pages (current = section)
+  booking/              BookingSteps (current = step), ItinerarySlice
+  behaviour/SiteBody    <body> + the bridge that runs lib/behaviour
+lib/
+  behaviour/            the vanilla ES-module behaviours, ported as-is
+    core/ components/ pages/   same split as assets/js/
+    registry.js         replaces main.js: starts behaviours, returns teardown
+  routes.ts             per-route <body> attributes (data-page, class, …)
+  theme-boot.ts         the pre-paint theme script, inlined into <head>
+styles/app.css          the Tailwind source (was assets/css/app.css)
+public/images/          was assets/images/
+emails/                 reference email templates (for the backend mailer)
+docs/                   design system, data contract, forms, handoff notes
 ```
 
-`docs/project-structure.md` explains what belongs in each directory.
+### Markup: server components
 
-## Entry points
+Each page is a server component holding the page's markup as JSX, so all
+content is in the HTML before any JavaScript runs, as it was before. The
+markup is the original markup, attribute for attribute:
 
-- **CSS** — `assets/css/app.css` is the source; the page links the generated
-  `assets/css/build.css`. Order inside `app.css`: import → sources → variants →
-  `@theme` → runtime vars → `@layer base` → `@layer components`. Utilities go in
-  the markup. See `assets/css/README.md`.
-- **JavaScript** — `assets/js/main.js`, loaded as
-  `<script type="module">` at the end of `<body>`. It starts site-wide
-  behaviour and loads a page module named by `<body data-page="…">`.
-- **Theme boot** — `assets/js/core/theme-boot.js`, a small synchronous script in
-  `<head>`. It is deliberately not a module: it must run before first paint so
-  the dark theme never flashes light.
+- `class` became `className` and `for` became `htmlFor`. Form defaults became
+  `defaultValue` / `defaultChecked`.
+- Internal `*.html` links became Next `<Link>` routes. Asset URLs moved to
+  `/images/…`.
+- `<!-- BLADE BOUNDARY -->` comments are kept as JSX comments.
 
-## Theme system
+Repeated chrome is one component each. The preloader, skip link, icon sprite
+and back-to-top link live in `app/layout.tsx`. The header and footer are
+rendered by each page, because the auth pages have neither and the header has
+two variants (`bordered`, `signedIn`).
 
-Two themes, light and dark, switched from the icon control in the site header.
-The active theme sits on `<html data-theme="light|dark">` and is stored in
-`localStorage` under `izumi-global-travels:theme`.
+### Behaviour: progressive enhancement, unchanged
 
-Light is the default and the site never follows the operating system: the
-approved design is a light design, so dark is something the visitor opts into.
-`assets/js/core/theme-boot.js` writes the attribute before first paint, so there
-is no theme flash.
+The 36 component and 13 page behaviour modules (search form, date pickers, airport field, select
+and phone fields, filters, sort tabs, add-ons, validation, dialogs, saved
+list, …) are the original vanilla modules in `lib/behaviour/`. Only their
+wiring changed:
 
-All theme differences live in the `@theme` block of `assets/css/app.css`, as
-`light-dark()` pairs. A semantic colour flips itself, so `dark:` variants are
-reserved for the rare non-colour difference. See `docs/design-system.md`.
+- `components/behaviour/SiteBody.tsx` loads `registry.js` in the browser after
+  each route change, and it starts the same site-wide and per-page modules
+  `main.js` started, chosen by `<body data-page>`.
+- Every listener goes through `on()` in `core/dom.js`, which now records it in
+  a per-route scope. Changing route removes the old page's listeners, timers
+  and observers before the new page starts, so client-side navigation never
+  stacks handlers.
+- The stand-in submits that walked to the next page (passengers → add-ons,
+  payment → confirm, login → profile, feedback → thanks) go through
+  `core/navigate.js`, which uses the Next router.
+- The preloader is a small React component (`Preloader.tsx`) because it
+  removes itself from the document. The static build showed it on every page
+  because every link was a full page load, so it is shown again on each client
+  navigation (a link click or `navigate()`). It leaves once the new page is in
+  place and its images have loaded.
 
-## Conventions
+### Styles
 
-- kebab-case filenames; component-oriented class names.
-- Tailwind utilities first; a component class only when a pattern repeats and
-  its utility list would drown the markup.
-- No arbitrary values where a token would do. No inline styles, no inline event
-  handlers, no `!important` without a comment.
-- JavaScript selects elements through `data-*` hooks, never styling classes.
-- Backend access goes through `assets/js/services/`; UI code never holds a URL.
-- Submit stable codes and ids (IATA, airline codes, `offerId`, `fareId`), never
-  visible labels or formatted prices.
-- The frontend is never authoritative for prices, availability, fare rules,
-  booking status or payment — see `docs/laravel-handoff.md`.
-- No secrets or API credentials in any frontend file.
-- Verify layouts at 375, 420, 768, 1024, 1280 and 1440px, and check for
-  horizontal overflow.
-- Entrance animations put their hidden state **only inside `@keyframes`**, never
-  on the element. Content must stay readable with no JavaScript, on an old
-  browser, and with reduced motion.
+`styles/app.css` is the original stylesheet. Only two things changed: the
+`@source` paths, and image `url()`s now point at `/images/`. Tailwind is
+pinned to the same version as the static build (4.3.3).
 
-## Assets still to supply
+`browserslist` in `package.json` names the browsers that support
+`light-dark()`, which the theme system needs. Without it, Next's CSS pass would
+replace `light-dark()` with a variable-based polyfill and stop matching the
+original output.
 
-Everything below renders today as a clearly marked placeholder. Dropping the
-real file in and updating the one reference is all that is needed.
+## Route map
 
-| Placeholder | Where | Replace with |
+| Static page | Route | File |
 | --- | --- | --- |
-| Logo mark | inline SVG in the header and footer of `index.html` | the official logo, ideally an SVG in `assets/images/brand/` |
-| Airline logos | text plus a generic plane icon in the Trusted airlines strip | licensed SVGs in `assets/images/airlines/` |
-| Customer photos | initials tiles in the testimonials | portraits in `assets/images/`, with real permission |
-| App Store / Google Play badges | styled buttons in `.store-badges` | the official artwork from Apple and Google (both are trademarked) |
-| Payment marks | text pills in the footer | licensed scheme artwork |
-| Typeface | system font stack | the licensed font, self-hosted in `assets/fonts/` |
+| `index.html` | `/` | `app/page.tsx` |
+| `pages/about.html` | `/about` | `app/about/page.tsx` |
+| `pages/blog.html` | `/blog` | `app/blog/page.tsx` |
+| `pages/blog-post.html` | `/blog-post` | `app/blog-post/page.tsx` |
+| `pages/contact.html` | `/contact` | `app/contact/page.tsx` |
+| `pages/faq.html` | `/faq` | `app/faq/page.tsx` |
+| `pages/account/booking.html` | `/account/booking` | `app/account/booking/page.tsx` |
+| `pages/account/bookings.html` | `/account/bookings` | `app/account/bookings/page.tsx` |
+| `pages/account/profile.html` | `/account/profile` | `app/account/profile/page.tsx` |
+| `pages/account/saved.html` | `/account/saved` | `app/account/saved/page.tsx` |
+| `pages/auth/forgot-password.html` | `/auth/forgot-password` | `app/auth/forgot-password/page.tsx` |
+| `pages/auth/login.html` | `/auth/login` | `app/auth/login/page.tsx` |
+| `pages/auth/reset-password.html` | `/auth/reset-password` | `app/auth/reset-password/page.tsx` |
+| `pages/flights/add-ons.html` | `/flights/add-ons` | `app/flights/add-ons/page.tsx` |
+| `pages/flights/confirm.html` | `/flights/confirm` | `app/flights/confirm/page.tsx` |
+| `pages/flights/flight-details.html` | `/flights/flight-details` | `app/flights/flight-details/page.tsx` |
+| `pages/flights/flight-status.html` | `/flights/flight-status` | `app/flights/flight-status/page.tsx` |
+| `pages/flights/passengers.html` | `/flights/passengers` | `app/flights/passengers/page.tsx` |
+| `pages/flights/payment.html` | `/flights/payment` | `app/flights/payment/page.tsx` |
+| `pages/flights/search-results.html` | `/flights/search-results` | `app/flights/search-results/page.tsx` |
+| `pages/hotels/hotel.html` | `/hotels/hotel` | `app/hotels/hotel/page.tsx` |
+| `pages/hotels/search-results.html` | `/hotels/search-results` | `app/hotels/search-results/page.tsx` |
+| `pages/legal/booking-conditions.html` | `/legal/booking-conditions` | `app/legal/booking-conditions/page.tsx` |
+| `pages/legal/privacy-policy.html` | `/legal/privacy-policy` | `app/legal/privacy-policy/page.tsx` |
+| `pages/legal/refund-policy.html` | `/legal/refund-policy` | `app/legal/refund-policy/page.tsx` |
+| `pages/legal/terms.html` | `/legal/terms` | `app/legal/terms/page.tsx` |
+| `pages/services/halal-meal.html` | `/services/halal-meal` | `app/services/halal-meal/page.tsx` |
+| `pages/services/meet-and-greet.html` | `/services/meet-and-greet` | `app/services/meet-and-greet/page.tsx` |
+| `pages/services/window-seat.html` | `/services/window-seat` | `app/services/window-seat/page.tsx` |
+| `pages/support/feedback.html` | `/support/feedback` | `app/support/feedback/page.tsx` |
+| `pages/support/feedback-thanks.html` | `/support/feedback-thanks` | `app/support/feedback-thanks/page.tsx` |
 
-One smaller gap against the reference: the small inset photograph in the
-"Booking should feel simple" panel has no source file.
+Path names in `docs/` refer to the static build. Read `assets/js/` as
+`lib/behaviour/`, `assets/css/app.css` as `styles/app.css`, and
+`assets/images/` as `public/images/`.
 
-# izumi-global--travels
+## Deliberate choices
+
+- **`reactStrictMode: false`.** Some behaviours add their own controls to the
+  DOM once (select, phone and date fields). Strict mode's dev-only double
+  mount would add them twice. Production is unaffected.
+- **Plain `<img>`, not `next/image`.** `next/image` adds wrappers, `srcset` and
+  inline styles, which would change the markup and the layout.
+- **Server-owned data stays server-owned.** Prices, availability, fare rules,
+  booking, ticketing and payment are still placeholders that the backend will
+  render. No API routes, credentials or simulated auth/payment were added.
+
+## Known placeholders carried over from the static build
+
+- `/contact` links to `/support/help-centre`, which does not exist in the
+  static build either.
+- "Sign out" / "Log out" POST to `/auth/login`, and the forms post to their
+  static `action`s. These need real backend routes.
