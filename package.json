@@ -1,33 +1,15 @@
 {
-  "name": "izumi-global-travels-next",
-  "version": "2.0.0",
+  "name": "izumi-global-travels",
+  "version": "1.0.0",
   "private": true,
-  "description": "Izumi Global Travels flight-booking frontend on Next.js (App Router) and Tailwind CSS v4.",
+  "description": "Static flight-search frontend, styled with Tailwind CSS, for conversion to Laravel Blade.",
   "license": "UNLICENSED",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "typecheck": "tsc --noEmit"
-  },
-  "dependencies": {
-    "next": "16.4.5",
-    "react": "19.3.1",
-    "react-dom": "19.3.1"
+    "dev": "tailwindcss --input assets/css/app.css --output assets/css/build.css --watch",
+    "build": "tailwindcss --input assets/css/app.css --output assets/css/build.css --minify"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "4.3.3",
-    "@types/node": "^22.10.0",
-    "@types/react": "^19.3.0",
-    "@types/react-dom": "^19.2.0",
-    "tailwindcss": "4.3.3",
-    "typescript": "^5.9.3"
-  },
-  "browserslist": [
-    "chrome >= 123",
-    "edge >= 123",
-    "firefox >= 120",
-    "safari >= 17.5",
-    "ios_saf >= 17.5"
-  ]
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
 }
